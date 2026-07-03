@@ -43,4 +43,4 @@ tests/analysis/
 reports/
 
 # Ruff cache
-.ruff_cache/
+.ruff_cache/.zcode/.mcp.json
