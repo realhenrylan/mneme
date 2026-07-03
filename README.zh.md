@@ -1,5 +1,13 @@
 # Mneme
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./.github/images/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./.github/images/logo-light.svg">
+    <img alt="Mneme Logo" src="./.github/images/logo-light.svg" width="70%">
+  </picture>
+</p>
+
 > 以希腊记忆女神 Mnemosyne 命名 —— 一个带终端 UI 的检索增强生成（RAG）系统。
 
 Mneme 是一个双语（中文/英文）RAG 系统，可对本地文档建立索引，并通过大语言模型回答问题。支持 Standard RAG 和 Graph RAG 两种模式。

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 320" width="1600" height="320">
+  <rect width="1600" height="320" fill="transparent"/>
+  <g font-family="Consolas,'Courier New',monospace" font-size="24" font-weight="bold" fill="#c8b8ff">
+    <text x="40" y="52">  000000   000000     000   00000000000  000         000000  0000000000000</text>
+    <text x="40" y="92"> &apos;88.     .888&apos;    &apos;888b.    &apos;888&apos;    &apos;8  &apos;88.       .888&apos;   &apos;888&apos;        &apos;8</text>
+    <text x="40" y="132">  888b   d&apos;888      8  &apos;88b.   8        8    888        888b   d&apos;888      888</text>
+    <text x="40" y="172"> 8  Y88.. .P      888   8   8    &apos;88b.    8    888oooo8  8 Y88.. .P   888   888oooo8</text>
+    <text x="40" y="212"> 8   &apos;888&apos;         888   8    &apos;88b.8    888  &quot;     8   &apos;888&apos;   888    888  &quot;</text>
+    <text x="40" y="252"> 8    Y           888   8    &apos;888&apos;     888        o 8    Y    888    888      o</text>
+    <text x="40" y="292"> o8o               o8888o    o8o       &apos;8  888oooooo8 o8o       o888o  888oooooo8</text>
+  </g>
+</svg>
