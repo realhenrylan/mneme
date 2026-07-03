@@ -2,6 +2,8 @@
 
 > Named after Mnemosyne, the Greek goddess of memory — a Retrieval-Augmented Generation system with a terminal UI.
 
+[中文版](./README.zh.md)
+
 Mneme is a bilingual (Chinese/English) RAG system that indexes local documents and answers questions via an LLM. It supports Standard RAG and Graph RAG modes.
 
 ## Features
