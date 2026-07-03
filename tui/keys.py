@@ -1,6 +1,6 @@
 COMMANDS = {
     "/help": "显示帮助信息",
-    "/files": "文件管理（添加/删除）",
+    "/files": "文件管理（watch/stop/list/add/remove）",
     "/mode": "切换 RAG 模式（standard/graph）",
     "/alpha": "调节图谱融合权重",
     "/models": "切换 LLM 模型",

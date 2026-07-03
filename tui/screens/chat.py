@@ -1,6 +1,6 @@
 import os
 from dotenv import get_key, set_key  # Issue #1b 修复：.env 解析器脆弱性
-from typing import Optional, List
+from typing import Optional
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Prompt, Confirm
@@ -12,29 +12,6 @@ from tui.components.message import user_message, assistant_message, source_refer
 from tui.components.prompt import match_command
 from tui.components.sidebar import render_sidebar
 from tui.keys import COMMANDS
-
-_SUPPORTED_EXTENSIONS = (
-    ".pdf", ".docx",
-    ".txt", ".md", ".markdown", ".html", ".htm",
-    ".json", ".csv", ".xml", ".yaml", ".yml",
-    ".toml", ".cfg", ".ini", ".conf", ".log",
-    ".py", ".js", ".ts", ".css", ".sql",
-    ".sh", ".bat",
-)
-
-
-def _list_supported_files(directory: str = ".") -> List[str]:
-    """Return sorted list of files in directory with supported extensions."""
-    try:
-        entries = os.listdir(directory)
-    except OSError:
-        return []
-    files = sorted(
-        f for f in entries
-        if os.path.isfile(os.path.join(directory, f))
-        and os.path.splitext(f)[1].lower() in _SUPPORTED_EXTENSIONS
-    )
-    return files
 
 
 def _api_ok() -> bool:
@@ -122,7 +99,7 @@ def run_chat_loop(console: Console, service, mode: str, alpha: float,
                 alpha = _set_alpha(console, alpha)
                 continue
             if cmd == "/files":
-                _manage_files(console, service)
+                _handle_files(console, service, user_input)
                 continue
             if cmd == "/settings":
                 result = _configure_settings(console, alpha, temperature, top_k_range[0], top_k_range[1])
@@ -276,75 +253,57 @@ def _set_alpha(console: Console, alpha: float) -> float:
     return new_alpha
 
 
-def _manage_files(console: Console, service):
-    console.print()
-    while True:
-        action = Prompt.ask(
-            f"  [{THEME['text_dim']}]Action[/]",
-            choices=["add", "remove", "list", "exit"],
-            default="list",
-            console=console,
-        )
-        if action == "exit":
-            break
-        if action == "list":
-            stats = service.get_stats()
-            files = stats.get("files", [])
-            if files:
-                for f in files:
-                    console.print(f"    · {f}")
-            else:
-                console.print(f"  [{THEME['text_dim']}]No files indexed.[/]")
-        elif action == "add":
-            while True:
-                directory = questionary.path(
-                    "Directory to scan (Tab to autocomplete):",
-                    only_directories=True,
-                    style=_QS,
-                ).ask()
-                if not directory:
-                    break
-                directory = os.path.abspath(os.path.expanduser(directory))
-                files = _list_supported_files(directory)
-                if not files:
-                    console.print(warning_panel(f"No supported files in {directory}", "Files"))
-                    continue
-                selected = questionary.checkbox(
-                    f"Select file(s) from {directory}:",
-                    choices=files,
-                    style=_QS,
-                ).ask()
-                if not selected:
-                    continue
-                paths = [os.path.join(directory, f) for f in selected]
-                service.add_files(paths)
-                console.print(f"[{THEME['success']}]Added {len(paths)} file(s).[/]")
-                more = questionary.select(
-                    "Add more files?",
-                    choices=["No", "Yes"],
-                    style=_QS,
-                ).ask()
-                if more != "Yes":
-                    break
-        elif action == "remove":
-            while True:
-                stats = service.get_stats()
-                files = stats.get("files", [])
-                if not files:
-                    console.print(warning_panel("No files to remove.", "Files"))
-                    break
-                choices = [questionary.Choice(f, f) for f in files]
-                choices.append(questionary.Choice("← Back", "__back__"))
-                name = questionary.select(
-                    "Select file to remove:",
-                    choices=choices,
-                    style=_QS,
-                ).ask()
-                if name == "__back__":
-                    break
-                count = service.remove_file(name)
-                console.print(f"[{THEME['success']}]Removed {count} chunks.[/]")
-    console.print()
+def _handle_files(console: Console, service, user_input: str):
+    parts = user_input.split(maxsplit=2)
+    sub = parts[1] if len(parts) > 1 else ""
+    arg = parts[2] if len(parts) > 2 else ""
+
+    if sub == "watch" and arg:
+        target = os.path.abspath(os.path.expanduser(arg))
+        if not os.path.isdir(target):
+            console.print(error_panel(f"Directory not found: {target}", "Files"))
+            return
+        service.set_watch_dir(target)
+        service.start_watching()
+        console.print(f"[{THEME['success']}]Watching: {target}[/]")
+        return
+
+    if sub == "stop":
+        service.stop_watching()
+        console.print(f"[{THEME['success']}]Watcher stopped.[/]")
+        return
+
+    if sub == "list" or sub == "":
+        watch_dir = service.get_watch_dir()
+        if watch_dir:
+            console.print(f"  [{THEME['text_dim']}]Watch directory:[/] [bold]{watch_dir}[/]")
+        else:
+            console.print(f"  [{THEME['text_dim']}]Watch directory:[/] [dim]<not set>[/]")
+        stats = service.get_stats()
+        files = stats.get("files", [])
+        if files:
+            console.print(f"  [{THEME['text_dim']}]Indexed files ({len(files)}):[/]")
+            for f in files:
+                console.print(f"    · {f}")
+        else:
+            console.print(f"  [{THEME['text_dim']}]No files indexed.[/]")
+        return
+
+    if sub == "remove" and arg:
+        count = service.remove_file(arg)
+        console.print(f"[{THEME['success']}]Removed {count} chunks.[/]")
+        return
+
+    if sub == "add" and arg:
+        path = os.path.abspath(os.path.expanduser(arg))
+        if not os.path.isfile(path):
+            console.print(error_panel(f"File not found: {path}", "Files"))
+            return
+        result = service.add_files([path])
+        console.print(f"[{THEME['success']}]Added {result.get('chunk_count', 0)} chunk(s).[/]")
+        return
+
+    console.print(warning_panel("Usage: /files [watch <dir> | stop | list | remove <file> | add <path>]", "Files"))
 
 
 def _read_env(key: str) -> str:
