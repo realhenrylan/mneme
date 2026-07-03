@@ -53,7 +53,7 @@ User Input → Query Decomposition → Concurrent Hybrid Retrieval →
 ### Install
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/HongyiLanDP/mneme.git
 cd mneme
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt

@@ -51,7 +51,7 @@ Mneme 是一个双语（中文/英文）RAG 系统，可对本地文档建立索
 ### 安装
 
 ```bash
-git clone <仓库地址>
+git clone https://github.com/HongyiLanDP/mneme.git
 cd mneme
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
