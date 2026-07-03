@@ -9,12 +9,14 @@ from rich.table import Table
 from tui.theme import THEME
 from tui.keys import COMMANDS
 from tui.components.message import error_panel, warning_panel
+from tui.constants import _SUPPORTED_EXTENSIONS
 import sys, os
 _ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
 
 from src.rag import CHROMA_DB_PATH
+
 
 _QS = QStyle([
     ("qmark", f"fg:{THEME['accent']}"),
@@ -26,15 +28,6 @@ _QS = QStyle([
     ("text", f"fg:{THEME['text_dim']}"),
     ("instruction", f"fg:{THEME['text_dim']} italic"),
 ])
-
-_SUPPORTED_EXTENSIONS = (
-    ".pdf", ".docx",
-    ".txt", ".md", ".markdown", ".html", ".htm",
-    ".json", ".csv", ".xml", ".yaml", ".yml",
-    ".toml", ".cfg", ".ini", ".conf", ".log",
-    ".py", ".js", ".ts", ".css", ".sql",
-    ".sh", ".bat",
-)
 
 
 def _list_supported_files(directory: str) -> list[str]:
