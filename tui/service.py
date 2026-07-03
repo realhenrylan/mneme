@@ -1,7 +1,7 @@
 import os
 import hashlib
 
-import sys, os
+import sys
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
@@ -10,11 +10,13 @@ from src.rag import (
     prepare_index, build_bm25_index,
     SentenceTransformer, chromadb,
     DEFAULT_COLLECTION_NAME,
+    add_files_to_index,
     answer_query, answer_query_stream,
     answer_with_llm_history, answer_with_llm_history_stream,
     remove_file_from_index,
     CHROMA_DB_PATH,
     EMBEDDING_MODEL_NAME, DEFAULT_LLM_MODEL,
+    _collection_exists,
 )
 from graph_rag import (
     prepare_graph_index,
@@ -119,9 +121,11 @@ class LocalRagService:
         self._bm25 = bm25
         self._docs = docs
         self._metadatas = metadatas
-        if self._mode == "graph" and self._kg is not None:
+        if self._mode == "graph":
             self._kg = KnowledgeGraph()
             self._kg.build_from_chunks(docs, verbose=False)
+            kg_file = os.path.join(CHROMA_DB_PATH, f"{self._collection_name}_kg.pkl")
+            self._kg.save(kg_file)
         return self.get_stats()
 
     def remove_file(self, filename: str) -> int:
@@ -145,6 +149,46 @@ class LocalRagService:
             stats["entity_count"] = self._kg.entity_graph.number_of_nodes()
             stats["relation_count"] = self._kg.entity_graph.number_of_edges()
         return stats
+
+    def set_mode(self, mode: str):
+        """供 /mode 命令更新内部模式标记。"""
+        self._mode = mode
+
+    def build_kg_from_chromadb(self, collection_name: str, progress_callback=None):
+        """
+        从 ChromaDB 持久化数据重建知识图谱（含磁盘缓存检查）。
+        - 优先读取 {CHROMA_DB_PATH}/{collection_name}_kg.pkl
+        - 缓存命中直接加载，调用 progress_callback(1,1) 避免进度条闪烁
+        - 缓存未命中则 LLM 提取实体并 save()
+        - 同步 self._docs / self._metadatas，不依赖易失内存
+        """
+        client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+        if not _collection_exists(client, collection_name):
+            raise RuntimeError(f"Collection '{collection_name}' not found.")
+
+        collection = client.get_collection(collection_name)
+        all_data = collection.get()
+        docs = all_data["documents"]
+        metadatas = all_data["metadatas"]
+        if not docs:
+            raise RuntimeError(f"Collection '{collection_name}' is empty.")
+
+        self._docs = docs
+        self._metadatas = metadatas
+        self._collection_name = collection_name
+
+        # 缓存优先
+        kg_file = os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.pkl")
+        if os.path.exists(kg_file):
+            self._kg = KnowledgeGraph.load(kg_file)
+            if progress_callback:
+                progress_callback(1, 1)
+            return
+
+        # 无缓存，重建
+        self._kg = KnowledgeGraph()
+        self._kg.build_from_chunks(docs, verbose=False, progress_callback=progress_callback)
+        self._kg.save(kg_file)
 
     def get_kg(self):
         return self._kg
