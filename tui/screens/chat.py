@@ -1,8 +1,9 @@
 import os
+from dotenv import get_key, set_key  # Issue #1b 修复：.env 解析器脆弱性
 from typing import Optional, List
 from rich.console import Console
 from rich.panel import Panel
-from rich.prompt import Prompt
+from rich.prompt import Prompt, Confirm
 import questionary
 from questionary import Style as QStyle
 
@@ -210,11 +211,57 @@ def _show_status(console: Console, service, mode: str):
 
 def _toggle_mode(console: Console, mode: str, service) -> str:
     new_mode = "graph" if mode == "standard" else "standard"
-    if new_mode == "graph" and service.get_kg() is None:
-        console.print(warning_panel("Build with graph mode first to use /mode.", "Knowledge Graph"))
+
+    # ── Graph → Standard：直接切换，无需确认 ──
+    if new_mode == "standard":
+        service.set_mode("standard")
+        console.print(f"[{THEME['success']}]Mode → STANDARD[/]")
+        return "standard"
+
+    # ── Standard → Graph：需先构建知识图谱 ──
+    stats = service.get_stats()
+    files = stats.get("files", [])
+    collection = stats.get("collection", "rag_demo")
+
+    if not files:
+        console.print(warning_panel("No files indexed. Add files first.", "Knowledge Graph"))
         return mode
-    console.print(f"[{THEME['success']}]Mode → {new_mode.upper()}[/]")
-    return new_mode
+
+    if not Confirm.ask(
+        f"  [{THEME['text_dim']}]Build knowledge graph for {len(files)} file(s)?[/]",
+        default=True,
+        console=console,
+    ):
+        return mode
+
+    try:
+        from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn
+
+        def _progress_cb(done, total):
+            progress.update(progress_bar, completed=done, total=total,
+                            description=f"[{THEME['accent']}]Processing chunks... ({done}/{total})[/]")
+
+        with Progress(
+            SpinnerColumn(spinner_name="dots", style=THEME["accent"]),
+            TextColumn("[progress.description]{task.description}"),
+            BarColumn(bar_width=None),
+            TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+            console=console,
+        ) as progress:
+            progress_bar = progress.add_task(
+                f"[{THEME['accent']}]Building knowledge graph...[/]",
+                total=None,
+            )
+            service.build_kg_from_chromadb(collection, progress_callback=_progress_cb)
+
+        service.set_mode("graph")
+        console.print(f"[{THEME['success']}]Knowledge graph ready![/]")
+        console.print(f"[{THEME['success']}]Mode → GRAPH[/]")
+        return "graph"
+
+    except Exception as e:
+        console.print(error_panel(f"Graph build failed: {e}"))
+        return mode
 
 
 def _set_alpha(console: Console, alpha: float) -> float:
@@ -301,35 +348,22 @@ def _manage_files(console: Console, service):
 
 
 def _read_env(key: str) -> str:
-    """Read a single value from .env file."""
-    if not os.path.isfile(".env"):
-        return ""
-    with open(".env") as f:
-        for line in f:
-            k, sep, v = line.strip().partition("=")
-            if k.strip() == key:
-                return v.strip()
-    return ""
+    """Read a single value from .env file using python-dotenv."""
+    return get_key(".env", key) or ""
 
 
-def _write_env(key: str, value: str):
-    """Update or append a key=value in .env file."""
-    key = key.strip()
-    lines = []
-    found = False
-    if os.path.isfile(".env"):
-        with open(".env") as f:
-            for line in f:
-                k, sep, _ = line.strip().partition("=")
-                if k.strip() == key:
-                    lines.append(f"{key}={value}\n")
-                    found = True
-                else:
-                    lines.append(line)
-    if not found:
-        lines.append(f"{key}={value}\n")
-    with open(".env", "w") as f:
-        f.writelines(lines)
+def _write_env(key: str, value: str) -> None:
+    """Update or append a key=value in .env file using python-dotenv."""
+    set_key(".env", key, value)  # quote_mode 默认 "always"
+
+
+def _mask_api_key(key: Optional[str]) -> str:
+    """掩码显示 API Key，仅保留 'sk-' 前缀和最后 4 位。"""
+    if not key:
+        return "<not set>"
+    if len(key) <= 8:
+        return "sk-...****"
+    return f"{key[:3]}...{key[-4:]}"   # key[:3] = "sk-"
 
 
 _QS = QStyle([
@@ -355,17 +389,14 @@ def _configure_settings(console: Console, alpha: float = 0.7,
 
     while True:
         console.clear()
-        api_key = _read_env("API_KEY") or "<not set>"
-        base_url = _read_env("BASE_URL") or "<not set>"
-
-        def _trunc(s, n):
-            return s[:n] + "..." if len(s) > n + 3 else s
+        api_key_display = _mask_api_key(_read_env("API_KEY"))
+        base_url_display = _mask_api_key(_read_env("BASE_URL"))
 
         choices = [
             questionary.Choice(
-                f"1. API Key          {_trunc(api_key, 30)}", "api_key"),
+                f"1. API Key          {api_key_display}", "api_key"),
             questionary.Choice(
-                f"2. Base URL         {_trunc(base_url, 30)}", "base_url"),
+                f"2. Base URL         {base_url_display}", "base_url"),
             questionary.Choice(
                 f"3. LLM Model        {os.environ.get('LLM_MODEL', 'deepseek-chat')}", "llm_model"),
             questionary.Choice(
@@ -390,12 +421,14 @@ def _configure_settings(console: Console, alpha: float = 0.7,
             break
 
         if choice == "api_key":
-            val = questionary.text("API Key:", default=api_key, style=_QS).ask()
-            if val and val != api_key:
+            current = _read_env("API_KEY")
+            val = questionary.text("API Key:", default=current, style=_QS).ask()
+            if val and val != current:
                 _write_env("API_KEY", val); os.environ["API_KEY"] = val
         elif choice == "base_url":
-            val = questionary.text("Base URL:", default=base_url, style=_QS).ask()
-            if val and val != base_url:
+            current = _read_env("BASE_URL")
+            val = questionary.text("Base URL:", default=current, style=_QS).ask()
+            if val and val != current:
                 _write_env("BASE_URL", val); os.environ["BASE_URL"] = val
         elif choice == "llm_model":
             cur = os.environ.get("LLM_MODEL", "deepseek-chat")
