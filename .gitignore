@@ -37,6 +37,7 @@ Thumbs.db
 # Test databases
 **/chroma_db_test/
 **/chroma_db_debug*/
+tests/analysis/
 
 # Reports
 reports/
