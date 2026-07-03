@@ -68,7 +68,7 @@ def render_home(console: Console) -> dict:
     console.clear()
     console.print(Panel(LOGO, border_style=THEME["accent"], expand=False))
     console.print(
-        f"[bold {THEME['accent']}]  Knowledge-Augmented Q&A System[/]\n",
+        f"[bold {THEME['accent']}]  Mneme — Knowledge-Augmented Q&A System[/]\n",
     )
 
     mode_choices = {"1": "standard", "2": "graph"}
