@@ -20,7 +20,6 @@ import os
 import sys
 import re
 import time
-import shutil
 import argparse
 import hashlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -54,6 +53,8 @@ DEFAULT_TEMPERATURE = 0.2
 SYSTEM_PROMPT = (
     "你是一个基于文档内容的问答助手。根据提供的文档回答问题。"
     "如果文档中找不到相关信息，绝对不能私自编造。"
+    "每个文档片段前标注了[Source: 文件名]，"
+    "你可以通过统计不同的[Source: 文件名]来回答关于文件数量、文件名等元问题。"
 )
 PROMPT_TEMPLATE = "文档：\n{context}\n\n问题：{question}\n答案："
 
@@ -225,9 +226,6 @@ def prepare_index(
         force_rebuild: bool = False,
         progress_callback=None,
 ) -> tuple:
-    if force_rebuild and os.path.exists(CHROMA_DB_PATH):
-        shutil.rmtree(CHROMA_DB_PATH)
-
     client = chromadb.PersistentClient(path = CHROMA_DB_PATH)
 
     # 判断是否需要重新建立索引
@@ -235,7 +233,7 @@ def prepare_index(
 
     if need_build:
         print("索引重构中...")
-        model, collection = build_index(file_paths, collection_name, client, progress_callback=progress_callback)
+        model, collection = build_index(file_paths, collection_name, client, force_rebuild=force_rebuild, progress_callback=progress_callback)
     else:
         print("检测到已有索引，正在加载...")
         model = SentenceTransformer(EMBEDDING_MODEL_NAME)
@@ -517,6 +515,28 @@ def dynamic_top_k(scores: list[float], min_k: int = DEFAULT_MIN_K, max_k: int = 
     return cut
 
 
+def _build_context(
+    top_indices: list[int],
+    docs: list[str],
+    metadatas: list[dict],
+) -> str:
+    """将 top-ranked chunk 拼接为 LLM context，每个 chunk 前标注来源文件名。
+
+    Args:
+        top_indices: 排序后的 chunk 索引列表，值作为 docs 和 metadatas 的索引
+        docs:        全量文档文本列表（docs[i] 获取第 i 个文档文本）
+        metadatas:   全量元数据列表（metadatas[i]["source"] 获取第 i 个文档的文件名）
+
+    Returns:
+        带 [Source: filename] 标注的 context 字符串，chunk 间以双换行分隔
+    """
+    parts = []
+    for i in top_indices:
+        source = metadatas[i].get("source", "unknown")
+        parts.append(f"[Source: {source}]\n{docs[i]}")
+    return "\n\n".join(parts)
+
+
 def enrich_context(
     top_indices: list[int],
     documents: list[str],
@@ -689,7 +709,7 @@ def answer_query(
     k = dynamic_top_k(scores_flat)
     top_indices = merged[:k]
     enriched_docs = enrich_context(top_indices, documents, metadatas)
-    context = "\n\n".join([enriched_docs[i] for i in top_indices])
+    context = _build_context(top_indices, enriched_docs, metadatas)
 
     answer = answer_with_llm_history(
         query, context, history or [], temperature=temperature,
@@ -914,7 +934,7 @@ def answer_query_stream(
     top_indices = merged[:k]
 
     enriched_docs = enrich_context(top_indices, documents, metadatas)
-    context = "\n\n".join([enriched_docs[i] for i in top_indices])
+    context = _build_context(top_indices, enriched_docs, metadatas)
     sources = format_sources(top_indices, enriched_docs, metadatas)
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,

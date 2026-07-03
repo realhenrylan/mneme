@@ -19,6 +19,7 @@ from rag import (
     add_files_to_index,
     retrieve_hybrid_with_sources, dynamic_top_k,
     answer_with_llm_history, format_sources,
+    _build_context,
     SentenceTransformer, chromadb,
     EMBEDDING_MODEL_NAME, DEFAULT_COLLECTION_NAME,
     DEFAULT_TOP_K, DEFAULT_MIN_K, DEFAULT_MAX_K,
@@ -305,7 +306,7 @@ def build_graph_index(
     model, collection = build_index(
         file_paths,
         collection_name,
-        force_rebuild,
+        force_rebuild=force_rebuild,
         progress_callback=progress_callback,
     )
     all_docs = collection.get()["documents"]
@@ -414,7 +415,7 @@ def graph_rag_pipeline(
     print("\n" + "=" * 60)
     print("LLM生成回答")
     print("=" * 60)
-    context = " ".join(top_docs)
+    context = _build_context(top_indices, all_docs, all_metadatas)
     _tq0 = time.time()
     answer = answer_with_llm_history(query, context, history = history or [], temperature=temperature)
     _tq1 = time.time()
@@ -468,7 +469,7 @@ if __name__ == "__main__":
         k = dynamic_top_k(fused_scores, min_k=3, max_k=50)
         top_docs = fused_docs[:k]
         top_indices = indices[:k]
-        context = " ".join(top_docs)
+        context = _build_context(top_indices, all_docs, all_metadatas)
         answer = answer_with_llm_history(args.query, context, history=[], temperature=0.1)
         print(f"\n{answer}")
         sources = format_sources(top_indices, all_docs, all_metadatas)
@@ -506,7 +507,7 @@ if __name__ == "__main__":
         top_docs = fused_docs[:k]
         top_indices = indices[:k]
 
-        context = " ".join(top_docs)
+        context = _build_context(top_indices, all_docs, all_metadatas)
         _tq0 = time.time()
         answer = answer_with_llm_history(query, context, history=history, temperature=0.1)
         _tq1 = time.time()
@@ -546,7 +547,7 @@ def graph_query_stream(
     )
     k = dynamic_top_k(scores, min_k=top_k_range[0], max_k=top_k_range[1])
     top_indices = indices[:k]
-    context = " ".join(docs[:k])
+    context = _build_context(top_indices, all_docs, all_metadatas)
     sources = format_sources(top_indices, all_docs, all_metadatas)
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,
