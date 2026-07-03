@@ -11,8 +11,6 @@ from typing import Optional
 _SRC = os.path.dirname(os.path.abspath(__file__))
 if _SRC not in sys.path:
     sys.path.insert(0, _SRC)
-from concurrent.futures import ThreadPoolExecutor, as_completed
-
 from rag import (
     build_bm25_index,
     build_index, ask_for_files, _collection_exists,
@@ -50,8 +48,15 @@ EXTRACT_PROMPT_BATCH = """从以下文本段落中分别提取实体。
 """
 
 def extract_entities_llm_batch(texts: list[str],
-                               batch_size: int = 5) -> list[list[str]]:
-    """批量提取实体，带逐文本缓存"""
+                               batch_size: int = 5,
+                               progress_callback=None) -> list[list[str]]:
+    """批量提取实体，带逐文本缓存
+
+    Args:
+        texts: 待提取实体的文本列表
+        batch_size: 每批处理的文本数量，默认为 5
+        progress_callback: 进度回调函数 (done, total)，每批处理后调用
+    """
 
     client = _get_llm_client()
 
@@ -105,6 +110,10 @@ def extract_entities_llm_batch(texts: list[str],
             except Exception as e:
                 print(f"[警告] 大模型调用失败：{e}")
 
+        # 每批处理完成后调用进度回调
+        if progress_callback:
+            progress_callback(min(i + batch_size, len(texts)), len(texts))
+
     return [_entity_cache.get(hashlib.md5(t.encode()).hexdigest(), []) for t in texts]
 
 
@@ -118,27 +127,46 @@ class KnowledgeGraph:
             self,
             chunks: list[str],
             verbose: bool = True,
-            max_workers = 10,
+            max_workers: int = 10,          # [DEPRECATED] 保留但忽略，向后兼容
             progress_callback=None,
+            batch_size: int = 5,            # 新参数追加到末尾
     ):
+        """
+        从文本块构建知识图谱。
+
+        Args:
+            chunks: 文本块列表
+            verbose: 是否打印进度信息
+            max_workers: [DEPRECATED] 保留参数用于向后兼容，实际不再使用。
+                         调用时传入此参数不会报错，但会被忽略。
+            progress_callback: 进度回调函数 (done, total)
+            batch_size: 批量处理的文本数量，默认为 5
+
+        Note:
+            进度回调在每批处理完成后触发。如需更细粒度的进度控制，
+            请直接使用 `extract_entities_llm_batch` 的 progress_callback 参数。
+        """
+        import warnings
+
+        if max_workers != 10:  # 用户显式传入了非默认值
+            warnings.warn(
+                "max_workers 参数已废弃，将被忽略。批量处理现在使用 batch_size 参数控制。",
+                DeprecationWarning,
+                stacklevel=2
+            )
+
         if verbose:
             print(f"正在从{len(chunks)}个chunks当中提取实体")
 
-        with ThreadPoolExecutor(max_workers = max_workers) as executor:
-            future_to_idx = {
-                executor.submit(extract_entities_llm_batch, [c]): i
-                for i, c in enumerate(chunks)
-            }
-            results = [None] * len(chunks)
-            done = 0
-            for future in as_completed(future_to_idx):
-                idx = future_to_idx[future]
-                results[idx] = future.result()[0]
-                done += 1
-                if verbose and done % 10 == 0:
-                    print(f"进度{done}/{len(chunks)}")
-                if progress_callback:
-                    progress_callback(done, len(chunks))
+        # 直接调用批量处理，extract_entities_llm_batch 内部已实现分批逻辑
+        results = extract_entities_llm_batch(
+            chunks,
+            batch_size=batch_size,
+            progress_callback=progress_callback,
+        )
+
+        if verbose:
+            print(f"进度{len(chunks)}/{len(chunks)}")
 
         for i, (chunk, entities) in enumerate(zip(chunks, results)):
 

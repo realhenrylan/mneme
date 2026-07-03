@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.1] - 2026-07-03
+
+### Fixed
+
+**Issue #3: 多线程无锁写入 `_entity_cache` + 批量 API 调用形同虚设**
+
+- 移除 `build_from_chunks` 中的 `ThreadPoolExecutor`，消除无锁并发写入 `_entity_cache` 的数据竞争风险
+- 修复批量处理被错误调用的问题：之前每个 chunk 单独调用一次 API，现在正确批量处理（减少 80% API 调用）
+- 新增 `batch_size` 参数控制批量大小，默认为 5
+- `max_workers` 参数标记为废弃，传入非默认值时发出 `DeprecationWarning`
+- 新增 `progress_callback` 参数支持增量进度回调
+
+### Added
+
+- 新增 `tests/test_graph_rag_batch.py` 测试文件，覆盖批量处理、向后兼容性、异常处理等场景
+
+---
+
 ## [1.0.0] - 2026-07-03
 
 ### Added
