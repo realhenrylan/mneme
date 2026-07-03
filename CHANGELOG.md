@@ -260,16 +260,54 @@ tui/
 
 ## [Unreleased]
 
+### Added
+
+- **自动目录监控 (File Watcher)** — 用 `watchdog` 替换 `/files → add` 交互流程
+  - `tui/file_watcher.py`: `FileWatcher` 类，监听 `created`/`moved`/`deleted` 事件，2 秒防抖，dotfile/temp 文件过滤
+  - `tui/constants.py`: 共享 `_SUPPORTED_EXTENSIONS` 常量，消除 `chat.py` 和 `home.py` 的重复定义
+  - `LocalRagService.set_watch_dir()` / `start_watching()` / `stop_watching()` / `get_watch_dir()` 生命周期方法
+  - `LocalRagService._on_new_file()` / `_on_removed_file()` 回调，删除后自动刷新 `_docs`/`_metadatas`/`_bm25`
+  - 线程安全：`threading.Lock` 保护 `add_files()` / `remove_file()` 写操作
+  - `.env` 持久化 `RAG_WATCH_DIR`，重启后自动恢复监控
+  - TUI 命令：`/files watch <dir>`、`/files stop`、`/files list`、`/files remove <file>`、`/files add <path>`
+- `tui/app.py`: 索引就绪后自动启动 watcher，退出时 `finally` 中停止
+- **#16: LLM 元问题回答** — 在 context 中标注来源文件名，使 LLM 能回答文件数量、文件名等元问题
+
+#### `src/rag.py`
+
+- 新增 `_build_context(top_indices, docs, metadatas)` 函数：遍历 `top_indices`，从 `metadatas[i]["source"]` 获取文件名，为每个 chunk 添加 `[Source: filename]` 前缀
+- 更新 `SYSTEM_PROMPT`：添加"每个文档片段前标注了[Source: 文件名]，你可以通过统计不同的[Source: 文件名]来回答关于文件数量、文件名等元问题"指令
+- `answer_query` (line 710)：`"\n\n".join([enriched_docs[i] for i in top_indices])` → `_build_context(top_indices, enriched_docs, metadatas)`
+- `answer_query_stream` (line 937)：同上替换
+
+#### `src/graph_rag.py`
+
+- import 新增 `_build_context`
+- `graph_rag_pipeline` (line 418)：`" ".join(top_docs)` → `_build_context(top_indices, all_docs, all_metadatas)`
+- CLI 首次查询 (line 472)：同上替换
+- CLI 对话循环 (line 510)：同上替换
+- `graph_query_stream` (line 550)：`" ".join(docs[:k])` → `_build_context(top_indices, all_docs, all_metadatas)`
+- **关键**：graph_rag 中传 `all_docs`（全量列表）而非 `top_docs`/`docs[:k]`（截断列表），因为 `top_indices` 是全局索引
+
+#### `tests/test_llm_meta_answer.py` (新建 10 个测试)
+
+| 测试类 | 数量 | 说明 |
+|--------|------|------|
+| `TestBuildContextFunction` | 7 | 函数存在性、单/多文件标注、重复来源、分隔符、缺 source 兜底、非连续索引 |
+| `TestContextInRagPipeline` | 2 | metadata 含 source、RAG 流程中 source 可访问 |
+| `TestLlmCanAnswerMetaQuestion` | 1 | 端到端集成（需 API key）|
+
+### Changed
+
+- `tui/screens/chat.py`: `_manage_files()` 替换为 `_handle_files()`，支持子命令路由
+- `tui/screens/chat.py`: `_toggle_mode()` 重写，支持 Standard→Graph 自动构建（Confirm → 进度条 → 成功/错误提示），Graph→Standard 直接切换
+- `tui/service.py`: 新增 `set_mode()` 和 `build_kg_from_chromadb()` 方法，供新版 `_toggle_mode` 调用
+
 ### Fixed
 
 - `/mode` 命令报 `NameError: name 'add_files_to_index' is not defined` — 在 `tui/service.py` 的 `from src.rag import` 中添加缺失的 `add_files_to_index`
 - `/mode` 显示旧警告 `"Build with graph mode first to use /mode."` — 重写 `_toggle_mode()`，改为带确认提示、进度条、异常处理的自动构建流程
 - 知识图谱构建进度条初始即显示 100% — `add_task(total=1)` 改为 `total=None`，回调中同步传入 `total=total`，使百分比 = `done/total` 正常递增
-
-### Changed
-
-- `tui/screens/chat.py`: `_toggle_mode()` 重写，支持 Standard→Graph 自动构建（Confirm → 进度条 → 成功/错误提示），Graph→Standard 直接切换
-- `tui/service.py`: 新增 `set_mode()` 和 `build_kg_from_chromadb()` 方法，供新版 `_toggle_mode` 调用
 
 ### Planned
 
