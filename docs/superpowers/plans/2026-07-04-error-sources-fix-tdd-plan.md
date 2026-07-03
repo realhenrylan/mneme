@@ -106,7 +106,8 @@ cd D:/deepprinciple/mneme && git add src/rag.py tests/test_error_no_sources.py &
 ## Task 2: 修改 answer_with_llm_history_stream 改 yield 为 raise
 
 **Files:**
-- Modify: `src/rag.py:887-892`
+- Modify: `src/rag.py:869-871`（API 配置检查）
+- Modify: `src/rag.py:887-892`（异常处理）
 - Test: `tests/test_error_no_sources.py`
 
 - [ ] **Step 1: Write the failing test**
@@ -119,6 +120,19 @@ cd D:/deepprinciple/mneme && git add src/rag.py tests/test_error_no_sources.py &
 # ── Task 2: answer_with_llm_history_stream 异常抛出 ─────────────────────────────
 
 _MOCK_ENV = {"API_KEY": "sk-test", "BASE_URL": "https://test"}
+
+
+def test_answer_with_llm_raises_on_api_config_missing():
+    """API 配置缺失应转换为 LLMError 并抛出"""
+    from src.rag import answer_with_llm_history_stream, LLMError
+
+    # 不设置 API_KEY 和 BASE_URL
+    with patch.dict(os.environ, {}, clear=True):
+        gen = answer_with_llm_history_stream("test question", "test context", [])
+        with pytest.raises(LLMError) as exc_info:
+            list(gen)
+
+        assert "API_KEY" in str(exc_info.value) or "BASE_URL" in str(exc_info.value)
 
 
 def test_answer_with_llm_raises_on_rate_limit():
@@ -190,14 +204,29 @@ def test_answer_with_llm_raises_on_api_error():
 - [ ] **Step 2: Run test to verify it fails**
 
 ```bash
-cd D:/deepprinciple/mneme && .venv/Scripts/python -m pytest tests/test_error_no_sources.py::test_answer_with_llm_raises_on_rate_limit -v
+cd D:/deepprinciple/mneme && .venv/Scripts/python -m pytest tests/test_error_no_sources.py::test_answer_with_llm_raises_on_api_config_missing -v
 ```
 
 Expected: FAIL - 当前代码 yield 错误消息，不抛出异常
 
 - [ ] **Step 3: Write minimal implementation**
 
-修改 `src/rag.py` 第 887-892 行:
+**修改 1**：`src/rag.py` 第 869-871 行（API 配置检查）:
+
+**修改前:**
+```python
+    if not api_key or not base_url:
+        yield "[错误] 请在 .env 文件中设置 API_KEY 和 BASE_URL"
+        return
+```
+
+**修改后:**
+```python
+    if not api_key or not base_url:
+        raise LLMError("请在 .env 文件中设置 API_KEY 和 BASE_URL")
+```
+
+**修改 2**：`src/rag.py` 第 887-892 行（异常处理）:
 
 **修改前:**
 ```python
@@ -222,10 +251,10 @@ Expected: FAIL - 当前代码 yield 错误消息，不抛出异常
 - [ ] **Step 4: Run test to verify it passes**
 
 ```bash
-cd D:/deepprinciple/mneme && .venv/Scripts/python -m pytest tests/test_error_no_sources.py::test_answer_with_llm_raises_on_rate_limit tests/test_error_no_sources.py::test_answer_with_llm_raises_on_connection_error tests/test_error_no_sources.py::test_answer_with_llm_raises_on_api_error -v
+cd D:/deepprinciple/mneme && .venv/Scripts/python -m pytest tests/test_error_no_sources.py::test_answer_with_llm_raises_on_api_config_missing tests/test_error_no_sources.py::test_answer_with_llm_raises_on_rate_limit tests/test_error_no_sources.py::test_answer_with_llm_raises_on_connection_error tests/test_error_no_sources.py::test_answer_with_llm_raises_on_api_error -v
 ```
 
-Expected: PASS (3 tests)
+Expected: PASS (4 tests)
 
 - [ ] **Step 5: Commit**
 
@@ -272,23 +301,27 @@ def test_answer_query_stream_catches_llm_error():
                 body=None,
             )
 
-            # Mock 检索相关函数
+            # Mock 检索相关函数（完整 mock 链，避免空列表导致 dynamic_top_k 崩溃）
             with patch("src.rag.decompose_query_llm", return_value=["test query"]):
-                with patch("src.rag.retrieve_hybrid_with_sources", return_value=([], [], [])):
-                    stream, sources = answer_query_stream(
-                        "test query", mock_model, mock_collection, mock_bm25,
-                        mock_docs, mock_metas,
-                    )
+                with patch("src.rag.retrieve_hybrid_with_sources", return_value=([0], [], [0.9])):
+                    with patch("src.rag.dynamic_top_k", return_value=1):
+                        with patch("src.rag.enrich_context", return_value=["enriched doc"]):
+                            with patch("src.rag._build_context", return_value="test context"):
+                                with patch("src.rag.format_sources", return_value="source text"):
+                                    stream, sources = answer_query_stream(
+                                        "test query", mock_model, mock_collection, mock_bm25,
+                                        mock_docs, mock_metas,
+                                    )
 
-                    # 迭代 stream
-                    chunks = list(stream)
+                                    # 迭代 stream
+                                    chunks = list(stream)
 
-                    # 验证错误消息
-                    assert any("[错误]" in c for c in chunks)
+                                    # 验证错误消息
+                                    assert any("[错误]" in c for c in chunks)
 
-                    # 验证错误信号被设置
-                    assert hasattr(stream, "_mneme_error")
-                    assert stream._mneme_error == [True]
+                                    # 验证错误信号被设置
+                                    assert hasattr(stream, "_mneme_error")
+                                    assert stream._mneme_error == [True]
 
 
 def test_answer_query_stream_normal_query():
@@ -301,32 +334,33 @@ def test_answer_query_stream_normal_query():
     mock_docs = ["test doc content"]
     mock_metas = [{"source": "test.txt"}]
 
-    mock_response = MagicMock()
+    # 使用 side_effect 返回可迭代的 mock response
     mock_chunk = MagicMock()
     mock_chunk.choices = [MagicMock()]
     mock_chunk.choices[0].delta.content = "This is the answer"
-    mock_response.__iter__ = lambda self: iter([mock_chunk])
 
     with patch.dict(os.environ, _MOCK_ENV):
         with patch("src.rag.OpenAI") as mock_openai:
             mock_client = MagicMock()
             mock_openai.return_value = mock_client
-            mock_client.chat.completions.create.return_value = mock_response
+            # 使用 return_value 返回可迭代对象
+            mock_client.chat.completions.create.return_value = [mock_chunk]
 
             with patch("src.rag.decompose_query_llm", return_value=["test query"]):
                 with patch("src.rag.retrieve_hybrid_with_sources", return_value=([0], [], [0.9])):
-                    with patch("src.rag.enrich_context", return_value=["enriched"]):
-                        with patch("src.rag._build_context", return_value="context"):
-                            with patch("src.rag.format_sources", return_value="source text"):
-                                stream, sources = answer_query_stream(
-                                    "test query", mock_model, mock_collection, mock_bm25,
-                                    mock_docs, mock_metas,
-                                )
+                    with patch("src.rag.dynamic_top_k", return_value=1):
+                        with patch("src.rag.enrich_context", return_value=["enriched"]):
+                            with patch("src.rag._build_context", return_value="context"):
+                                with patch("src.rag.format_sources", return_value="source text"):
+                                    stream, sources = answer_query_stream(
+                                        "test query", mock_model, mock_collection, mock_bm25,
+                                        mock_docs, mock_metas,
+                                    )
 
-                                chunks = list(stream)
+                                    chunks = list(stream)
 
-                                # 正常查询不应有错误信号
-                                assert not getattr(stream, "_mneme_error", None)
+                                    # 正常查询不应有错误信号
+                                    assert not getattr(stream, "_mneme_error", None)
 ```
 
 - [ ] **Step 2: Run test to verify it fails**
@@ -406,8 +440,9 @@ cd D:/deepprinciple/mneme && git add src/rag.py tests/test_error_no_sources.py &
 ## Task 4: 修改 graph_query_stream 添加生成器包装器
 
 **Files:**
+- Modify: `src/graph_rag.py:27`（添加 openai 异常导入）
+- Modify: `src/graph_rag.py:14-25`（添加 LLMError 导入）
 - Modify: `src/graph_rag.py:587-591`
-- Modify: `src/graph_rag.py:555`（添加 LLMError 导入）
 - Test: `tests/test_error_no_sources.py`
 
 - [ ] **Step 1: Write the failing test**
@@ -441,19 +476,21 @@ def test_graph_query_stream_catches_llm_error():
                 body=None,
             )
 
-            # Mock 图增强检索
-            with patch("src.graph_rag.graph_augmented_retrieve", return_value=([], [], [])):
-                with patch("src.graph_rag.dynamic_top_k", return_value=3):
-                    stream, sources = graph_query_stream(
-                        "test query", mock_model, mock_collection, mock_bm25,
-                        mock_docs, mock_metas, mock_kg,
-                    )
+            # Mock 图增强检索（完整 mock 链）
+            with patch("src.graph_rag.graph_augmented_retrieve", return_value=([0], ["doc"], [0.9])):
+                with patch("src.graph_rag.dynamic_top_k", return_value=1):
+                    with patch("src.graph_rag._build_context", return_value="context"):
+                        with patch("src.graph_rag.format_sources", return_value="source"):
+                            stream, sources = graph_query_stream(
+                                "test query", mock_model, mock_collection, mock_bm25,
+                                mock_docs, mock_metas, mock_kg,
+                            )
 
-                    chunks = list(stream)
+                            chunks = list(stream)
 
-                    assert any("[错误]" in c for c in chunks)
-                    assert hasattr(stream, "_mneme_error")
-                    assert stream._mneme_error == [True]
+                            assert any("[错误]" in c for c in chunks)
+                            assert hasattr(stream, "_mneme_error")
+                            assert stream._mneme_error == [True]
 
 
 def test_graph_query_stream_normal_query():
@@ -467,17 +504,15 @@ def test_graph_query_stream_normal_query():
     mock_metas = [{"source": "test.txt"}]
     mock_kg = MagicMock()
 
-    mock_response = MagicMock()
     mock_chunk = MagicMock()
     mock_chunk.choices = [MagicMock()]
     mock_chunk.choices[0].delta.content = "Answer"
-    mock_response.__iter__ = lambda self: iter([mock_chunk])
 
     with patch.dict(os.environ, _MOCK_ENV):
         with patch("src.rag.OpenAI") as mock_openai:
             mock_client = MagicMock()
             mock_openai.return_value = mock_client
-            mock_client.chat.completions.create.return_value = mock_response
+            mock_client.chat.completions.create.return_value = [mock_chunk]
 
             with patch("src.graph_rag.graph_augmented_retrieve", return_value=([0], ["doc"], [0.9])):
                 with patch("src.graph_rag.dynamic_top_k", return_value=1):
@@ -503,19 +538,54 @@ Expected: FAIL - 当前代码没有包装器
 
 - [ ] **Step 3: Write minimal implementation**
 
-首先，在 `src/graph_rag.py` 第 555 行（`from rag import answer_with_llm_history_stream` 处）添加 `LLMError` 导入:
+**修改 1**：`src/graph_rag.py` 第 27 行，添加 openai 异常导入:
 
 **修改前:**
 ```python
-from rag import answer_with_llm_history_stream
+from openai import OpenAI
 ```
 
 **修改后:**
 ```python
-from rag import answer_with_llm_history_stream, LLMError
+from openai import OpenAI, RateLimitError, APIConnectionError, APIError
 ```
 
-然后修改 `src/graph_rag.py` 第 587-591 行:
+**修改 2**：`src/graph_rag.py` 第 14 行，添加 `LLMError` 导入:
+
+**修改前:**
+```python
+from rag import (
+    build_bm25_index,
+    build_index, ask_for_files, _collection_exists,
+    add_files_to_index,
+    retrieve_hybrid_with_sources, dynamic_top_k,
+    answer_with_llm_history, format_sources,
+    _build_context,
+    SentenceTransformer, chromadb,
+    EMBEDDING_MODEL_NAME, DEFAULT_COLLECTION_NAME,
+    DEFAULT_TOP_K, DEFAULT_MIN_K, DEFAULT_MAX_K,
+    CHROMA_DB_PATH, DEFAULT_LLM_MODEL,
+)
+```
+
+**修改后:**
+```python
+from rag import (
+    build_bm25_index,
+    build_index, ask_for_files, _collection_exists,
+    add_files_to_index,
+    retrieve_hybrid_with_sources, dynamic_top_k,
+    answer_with_llm_history, format_sources,
+    _build_context,
+    SentenceTransformer, chromadb,
+    EMBEDDING_MODEL_NAME, DEFAULT_COLLECTION_NAME,
+    DEFAULT_TOP_K, DEFAULT_MIN_K, DEFAULT_MAX_K,
+    CHROMA_DB_PATH, DEFAULT_LLM_MODEL,
+    LLMError,
+)
+```
+
+**修改 3**：`src/graph_rag.py` 第 587-591 行:
 
 **修改前:**
 ```python
@@ -548,12 +618,6 @@ from rag import answer_with_llm_history_stream, LLMError
     stream = _safe_stream()
     stream._mneme_error = error_occurred
     return stream, sources
-```
-
-需要在 `src/graph_rag.py` 顶部添加 `openai` 异常的导入（检查是否已存在，如不存在则添加）:
-
-```python
-from openai import RateLimitError, APIConnectionError, APIError
 ```
 
 - [ ] **Step 4: Run test to verify it passes**
@@ -707,6 +771,7 @@ cd D:/deepprinciple/mneme && git add -A && git commit -m "fix: error scenarios n
 
 - [ ] `test_llm_error_exception_exists` PASS
 - [ ] `test_llm_error_is_exception` PASS
+- [ ] `test_answer_with_llm_raises_on_api_config_missing` PASS
 - [ ] `test_answer_with_llm_raises_on_rate_limit` PASS
 - [ ] `test_answer_with_llm_raises_on_connection_error` PASS
 - [ ] `test_answer_with_llm_raises_on_api_error` PASS

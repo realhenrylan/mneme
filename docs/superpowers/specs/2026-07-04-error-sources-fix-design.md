@@ -105,7 +105,24 @@ class LLMError(Exception):
 
 #### 4.2.2 `src/rag.py` — 修改 `answer_with_llm_history_stream`
 
-**修改前**（第 887-892 行）：
+**修改 1**：第 869-871 行（API 配置检查）:
+
+**修改前**：
+```python
+    if not api_key or not base_url:
+        yield "[错误] 请在 .env 文件中设置 API_KEY 和 BASE_URL"
+        return
+```
+
+**修改后**：
+```python
+    if not api_key or not base_url:
+        raise LLMError("请在 .env 文件中设置 API_KEY 和 BASE_URL")
+```
+
+**修改 2**：第 887-892 行（异常处理）:
+
+**修改前**：
 ```python
 except RateLimitError:
     yield "\n[API 请求频率超限，请稍后重试]"
@@ -222,6 +239,7 @@ if sources.strip() and not getattr(stream, '_mneme_error', None):
 | 测试用例 | 验证点 |
 |----------|--------|
 | `test_llm_error_exception` | LLMError 异常类可正常创建和捕获 |
+| `test_answer_with_llm_raises_on_api_config_missing` | `answer_with_llm_history_stream` 在 API 配置缺失时抛出 LLMError |
 | `test_answer_with_llm_history_stream_raises_llm_error` | `answer_with_llm_history_stream` 在 API 错误时抛出 LLMError |
 | `test_answer_query_stream_catches_llm_error` | `answer_query_stream` 包装器捕获 LLMError，设置错误信号 |
 | `test_graph_query_stream_catches_llm_error` | `graph_query_stream` 包装器捕获 LLMError，设置错误信号 |
