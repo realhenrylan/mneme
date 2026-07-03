@@ -1,10 +1,12 @@
 import os
-import hashlib
+import threading
 
 import sys
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
+
+from tui.file_watcher import FileWatcher
 
 from src.rag import (
     prepare_index, build_bm25_index,
@@ -35,6 +37,9 @@ class LocalRagService:
         self._kg = None
         self._mode = "standard"
         self._collection_name = None
+        self._watch_dir = None
+        self._watcher = None
+        self._lock = threading.Lock()
 
     def _ensure_model(self):
         if self._model is None:
@@ -114,22 +119,30 @@ class LocalRagService:
         )
 
     def add_files(self, file_paths: list[str]) -> dict:
-        self._ensure_model()
-        bm25, docs, metadatas = add_files_to_index(
-            file_paths, self._model, self._collection,
-        )
-        self._bm25 = bm25
-        self._docs = docs
-        self._metadatas = metadatas
-        if self._mode == "graph":
-            self._kg = KnowledgeGraph()
-            self._kg.build_from_chunks(docs, verbose=False)
-            kg_file = os.path.join(CHROMA_DB_PATH, f"{self._collection_name}_kg.pkl")
-            self._kg.save(kg_file)
-        return self.get_stats()
+        with self._lock:
+            self._ensure_model()
+            bm25, docs, metadatas = add_files_to_index(
+                file_paths, self._model, self._collection,
+            )
+            self._bm25 = bm25
+            self._docs = docs
+            self._metadatas = metadatas
+            if self._mode == "graph":
+                self._kg = KnowledgeGraph()
+                self._kg.build_from_chunks(docs, verbose=False)
+                kg_file = os.path.join(CHROMA_DB_PATH, f"{self._collection_name}_kg.pkl")
+                self._kg.save(kg_file)
+            return self.get_stats()
 
     def remove_file(self, filename: str) -> int:
-        return remove_file_from_index(filename, self._collection)
+        with self._lock:
+            count = remove_file_from_index(filename, self._collection)
+            if self._collection is not None:
+                all_data = self._collection.get()
+                self._docs = all_data["documents"]
+                self._metadatas = all_data["metadatas"]
+                self._bm25 = build_bm25_index(self._docs)
+            return count
 
     def get_stats(self) -> dict:
         stats = {
@@ -151,17 +164,9 @@ class LocalRagService:
         return stats
 
     def set_mode(self, mode: str):
-        """供 /mode 命令更新内部模式标记。"""
         self._mode = mode
 
     def build_kg_from_chromadb(self, collection_name: str, progress_callback=None):
-        """
-        从 ChromaDB 持久化数据重建知识图谱（含磁盘缓存检查）。
-        - 优先读取 {CHROMA_DB_PATH}/{collection_name}_kg.pkl
-        - 缓存命中直接加载，调用 progress_callback(1,1) 避免进度条闪烁
-        - 缓存未命中则 LLM 提取实体并 save()
-        - 同步 self._docs / self._metadatas，不依赖易失内存
-        """
         client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
         if not _collection_exists(client, collection_name):
             raise RuntimeError(f"Collection '{collection_name}' not found.")
@@ -177,7 +182,6 @@ class LocalRagService:
         self._metadatas = metadatas
         self._collection_name = collection_name
 
-        # 缓存优先
         kg_file = os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.pkl")
         if os.path.exists(kg_file):
             self._kg = KnowledgeGraph.load(kg_file)
@@ -185,10 +189,48 @@ class LocalRagService:
                 progress_callback(1, 1)
             return
 
-        # 无缓存，重建
         self._kg = KnowledgeGraph()
         self._kg.build_from_chunks(docs, verbose=False, progress_callback=progress_callback)
         self._kg.save(kg_file)
 
     def get_kg(self):
         return self._kg
+
+    def set_watch_dir(self, dir: str) -> None:
+        self.stop_watching()
+        self._watch_dir = os.path.abspath(dir)
+        from dotenv import set_key
+        set_key(".env", "RAG_WATCH_DIR", self._watch_dir)
+
+    def get_watch_dir(self) -> str | None:
+        return self._watch_dir
+
+    def start_watching(self) -> None:
+        if self._watcher is not None and self._watcher._running:
+            return
+        watch_dir = self._watch_dir
+        if not watch_dir or not os.path.isdir(watch_dir):
+            return
+        self._watcher = FileWatcher(
+            watch_dir,
+            self._on_new_file,
+            self._on_removed_file,
+        )
+        self._watcher.start()
+
+    def stop_watching(self) -> None:
+        if self._watcher is not None:
+            self._watcher.stop()
+            self._watcher = None
+
+    def _on_new_file(self, path: str) -> None:
+        try:
+            self.add_files([path])
+        except Exception:
+            pass
+
+    def _on_removed_file(self, path: str) -> None:
+        try:
+            self.remove_file(os.path.basename(path))
+        except Exception:
+            pass

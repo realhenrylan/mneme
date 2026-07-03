@@ -1,5 +1,6 @@
 import os
 import sys
+from dotenv import get_key
 from rich.console import Console
 from tui.theme import THEME
 from tui.service import LocalRagService
@@ -36,7 +37,15 @@ class RagApp:
             self.console.print(error_panel("Failed to build index."))
             return
 
-        run_chat_loop(
-            self.console, self.service, self.mode,
-            self.alpha, self.temperature, self.top_k_range,
-        )
+        watch_dir = get_key(".env", "RAG_WATCH_DIR") or ""
+        if watch_dir and os.path.isdir(watch_dir):
+            self.service.set_watch_dir(watch_dir)
+            self.service.start_watching()
+
+        try:
+            run_chat_loop(
+                self.console, self.service, self.mode,
+                self.alpha, self.temperature, self.top_k_range,
+            )
+        finally:
+            self.service.stop_watching()
