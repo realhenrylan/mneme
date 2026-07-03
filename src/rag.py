@@ -259,19 +259,20 @@ def build_index(
     if client is None:
         client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
 
-    collection = client.get_or_create_collection(
-        name=collection_name,
-        metadata={"hnsw:space": "cosine"},
-    )
-
-    # 清除已有数据，避免重复追加或 ID 冲突
     if force_rebuild:
-        existing_count = collection.count()
-        if existing_count > 0:
-            print(f"检测到已有 {existing_count} 条索引，清除后重建")
-            existing_ids = collection.get()["ids"]
-            if existing_ids:
-                collection.delete(ids=existing_ids)
+        try:
+            client.delete_collection(collection_name)
+        except Exception:
+            pass
+        collection = client.create_collection(
+            name=collection_name,
+            metadata={"hnsw:space": "cosine"},
+        )
+    else:
+        collection = client.get_or_create_collection(
+            name=collection_name,
+            metadata={"hnsw:space": "cosine"},
+        )
 
     all_chunks: list[str] = []
     all_metadatas: list[dict] = []

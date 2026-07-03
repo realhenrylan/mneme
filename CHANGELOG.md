@@ -309,6 +309,10 @@ tui/
 - `/mode` 显示旧警告 `"Build with graph mode first to use /mode."` — 重写 `_toggle_mode()`，改为带确认提示、进度条、异常处理的自动构建流程
 - 知识图谱构建进度条初始即显示 100% — `add_task(total=1)` 改为 `total=None`，回调中同步传入 `total=total`，使百分比 = `done/total` 正常递增
 
+### Fixed
+
+- `build_index(force_rebuild=True)` 改为原子删除并重建 collection，避免逐条删除文档的低效操作，同路径下其他 collection 不再被连带删除
+
 ### Planned
 
 - Cross-encoder reranking for improved retrieval quality
