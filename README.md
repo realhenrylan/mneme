@@ -1,11 +1,7 @@
 # Mneme
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./.github/images/logo-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./.github/images/logo-light.svg">
-    <img alt="Mneme Logo" src="./.github/images/logo-light.svg" width="70%">
-  </picture>
+  <img src="./.github/images/mneme-logo.png" alt="Mneme Logo" width="70%">
 </p>
 
 > Named after Mnemosyne, the Greek goddess of memory — a Retrieval-Augmented Generation system with a terminal UI.

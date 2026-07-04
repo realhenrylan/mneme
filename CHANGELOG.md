@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.3] - 2026-07-04
+
+### Fixed
+
+**错误场景不再显示 Sources**
+
+- 修复 LLM 调用失败（RateLimitError/APIConnectionError/APIError）时同时显示错误消息和 Sources 的问题
+- 新增 `LLMError` 自定义异常类，统一 LLM 错误处理
+- `answer_with_llm_history_stream` 从 `yield` 错误消息改为 `raise LLMError`
+- `answer_query_stream` 和 `graph_query_stream` 添加生成器包装器，捕获异常并通过 `_mneme_error` 信号传递
+- `chat.py` 根据 `_mneme_error` 信号决定是否显示 Sources
+- 新增 13 个 TDD 测试覆盖错误场景
+
+---
+
+## [1.0.2] - 2026-07-04
+
+### Fixed
+
+- 修复 `/settings` 中 **Temperature、Alpha、Top-K Min/Max** 四个设置项在重启后丢失的问题：
+  - `RagApp.__init__()` 新增从 `.env` 读取 `LLM_TEMPERATURE`、`ALPHA`、`LLM_TOP_K_MIN`、`LLM_TOP_K_MAX`
+  - `/settings` 修改设置写入 `.env` 后，重启应用将自动恢复上次保存的值
+
+---
+
 ## [1.0.1] - 2026-07-03
 
 ### Fixed
@@ -329,7 +354,19 @@ tui/
 
 ### Fixed
 
+- **无 API 配置时错误显示 Sources** — 当 `.env` 未配置 `API_KEY`/`BASE_URL` 时，错误消息与 Sources 同时显示
+  - `answer_query_stream` / `graph_query_stream` 在调用 LLM 前先检查 API 配置，配置无效时直接返回空 sources 和错误 stream
+  - 避免无效的检索计算和 sources 格式化
+
 - `build_index(force_rebuild=True)` 改为原子删除并重建 collection，避免逐条删除文档的低效操作，同路径下其他 collection 不再被连带删除
+
+### Changed
+
+- **README Logo** — 将 SVG（内嵌 base64 PNG）替换为直接引用原始 PNG 文件，更简单可靠
+  - 删除 `.github/images/logo-light.svg` 和 `.github/images/logo-dark.svg`
+  - 新增 `.github/images/mneme-logo.png`（原始 1053×208 PNG）
+  - README.md / README.zh.md 中的 `<picture>`（暗黑/亮色切换）替换为简单 `<img>` 标签
+  - 参考 `obsidian-with-kilocode` 项目的 logo 展示方式
 
 ### Planned
 

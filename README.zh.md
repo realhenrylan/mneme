@@ -1,11 +1,7 @@
 # Mneme
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./.github/images/logo-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./.github/images/logo-light.svg">
-    <img alt="Mneme Logo" src="./.github/images/logo-light.svg" width="70%">
-  </picture>
+  <img src="./.github/images/mneme-logo.png" alt="Mneme Logo" width="70%">
 </p>
 
 > 以希腊记忆女神 Mnemosyne 命名 —— 一个带终端 UI 的检索增强生成（RAG）系统。
