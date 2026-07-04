@@ -7,6 +7,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-07-04
+
+### Added
+
+**首次启动引导向导 (Onboarding Wizard)**
+
+新增首次启动引导流程，在检测到 `.env` 缺失或 `API_KEY`/`BASE_URL` 为空时自动启动：
+
+- **Step 0**: 欢迎页 — 展示 Mneme 系统介绍和功能概述
+- **Step 1**: Provider 选择 — 支持 DeepSeek、OpenAI、自定义三种 Provider
+- **Step 2**: API Key 配置 — 输入 API Key，带格式校验（不以 `sk-` 开头时提示确认）
+- **Step 2b**: Base URL 配置 — 仅自定义 Provider 需要手动输入
+- **Step 3**: LLM 模型选择 — 根据 Provider 联动显示可用模型列表
+- **Step 4**: 功能速览 — 展示 `/files`、`/settings`、`/mode` 等命令用法
+- 配置完成后自动保存到 `.env` 文件并同步到环境变量
+
+**Provider 与模型联动配置**
+
+| Provider | Base URL | 可选模型 |
+|----------|----------|----------|
+| DeepSeek | `https://api.deepseek.com/v1` | deepseek-chat, deepseek-reasoner |
+| OpenAI | `https://api.openai.com/v1` | gpt-4o, gpt-4o-mini, gpt-3.5-turbo |
+| 自定义 | 手动输入 | 手动输入 |
+
+**新增文件**
+
+| 文件 | 说明 |
+|------|------|
+| `tui/env_check.py` | 无重依赖环境检测模块，供测试直接导入 |
+| `tui/logo.py` | 共享 LOGO 常量模块，避免重复定义 |
+| `tui/screens/onboarding.py` | 引导向导主逻辑 |
+| `tests/test_onboarding.py` | 13 个测试用例（含 LOGO 复用验证） |
+
+**修改文件**
+
+| 文件 | 变更 |
+|------|------|
+| `tui/app.py` | 从 `env_check` 导入 `need_onboarding`，`run()` 中添加引导跳转 |
+| `tui/screens/home.py` | 从 `logo.py` 导入 LOGO（删除重复定义） |
+| `tui/screens/onboarding.py` | 从 `logo.py` 导入 LOGO（删除重复定义） |
+
+**测试覆盖**
+
+- `TestNeedOnboarding`: 5 tests — 触发条件 + 空白字符边界
+- `TestOnboardingFlow`: 6 tests — 正常完成、取消、Ctrl+C、自定义 Provider、自定义模型、OpenAI 流程
+- `TestLogoReuse`: 2 tests — LOGO 对象同一性 + 导入路径静态检查
+
+### Changed
+
+- `README.md` / `README.zh.md` 新增「首次启动 / First-Time Setup」章节，说明引导向导流程
+
+---
+
 ## [1.0.3] - 2026-07-04
 
 ### Fixed

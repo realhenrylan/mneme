@@ -82,6 +82,18 @@ BASE_URL=https://api.deepseek.com/v1
 python -m tui
 ```
 
+### First-Time Setup
+
+On first launch (when `.env` is missing or `API_KEY`/`BASE_URL` are empty), Mneme will start an interactive onboarding wizard:
+
+1. **Welcome** — Overview of Mneme features
+2. **Provider Selection** — Choose DeepSeek, OpenAI, or Custom
+3. **API Key** — Enter your API key (validated format)
+4. **Model Selection** — Pick from provider-specific models or enter custom
+5. **Feature Preview** — Quick guide to slash commands
+
+Configuration is automatically saved to `.env` and ready to use.
+
 ### Run (CLI)
 
 ```bash

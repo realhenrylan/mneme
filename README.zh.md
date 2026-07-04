@@ -80,6 +80,18 @@ BASE_URL=https://api.deepseek.com/v1
 python -m tui
 ```
 
+### 首次启动
+
+首次运行时（当 `.env` 不存在或 `API_KEY`/`BASE_URL` 为空），Mneme 会自动启动交互式引导向导：
+
+1. **欢迎页** — Mneme 功能概述
+2. **Provider 选择** — 选择 DeepSeek、OpenAI 或自定义
+3. **API Key 配置** — 输入 API 密钥（带格式校验）
+4. **模型选择** — 从 Provider 预设模型中选择或自定义输入
+5. **功能速览** — 斜杠命令快速指南
+
+配置会自动保存到 `.env` 文件，即刻可用。
+
 ### 运行（CLI）
 
 ```bash

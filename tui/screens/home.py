@@ -7,6 +7,7 @@ from rich.panel import Panel
 from rich.prompt import Prompt, Confirm
 from rich.table import Table
 from tui.theme import THEME
+from tui.logo import LOGO
 from tui.keys import COMMANDS
 from tui.components.message import error_panel, warning_panel
 from tui.constants import _SUPPORTED_EXTENSIONS
@@ -40,19 +41,6 @@ def _list_supported_files(directory: str) -> list[str]:
         if os.path.isfile(os.path.join(directory, f))
         and os.path.splitext(f)[1].lower() in _SUPPORTED_EXTENSIONS
     )
-
-
-LOGO = r"""
-[bold #a78bfa]
-ooo        ooooo ooooo      ooo oooooooooooo ooo        ooooo oooooooooooo
-`88.       .888' `888b.     `8' `888'     `8 `88.       .888' `888'     `8
- 888b     d'888   8 `88b.    8   888          888b     d'888   888
- 8 Y88. .P  888   8   `88b.  8   888oooo8     8 Y88. .P  888   888oooo8
- 8  `888'   888   8     `88b.8   888    "     8  `888'   888   888    "
- 8    Y     888   8       `888   888       o  8    Y     888   888       o
-o8o        o888o o8o        `8  o888ooooood8 o8o        o888o o888ooooood8
-[/]
-"""
 
 
 def _collection_exists(name: str) -> bool:
