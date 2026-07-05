@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Fixed
+
+**Graph RAG 模式下 enrich_context 集成缺失**
+
+- 修复 Graph RAG 的 4 条查询路径未调用 `enrich_context` 的问题，导致 anchor chunk 未被 PDF 首页全文替换
+- 影响路径：`graph_rag_pipeline()`、`--query` CLI、交互式循环、`graph_query_stream()`
+- 新增 `tests/test_graph_rag_enrich.py`（4 个 TDD 测试覆盖全部路径）
+
 ## [1.1.0] - 2026-07-04
 
 ### Added
@@ -412,6 +422,14 @@ tui/
   - 避免无效的检索计算和 sources 格式化
 
 - `build_index(force_rebuild=True)` 改为原子删除并重建 collection，避免逐条删除文档的低效操作，同路径下其他 collection 不再被连带删除
+
+### Fixed
+
+- **Graph RAG 模式集成 `enrich_context`**，修复 PDF 元数据（作者、机构等）缩水问题
+  - `graph_rag_pipeline()` 调用 `enrich_context`
+  - `graph_query_stream()` 调用 `enrich_context`
+  - 交互式循环调用 `enrich_context`
+  - `--query` CLI 路径调用 `enrich_context`
 
 ### Changed
 

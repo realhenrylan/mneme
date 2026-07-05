@@ -18,6 +18,7 @@ from rag import (
     retrieve_hybrid_with_sources, dynamic_top_k,
     answer_with_llm_history, format_sources,
     _build_context,
+    enrich_context,
     SentenceTransformer, chromadb,
     EMBEDDING_MODEL_NAME, DEFAULT_COLLECTION_NAME,
     DEFAULT_TOP_K, DEFAULT_MIN_K, DEFAULT_MAX_K,
@@ -443,7 +444,8 @@ def graph_rag_pipeline(
     print("\n" + "=" * 60)
     print("LLM生成回答")
     print("=" * 60)
-    context = _build_context(top_indices, all_docs, all_metadatas)
+    enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
+    context = _build_context(top_indices, enriched_docs, all_metadatas)
     _tq0 = time.time()
     answer = answer_with_llm_history(query, context, history = history or [], temperature=temperature)
     _tq1 = time.time()
@@ -452,12 +454,13 @@ def graph_rag_pipeline(
     _qseconds = int(_qelapsed % 60)
     print(f"\n{answer}（用时{_qminutes}分{_qseconds}秒）")
 
-    sources = format_sources(top_indices, all_docs, all_metadatas)
+    sources = format_sources(top_indices, enriched_docs, all_metadatas)
     print(f"\n参考来源：\n{sources}")
 
     return answer
 
-if __name__ == "__main__":
+def main():
+    """Graph RAG 命令行入口"""
     parser = argparse.ArgumentParser(description="Graph RAG Pipeline")
     parser.add_argument("--files", nargs="+", default=None)
     parser.add_argument("--collection", default=None)
@@ -497,10 +500,11 @@ if __name__ == "__main__":
         k = dynamic_top_k(fused_scores, min_k=3, max_k=50)
         top_docs = fused_docs[:k]
         top_indices = indices[:k]
-        context = _build_context(top_indices, all_docs, all_metadatas)
+        enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
+        context = _build_context(top_indices, enriched_docs, all_metadatas)
         answer = answer_with_llm_history(args.query, context, history=[], temperature=0.1)
         print(f"\n{answer}")
-        sources = format_sources(top_indices, all_docs, all_metadatas)
+        sources = format_sources(top_indices, enriched_docs, all_metadatas)
         print(f"\n参考来源：\n{sources}")
         exit(0)
 
@@ -535,7 +539,8 @@ if __name__ == "__main__":
         top_docs = fused_docs[:k]
         top_indices = indices[:k]
 
-        context = _build_context(top_indices, all_docs, all_metadatas)
+        enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
+        context = _build_context(top_indices, enriched_docs, all_metadatas)
         _tq0 = time.time()
         answer = answer_with_llm_history(query, context, history=history, temperature=0.1)
         _tq1 = time.time()
@@ -544,11 +549,15 @@ if __name__ == "__main__":
         _qseconds = int(_qelapsed % 60)
 
         print(f"\n{answer}（用时{_qminutes}分{_qseconds}秒）")
-        sources = format_sources(top_indices, all_docs, all_metadatas)
+        sources = format_sources(top_indices, enriched_docs, all_metadatas)
         print(f"\n参考来源：\n{sources}\n")
         print("=" * 100)
 
         history.append((query, answer))
+
+
+if __name__ == "__main__":
+    main()
 
 
 from typing import Generator
@@ -575,8 +584,9 @@ def graph_query_stream(
     )
     k = dynamic_top_k(scores, min_k=top_k_range[0], max_k=top_k_range[1])
     top_indices = indices[:k]
-    context = _build_context(top_indices, all_docs, all_metadatas)
-    sources = format_sources(top_indices, all_docs, all_metadatas)
+    enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
+    context = _build_context(top_indices, enriched_docs, all_metadatas)
+    sources = format_sources(top_indices, enriched_docs, all_metadatas)
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,
     )
