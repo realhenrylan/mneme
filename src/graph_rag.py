@@ -1,22 +1,19 @@
 from __future__ import annotations
 import os
-import sys
 import time
 import hashlib
 import pickle
 import argparse
 import networkx as nx
-from typing import Optional
-
-_SRC = os.path.dirname(os.path.abspath(__file__))
-if _SRC not in sys.path:
-    sys.path.insert(0, _SRC)
-from rag import (
+from typing import Optional, Generator
+from src.rag import (
     build_bm25_index,
     build_index, ask_for_files, _collection_exists,
+    _ensure_client_and_check_rebuild,
     add_files_to_index,
     retrieve_hybrid_with_sources, dynamic_top_k,
-    answer_with_llm_history, format_sources,
+    answer_with_llm_history, answer_with_llm_history_stream,
+    format_sources,
     _build_context,
     enrich_context,
     SentenceTransformer, chromadb,
@@ -364,10 +361,8 @@ def prepare_graph_index(
         force_rebuild: bool = False,
         progress_callback=None,
 ) -> tuple:
-    client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+    client, need_build = _ensure_client_and_check_rebuild(collection_name, force_rebuild)
     kg_file = os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.pkl")
-
-    need_build = force_rebuild or not _collection_exists(client, collection_name)
 
     if need_build:
         print("索引重构中...")
@@ -465,6 +460,8 @@ def graph_rag_pipeline(
 
 def main():
     """Graph RAG 命令行入口"""
+    from src.cli_loop import run_interactive_session, run_single_query
+
     parser = argparse.ArgumentParser(description="Graph RAG Pipeline")
     parser.add_argument("--files", nargs="+", default=None)
     parser.add_argument("--collection", default=None)
@@ -473,99 +470,41 @@ def main():
     parser.add_argument("--alpha", type=float, default=0.7, help="语义检索 vs 图谱检索融合权重")
     args = parser.parse_args()
 
-    if args.files:
-        file_paths = args.files
-    else:
-        file_paths = ask_for_files()
-        if not file_paths:
-            print("没有文件")
-            exit(1)
+    file_paths = args.files or ask_for_files()
+    if not file_paths:
+        print("没有文件")
+        exit(1)
 
     collection_name = args.collection or (
         "graph_rag_" + hashlib.md5("|".join(sorted(file_paths)).encode()).hexdigest()[:8]
     )
 
-    _t0 = time.time()
-    model, collection, bm25, all_docs, all_metadatas, kg = prepare_graph_index(
-        file_paths, collection_name, args.rebuild
-    )
-    _t1 = time.time()
-    _elapsed = _t1 - _t0
-    _minutes = int(_elapsed // 60)
-    _seconds = int(_elapsed % 60)
-    print(f"文档库就绪（用时{_minutes}分{_seconds}秒）\n")
-    print("-" * 100)
-
+    # 单次查询路径（graph_rag.py 特有）：先准备索引，再执行单次查询
     if args.query:
-        indices, fused_docs, fused_scores = graph_augmented_retrieve(
-            args.query, model, collection, bm25,
-            all_docs, kg, alpha=args.alpha
+        model, collection, bm25, all_docs, all_metadatas, kg = prepare_graph_index(
+            file_paths, collection_name, args.rebuild,
         )
-        k = dynamic_top_k(fused_scores, min_k=3, max_k=50)
-        top_docs = fused_docs[:k]
-        top_indices = indices[:k]
-        enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
-        context = _build_context(top_indices, enriched_docs, all_metadatas)
-        answer = answer_with_llm_history(args.query, context, history=[], temperature=0.1)
+        answer, sources = run_single_query(
+            args.query,
+            model=model, collection=collection, bm25=bm25,
+            all_docs=all_docs, all_metadatas=all_metadatas,
+            is_graph_rag=True, alpha=args.alpha, kg=kg,
+        )
         print(f"\n{answer}")
-        sources = format_sources(top_indices, enriched_docs, all_metadatas)
         print(f"\n参考来源：\n{sources}")
         exit(0)
 
-    history = []
-    while True:
-        query = input("请输入问题（q以退出，+add以添加新文件）：")
-        if query.lower() in ("q", "quit"):
-            break
-        if not query:
-            continue
-        if query.startswith("+add"):
-            raw_paths = query[4:].strip()
-            if not raw_paths:
-                print("用法: +add <文件路径1>[, <文件路径2>]")
-                continue
-            paths = [p.strip() for p in raw_paths.replace("，", ",").split(",") if p.strip()]
-            if not paths:
-                print("用法: +add <文件路径1>[, <文件路径2>]")
-                continue
-            bm25, all_docs, all_metadatas = add_files_to_index(paths, model, collection)
-            print("重建知识图谱...")
-            kg = KnowledgeGraph()
-            kg.build_from_chunks(all_docs, verbose=True)
-            print(f"已新增索引，当前共 {len(all_docs)} 个文档块")
-            continue
-
-        indices, fused_docs, fused_scores = graph_augmented_retrieve(
-            query, model, collection, bm25,
-            all_docs, kg, alpha=args.alpha
-        )
-        k = dynamic_top_k(fused_scores, min_k=3, max_k=50)
-        top_docs = fused_docs[:k]
-        top_indices = indices[:k]
-
-        enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
-        context = _build_context(top_indices, enriched_docs, all_metadatas)
-        _tq0 = time.time()
-        answer = answer_with_llm_history(query, context, history=history, temperature=0.1)
-        _tq1 = time.time()
-        _qelapsed = _tq1 - _tq0
-        _qminutes = int(_qelapsed // 60)
-        _qseconds = int(_qelapsed % 60)
-
-        print(f"\n{answer}（用时{_qminutes}分{_qseconds}秒）")
-        sources = format_sources(top_indices, enriched_docs, all_metadatas)
-        print(f"\n参考来源：\n{sources}\n")
-        print("=" * 100)
-
-        history.append((query, answer))
+    # 交互式循环
+    run_interactive_session(
+        file_paths, collection_name,
+        force_rebuild=args.rebuild,
+        alpha=args.alpha,
+        is_graph_rag=True,
+    )
 
 
 if __name__ == "__main__":
     main()
-
-
-from typing import Generator
-from rag import answer_with_llm_history_stream
 
 
 def graph_query_stream(

@@ -17,17 +17,12 @@ RAG (Retrieval-Augmented Generation) 完整实现
 
 from __future__ import annotations
 import os
-import sys
 import re
 import time
 import argparse
 import hashlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Optional
-
-_SRC = os.path.dirname(os.path.abspath(__file__))
-if _SRC not in sys.path:
-    sys.path.insert(0, _SRC)
 
 from dotenv import load_dotenv
 
@@ -66,6 +61,9 @@ TEXT_EXTENSIONS = {
     ".py", ".js", ".ts", ".css", ".sql",
     ".sh", ".bat", ".gitignore",
 }
+
+# 所有支持的扩展名（包含 PDF/DOCX，供 TUI 文件选择器使用）
+SUPPORTED_EXTENSIONS = TEXT_EXTENSIONS | {".pdf", ".docx"}
 
 # ═══════════════════════════════════════════════
 # 第一步：用户上传文件路径、文件类型检测
@@ -219,17 +217,34 @@ def _collection_exists(client: chromadb.Client, name:str) -> bool:
         return True
     except Exception:
         return False
-    
+
+
+def _ensure_client_and_check_rebuild(
+    collection_name: str,
+    force_rebuild: bool,
+) -> tuple[chromadb.Client, bool]:
+    """创建 PersistentClient 并判断是否需要重建索引。
+
+    Args:
+        collection_name: ChromaDB collection 名称
+        force_rebuild: 是否强制重建索引
+
+    Returns:
+        (client, need_build): client 为 PersistentClient 实例，
+                              need_build 为是否需要重建索引的布尔值
+    """
+    client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+    need_build = force_rebuild or not _collection_exists(client, collection_name)
+    return client, need_build
+
+
 def prepare_index(
         file_paths: list[str],
         collection_name: str,
         force_rebuild: bool = False,
         progress_callback=None,
 ) -> tuple:
-    client = chromadb.PersistentClient(path = CHROMA_DB_PATH)
-
-    # 判断是否需要重新建立索引
-    need_build = force_rebuild or not _collection_exists(client, collection_name)
+    client, need_build = _ensure_client_and_check_rebuild(collection_name, force_rebuild)
 
     if need_build:
         print("索引重构中...")
@@ -680,7 +695,7 @@ def answer_query(
         history = None,
         temperature: float = DEFAULT_TEMPERATURE,
 ):
-    from rag_query_decomposer import decompose_query_llm
+    from src.rag_query_decomposer import decompose_query_llm
 
     # ── LLM 查询拆解 ──
     sub_queries = decompose_query_llm(query)
@@ -768,82 +783,25 @@ def rag_pipeline(
 # ═══════════════════════════════════════════════
 
 if __name__ == "__main__":
+    from src.cli_loop import run_interactive_session
+
     parser = argparse.ArgumentParser(description="RAG Pipeline")
     parser.add_argument("--files", nargs="+", default=None)
     parser.add_argument("--collection", default=None, help="ChromaDB collection 名称（默认按文件列表自动生成）")
     parser.add_argument("--rebuild", action="store_true", help="强制重建索引")
-    parser.add_argument("--query", default=None, help="提问内容（不传则交互式输入）")
+    # 注意：移除了 --query 参数（原为死参数，从未被使用）
     args = parser.parse_args()
 
-    # 1.获取文件路径
-    if args.files:
-        file_paths = args.files
-    else:
-        file_paths = ask_for_files()
-        if not file_paths:
-            print("没有有效文件")
-            exit(1)
+    file_paths = args.files or ask_for_files()
+    if not file_paths:
+        print("没有有效文件")
+        exit(1)
 
-    # 2.准备索引
     collection_name = args.collection or (
         "rag_" + hashlib.md5("|".join(sorted(file_paths)).encode()).hexdigest()[:8]
     )
-    _t0 = time.time()
-    model, collection, bm25, all_docs, all_metadatas = prepare_index(
-        file_paths, collection_name, args.rebuild
-    )
-    _t1 = time.time()
 
-    if not all_docs:
-        print("文档库为空")
-        exit(1)
-
-    _elapsed = _t1 - _t0
-    _minutes = int(_elapsed // 60)
-    _seconds = int(_elapsed % 60)
-    print(f"文档库就绪（用时{_minutes}分{_seconds}秒）\n")
-    print("-" * 100)
-
-    # 3.对话循环
-    history = []
-    while True:
-        query = input("请输入问题（q以退出，+add以添加文件）: ")
-        if query.lower() in ("q", "quit"):
-            break
-        if not query:
-            continue
-        if query.startswith("+add"):
-            raw_paths = query[4:].strip()
-            if not raw_paths:
-                print("用法: +add <文件路径1>[, <文件路径2>]")
-                continue
-            paths = [p.strip() for p in raw_paths.replace("，", ",").split(",") if p.strip()]
-            if not paths:
-                print("用法: +add <文件路径1>[, <文件路径2>]")
-                continue
-            bm25, all_docs, all_metadatas = add_files_to_index(paths, model, collection)
-            print(f"已新增索引，当前共 {len(all_docs)} 个文档块")
-            continue
-        _tq0 = time.time()
-        answer, sources = answer_query(
-            query = query,
-            model = model,
-            collection = collection,
-            bm25 = bm25,
-            documents = all_docs,
-            metadatas = all_metadatas,
-            history = history,
-        )
-        _tq1 = time.time()
-        _qelapsed = _tq1 - _tq0
-        _qminutes = int(_qelapsed // 60)
-        _qseconds = int(_qelapsed % 60)
-
-        print(f"\n\n{answer}（用时{_qminutes}分{_qseconds}秒）")
-        print(f"\n参考来源：\n{sources}\n\n")
-        print("=" * 100)
-
-        history.append((query, answer))
+    run_interactive_session(file_paths, collection_name, force_rebuild=args.rebuild)
 
 
 # ═══════════════════════════════════════════════
@@ -900,7 +858,7 @@ def answer_query_stream(
     temperature=0.1,
     llm_model: str = DEFAULT_LLM_MODEL,
 ) -> tuple[Generator[str, None, None], str]:
-    from rag_query_decomposer import decompose_query_llm
+    from src.rag_query_decomposer import decompose_query_llm
 
     # ── LLM 查询拆解 ──
     sub_queries = decompose_query_llm(query, model=llm_model)

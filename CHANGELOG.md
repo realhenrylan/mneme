@@ -11,6 +11,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+**消除 rag.py 与 graph_rag.py 之间的 CLI 循环代码重复（Issue #6 DRY 重构）**
+
+- 新增 `src/cli_loop.py`，将 `rag.py` 和 `graph_rag.py` 的交互式 CLI 循环代码提取为公共模块
+  - `run_interactive_session()`: 统一的交互式问答循环入口
+  - `run_single_query()`: 单次查询（供 `--query` 路径使用）
+  - `_print_elapsed()`: 统一计时打印格式
+  - `_parse_add_paths()`: 解析 `+add` 命令中的文件路径，兼容全角逗号
+  - `_graph_rag_answer()`: Graph RAG 回答生成（封装 6 步 pipeline）
+- 重构 `rag.py` 的 `__main__` 使用 `cli_loop.run_interactive_session()`
+- 重构 `graph_rag.py` 的 `main()` 使用 `cli_loop.run_interactive_session()` 和 `run_single_query()`
+- 移除 `rag.py` 的 `--query` 死参数（原参数从未被使用）
+- 新增 `_ensure_client_and_check_rebuild()` 辅助函数，消除 `prepare_index` 和 `prepare_graph_index` 中的重复逻辑（创建 PersistentClient + 判断 need_build）
+- 新增测试：`tests/test_cli_loop.py`（9 个测试覆盖辅助函数和交互流程）
+- 新增测试：`tests/test_prepare_index_helper.py`（3 个测试覆盖 helper 边界条件）
+
+**消除重复定义与 sys.path 散落（Issue #7 DRY 重构）**
+
+- 新增 `src/rag.SUPPORTED_EXTENSIONS`，统一扩展名列表（原 `TEXT_EXTENSIONS` 不含 `.pdf`/`.docx`，`_SUPPORTED_EXTENSIONS` 在 `tui/constants.py` 中重复定义）
+- `tui/constants.py` 和 `tui/screens/home.py` 改为从 `src.rag` 导入 `SUPPORTED_EXTENSIONS`
+- `_collection_exists()` 从 `tui/screens/home.py` 移除重复实现，统一从 `src.rag` 导入
+- 移除 15 处 `sys.path` 运行时注入（`src/rag.py`、`src/graph_rag.py`、`tui/service.py`、`tui/screens/home.py`、`scripts/run_temperature_test.py` 及 10 个测试文件）
+- `src/graph_rag.py` 中所有隐式绝对导入 `from rag import` 改为显式绝对导入 `from src.rag import`
+- `tui/service.py` 和 `scripts/run_temperature_test.py` 中 `from graph_rag import` 改为 `from src.graph_rag import`
+- 新增 `pyproject.toml` 支持 `pip install -e .` 可编辑安装
+- 更新 `README.md` 启动说明（包含 `pip install -e .` 和 `PYTHONPATH` 两种方案）
+
 **`_get_llm_client()` 改为模块级单例模式**
 
 - 增加模块级 `_llm_client` 变量，`_get_llm_client()` 内部做惰性初始化

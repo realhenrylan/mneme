@@ -14,9 +14,6 @@ import sys
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
-
 from src.graph_rag import (
     graph_query_stream,
     graph_rag_pipeline,
@@ -111,20 +108,21 @@ def test_interactive_loop_calls_enrich_context():
     ]
     enriched_expected = ["full first page...", "body text"]
 
+    # _graph_rag_answer 内部动态导入，所以需要 mock 源模块
     with (
         patch("src.graph_rag.graph_augmented_retrieve") as mock_retrieve,
-        patch("src.graph_rag.dynamic_top_k") as mock_top_k,
-        patch("src.graph_rag.enrich_context") as mock_enrich,
-        patch("src.graph_rag._build_context") as mock_build,
-        patch("src.graph_rag.format_sources") as mock_sources,
-        patch("src.graph_rag.answer_with_llm_history") as mock_answer,
+        patch("src.rag.dynamic_top_k") as mock_top_k,
+        patch("src.rag.enrich_context") as mock_enrich,
+        patch("src.rag._build_context") as mock_build,
+        patch("src.rag.format_sources") as mock_sources,
+        patch("src.rag.answer_with_llm_history") as mock_answer,
         patch("src.graph_rag.prepare_graph_index") as mock_prepare,
-        patch("builtins.input") as mock_input,   # input 是内建函数，graph_rag.py 无模块级引用
-        patch("time.time", return_value=0.0),    # 必须设返回值，否则 int() TypeError
-        patch("builtins.print"),                 # 消除 main() 内 print 噪音
+        patch("builtins.input") as mock_input,
+        patch("time.time", return_value=0.0),
+        patch("builtins.print"),
         patch("sys.argv", [
             "graph_rag.py",
-            "--files", "/fake/test.pdf",         # 绕过 ask_for_files，直接给文件
+            "--files", "/fake/test.pdf",
         ]),
     ):
         mock_retrieve.return_value = ([0, 1], all_docs, [0.9, 0.8])
@@ -132,7 +130,6 @@ def test_interactive_loop_calls_enrich_context():
         mock_enrich.return_value = enriched_expected
         mock_answer.return_value = "mock answer"
         mock_prepare.return_value = (None, None, None, all_docs, all_metas, None)
-        # 先发一个查询，再退出
         mock_input.side_effect = ["test query", "q"]
 
         main()
@@ -156,20 +153,21 @@ def test_cli_query_calls_enrich_context():
     ]
     enriched_expected = ["full first page...", "body text"]
 
+    # _graph_rag_answer 内部动态导入，所以需要 mock 源模块
     with (
         patch("src.graph_rag.graph_augmented_retrieve") as mock_retrieve,
-        patch("src.graph_rag.dynamic_top_k") as mock_top_k,
-        patch("src.graph_rag.enrich_context") as mock_enrich,
-        patch("src.graph_rag._build_context") as mock_build,
-        patch("src.graph_rag.format_sources") as mock_sources,
-        patch("src.graph_rag.answer_with_llm_history") as mock_answer,
+        patch("src.rag.dynamic_top_k") as mock_top_k,
+        patch("src.rag.enrich_context") as mock_enrich,
+        patch("src.rag._build_context") as mock_build,
+        patch("src.rag.format_sources") as mock_sources,
+        patch("src.rag.answer_with_llm_history") as mock_answer,
         patch("src.graph_rag.prepare_graph_index") as mock_prepare,
-        patch("builtins.exit") as mock_exit,     # main() 用内建 exit() 结束，非 sys.exit
-        patch("time.time", return_value=0.0),    # 必须设返回值，否则 int() TypeError
-        patch("builtins.print"),                 # 消除 main() 内 print 噪音
+        patch("builtins.exit") as mock_exit,
+        patch("time.time", return_value=0.0),
+        patch("builtins.print"),
         patch("sys.argv", [
             "graph_rag.py",
-            "--files", "/fake/test.pdf",         # 必须提供 --files，否则走 ask_for_files → exit(1)
+            "--files", "/fake/test.pdf",
             "--query", "test query",
         ]),
     ):
@@ -178,7 +176,6 @@ def test_cli_query_calls_enrich_context():
         mock_enrich.return_value = enriched_expected
         mock_answer.return_value = "mock answer"
         mock_prepare.return_value = (None, None, None, all_docs, all_metas, None)
-        # exit(0) 被 mock 接管，不真正退出进程
         mock_exit.side_effect = SystemExit(0)
 
         try:
