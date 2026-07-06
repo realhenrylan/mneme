@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+**`_get_llm_client()` 改为模块级单例模式**
+
+- 增加模块级 `_llm_client` 变量，`_get_llm_client()` 内部做惰性初始化
+- 避免每次调用都新建 `OpenAI` 客户端实例，减少不必要的对象创建开销
+- 对调用方完全透明，已有 mock 测试不受影响
+- 新增 `tests/test_llm_client_singleton.py`（2 个 TDD 测试覆盖单例行为和环境变量读取）
+
 ### Fixed
 
 **Graph RAG 模式下 enrich_context 集成缺失**

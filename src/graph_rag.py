@@ -27,12 +27,16 @@ from rag import (
 
 from openai import OpenAI
 _entity_cache: dict[str, list[str]] = {}
+_llm_client: OpenAI | None = None
 
 def _get_llm_client() -> OpenAI:
-    return OpenAI(
-        api_key = os.getenv("API_KEY"),
-        base_url = os.getenv("BASE_URL"),
-    )
+    global _llm_client
+    if _llm_client is None:
+        _llm_client = OpenAI(
+            api_key = os.getenv("API_KEY"),
+            base_url = os.getenv("BASE_URL"),
+        )
+    return _llm_client
 
 EXTRACT_PROMPT_BATCH = """从以下文本段落中分别提取实体。
 
