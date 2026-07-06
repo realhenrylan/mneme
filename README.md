@@ -56,11 +56,34 @@ User Input → Query Decomposition → Concurrent Hybrid Retrieval →
 
 ### Install
 
+**Option A: Standard Install (Recommended)**
+
 ```bash
 git clone https://github.com/HongyiLanDP/mneme.git
 cd mneme
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+pip install -e .
+```
+
+**Option B: Editable Install (For Development)**
+
+For contributors or users who want to modify the code:
+
+```bash
+git clone https://github.com/HongyiLanDP/mneme.git
+cd mneme
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+```
+
+**Option C: PYTHONPATH (No Install)**
+
+If you prefer not to install the package:
+
+```bash
+export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 ```
 
 ### Configure

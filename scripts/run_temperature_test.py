@@ -9,10 +9,8 @@ import json, os, sys, time, hashlib
 import numpy as np
 import argparse
 
-sys.path.insert(0, "/Users/deepprinciple/Desktop/henry/0")
-
 from src.rag import prepare_index, answer_query_stream
-from graph_rag import prepare_graph_index, graph_query_stream
+from src.graph_rag import prepare_graph_index, graph_query_stream
 
 WORKDIR = "/Users/deepprinciple/Desktop/henry/0"
 FILE_PATHS = [

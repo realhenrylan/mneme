@@ -22,10 +22,6 @@ sys.modules['openai'] = MagicMock()
 import pytest
 import warnings
 from unittest.mock import patch, MagicMock
-from pathlib import Path
-
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.graph_rag import KnowledgeGraph, extract_entities_llm_batch, _entity_cache
 

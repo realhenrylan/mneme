@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-验证：为 PDF 版索引补一个“元数据 anchor chunk”后，
+验证：为 PDF 版索引补一个"元数据 anchor chunk"后，
 原查询是否能召回作者/机构信息。
 """
-import sys
 from pathlib import Path
-
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
 
 import src.rag as rag
 from rank_bm25 import BM25Okapi

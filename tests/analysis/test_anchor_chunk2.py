@@ -3,14 +3,11 @@
 验证：把 MD 的 chunk 0（标题+作者+摘要）作为 anchor 加入 PDF 索引后，
 原查询的召回情况。
 """
-import sys
 from pathlib import Path
-
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
 
 import src.rag as rag
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 TEST_DB_PATH = Path(__file__).resolve().parent / "chroma_db_test"
 rag.CHROMA_DB_PATH = str(TEST_DB_PATH)
 

@@ -10,13 +10,8 @@ from tui.theme import THEME
 from tui.logo import LOGO
 from tui.keys import COMMANDS
 from tui.components.message import error_panel, warning_panel
-from tui.constants import _SUPPORTED_EXTENSIONS
-import sys, os
-_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-if _ROOT not in sys.path:
-    sys.path.insert(0, _ROOT)
 
-from src.rag import CHROMA_DB_PATH
+from src.rag import CHROMA_DB_PATH, SUPPORTED_EXTENSIONS as _SUPPORTED_EXTENSIONS, _collection_exists
 
 
 _QS = QStyle([
@@ -41,16 +36,6 @@ def _list_supported_files(directory: str) -> list[str]:
         if os.path.isfile(os.path.join(directory, f))
         and os.path.splitext(f)[1].lower() in _SUPPORTED_EXTENSIONS
     )
-
-
-def _collection_exists(name: str) -> bool:
-    """Check whether a ChromaDB collection already exists on disk."""
-    try:
-        client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
-        client.get_collection(name)
-        return True
-    except Exception:
-        return False
 
 
 def render_home(console: Console) -> dict:
@@ -85,7 +70,8 @@ def render_home(console: Console) -> dict:
     ).strip()
     collection = collection or default_name
 
-    exists = _collection_exists(collection)
+    client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+    exists = _collection_exists(client, collection)
 
     console.print()
     if not exists:

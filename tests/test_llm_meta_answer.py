@@ -11,13 +11,11 @@ TDD 测试：验证 LLM context 是否包含来源文件名信息（Issue #16）
   pytest tests/test_llm_meta_answer.py -v
 """
 import os
-import sys
 import shutil
 import subprocess
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
 
 try:
     import pytest

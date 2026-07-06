@@ -14,13 +14,11 @@
   python test_retrieval_fix.py          # 无 pytest 时手动运行
 """
 import os
-import sys
 import shutil
 import subprocess
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PROJECT_ROOT))
 
 try:
     import pytest

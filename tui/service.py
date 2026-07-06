@@ -3,11 +3,6 @@ from __future__ import annotations
 import os
 import threading
 
-import sys
-_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _ROOT not in sys.path:
-    sys.path.insert(0, _ROOT)
-
 from tui.file_watcher import FileWatcher
 
 from src.rag import (
@@ -22,7 +17,7 @@ from src.rag import (
     EMBEDDING_MODEL_NAME, DEFAULT_LLM_MODEL,
     _collection_exists,
 )
-from graph_rag import (
+from src.graph_rag import (
     prepare_graph_index,
     graph_query_stream,
     KnowledgeGraph,
