@@ -28,8 +28,73 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# 离线模式：避免 SentenceTransformer 联网检查更新
+# 离线模式：避免 SentenceTransformer 从 Hugging Face 联网检查更新
+# 默认从 ModelScope 下载模型（国内网络友好，无需登录）
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
+
+# ── 模型加载配置 ──
+# 支持从环境变量 EMBEDDING_MODEL_PATH 指定本地模型路径
+# 默认从 ModelScope 自动下载（无需登录，国内网络友好）
+EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_PATH", "all-MiniLM-L6-v2")
+# 保留原始模型标识（用于日志和显示）
+EMBEDDING_MODEL_DISPLAY = "all-MiniLM-L6-v2"
+
+
+def _load_sentence_transformer(model_name: str) -> SentenceTransformer:
+    """加载 SentenceTransformer 模型，默认从 ModelScope 下载。
+
+    加载优先级：
+        1. 如果 model_name 是本地路径且存在，直接加载
+        2. 如果 model_name 是模型 ID，尝试从本地缓存加载
+        3. 本地没有时，自动从 ModelScope 下载（无需登录，国内网络友好）
+        4. 下载失败时给出清晰的错误提示
+
+    Args:
+        model_name: 模型路径或模型 ID
+
+    Returns:
+        SentenceTransformer 实例
+
+    Raises:
+        RuntimeError: 模型加载失败时抛出，附带解决指引
+    """
+    import sys
+
+    # 1. 尝试直接加载（本地路径或 Hugging Face 缓存）
+    try:
+        return SentenceTransformer(model_name)
+    except Exception:
+        pass  # 继续尝试其他方式
+
+    # 2. 从 ModelScope 下载（默认方式，国内网络友好，无需登录）
+    try:
+        from modelscope import snapshot_download
+        print(f"正在从 ModelScope 下载 {EMBEDDING_MODEL_DISPLAY}...")
+        local_path = snapshot_download(
+            f"sentence-transformers/{EMBEDDING_MODEL_DISPLAY}",
+            cache_dir="models",
+        )
+        return SentenceTransformer(local_path)
+    except ImportError:
+        pass  # modelscope 未安装，继续
+    except Exception as e:
+        print(f"ModelScope 下载失败: {e}")
+
+    # 3. 所有方式都失败了，给出清晰的错误提示
+    error_msg = (
+        f"无法加载 embedding 模型: {model_name}\n\n"
+        f"解决方式（任选其一）：\n"
+        f"1. 安装 modelscope 后重试（推荐）：\n"
+        f"   pip install modelscope\n\n"
+        f"2. 手动下载模型到本地：\n"
+        f"   python -c \"from modelscope import snapshot_download; "
+        f"snapshot_download('sentence-transformers/{EMBEDDING_MODEL_DISPLAY}', cache_dir='models')\"\n\n"
+        f"3. 设置环境变量指向本地模型路径：\n"
+        f"   EMBEDDING_MODEL_PATH=/path/to/all-MiniLM-L6-v2\n\n"
+        f"4. 确保网络可以访问 modelscope.cn"
+    )
+    raise RuntimeError(error_msg)
+
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 CHROMA_DB_PATH = os.path.join(PROJECT_ROOT, "chroma_db")
@@ -251,7 +316,7 @@ def prepare_index(
         model, collection = build_index(file_paths, collection_name, client, force_rebuild=force_rebuild, progress_callback=progress_callback)
     else:
         print("检测到已有索引，正在加载...")
-        model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+        model = _load_sentence_transformer(EMBEDDING_MODEL_NAME)
         collection = client.get_collection(collection_name)
 
     all_data = collection.get()
@@ -269,7 +334,7 @@ def build_index(
     force_rebuild: bool = False,
     progress_callback=None,
 ) -> tuple[SentenceTransformer, chromadb.Collection]:
-    model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+    model = _load_sentence_transformer(EMBEDDING_MODEL_NAME)
 
     if client is None:
         client = chromadb.PersistentClient(path=CHROMA_DB_PATH)

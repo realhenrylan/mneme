@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+**Embedding 模型加载支持本地路径和 ModelScope 自动下载**
+
+- 新增 `_load_sentence_transformer()` 函数，统一模型加载逻辑：
+  - 优先从本地路径加载（通过 `EMBEDDING_MODEL_PATH` 环境变量指定）
+  - 本地没有时，**自动从 ModelScope 下载**（国内网络友好，无需登录）
+  - 下载失败时给出清晰的错误提示和解决指引
+- 修改 `src/rag.py`、`src/graph_rag.py`、`tui/service.py` 中所有 `SentenceTransformer()` 直接调用，改为使用 `_load_sentence_transformer()`
+- 更新 `.env.example`，添加 `EMBEDDING_MODEL_PATH` 配置示例和 ModelScope 下载指引
+- 默认关闭 Hugging Face 联网（`HF_HUB_OFFLINE=1`），避免首次启动时尝试连接 Hugging Face
+- 新增依赖 `modelscope>=1.0.0`，确保 ModelScope 下载功能可用
+
 ### Changed
 
 **消除 rag.py 与 graph_rag.py 之间的 CLI 循环代码重复（Issue #6 DRY 重构）**

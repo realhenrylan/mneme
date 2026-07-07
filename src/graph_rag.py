@@ -20,6 +20,7 @@ from src.rag import (
     EMBEDDING_MODEL_NAME, DEFAULT_COLLECTION_NAME,
     DEFAULT_TOP_K, DEFAULT_MIN_K, DEFAULT_MAX_K,
     CHROMA_DB_PATH, DEFAULT_LLM_MODEL,
+    _load_sentence_transformer,
 )
 
 from openai import OpenAI
@@ -425,7 +426,7 @@ def prepare_graph_index(
         kg.save(kg_file)
     else:
         print("检测到已有索引，正在加载...")
-        model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+        model = _load_sentence_transformer(EMBEDDING_MODEL_NAME)
         collection = client.get_collection(collection_name)
 
         all_data = collection.get()

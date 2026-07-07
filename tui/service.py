@@ -16,6 +16,7 @@ from src.rag import (
     CHROMA_DB_PATH,
     EMBEDDING_MODEL_NAME, DEFAULT_LLM_MODEL,
     _collection_exists,
+    _load_sentence_transformer,
 )
 from src.graph_rag import (
     prepare_graph_index,
@@ -40,7 +41,7 @@ class LocalRagService:
 
     def _ensure_model(self):
         if self._model is None:
-            self._model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+            self._model = _load_sentence_transformer(EMBEDDING_MODEL_NAME)
 
     def prepare_index(
         self,

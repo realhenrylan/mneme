@@ -42,5 +42,8 @@ tests/analysis/
 # Reports
 reports/
 
+# ModelScope cache
+models/
+
 # Ruff cache
 .ruff_cache/.zcode/.mcp.json

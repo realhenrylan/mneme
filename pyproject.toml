@@ -13,6 +13,7 @@ license = {text = "MIT"}
 dependencies = [
     "chromadb>=0.5.0",
     "sentence-transformers>=2.2.0",
+    "modelscope>=1.0.0",
     "rank_bm25>=0.2.2",
     "openai>=1.0.0",
     "PyMuPDF>=1.24.0",
