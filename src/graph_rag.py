@@ -96,8 +96,10 @@ def extract_entities_llm_batch(texts: list[str],
                         if current:
                             parsed.append(current)
                             current = []
-                    elif line and not line.startswith(("-", "*", "·")):
-                        current.append(line)
+                    elif line:
+                        # 剥离列表标记前缀（-, *, ·, 空格），保留实体文本
+                        # 修复 bug：LLM 返回的 "- 人工智能" 等格式不应被丢弃
+                        current.append(line.lstrip("-*· "))
                 if current:
                     parsed.append(current)
 

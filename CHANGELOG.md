@@ -46,6 +46,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+**Graph RAG 实体行静默丢弃 Bug**
+
+- 修复 `extract_entities_llm_batch()` 中 LLM 返回的实体行以 `-`、`*`、`·` 开头时被静默丢弃的问题
+- 根因：原逻辑 `elif line and not line.startswith(("-", "*", "·"))` 将所有以这三个字符开头的非空行过滤掉
+- 修复：使用 `line.lstrip("-*· ")` 剥离列表标记前缀，保留实体文本
+- 新增 `tests/test_graph_rag_batch.py::TestEntityParseWithListPrefix`（8 个参数化测试覆盖各种前缀场景）
+
 **Graph RAG 模式下 enrich_context 集成缺失**
 
 - 修复 Graph RAG 的 4 条查询路径未调用 `enrich_context` 的问题，导致 anchor chunk 未被 PDF 首页全文替换

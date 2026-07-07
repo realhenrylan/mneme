@@ -228,5 +228,95 @@ class TestProgressCallback:
             assert last_call[0] == last_call[1]  # done == total
 
 
+class TestEntityParseWithListPrefix:
+    """验证带列表前缀的实体行能被正确解析（ListPrefix Bug 修复）
+
+    Issue: LLM 返回的实体行如果以 -、*、· 开头，会被静默丢弃。
+
+    修复方案：在将行加入实体列表前，使用 lstrip 剥离列表标记前缀。
+    """
+
+    def setup_method(self):
+        """每测试前清空缓存，避免假通过"""
+        _entity_cache.clear()
+
+    @pytest.mark.parametrize(
+        "mock_response,texts,expected",
+        [
+            # 用例 1: 单段落，- 前缀
+            pytest.param(
+                "---段落1---\n- 人工智能\n- 机器学习",
+                ["虚构文本段落内容"],
+                [["人工智能", "机器学习"]],
+                id="hyphen_prefix"
+            ),
+            # 用例 2: 单段落，* 前缀
+            pytest.param(
+                "---段落1---\n* 深度学习\n* 强化学习",
+                ["虚构文本段落内容"],
+                [["深度学习", "强化学习"]],
+                id="asterisk_prefix"
+            ),
+            # 用例 3: 单段落，· 前缀
+            pytest.param(
+                "---段落1---\n· 自然语言处理\n· 计算机视觉",
+                ["虚构文本段落内容"],
+                [["自然语言处理", "计算机视觉"]],
+                id="dot_prefix"
+            ),
+            # 用例 4: 混合前缀
+            pytest.param(
+                "---段落1---\n- AI\n* ML\n· DL",
+                ["虚构文本段落内容"],
+                [["AI", "ML", "DL"]],
+                id="mixed_prefix"
+            ),
+            # 用例 5: 无前缀实体（回归）
+            pytest.param(
+                "---段落1---\n人工智能\n机器学习",
+                ["虚构文本段落内容"],
+                [["人工智能", "机器学习"]],
+                id="no_prefix_regression"
+            ),
+            # 用例 6: 空行不被注入
+            pytest.param(
+                "---段落1---\n人工智能\n\n机器学习",
+                ["虚构文本段落内容"],
+                [["人工智能", "机器学习"]],
+                id="empty_line_not_injected"
+            ),
+            # 用例 7: 多段落含前缀（2个文本输入）
+            pytest.param(
+                "---段落1---\n- AI\n---段落2---\n* ML",
+                ["虚构文本A", "虚构文本B"],
+                [["AI"], ["ML"]],
+                id="multi_paragraph_with_prefix"
+            ),
+            # 用例 8: 无内容段落（2个文本输入，第二个段落无实体）
+            pytest.param(
+                "---段落1---\n- AI\n---段落2---",
+                ["虚构文本A", "虚构文本B"],
+                [["AI"], []],
+                id="empty_paragraph"
+            ),
+        ],
+    )
+    def test_entity_parse_with_list_prefix(self, mock_response, texts, expected):
+        """验证带列表前缀的实体行能被正确解析"""
+        with patch("src.graph_rag._get_llm_client") as mock_get_client:
+            # Arrange: mock LLM 返回带列表前缀的实体
+            mock_client_obj = MagicMock()
+            mock_resp = MagicMock()
+            mock_resp.choices = [MagicMock(message=MagicMock(content=mock_response))]
+            mock_client_obj.chat.completions.create.return_value = mock_resp
+            mock_get_client.return_value = mock_client_obj
+
+            # Act
+            result = extract_entities_llm_batch(texts)
+
+            # Assert
+            assert result == expected
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
