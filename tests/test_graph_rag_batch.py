@@ -10,6 +10,7 @@ Issue #3 修复验证：
 """
 
 import sys
+from contextlib import contextmanager
 from unittest.mock import MagicMock
 
 # Mock 外部依赖（在导入 graph_rag 之前）
@@ -316,6 +317,182 @@ class TestEntityParseWithListPrefix:
 
             # Assert
             assert result == expected
+
+
+class TestDenseGraphFix:
+    """测试 dense graph 修复：两趟共现统计 + 阈值过滤 + 截断建边
+
+    所有测试均通过 @patch 绕过 LLM，直接操控 `extract_entities_llm_batch`
+    返回预定义的实体列表，确保测试不依赖真实 API。
+
+    注意：文件顶部的全局 `sys.modules['networkx'] = MagicMock()` 会把
+    `nx.Graph()` 变成 MagicMock。本类使用 `_real_nx()` 方法临时从
+    sys.modules 移除 mock、import 真实 networkx，确保 `entity_graph`
+    在真实 nx.Graph 上运行，退出上下文后自动恢复 mock。
+    """
+
+    def setup_method(self):
+        """每个测试前清空缓存"""
+        _entity_cache.clear()
+
+    @staticmethod
+    def _real_nx():
+        """返回真实 networkx 模块的上下文管理器（临时替代 sys.modules 中的 mock）"""
+        import sys, importlib
+        class _Ctx:
+            def __enter__(self_inner):
+                self_inner._saved = sys.modules.pop('networkx')
+                self_inner._nx = importlib.import_module('networkx')
+                sys.modules['networkx'] = self_inner._nx
+                return self_inner._nx
+            def __exit__(self_inner, *args):
+                sys.modules['networkx'] = self_inner._saved
+        return _Ctx()
+
+    @staticmethod
+    def _make_kg(real_nx) -> KnowledgeGraph:
+        """在真实 nx.Graph 上构造 KnowledgeGraph，跳过 __init__（会使用 mock nx）"""
+        kg = KnowledgeGraph.__new__(KnowledgeGraph)
+        kg.entity_graph = real_nx.Graph()
+        kg.entity_to_chunks = {}
+        kg.chunk_to_entities = {}
+        return kg
+
+    # ─────────────────────────────────────────────
+    # Test 1: 阈值过滤（min_cooccur）
+    # ─────────────────────────────────────────────
+    def test_min_cooccur_threshold(self):
+        """min_cooccur=2 时，只保留至少共现 2 次的实体对"""
+        with patch("src.graph_rag.extract_entities_llm_batch") as mock_extract, \
+             self._real_nx() as real_nx:
+            # 3 个 chunk：
+            #   c1: A, B, C       → A-B 共现 1 次，A-C 共现 1 次，B-C 共现 1 次
+            #   c2: A, B          → A-B 共现 2 次
+            #   c3: A, D          → A-D 共现 1 次
+            mock_extract.return_value = [
+                ["实体A", "实体B", "实体C"],
+                ["实体A", "实体B"],
+                ["实体A", "实体D"],
+            ]
+            kg = self._make_kg(real_nx)
+            kg.build_from_chunks(["c1", "c2", "c3"], min_cooccur=2, verbose=False)
+
+            # A-B 共现 2 次 → 应有边
+            assert kg.entity_graph.has_edge("实体A", "实体B"), "A-B 共现 2 次，应有边"
+            # A-C / B-C / A-D 都只共现 1 次 → 无边
+            assert not kg.entity_graph.has_edge("实体A", "实体C"), "A-C 仅共现 1 次，应无边"
+            assert not kg.entity_graph.has_edge("实体B", "实体C"), "B-C 仅共现 1 次，应无边"
+            assert not kg.entity_graph.has_edge("实体A", "实体D"), "A-D 仅共现 1 次，应无边"
+            assert kg.entity_graph.number_of_edges() == 1
+
+    # ─────────────────────────────────────────────
+    # Test 2: 截断边界（max_entities_per_chunk）
+    # ─────────────────────────────────────────────
+    def test_max_entities_capping(self):
+        """单 chunk 返回 25 个实体，max_entities_per_chunk=10 时建边只使用前 10 个"""
+        with patch("src.graph_rag.extract_entities_llm_batch") as mock_extract, \
+             self._real_nx() as real_nx:
+            entities = [f"E{i:02d}" for i in range(25)]  # E00..E24，共 25 个
+            mock_extract.return_value = [entities]
+            kg = self._make_kg(real_nx)
+            kg.build_from_chunks(
+                ["chunk1"],
+                min_cooccur=1,              # 阈值设为 1，不额外过滤
+                max_entities_per_chunk=10,   # 建边最多用 10 个实体
+                verbose=False,
+            )
+            # C(10, 2) = 45 条边；E10-E24 被排除在完全子图之外
+            assert kg.entity_graph.number_of_edges() == 45
+            # 所有 25 个实体仍应存在于 entity_to_chunks 中（截断仅影响建边）
+            assert len(kg.entity_to_chunks) == 25
+
+    # ─────────────────────────────────────────────
+    # Test 3: 向后兼容（默认值 = 原行为）
+    # ─────────────────────────────────────────────
+    def test_backward_compatible_defaults(self):
+        """min_cooccur=1 / max_entities_per_chunk=20 等价于原逻辑
+
+        原逻辑：每 chunk 完全子图，weight = 共现 chunk 数。
+        新逻辑（两趟法）：边集一致，weight = count（共现 chunk 数）。
+        """
+        with patch("src.graph_rag.extract_entities_llm_batch") as mock_extract, \
+             self._real_nx() as real_nx:
+            mock_extract.return_value = [
+                ["A", "B", "C"],
+                ["A", "B", "C"],
+                ["A", "B"],
+            ]
+            kg = self._make_kg(real_nx)
+            # 传显式默认值，模拟原行为
+            kg.build_from_chunks(
+                ["c1", "c2", "c3"],
+                min_cooccur=1,
+                max_entities_per_chunk=20,
+                verbose=False,
+            )
+            # A-B: 3 个 chunk 都含 A,B → weight=3
+            # A-C: 2 个 chunk 含 A,C → weight=2
+            # B-C: 2 个 chunk 含 B,C → weight=2
+            assert kg.entity_graph.has_edge("A", "B")
+            assert kg.entity_graph.has_edge("A", "C")
+            assert kg.entity_graph.has_edge("B", "C")
+            assert kg.entity_graph.number_of_edges() == 3
+            assert kg.entity_graph["A"]["B"]["weight"] == 3
+            assert kg.entity_graph["A"]["C"]["weight"] == 2
+
+    # ─────────────────────────────────────────────
+    # Test 4: 空 chunks 不崩溃
+    # ─────────────────────────────────────────────
+    def test_empty_chunks_no_crash(self):
+        """空 chunks 输入不引发异常，图保持空"""
+        with self._real_nx() as real_nx:
+            kg = self._make_kg(real_nx)
+            kg.build_from_chunks([], min_cooccur=2, verbose=False)
+            assert kg.entity_graph.number_of_nodes() == 0
+            assert kg.entity_graph.number_of_edges() == 0
+            assert kg.entity_to_chunks == {}
+            assert kg.chunk_to_entities == {}
+
+    # ─────────────────────────────────────────────
+    # Test 5: 单实体无完全子图
+    # ─────────────────────────────────────────────
+    def test_single_entity_no_edges(self):
+        """每 chunk 只有 1 个实体 → 无法构成配对 → 0 条边"""
+        with patch("src.graph_rag.extract_entities_llm_batch") as mock_extract, \
+             self._real_nx() as real_nx:
+            mock_extract.return_value = [["唯一实体"], ["唯一实体"]]
+            kg = self._make_kg(real_nx)
+            kg.build_from_chunks(["c1", "c2"], min_cooccur=1, verbose=False)
+            assert kg.entity_graph.number_of_edges() == 0
+            # 但实体应被记录
+            assert "唯一实体" in kg.entity_to_chunks
+
+    # ─────────────────────────────────────────────
+    # Test 6: entity_to_chunks 完整性
+    # ─────────────────────────────────────────────
+    def test_entity_to_chunks_completeness(self):
+        """即使实体被 max_entities_per_chunk 截断排除在建边之外，
+        仍应在 entity_to_chunks 中可查到（不影响索引映射完整性）。
+        """
+        with patch("src.graph_rag.extract_entities_llm_batch") as mock_extract, \
+             self._real_nx() as real_nx:
+            # c1: 30 个实体，建边只用前 10 个；但全部 30 个应出现在 entity_to_chunks
+            entities_30 = [f"T{i:02d}" for i in range(30)]
+            mock_extract.return_value = [entities_30]
+            kg = self._make_kg(real_nx)
+            kg.build_from_chunks(
+                ["c1"],
+                min_cooccur=1,
+                max_entities_per_chunk=10,
+                verbose=False,
+            )
+            # entity_to_chunks 应包含全部 30 个实体
+            assert len(kg.entity_to_chunks) == 30
+            for ent in entities_30:
+                assert ent in kg.entity_to_chunks
+                assert "c1" in kg.entity_to_chunks[ent]
+            # 但建边只涉及前 10 个 → C(10,2)=45
+            assert kg.entity_graph.number_of_edges() == 45
 
 
 if __name__ == "__main__":

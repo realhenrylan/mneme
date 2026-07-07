@@ -46,6 +46,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+**Graph RAG 全连接子图噪音修复（Dense Graph Fix）**
+
+- `KnowledgeGraph.build_from_chunks()` 原逻辑对每个 chunk 的实体集合建立完全子图（所有实体两两连边），导致大量弱共现噪音
+  - 实际问题：4046 实体产生 38755 条边（最大可能边数 8,183,035），平均度 19.2，图密度 0.47%，`get_related_entities()` 几乎返回全部邻居
+- 修复方案：组合方案（方案 C），引入两个新参数：
+  - `min_cooccur: int = 2` — 两个实体至少在 N 个 chunk 中共现才建边，过滤偶然共现噪音
+  - `max_entities_per_chunk: int = 20` — 每 chunk 仅前 N 个实体参与建边，防止完全子图指数爆炸
+- 实现方式：两趟法
+  - 第一趟：逐 chunk 统计实体对共现次数（`cooccur_counts` dict）
+  - 第二趟：按 `min_cooccur` 阈值过滤后建边
+- 参数设计：`max_entities_per_chunk` 仅影响建边过程，`entity_to_chunks` 映射始终记录全部实体
+- 向后兼容：默认值 `min_cooccur=2, max_entities_per_chunk=20`，调用方无需修改；如需恢复原行为，显式传 `min_cooccur=1, max_entities_per_chunk=sys.maxsize`
+- 新增测试：`TestDenseGraphFix`（6 个 TDD 测试覆盖阈值过滤、截断边界、向后兼容、空 chunks、单实体、entity_to_chunks 完整性）
+- 预期效果：边数从 ~38755 降至 ~3000-8000，平均度从 19.2 降至 ~2-4，图区分度显著提升
+
 **Graph RAG 实体行静默丢弃 Bug**
 
 - 修复 `extract_entities_llm_batch()` 中 LLM 返回的实体行以 `-`、`*`、`·` 开头时被静默丢弃的问题

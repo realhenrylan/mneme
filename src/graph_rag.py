@@ -134,6 +134,8 @@ class KnowledgeGraph:
             max_workers: int = 10,          # [DEPRECATED] 保留但忽略，向后兼容
             progress_callback=None,
             batch_size: int = 5,            # 新参数追加到末尾
+            min_cooccur: int = 2,           # 最小共现次数阈值
+            max_entities_per_chunk: int = 20,  # 每 chunk 参与建边的最大实体数
     ):
         """
         从文本块构建知识图谱。
@@ -145,6 +147,11 @@ class KnowledgeGraph:
                          调用时传入此参数不会报错，但会被忽略。
             progress_callback: 进度回调函数 (done, total)
             batch_size: 批量处理的文本数量，默认为 5
+            min_cooccur: 最小共现次数阈值。两个实体至少在 N 个 chunk 中共同出现
+                         才建立边。默认值 2 过滤偶然共现噪音。
+            max_entities_per_chunk: 每 chunk 参与建边的最大实体数。超出部分不参与
+                                    建边（但仍记录在 entity_to_chunks 映射中），用于
+                                    防止 chunk 中实体过多导致完全子图爆炸。默认值 20。
 
         Note:
             进度回调在每批处理完成后触发。如需更细粒度的进度控制，
@@ -172,32 +179,74 @@ class KnowledgeGraph:
         if verbose:
             print(f"进度{len(chunks)}/{len(chunks)}")
 
-        for i, (chunk, entities) in enumerate(zip(chunks, results)):
+        # ── 第一趟：逐 chunk 收集共现统计 ──────────────────────────────────
+        # cooccur_counts[(u, v)] = 两个实体在不同 chunk 中共同出现的次数
+        cooccur_counts: dict[tuple[str, str], int] = {}
+
+        for chunk, entities in zip(chunks, results):
 
             if not entities:
                 continue
 
-            unique_entities = list(set(entities))
+            # 1. 记录实体→chunk 映射（始终使用完整列表，不受截断影响）
+            unique_all = self._record_entity_chunk_mapping(chunk, entities)
 
-            self.chunk_to_entities[chunk] = unique_entities
-            for ent in unique_entities:
-                if ent not in self.entity_to_chunks:
-                    self.entity_to_chunks[ent] = []
-                self.entity_to_chunks[ent].append(chunk)
+            # 2. 统计该 chunk 内实体对的共现次数（仅使用截断列表建边）
+            self._count_cooccurrences(unique_all, max_entities_per_chunk, cooccur_counts)
 
-            for u in unique_entities:
-                for v in unique_entities:
-                    if u < v:
-                        if self.entity_graph.has_edge(u, v):
-                            self.entity_graph[u][v]["weight"] += 1
-                        else:
-                            self.entity_graph.add_edge(u, v, weight = 1)
+        # ── 第二趟：按阈值建边 ─────────────────────────────────────────────
+        self._build_edges_from_cooccurrences(cooccur_counts, min_cooccur)
 
         if verbose:
             print(f"Graph Stats: ")
             print(f"Entities (nodes):  {self.entity_graph.number_of_nodes()}")
             print(f"Relations (edges): {self.entity_graph.number_of_edges()}")
             print(f"Chunks with Entities: {len(self.chunk_to_entities)}")
+
+    @staticmethod
+    def _normalize_pair(u: str, v: str) -> tuple[str, str]:
+        """返回按字典序排列的实体对 (u, v)，用于 dict key 的唯一性。"""
+        return (u, v) if u < v else (v, u)
+
+    def _record_entity_chunk_mapping(
+            self,
+            chunk: str,
+            entities: list[str],
+    ) -> list[str]:
+        """更新 entity_to_chunks / chunk_to_entities，返回去重后的实体列表。"""
+        unique_all = list(set(entities))
+        self.chunk_to_entities[chunk] = unique_all
+        for ent in unique_all:
+            if ent not in self.entity_to_chunks:
+                self.entity_to_chunks[ent] = []
+            self.entity_to_chunks[ent].append(chunk)
+        return unique_all
+
+    def _count_cooccurrences(
+            self,
+            unique_entities: list[str],
+            max_entities_per_chunk: int,
+            cooccur_counts: dict[tuple[str, str], int],
+    ) -> None:
+        """将截断后实体对的共现次数累加到 cooccur_counts（原地修改）。"""
+        capped = unique_entities[:max_entities_per_chunk]
+        for i in range(len(capped)):
+            for j in range(i + 1, len(capped)):
+                pair = self._normalize_pair(capped[i], capped[j])
+                cooccur_counts[pair] = cooccur_counts.get(pair, 0) + 1
+
+    def _build_edges_from_cooccurrences(
+            self,
+            cooccur_counts: dict[tuple[str, str], int],
+            min_cooccur: int,
+    ) -> None:
+        """根据共现统计结果，按阈值向 entity_graph 添加边。"""
+        for (u, v), count in cooccur_counts.items():
+            if count >= min_cooccur:
+                if self.entity_graph.has_edge(u, v):
+                    self.entity_graph[u][v]["weight"] += count
+                else:
+                    self.entity_graph.add_edge(u, v, weight=count)
 
     def get_related_entities(
             self,
