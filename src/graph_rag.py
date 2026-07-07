@@ -80,7 +80,7 @@ def extract_entities_llm_batch(texts: list[str],
             )
             try:
                 response = client.chat.completions.create(
-                    model="deepseek-chat",
+                    model=os.getenv("LLM_MODEL", DEFAULT_LLM_MODEL),
                     messages=[
                         {"role": "user", "content": EXTRACT_PROMPT_BATCH.format(batched_texts=batched_text)}
                     ],

@@ -46,6 +46,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+**Graph RAG 实体提取模型名不再硬编码**
+
+- 修复 `src/graph_rag.py:83` 中 `model="deepseek-chat"` 硬编码问题
+- 现在使用 `os.getenv("LLM_MODEL", DEFAULT_LLM_MODEL)`，优先读取环境变量，否则回退到 `DEFAULT_LLM_MODEL`
+- 用户通过 TUI `/settings` 或环境变量切换模型后，Graph RAG 实体提取将使用正确的模型
+
 **Graph RAG 全连接子图噪音修复（Dense Graph Fix）**
 
 - `KnowledgeGraph.build_from_chunks()` 原逻辑对每个 chunk 的实体集合建立完全子图（所有实体两两连边），导致大量弱共现噪音
