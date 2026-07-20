@@ -71,3 +71,4 @@ class RagApp:
             )
         finally:
             self.service.stop_watching()
+            self.service.close()

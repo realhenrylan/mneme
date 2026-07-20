@@ -2,14 +2,17 @@ from __future__ import annotations
 import os
 import time
 import hashlib
-import pickle
+import json
+import math
 import argparse
+import tempfile
 import networkx as nx
 from typing import Optional, Generator
 from src.rag import (
     build_bm25_index,
     build_index, ask_for_files, _collection_exists,
     _ensure_client_and_check_rebuild,
+    _manifest_config_matches,
     add_files_to_index,
     retrieve_hybrid_with_sources, dynamic_top_k,
     answer_with_llm_history, answer_with_llm_history_stream,
@@ -21,19 +24,29 @@ from src.rag import (
     DEFAULT_TOP_K, DEFAULT_MIN_K, DEFAULT_MAX_K,
     CHROMA_DB_PATH, DEFAULT_LLM_MODEL,
     _load_sentence_transformer,
+    index_fingerprint,
+    load_index_manifest,
+    set_manifest_version,
+    retrieval_refused, REFUSAL_MESSAGE, _record_query_metric,
 )
+from src.security import validate_endpoint
 
 from openai import OpenAI
 _entity_cache: dict[str, list[str]] = {}
 _llm_client: OpenAI | None = None
+_llm_client_config: tuple[str, str] | None = None
 
 def _get_llm_client() -> OpenAI:
-    global _llm_client
-    if _llm_client is None:
+    global _llm_client, _llm_client_config
+    api_key = os.getenv("API_KEY", "")
+    base_url = validate_endpoint(os.getenv("BASE_URL"))
+    config = (api_key, base_url)
+    if _llm_client is None or _llm_client_config != config:
         _llm_client = OpenAI(
-            api_key = os.getenv("API_KEY"),
-            base_url = os.getenv("BASE_URL"),
+            api_key=api_key,
+            base_url=base_url,
         )
+        _llm_client_config = config
     return _llm_client
 
 EXTRACT_PROMPT_BATCH = """从以下文本段落中分别提取实体。
@@ -127,6 +140,8 @@ class KnowledgeGraph:
         self.entity_graph = nx.Graph()
         self.entity_to_chunks: dict[str, list[str]] = {}
         self.chunk_to_entities: dict[str, list[str]] = {}
+        self.index_fingerprint: str | None = None
+        self.manifest_version: int | None = None
 
     def build_from_chunks(
             self,
@@ -137,6 +152,7 @@ class KnowledgeGraph:
             batch_size: int = 5,            # 新参数追加到末尾
             min_cooccur: int = 2,           # 最小共现次数阈值
             max_entities_per_chunk: int = 20,  # 每 chunk 参与建边的最大实体数
+            chunk_ids: list[str] | None = None,
     ):
         """
         从文本块构建知识图谱。
@@ -167,6 +183,16 @@ class KnowledgeGraph:
                 stacklevel=2
             )
 
+        # Rebuilding an existing object must not retain deleted/old mappings.
+        self.entity_graph.clear()
+        self.entity_to_chunks.clear()
+        self.chunk_to_entities.clear()
+        # Preserve the historical text-key behavior for direct callers that do
+        # not provide Chroma ids; production indexing always supplies ids.
+        chunk_ids = chunk_ids or chunks
+        if len(chunk_ids) != len(chunks):
+            raise ValueError("chunk_ids must have the same length as chunks")
+
         if verbose:
             print(f"正在从{len(chunks)}个chunks当中提取实体")
 
@@ -184,13 +210,13 @@ class KnowledgeGraph:
         # cooccur_counts[(u, v)] = 两个实体在不同 chunk 中共同出现的次数
         cooccur_counts: dict[tuple[str, str], int] = {}
 
-        for chunk, entities in zip(chunks, results):
+        for chunk_id, entities in zip(chunk_ids, results):
 
             if not entities:
                 continue
 
             # 1. 记录实体→chunk 映射（始终使用完整列表，不受截断影响）
-            unique_all = self._record_entity_chunk_mapping(chunk, entities)
+            unique_all = self._record_entity_chunk_mapping(chunk_id, entities)
 
             # 2. 统计该 chunk 内实体对的共现次数（仅使用截断列表建边）
             self._count_cooccurrences(unique_all, max_entities_per_chunk, cooccur_counts)
@@ -300,22 +326,112 @@ class KnowledgeGraph:
         sorted_chunks = sorted(chunk_scores.items(), key = lambda x: x[1], reverse = True)
         return [chunk for chunk, _ in sorted_chunks[:max_chunks]]
 
-    def save(self, filepath: str):
-        with open(filepath, "wb") as f:
-            pickle.dump({
-                "entity_graph": self.entity_graph,
-                "entity_to_chunks": self.entity_to_chunks,
-                "chunk_to_entities": self.chunk_to_entities,
-            }, f)
+    def save(
+        self,
+        filepath: str,
+        index_fingerprint_value: str | None = None,
+        manifest_version: int | None = None,
+    ):
+        if index_fingerprint_value is not None:
+            self.index_fingerprint = index_fingerprint_value
+        if manifest_version is not None:
+            self.manifest_version = manifest_version
+        directory = os.path.dirname(filepath) or "."
+        os.makedirs(directory, exist_ok=True)
+        temporary_path = None
+        payload = {
+            "schema_version": 2,
+            "entity_graph": {
+                "nodes": sorted(str(node) for node in self.entity_graph.nodes),
+                "edges": [
+                    {
+                        "source": str(source),
+                        "target": str(target),
+                        "weight": float(data.get("weight", 1.0)),
+                    }
+                    for source, target, data in self.entity_graph.edges(data=True)
+                ],
+            },
+            "entity_to_chunks": {
+                str(entity): [str(chunk) for chunk in chunks]
+                for entity, chunks in self.entity_to_chunks.items()
+            },
+            "chunk_to_entities": {
+                str(chunk): [str(entity) for entity in entities]
+                for chunk, entities in self.chunk_to_entities.items()
+            },
+            "index_fingerprint": self.index_fingerprint,
+            "manifest_version": self.manifest_version,
+        }
+        try:
+            fd, temporary_path = tempfile.mkstemp(
+                prefix=".mneme-kg-", suffix=".tmp", dir=directory,
+            )
+            with os.fdopen(fd, "w", encoding="utf-8") as stream:
+                json.dump(payload, stream, ensure_ascii=False, sort_keys=True)
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(temporary_path, filepath)
+            temporary_path = None
+        finally:
+            if temporary_path and os.path.exists(temporary_path):
+                os.remove(temporary_path)
 
     @classmethod
     def load(cls, filepath: str) -> KnowledgeGraph:
+        if os.path.getsize(filepath) > 100 * 1024 * 1024:
+            raise ValueError("Graph RAG 缓存超过安全大小上限")
+        with open(filepath, "r", encoding="utf-8") as stream:
+            data = json.load(stream)
+        if not isinstance(data, dict) or data.get("schema_version") != 2:
+            raise ValueError("不支持的 Graph RAG 缓存 schema")
+        expected_keys = {
+            "schema_version", "entity_graph", "entity_to_chunks",
+            "chunk_to_entities", "index_fingerprint", "manifest_version",
+        }
+        if set(data) != expected_keys:
+            raise ValueError("Graph RAG 缓存字段不符合 schema")
+
         kg = cls()
-        with open(filepath, "rb") as f:
-            data = pickle.load(f)
-        kg.entity_graph = data["entity_graph"]
-        kg.entity_to_chunks = data["entity_to_chunks"]
-        kg.chunk_to_entities = data["chunk_to_entities"]
+        graph_data = data["entity_graph"]
+        if not isinstance(graph_data, dict) or set(graph_data) != {"nodes", "edges"}:
+            raise ValueError("Graph RAG 图结构不符合 schema")
+        nodes = graph_data["nodes"]
+        edges = graph_data["edges"]
+        if not isinstance(nodes, list) or not all(isinstance(node, str) for node in nodes):
+            raise ValueError("Graph RAG 节点数据无效")
+        if not isinstance(edges, list):
+            raise ValueError("Graph RAG 边数据无效")
+        kg.entity_graph.add_nodes_from(nodes)
+        for edge in edges:
+            if not isinstance(edge, dict) or set(edge) != {"source", "target", "weight"}:
+                raise ValueError("Graph RAG 边 schema 无效")
+            source, target, weight = edge["source"], edge["target"], edge["weight"]
+            if (
+                not isinstance(source, str)
+                or not isinstance(target, str)
+                or not isinstance(weight, (int, float))
+                or not math.isfinite(float(weight))
+            ):
+                raise ValueError("Graph RAG 边数据无效")
+            kg.entity_graph.add_edge(source, target, weight=float(weight))
+
+        for key in ("entity_to_chunks", "chunk_to_entities"):
+            mapping = data[key]
+            if not isinstance(mapping, dict) or not all(
+                isinstance(name, str)
+                and isinstance(values, list)
+                and all(isinstance(value, str) for value in values)
+                for name, values in mapping.items()
+            ):
+                raise ValueError(f"Graph RAG 映射字段无效: {key}")
+            setattr(kg, key, mapping)
+        kg.index_fingerprint = data.get("index_fingerprint")
+        kg.manifest_version = data.get("manifest_version")
+        if kg.index_fingerprint is not None and not isinstance(kg.index_fingerprint, str):
+            raise ValueError("Graph RAG index fingerprint 无效")
+        if kg.manifest_version is not None and not isinstance(kg.manifest_version, int):
+            raise ValueError("Graph RAG manifest version 无效")
         return kg
 
 
@@ -333,12 +449,26 @@ def graph_augmented_retrieve(
         k_graph: int = 5,
         alpha: float = 0.7,
         verbose: bool = True,
+        all_ids: list[str] | None = None,
+        all_metadatas: list[dict] | None = None,
 ) -> tuple[list[int], list[str], list[float]]:
     if kg.entity_graph.number_of_nodes() == 0:
         print("[警告] 知识图谱为空，退化为纯语义检索")
 
-    _, semantic_docs, semantic_scores = retrieve_hybrid_with_sources(
-        query, model, collection, bm25, all_docs, k = k_vector
+    collection_data = collection.get()
+    collection_metadatas = all_metadatas or (
+        collection_data.get("metadatas", []) if isinstance(collection_data, dict) else []
+    )
+    all_ids = all_ids or [
+        metadata.get("chunk_id", f"chunk_{index}")
+        for index, metadata in enumerate(collection_metadatas)
+    ]
+    if len(all_ids) != len(all_docs):
+        all_ids = [f"chunk_{index}" for index in range(len(all_docs))]
+
+    semantic_indices, semantic_docs, semantic_scores = retrieve_hybrid_with_sources(
+        query, model, collection, bm25, all_docs,
+        metadatas=collection_metadatas, k=k_vector,
     )
 
     query_entities = extract_entities_from_query(query)
@@ -356,7 +486,7 @@ def graph_augmented_retrieve(
             max_chunks = k_graph * 2,
         )
 
-    doc_to_idx = {doc: i for i, doc in enumerate(all_docs)}
+    id_to_idx = {chunk_id: index for index, chunk_id in enumerate(all_ids)}
 
     merged: dict[str, float] = {}
 
@@ -364,18 +494,16 @@ def graph_augmented_retrieve(
         if doc not in merged:
             merged[doc] = (1 - alpha) / (rank + 1)
 
-    for doc, score in zip(semantic_docs, semantic_scores):
-        if doc in merged:
-            merged[doc] += alpha * score
-        else:
-            merged[doc] = alpha * score
+    for index, score in zip(semantic_indices, semantic_scores):
+        chunk_id = all_ids[index]
+        merged[chunk_id] = merged.get(chunk_id, 0.0) + alpha * score
 
     sorted_merged = sorted(merged.items(), key=lambda x: x[1], reverse=True)
     top = sorted_merged[:k_vector]
 
-    indices = [doc_to_idx[doc] for doc, _ in top if doc in doc_to_idx]
-    docs = [doc for doc, _ in top]
-    scores = [s for _, s in top]
+    indices = [id_to_idx[chunk_id] for chunk_id, _ in top if chunk_id in id_to_idx]
+    docs = [all_docs[id_to_idx[chunk_id]] for chunk_id, _ in top if chunk_id in id_to_idx]
+    scores = [score for chunk_id, score in top if chunk_id in id_to_idx]
     return indices, docs, scores
 
 
@@ -391,17 +519,28 @@ def build_graph_index(
         force_rebuild=force_rebuild,
         progress_callback=progress_callback,
     )
-    all_docs = collection.get()["documents"]
+    all_data = collection.get()
+    all_docs = all_data["documents"]
+    all_ids = all_data["ids"]
+    all_metadatas = all_data["metadatas"]
     if not all_docs:
         raise ValueError("文档为空")
 
-    bm25 = build_bm25_index(all_docs)
+    manifest = load_index_manifest(collection_name)
+    bm25 = set_manifest_version(
+        build_bm25_index(all_docs),
+        manifest.get("manifest_version") if manifest else None,
+    )
 
     print("\n" + "=" * 60)
     print("构建Knowledge Graph")
     print("=" * 60)
     kg = KnowledgeGraph()
-    kg.build_from_chunks(all_docs, verbose=True, progress_callback=progress_callback)
+    kg.build_from_chunks(
+        all_docs, chunk_ids=all_ids, verbose=True,
+        progress_callback=progress_callback,
+    )
+    kg.manifest_version = manifest.get("manifest_version") if manifest else None
     print(f"知识图谱构建完成: {kg.entity_graph.number_of_nodes()}个实体",
           f"{kg.entity_graph.number_of_edges()}个关系")
     return model, collection, bm25, all_docs, kg
@@ -413,36 +552,80 @@ def prepare_graph_index(
         force_rebuild: bool = False,
         progress_callback=None,
 ) -> tuple:
-    client, need_build = _ensure_client_and_check_rebuild(collection_name, force_rebuild)
-    kg_file = os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.pkl")
+    client, need_build = _ensure_client_and_check_rebuild(
+        collection_name, force_rebuild, file_paths=file_paths,
+    )
+    model_for_config = _load_sentence_transformer(EMBEDDING_MODEL_NAME)
+    manifest = load_index_manifest(collection_name)
+    config_mismatch = bool(file_paths) and (
+        manifest is None
+        or not _manifest_config_matches(manifest, model=model_for_config)
+    )
+    need_build = need_build or config_mismatch
+    kg_file = os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.json")
 
     if need_build:
         print("索引重构中...")
         model, collection, bm25, all_docs, kg = build_graph_index(
-            file_paths, collection_name, force_rebuild, progress_callback=progress_callback,
+            file_paths, collection_name,
+            force_rebuild or config_mismatch,
+            progress_callback=progress_callback,
         )
         all_data = collection.get()
         all_metadatas = all_data["metadatas"]
-        kg.save(kg_file)
+        manifest = load_index_manifest(collection_name)
+        kg.save(
+            kg_file,
+            index_fingerprint(all_data["ids"], all_metadatas),
+            manifest.get("manifest_version") if manifest else None,
+        )
     else:
         print("检测到已有索引，正在加载...")
-        model = _load_sentence_transformer(EMBEDDING_MODEL_NAME)
+        model = model_for_config
         collection = client.get_collection(collection_name)
 
         all_data = collection.get()
         all_docs = all_data["documents"]
         all_metadatas = all_data["metadatas"]
 
-        bm25 = build_bm25_index(all_docs)
+        manifest = load_index_manifest(collection_name)
+        bm25 = set_manifest_version(
+            build_bm25_index(all_docs),
+            manifest.get("manifest_version") if manifest else None,
+        )
 
+        current_fingerprint = index_fingerprint(all_data["ids"], all_metadatas)
         if os.path.exists(kg_file):
             print("加载已缓存的知识图谱...")
-            kg = KnowledgeGraph.load(kg_file)
+            try:
+                candidate = KnowledgeGraph.load(kg_file)
+            except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError):
+                candidate = None
+            current_manifest_version = manifest.get("manifest_version") if manifest else None
+            if (
+                candidate is not None
+                and candidate.index_fingerprint == current_fingerprint
+                and candidate.manifest_version == current_manifest_version
+            ):
+                kg = candidate
+            else:
+                print("知识图谱缓存与索引版本不一致，重建知识图谱...")
+                kg = KnowledgeGraph()
+                kg.build_from_chunks(
+                    all_docs, chunk_ids=all_data["ids"], verbose=True,
+                )
+                kg.save(kg_file, current_fingerprint, current_manifest_version)
         else:
             print("重建知识图谱...")
             kg = KnowledgeGraph()
-            kg.build_from_chunks(all_docs, verbose=True)
-            kg.save(kg_file)
+            kg.build_from_chunks(
+                all_docs, chunk_ids=all_data["ids"], verbose=True,
+            )
+            kg.save(
+                kg_file,
+                current_fingerprint,
+                manifest.get("manifest_version") if manifest else None,
+            )
 
     return model, collection, bm25, all_docs, all_metadatas, kg
 
@@ -477,13 +660,21 @@ def graph_rag_pipeline(
 
     indices, fused_docs, fused_scores = graph_augmented_retrieve(
         query, model, collection, bm25,
-        all_docs, kg, k_vector = 20, k_graph = 5,
-        alpha = alpha
+        all_docs, kg, k_vector=20, k_graph=5,
+        alpha=alpha,
+        all_metadatas=all_metadatas,
     )
 
     k = dynamic_top_k(fused_scores, min_k = 3, max_k = 50)
     top_docs = fused_docs[:k]
     top_indices = indices[:k]
+
+    if retrieval_refused(fused_scores):
+        _record_query_metric(
+            _t0, [], fused_scores, all_metadatas, bm25, refused=True,
+        )
+        print(REFUSAL_MESSAGE)
+        return REFUSAL_MESSAGE
 
     print(f"查询：{query}")
     print(f"动态top_k = {k}")
@@ -573,15 +764,26 @@ def graph_query_stream(
     top_k_range=(3, 50),
     llm_model: str = DEFAULT_LLM_MODEL,
 ) -> tuple[Generator[str, None, None], str]:
+    retrieval_start = time.perf_counter()
     indices, docs, scores = graph_augmented_retrieve(
         query, model, collection, bm25, all_docs, kg,
-        alpha=alpha, verbose=False,
+        alpha=alpha, verbose=False, all_metadatas=all_metadatas,
     )
     k = dynamic_top_k(scores, min_k=top_k_range[0], max_k=top_k_range[1])
     top_indices = indices[:k]
+    if retrieval_refused(scores):
+        _record_query_metric(
+            retrieval_start, [], scores, all_metadatas, bm25, refused=True,
+        )
+        def refusal_stream():
+            yield REFUSAL_MESSAGE
+        return refusal_stream(), ""
     enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
     context = _build_context(top_indices, enriched_docs, all_metadatas)
     sources = format_sources(top_indices, enriched_docs, all_metadatas)
+    _record_query_metric(
+        retrieval_start, top_indices, scores, all_metadatas, bm25,
+    )
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,
     )

@@ -15,7 +15,6 @@
 """
 import os
 import shutil
-import subprocess
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -27,6 +26,7 @@ except ImportError:
     HAS_PYTEST = False
 
 import src.rag as rag
+from conftest import cleanup_test_path
 from src.rag import (
     prepare_index, build_bm25_index, retrieve_hybrid_with_sources, dynamic_top_k,
     build_index, format_sources, _tokenize,
@@ -43,10 +43,10 @@ _original_db_path = _ORIGINAL_DB
 
 
 def setup_module():
-    """确保干净的测试数据库（用 subprocess 绕过 macOS SQLite lock）"""
+    """使用跨平台清理确保干净的测试数据库。"""
     db_dir = str(TEST_DB_PATH)
     if os.path.exists(db_dir):
-        subprocess.run(["rm", "-rf", db_dir], check=False)
+        cleanup_test_path(db_dir)
     rag.CHROMA_DB_PATH = db_dir
 
 
@@ -54,7 +54,7 @@ def teardown_module():
     """清理测试数据库"""
     db_dir = str(TEST_DB_PATH)
     if os.path.exists(db_dir):
-        subprocess.run(["rm", "-rf", db_dir], check=False)
+        cleanup_test_path(db_dir)
     rag.CHROMA_DB_PATH = _original_db_path
 
 

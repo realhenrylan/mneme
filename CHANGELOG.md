@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+**项目综合改进评估报告**
+
+- 新增 `plans/2026-07-20-project-optimization-assessment.md`，记录索引一致性、测试与依赖、数据安全、性能、检索质量、架构与发布的改进建议及实施优先级。
+
 **Embedding 模型加载支持本地路径和 ModelScope 自动下载**
 
 - 新增 `_load_sentence_transformer()` 函数，统一模型加载逻辑：
@@ -69,6 +73,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 新增 `tests/test_llm_client_singleton.py`（2 个 TDD 测试覆盖单例行为和环境变量读取）
 
 ### Fixed
+
+**P0 release closure: Graph RAG safety, endpoint policy, and Windows cleanup**
+
+- Replaced executable Graph RAG pickle caches with schema-validated atomic JSON; legacy `.pkl` files are invalidated without being loaded.
+- Bound the Graph RAG LLM client cache to the current API key and base URL so endpoint changes take effect immediately.
+- Added shared HTTPS-by-default endpoint validation, remote-data disclosure in onboarding, document size/page/path limits, and a bounded remote context.
+- Ensured the configured embedding model identifier is used consistently for ModelScope fallback and diagnostics.
+- Added explicit Chroma client shutdown and fail-fast Windows test cleanup; cleanup failures are now visible instead of being ignored.
+- Added P0 regression coverage for cache schema, client refresh, endpoint policy, resource limits, context bounds, and model fallback.
+- Fixed remote-context truncation so source metadata and untrusted-document boundaries always remain complete; chunks are skipped when the safety frame cannot fit.
+- Refreshed the bilingual README with current CLI commands, manifest/citation safety behavior, endpoint disclosure, resource limits, embedding fallback, project structure, and test instructions.
+
+**Phase C: retrieval quality, evidence safety, and serialized index operations**
+
+- Added deterministic retrieval benchmark utilities for Recall@k, MRR, nDCG, and configurable quality gates, with a checked-in smoke benchmark under `benchmarks/retrieval_quality.json`.
+- Added query-local citation IDs (`S1`, `S2`, ...), source paths, PDF page locations, chunk IDs, and explicit untrusted-document boundaries for prompt-injection resistance.
+- Added a configurable low-evidence refusal threshold so the LLM is not called when retrieval cannot provide sufficient support.
+- Added a serialized TUI index queue, immutable query snapshots, bounded privacy-preserving runtime metrics, and incremental BM25 tokenization reuse.
+- Added Phase C regressions for quality gates, citations, prompt-injection boundaries, refusal behavior, queue serialization, snapshots, and lexical cache reuse.
+
+**Phase B: manifest-consistent indexing and atomic source updates**
+
+- Added an atomic per-collection manifest with content hashes, source chunk IDs, embedding configuration, chunking configuration, and monotonically increasing manifest versions.
+- Source additions, modifications, and deletions now update Chroma, the BM25 snapshot, and manifest sidecars together with rollback on failed commits.
+- Graph RAG caches and TUI/CLI state now carry and validate the same manifest version; added end-to-end regressions for modification, deletion, same-name sources, duplicate text, and rollback.
+
+**完成阶段 A：可靠底座修复**
+
+- 测试清理改为跨平台实现，注册 `integration` marker，并通过 `MNEME_RUN_INTEGRATION=1` 将真实 LLM 测试设为显式开关；新增 Windows/Linux CI。
+- 锁定 `pyproject.toml` 与 `requirements.txt` 的直接依赖版本，避免 ChromaDB 等依赖漂移。
+- 配置保存失败时不再输出完整 API Key，增加明文密钥回归测试。
+- 为索引 chunk 增加 `source_id`、规范化 `source_path`、`chunk_id` 和内容哈希；来源更新按精确来源替换，删除不再按 basename 匹配，重复文本检索和引用改用稳定 chunk ID。
+- Graph RAG 缓存绑定当前索引指纹，来源新增、修改或删除后自动失效并重建；文件监听补充修改事件处理。
 
 **Graph RAG 实体提取模型名不再硬编码**
 

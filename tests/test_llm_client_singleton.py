@@ -23,7 +23,7 @@ Mock 策略注解：
 """
 import sys
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 import src.graph_rag as graph_rag
 from openai import OpenAI
@@ -41,6 +41,7 @@ class TestGetLLMClientSingleton:
         """
         graph_rag.OpenAI = OpenAI
         graph_rag._llm_client = None
+        graph_rag._llm_client_config = None
 
     def test_returns_same_instance_on_multiple_calls(self):
         """多次调用返回同一实例
@@ -69,6 +70,7 @@ class TestGetLLMClientSingleton:
                 # 恢复 graph_rag 中的 OpenAI 为 mock（测试隔离）
                 graph_rag.OpenAI = mock_openai_class
                 graph_rag._llm_client = None
+                graph_rag._llm_client_config = None
 
                 client = graph_rag._get_llm_client()
 
@@ -79,3 +81,23 @@ class TestGetLLMClientSingleton:
                 )
                 # 返回的是 mock 实例
                 assert client is mock_openai_class.return_value
+
+    def test_refreshes_client_when_endpoint_configuration_changes(self):
+        with patch("src.graph_rag.OpenAI") as mock_openai_class:
+            mock_openai_class.side_effect = [object(), object()]
+            with patch.dict("os.environ", {
+                "API_KEY": "first-key",
+                "BASE_URL": "https://first.example/v1",
+            }, clear=True):
+                first = graph_rag._get_llm_client()
+            with patch.dict("os.environ", {
+                "API_KEY": "second-key",
+                "BASE_URL": "https://second.example/v1",
+            }, clear=True):
+                second = graph_rag._get_llm_client()
+
+        assert first is not second
+        assert mock_openai_class.call_args_list == [
+            call(api_key="first-key", base_url="https://first.example/v1"),
+            call(api_key="second-key", base_url="https://second.example/v1"),
+        ]

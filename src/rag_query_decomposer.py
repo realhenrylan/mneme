@@ -5,6 +5,7 @@ import re
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from src.security import endpoint_validation_error, validate_endpoint
 
 load_dotenv()
 
@@ -60,6 +61,9 @@ def decompose_query_llm(
     base_url = os.getenv("BASE_URL")
     if not api_key or not base_url:
         return [query]
+    if endpoint_validation_error(base_url):
+        return [query]
+    base_url = validate_endpoint(base_url)
 
     for attempt in range(max_retries):
         try:

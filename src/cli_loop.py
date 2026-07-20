@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import time
 import sys
+import os
 
 # ── 辅助函数 ──
 
@@ -213,8 +214,20 @@ def run_interactive_session(
             if is_graph_rag:
                 # Graph RAG 特有：重建 KG
                 from src.graph_rag import KnowledgeGraph
+                from src.rag import index_fingerprint, CHROMA_DB_PATH, load_index_manifest
                 kg = KnowledgeGraph()
-                kg.build_from_chunks(all_docs, verbose=True)
+                ids = [
+                    metadata.get("chunk_id", str(index))
+                    for index, metadata in enumerate(all_metadatas)
+                ]
+                kg.build_from_chunks(all_docs, chunk_ids=ids, verbose=True)
+                collection_data = collection.get()
+                persisted_ids = collection_data.get("ids") or ids
+                kg.save(
+                    os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.json"),
+                    index_fingerprint(persisted_ids, all_metadatas),
+                    (load_index_manifest(collection_name) or {}).get("manifest_version"),
+                )
                 extra_state = kg
             print(f"已新增索引，当前共 {len(all_docs)} 个文档块")
             continue

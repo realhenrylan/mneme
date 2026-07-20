@@ -71,7 +71,10 @@ def render_home(console: Console) -> dict:
     collection = collection or default_name
 
     client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
-    exists = _collection_exists(client, collection)
+    try:
+        exists = _collection_exists(client, collection)
+    finally:
+        client.close()
 
     console.print()
     if not exists:

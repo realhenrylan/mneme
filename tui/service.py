@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import os
+import json
 import threading
 
 from tui.file_watcher import FileWatcher
+from src.index_queue import IndexQueue, make_snapshot
+from src.metrics import GLOBAL_METRICS
 
 from src.rag import (
     prepare_index, build_bm25_index,
@@ -17,6 +20,11 @@ from src.rag import (
     EMBEDDING_MODEL_NAME, DEFAULT_LLM_MODEL,
     _collection_exists,
     _load_sentence_transformer,
+    index_fingerprint,
+    load_index_manifest,
+    load_bm25_snapshot,
+    set_manifest_version,
+    close_chroma_clients,
 )
 from src.graph_rag import (
     prepare_graph_index,
@@ -38,6 +46,8 @@ class LocalRagService:
         self._watch_dir = None
         self._watcher = None
         self._lock = threading.Lock()
+        self._index_queue = IndexQueue()
+        self._snapshot = None
 
     def _ensure_model(self):
         if self._model is None:
@@ -68,6 +78,7 @@ class LocalRagService:
         self._bm25 = bm25
         self._docs = docs
         self._metadatas = metadatas
+        self._refresh_snapshot()
         return self.get_stats()
 
     def _build_graph_index(self, file_paths, collection_name, force_rebuild, progress_callback=None):
@@ -81,6 +92,7 @@ class LocalRagService:
         self._docs = docs
         self._metadatas = metadatas
         self._kg = kg
+        self._refresh_snapshot()
         return self.get_stats()
 
     def _llm_model(self) -> str:
@@ -93,9 +105,24 @@ class LocalRagService:
         temperature: float = 0.1,
         top_k_range: tuple = (3, 20),
     ) -> tuple:
+        return self._index_queue.run(
+            self._query_from_snapshot,
+            query, history, temperature, top_k_range,
+        )
+
+    def _query_from_snapshot(
+        self,
+        query: str,
+        history: list[tuple[str, str]],
+        temperature: float,
+        top_k_range: tuple,
+    ) -> tuple:
+        snapshot = self._snapshot
+        if snapshot is None:
+            raise RuntimeError("index is not prepared")
         return answer_query_stream(
-            query, self._model, self._collection, self._bm25,
-            self._docs, self._metadatas, history,
+            query, self._model, snapshot.collection, snapshot.bm25,
+            list(snapshot.documents), list(snapshot.metadatas), history,
             top_k_range=top_k_range, temperature=temperature,
             llm_model=self._llm_model(),
         )
@@ -108,39 +135,98 @@ class LocalRagService:
         temperature: float = 0.1,
         top_k_range: tuple = (3, 50),
     ) -> tuple:
+        return self._index_queue.run(
+            self._graph_query_from_snapshot,
+            query, history, alpha, temperature, top_k_range,
+        )
+
+    def _graph_query_from_snapshot(
+        self,
+        query: str,
+        history: list[tuple[str, str]],
+        alpha: float,
+        temperature: float,
+        top_k_range: tuple,
+    ) -> tuple:
+        snapshot = self._snapshot
+        if snapshot is None:
+            raise RuntimeError("index is not prepared")
         return graph_query_stream(
-            query, self._model, self._collection, self._bm25,
-            self._docs, self._metadatas, self._kg,
+            query, self._model, snapshot.collection, snapshot.bm25,
+            list(snapshot.documents), list(snapshot.metadatas), self._kg,
             history=history, alpha=alpha,
             temperature=temperature, top_k_range=top_k_range,
             llm_model=self._llm_model(),
         )
 
     def add_files(self, file_paths: list[str]) -> dict:
-        with self._lock:
-            self._ensure_model()
-            bm25, docs, metadatas = add_files_to_index(
-                file_paths, self._model, self._collection,
+        return self._index_queue.run(self._add_files_sync, file_paths)
+
+    def _add_files_sync(self, file_paths: list[str]) -> dict:
+        self._ensure_model()
+        bm25, docs, metadatas = add_files_to_index(
+            file_paths, self._model, self._collection,
+        )
+        self._bm25 = bm25
+        self._docs = docs
+        self._metadatas = metadatas
+        if self._mode == "graph":
+            self._kg = KnowledgeGraph()
+            ids = [
+                metadata.get("chunk_id", str(index))
+                for index, metadata in enumerate(metadatas)
+            ]
+            self._kg.build_from_chunks(docs, chunk_ids=ids, verbose=False)
+            kg_file = os.path.join(CHROMA_DB_PATH, f"{self._collection_name}_kg.json")
+            manifest = load_index_manifest(self._collection_name)
+            self._kg.save(
+                kg_file,
+                index_fingerprint(self._collection.get()["ids"], metadatas),
+                manifest.get("manifest_version") if manifest else None,
             )
-            self._bm25 = bm25
-            self._docs = docs
-            self._metadatas = metadatas
-            if self._mode == "graph":
-                self._kg = KnowledgeGraph()
-                self._kg.build_from_chunks(docs, verbose=False)
-                kg_file = os.path.join(CHROMA_DB_PATH, f"{self._collection_name}_kg.pkl")
-                self._kg.save(kg_file)
-            return self.get_stats()
+        self._refresh_snapshot()
+        return self.get_stats()
 
     def remove_file(self, filename: str) -> int:
-        with self._lock:
-            count = remove_file_from_index(filename, self._collection)
-            if self._collection is not None:
-                all_data = self._collection.get()
-                self._docs = all_data["documents"]
-                self._metadatas = all_data["metadatas"]
-                self._bm25 = build_bm25_index(self._docs)
-            return count
+        return self._index_queue.run(self._remove_file_sync, filename)
+
+    def _remove_file_sync(self, filename: str) -> int:
+        count = remove_file_from_index(filename, self._collection)
+        if self._collection is not None:
+            all_data = self._collection.get()
+            self._docs = all_data["documents"]
+            self._metadatas = all_data["metadatas"]
+            manifest = load_index_manifest(self._collection_name)
+            self._bm25 = set_manifest_version(
+                build_bm25_index(
+                    self._docs,
+                    ids=all_data.get("ids", []),
+                ),
+                manifest.get("manifest_version") if manifest else None,
+            )
+            if self._mode == "graph":
+                kg_file = os.path.join(CHROMA_DB_PATH, f"{self._collection_name}_kg.json")
+                if self._docs:
+                    self._kg = KnowledgeGraph()
+                    ids = all_data.get("ids", [])
+                    self._kg.build_from_chunks(
+                        self._docs,
+                        chunk_ids=ids,
+                        verbose=False,
+                    )
+                    self._kg.save(
+                        kg_file,
+                        index_fingerprint(ids, self._metadatas),
+                        manifest.get("manifest_version") if manifest else None,
+                    )
+                else:
+                    self._kg = None
+                    try:
+                        os.remove(kg_file)
+                    except FileNotFoundError:
+                        pass
+        self._refresh_snapshot()
+        return count
 
     def get_stats(self) -> dict:
         stats = {
@@ -149,10 +235,18 @@ class LocalRagService:
             "chunk_count": len(self._docs) if self._docs else 0,
             "files": [],
         }
+        manifest = load_index_manifest(self._collection_name) if self._collection_name else None
+        stats["manifest_version"] = manifest.get("manifest_version") if manifest else None
+        stats["bm25_manifest_version"] = getattr(self._bm25, "manifest_version", None)
+        stats["snapshot_manifest_version"] = (
+            self._snapshot.manifest_version if self._snapshot else None
+        )
+        stats["index_queue"] = self._index_queue.status()
+        stats["metrics"] = GLOBAL_METRICS.summary()
         if self._metadatas:
             seen = set()
             for meta in self._metadatas:
-                source = meta.get("source", "")
+                source = meta.get("source_path") or meta.get("source", "")
                 if source and source not in seen:
                     seen.add(source)
                     stats["files"].append(source)
@@ -160,6 +254,23 @@ class LocalRagService:
             stats["entity_count"] = self._kg.entity_graph.number_of_nodes()
             stats["relation_count"] = self._kg.entity_graph.number_of_edges()
         return stats
+
+    def _refresh_snapshot(self) -> None:
+        """Publish one immutable query view after every completed mutation."""
+        if self._collection is None:
+            self._snapshot = None
+            return
+        all_data = self._collection.get()
+        manifest = load_index_manifest(self._collection_name) if self._collection_name else None
+        with self._lock:
+            self._snapshot = make_snapshot(
+                self._collection,
+                self._bm25,
+                all_data.get("documents", []),
+                all_data.get("metadatas", []),
+                all_data.get("ids", []),
+                manifest.get("manifest_version") if manifest else None,
+            )
 
     def set_mode(self, mode: str):
         self._mode = mode
@@ -178,18 +289,51 @@ class LocalRagService:
 
         self._docs = docs
         self._metadatas = metadatas
+        self._collection = collection
         self._collection_name = collection_name
+        manifest = load_index_manifest(collection_name)
+        self._bm25 = set_manifest_version(
+            build_bm25_index(
+                docs,
+                ids=all_data.get("ids", []),
+                previous_snapshot=load_bm25_snapshot(collection_name),
+            ),
+            manifest.get("manifest_version") if manifest else None,
+        )
+        self._refresh_snapshot()
 
-        kg_file = os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.pkl")
+        kg_file = os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.json")
+        current_fingerprint = index_fingerprint(all_data["ids"], metadatas)
+        manifest = load_index_manifest(collection_name)
+        current_manifest_version = manifest.get("manifest_version") if manifest else None
         if os.path.exists(kg_file):
-            self._kg = KnowledgeGraph.load(kg_file)
+            try:
+                candidate = KnowledgeGraph.load(kg_file)
+            except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError):
+                candidate = None
+            if (
+                candidate is not None
+                and candidate.index_fingerprint == current_fingerprint
+                and candidate.manifest_version == current_manifest_version
+            ):
+                self._kg = candidate
+            else:
+                self._kg = KnowledgeGraph()
+                self._kg.build_from_chunks(
+                    docs, chunk_ids=all_data["ids"], verbose=False,
+                    progress_callback=progress_callback,
+                )
+                self._kg.save(kg_file, current_fingerprint, current_manifest_version)
             if progress_callback:
                 progress_callback(1, 1)
             return
 
         self._kg = KnowledgeGraph()
-        self._kg.build_from_chunks(docs, verbose=False, progress_callback=progress_callback)
-        self._kg.save(kg_file)
+        self._kg.build_from_chunks(
+            docs, chunk_ids=all_data["ids"], verbose=False,
+            progress_callback=progress_callback,
+        )
+        self._kg.save(kg_file, current_fingerprint, current_manifest_version)
 
     def get_kg(self):
         return self._kg
@@ -221,6 +365,17 @@ class LocalRagService:
             self._watcher.stop()
             self._watcher = None
 
+    def close(self) -> None:
+        """Stop background work and release Chroma's shared file handles."""
+        self.stop_watching()
+        self._index_queue.close()
+        close_chroma_clients()
+        try:
+            chromadb.api.client.SharedSystemClient.clear_system_cache()
+        except AttributeError:
+            # Lightweight test doubles may not expose Chroma's shared cache.
+            pass
+
     def _on_new_file(self, path: str) -> None:
         try:
             self.add_files([path])
@@ -229,6 +384,6 @@ class LocalRagService:
 
     def _on_removed_file(self, path: str) -> None:
         try:
-            self.remove_file(os.path.basename(path))
+            self.remove_file(path)
         except Exception:
             pass

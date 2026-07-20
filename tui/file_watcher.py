@@ -38,7 +38,7 @@ class FileWatcher:
         self.on_removed_file = on_removed_file
         self._observer = Observer()
         self._handler = _FileHandler(
-            self.watch_dir, self._on_new, self._on_removed
+            self.watch_dir, self._on_new, self._on_removed, self._on_modified
         )
         self._seen: set[str] = set()
         self._debounce = _DebounceTimer(2.0, self._emit_new_file)
@@ -64,6 +64,13 @@ class FileWatcher:
             self._seen.discard(path)
         self.on_removed_file(path)
 
+    def _on_modified(self, path: str):
+        # A modified file has the same source identity but new content.  Drop
+        # the debounce guard so the service replaces that source's chunks.
+        with self._lock:
+            self._seen.discard(path)
+        self._on_new(path)
+
     def start(self):
         if self._running:
             return
@@ -82,10 +89,11 @@ class FileWatcher:
 
 
 class _FileHandler(FileSystemEventHandler):
-    def __init__(self, watch_dir: str, on_new_file, on_removed_file):
+    def __init__(self, watch_dir: str, on_new_file, on_removed_file, on_modified_file):
         self.watch_dir = watch_dir
         self.on_new_file = on_new_file
         self.on_removed_file = on_removed_file
+        self.on_modified_file = on_modified_file
 
     def _is_ignored(self, name: str) -> bool:
         base = os.path.basename(name)
@@ -100,6 +108,13 @@ class _FileHandler(FileSystemEventHandler):
         path = event.src_path
         if not self._is_ignored(path):
             self.on_new_file(path)
+
+    def on_modified(self, event):
+        if event.is_directory:
+            return
+        path = event.src_path
+        if not self._is_ignored(path):
+            self.on_modified_file(path)
 
     def on_moved(self, event):
         if event.is_directory:

@@ -156,3 +156,30 @@ class TestApiKeyMasking:
         api_key = "sk-proj-abcdef123456"
         masked = _mask_api_key(api_key)
         assert masked.startswith("sk-")
+
+
+class TestOnboardingSaveErrors:
+    """配置写入失败时不得把用户输入回显到终端。"""
+
+    def test_save_error_does_not_print_api_key(self):
+        from io import StringIO
+        from rich.console import Console
+        from tui.screens.onboarding import _save_config
+        from unittest.mock import patch
+
+        secret = "sk-sensitive-test-key-123456"
+        output = StringIO()
+        console = Console(file=output, force_terminal=False)
+        config = {
+            "api_key": secret,
+            "base_url": "https://example.test/v1",
+            "llm_model": "test-model",
+        }
+
+        with patch(
+            "tui.screens.onboarding.set_key",
+            side_effect=RuntimeError(f"write failed for {secret}"),
+        ):
+            assert _save_config(console, config) is False
+
+        assert secret not in output.getvalue()

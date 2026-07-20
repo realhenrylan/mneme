@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "description": "Small deterministic smoke benchmark for retrieval ranking. Replace or extend cases with project datasets.",
+  "k": 3,
+  "corpus": [
+    {"chunk_id": "mobility-0", "text": "Mobility analysis studies travel behavior and transportation demand."},
+    {"chunk_id": "privacy-0", "text": "Privacy controls restrict which documents can be sent to a remote model."},
+    {"chunk_id": "graph-0", "text": "Graph retrieval expands from entities to related document chunks."}
+  ],
+  "cases": [
+    {"id": "mobility", "query": "What does mobility analysis study?", "relevant_chunk_ids": ["mobility-0"]},
+    {"id": "privacy", "query": "Which control restricts remote document sending?", "relevant_chunk_ids": ["privacy-0"]},
+    {"id": "graph", "query": "How does graph retrieval find related text?", "relevant_chunk_ids": ["graph-0"]}
+  ],
+  "quality_gates": {
+    "recall@3": 1.0,
+    "mrr": 0.8,
+    "ndcg@3": 0.8
+  }
+}

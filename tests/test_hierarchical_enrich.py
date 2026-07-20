@@ -10,7 +10,7 @@ NOTE: Each test uses a UNIQUE collection name.
       and each test builds its own isolated collection from scratch.
 """
 import os
-import subprocess
+import shutil
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -22,6 +22,7 @@ except ImportError:
     HAS_PYTEST = False
 
 import src.rag as rag
+from conftest import cleanup_test_path
 from src.rag import (
     prepare_index, retrieve_hybrid_with_sources, dynamic_top_k,
     enrich_context, load_pdf_pages,
@@ -35,10 +36,10 @@ _original_db_path = _ORIGINAL_DB
 
 
 def setup_module():
-    """用 subprocess 绕过 macOS SQLite lock，确保干净数据库"""
+    """使用跨平台清理，确保干净数据库。"""
     db_dir = str(TEST_DB)
     if os.path.exists(db_dir):
-        subprocess.run(["rm", "-rf", db_dir], check=False)
+        cleanup_test_path(db_dir)
     TEST_DB.parent.mkdir(parents=True, exist_ok=True)
     rag.CHROMA_DB_PATH = db_dir
 
@@ -47,7 +48,7 @@ def teardown_module():
     """清理测试数据库"""
     db_dir = str(TEST_DB)
     if os.path.exists(db_dir):
-        subprocess.run(["rm", "-rf", db_dir], check=False)
+        cleanup_test_path(db_dir)
     rag.CHROMA_DB_PATH = _original_db_path
 
 

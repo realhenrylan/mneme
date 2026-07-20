@@ -15,6 +15,12 @@ from questionary import Style as QStyle
 from tui.theme import THEME
 from tui.logo import LOGO
 from tui.components.message import error_panel
+from src.security import (
+    DEFAULT_MAX_DOCUMENT_BYTES,
+    DEFAULT_MAX_PDF_PAGES,
+    DEFAULT_MAX_REMOTE_CONTEXT_CHARS,
+    endpoint_validation_error,
+)
 
 
 # ── Provider 与模型联动配置 ────────────────────────────────
@@ -201,11 +207,17 @@ def _step_base_url(console: Console) -> str:
     console.print(f"[bold {THEME['accent']}]Step 2b/4: 自定义 Base URL[/]\n")
     console.print(
         f"  [{THEME['text_dim']}]请输入 API Base URL：[/]\n"
+        f"  [{THEME['warning']}]注意：检索到的文档片段会发送到此端点，用于查询改写、实体抽取和回答生成。[/]\n"
+        f"  [{THEME['warning']}]请勿索引密钥、密码等敏感文件；远程端点默认要求 HTTPS。[/]\n"
+        f"  [{THEME['text_dim']}]默认资源上限：单文件 {DEFAULT_MAX_DOCUMENT_BYTES // (1024 * 1024)} MiB、PDF {DEFAULT_MAX_PDF_PAGES} 页、单次上下文 {DEFAULT_MAX_REMOTE_CONTEXT_CHARS} 字符。[/]\n"
     )
+
+    def validate_url(value: str):
+        return endpoint_validation_error(value) or True
 
     url = questionary.text(
         "Base URL:",
-        validate=lambda x: x.strip().startswith("http") or "URL 应以 http/https 开头",
+        validate=validate_url,
         style=_QS,
     ).ask()
 
@@ -316,13 +328,12 @@ def _save_config(console: Console, config: dict) -> bool:
         return True
 
     except Exception as e:
-        # 写入失败，打印配置供用户手动保存
+        # Never print the values supplied by the user.  In particular, API keys
+        # must not end up in terminal history, screenshots, or support logs.
         console.print(error_panel(
-            f"保存配置失败: {e}\n\n"
-            "请手动创建 .env 文件并添加以下内容：\n"
-            f"  API_KEY='{config['api_key']}'\n"
-            f"  BASE_URL='{config['base_url']}'\n"
-            f"  LLM_MODEL='{config['llm_model']}'",
+            f"保存配置失败（{type(e).__name__}）。\n\n"
+            f"请检查配置文件写入权限：{os.path.abspath('.env')}\n"
+            "配置值未显示，请勿将 API Key 粘贴到日志中。",
             title="配置保存失败",
         ))
         return False

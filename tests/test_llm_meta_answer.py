@@ -12,7 +12,6 @@ TDD 测试：验证 LLM context 是否包含来源文件名信息（Issue #16）
 """
 import os
 import shutil
-import subprocess
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -24,6 +23,7 @@ except ImportError:
     HAS_PYTEST = False
 
 import src.rag as rag
+from conftest import cleanup_test_path
 from src.rag import (
     prepare_index, build_bm25_index, SentenceTransformer, chromadb,
     CHROMA_DB_PATH as _ORIGINAL_DB,
@@ -42,7 +42,7 @@ def setup_module():
     """确保干净的测试数据库"""
     db_dir = str(TEST_DB_PATH)
     if os.path.exists(db_dir):
-        subprocess.run(["rm", "-rf", db_dir], check=False)
+        cleanup_test_path(db_dir)
     rag.CHROMA_DB_PATH = db_dir
 
 
@@ -50,7 +50,7 @@ def teardown_module():
     """清理测试数据库"""
     db_dir = str(TEST_DB_PATH)
     if os.path.exists(db_dir):
-        subprocess.run(["rm", "-rf", db_dir], check=False)
+        cleanup_test_path(db_dir)
     rag.CHROMA_DB_PATH = _original_db_path
 
 
@@ -173,11 +173,15 @@ class TestContextInRagPipeline:
     @classmethod
     def teardown_class(cls):
         """清理 collection"""
+        client = None
         try:
             client = chromadb.PersistentClient(path=str(TEST_DB_PATH))
             client.delete_collection(cls.COLLECTION_NAME)
         except Exception:
             pass
+        finally:
+            if client is not None:
+                client.close()
 
     def test_metadatas_contain_source(self):
         """所有 metadatas 应该有 source 字段"""
@@ -202,6 +206,7 @@ class TestContextInRagPipeline:
 # 集成测试：端到端验证 LLM 回答
 # ═══════════════════════════════════════════════
 
+@pytest.mark.integration
 class TestLlmCanAnswerMetaQuestion:
     """端到端测试 LLM 能否回答文件数量问题（需要 .env 中的 API Key）"""
 
@@ -228,11 +233,15 @@ class TestLlmCanAnswerMetaQuestion:
     @classmethod
     def teardown_class(cls):
         if not cls.skip:
+            client = None
             try:
                 client = chromadb.PersistentClient(path=str(TEST_DB_PATH))
                 client.delete_collection(cls.COLLECTION_NAME)
             except Exception:
                 pass
+            finally:
+                if client is not None:
+                    client.close()
 
     def test_llm_can_count_files(self):
         """提问文件数量，验证 LLM context 含 [Source: ...] 标注，回答基于实际内容"""

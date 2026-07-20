@@ -1,10 +1,11 @@
 """LLM 驱动的查询拆解 — TDD 测试套件"""
 
 import os
-import subprocess
+import shutil
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 import pytest
+from conftest import cleanup_test_path
 
 from src.rag_query_decomposer import should_decompose, decompose_query_llm
 
@@ -91,9 +92,9 @@ _ORIGINAL_DB = str(PROJECT_ROOT / "chroma_db")
 
 
 def _make_test_db(name: str) -> str:
-    """Return a fresh isolated DB path; use subprocess to avoid macOS SQLite lock issues."""
+    """Return a fresh isolated DB path using a cross-platform cleanup."""
     db_path = str(PROJECT_ROOT / "tests" / "analysis" / f"chroma_db_{name}")
-    subprocess.run(["rm", "-rf", db_path], check=False)
+    cleanup_test_path(db_path)
     return db_path
 
 
@@ -109,13 +110,11 @@ def _restore_original_db():
     import src.rag as rag
     rag.CHROMA_DB_PATH = _ORIGINAL_DB
     # Also clean up all decomposer test DBs
-    subprocess.run(
-        ["rm", "-rf", str(PROJECT_ROOT / "tests" / "analysis" / "chroma_db_recall"),
-         str(PROJECT_ROOT / "tests" / "analysis" / "chroma_db_dedup")],
-        check=False,
-    )
+    for name in ("chroma_db_recall", "chroma_db_dedup"):
+        cleanup_test_path(PROJECT_ROOT / "tests" / "analysis" / name)
 
 
+@pytest.mark.integration
 def test_multi_query_recall_improvement():
     """多 query 检索应比单 query 检索召回更多 anchor"""
     db_path = _make_test_db("recall")
@@ -144,6 +143,7 @@ def test_multi_query_recall_improvement():
         _restore_original_db()
 
 
+@pytest.mark.integration
 def test_multi_query_no_duplicates():
     """多 query 检索去重：相同 chunk 仅保留最高分，最终列表无重复索引"""
     db_path = _make_test_db("dedup")

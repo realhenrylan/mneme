@@ -10,21 +10,36 @@ Issue #3 修复验证：
 """
 
 import sys
+import importlib
 from contextlib import contextmanager
 from unittest.mock import MagicMock
 
 # Mock 外部依赖（在导入 graph_rag 之前）
-sys.modules['networkx'] = MagicMock()
-sys.modules['sentence_transformers'] = MagicMock()
-sys.modules['chromadb'] = MagicMock()
-sys.modules['rank_bm25'] = MagicMock()
-sys.modules['openai'] = MagicMock()
+_original_external_modules = {
+    name: sys.modules.get(name)
+    for name in ('networkx', 'sentence_transformers', 'chromadb', 'rank_bm25', 'openai')
+}
+for _name in _original_external_modules:
+    sys.modules[_name] = MagicMock()
 
 import pytest
 import warnings
 from unittest.mock import patch, MagicMock
 
-from src.graph_rag import KnowledgeGraph, extract_entities_llm_batch, _entity_cache
+# Restore the process-wide module table immediately after importing the unit
+# under test.  Otherwise a MagicMock ``chromadb`` leaks into later tests and
+# breaks Chroma's runtime type validation.
+for _name, _module in _original_external_modules.items():
+    if _module is None:
+        sys.modules.pop(_name, None)
+    else:
+        sys.modules[_name] = _module
+
+importlib.reload(importlib.import_module("src.rag"))
+_graph_rag_module = importlib.reload(importlib.import_module("src.graph_rag"))
+KnowledgeGraph = _graph_rag_module.KnowledgeGraph
+extract_entities_llm_batch = _graph_rag_module.extract_entities_llm_batch
+_entity_cache = _graph_rag_module._entity_cache
 
 
 class TestBatchProcessing:
@@ -55,8 +70,6 @@ class TestBatchProcessing:
     def test_empty_chunks(self):
         """测试空 chunks 输入"""
         kg = KnowledgeGraph()
-        # 设置 mock 返回值
-        kg.entity_graph.number_of_nodes.return_value = 0
         kg.build_from_chunks([], verbose=False)
         # 验证没有调用 LLM（空输入不需要处理）
         assert kg.entity_graph.number_of_nodes() == 0
