@@ -24,6 +24,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+**Replace the README PNG logo with a transparent SVG wordmark**
+
+- Updated the README logo reference to `.github/images/mneme-logo.svg`.
+- The new logo contains only the purple `MNEME` letters and has no background.
+
 **消除 rag.py 与 graph_rag.py 之间的 CLI 循环代码重复（Issue #6 DRY 重构）**
 
 - 新增 `src/cli_loop.py`，将 `rag.py` 和 `graph_rag.py` 的交互式 CLI 循环代码提取为公共模块
