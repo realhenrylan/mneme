@@ -24,6 +24,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+**Preserve the original logo glyphs in the transparent SVG**
+
+- Rebuilt `.github/images/mneme-logo.svg` from the original logo pixels instead of substituting a system font.
+- Removed the black background while preserving the original glyph shapes and antialiasing.
+- Removed the obsolete PNG asset now that the SVG is self-contained.
+
 **Replace the README PNG logo with a transparent SVG wordmark**
 
 - Updated the README logo reference to `.github/images/mneme-logo.svg`.
