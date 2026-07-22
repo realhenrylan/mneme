@@ -74,6 +74,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+**Skip LLM client initialization for empty graph batches**
+
+- Return an empty entity-result list before validating `BASE_URL` when no chunks are provided, keeping empty graph builds offline and deterministic.
+
 **P0 release closure: Graph RAG safety, endpoint policy, and Windows cleanup**
 
 - Replaced executable Graph RAG pickle caches with schema-validated atomic JSON; legacy `.pkl` files are invalidated without being loaded.

@@ -74,6 +74,9 @@ def extract_entities_llm_batch(texts: list[str],
         progress_callback: 进度回调函数 (done, total)，每批处理后调用
     """
 
+    if not texts:
+        return []
+
     client = _get_llm_client()
 
     for i in range(0, len(texts), batch_size):
