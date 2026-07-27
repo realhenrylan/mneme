@@ -1,0 +1,46 @@
+name: Deploy Docs to realhenrylan.github.io
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs-deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mneme
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd docs
+          npm ci
+
+      - name: Build with VitePress
+        run: |
+          cd docs
+          npm run docs:build
+
+      - name: Deploy to realhenrylan.github.io
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.DOCS_DEPLOY_TOKEN }}
+          external_repository: realhenrylan/realhenrylan.github.io
+          publish_branch: main
+          publish_dir: docs/.vitepress/dist
+          force_orphan: true
+          full_commit_message: "Deploy from mneme@${{ github.sha }}"

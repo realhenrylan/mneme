@@ -46,4 +46,18 @@ reports/
 models/
 
 # Ruff cache
-.ruff_cache/.zcode/.mcp.json
+.ruff_cache/
+
+# ZCode / MCP
+.zcode/
+.mcp.json
+
+# VitePress / Node
+node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# Screenshots / temporary
+*.png
+!docs/public/*.png
+!docs/public/*.svg

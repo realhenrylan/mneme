@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+**Mneme VitePress 文档展示站**
+
+- 新增 `docs/` 目录，使用 VitePress 构建静态文档站点：
+  - 首页：Hero 区（Logo + 标语 + CTA）+ 6 个 Feature 卡片 + Quick Preview 代码块
+  - 指南：快速开始、配置参考、TUI 命令速查
+  - 功能文档：混合检索、Graph RAG、查询拆解、安全设计
+  - 博客：中英文双语技术博客（原 `mneme-technical-blog-*` 迁移）
+  - 参考：配置项速查表、支持文件类型、更新日志
+  - 关于：项目愿景、架构原则、MIT License
+- 自定义主题样式，匹配 TUI 的 Obsidian 深紫配色（`#a78bfa` 品牌色）
+- 内置本地搜索、暗色/亮色模式切换、代码行号
+- 新增 GitHub Actions 工作流 `.github/workflows/docs-deploy.yml`，构建后自动推送到 `realhenrylan.github.io` 仓库
+- Logo 资源复制到 `docs/public/mneme-logo.svg` 供站点引用
+
+**新增 Mneme 双语技术博客**
+
+- 新增 `mneme-technical-blog-zh.md` 和 `mneme-technical-blog-en.md`，从混合检索、Graph RAG、索引一致性、引用边界、端点安全、TUI 并发模型和测试策略介绍当前项目实现。
+
 **项目综合改进评估报告**
 
 - 新增 `plans/2026-07-20-project-optimization-assessment.md`，记录索引一致性、测试与依赖、数据安全、性能、检索质量、架构与发布的改进建议及实施优先级。
