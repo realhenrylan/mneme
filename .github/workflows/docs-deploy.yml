@@ -35,12 +35,15 @@ jobs:
           cd docs
           npm run docs:build
 
-      - name: Deploy to realhenrylan.github.io
+      - name: Deploy to realhenrylan.github.io/MNEME
         uses: peaceiris/actions-gh-pages@v4
         with:
           personal_token: ${{ secrets.DOCS_DEPLOY_TOKEN }}
           external_repository: realhenrylan/realhenrylan.github.io
           publish_branch: main
+          # Deploy built files into the MNEME/ subdirectory
+          destination_dir: MNEME
+          # Keep other files in the repo intact (e.g. root index.html)
+          keep_files: true
           publish_dir: docs/.vitepress/dist
-          force_orphan: true
-          full_commit_message: "Deploy from mneme@${{ github.sha }}"
+          full_commit_message: "Deploy MNEME docs from mneme@${{ github.sha }}"

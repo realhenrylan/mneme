@@ -5,8 +5,8 @@ export default defineConfig({
   title: 'Mneme',
   description: 'Local-document RAG with Graph RAG — Named after Mnemosyne, the Greek goddess of memory',
 
-  // Base URL for GitHub Pages user site (root)
-  base: '/',
+  // Base URL for GitHub Pages — site is served from /MNEME/ subdirectory
+  base: '/MNEME/',
 
   // Enable clean URLs (no .html suffix)
   cleanUrls: true,
@@ -205,7 +205,7 @@ export default defineConfig({
 
   // Head tags
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/mneme-logo.svg' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/MNEME/mneme-logo.svg' }],
     ['meta', { name: 'theme-color', content: '#a78bfa' }],
   ],
 })
