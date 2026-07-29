@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- 删除 `docs/` 目录（VitePress 文档站点及相关资源）
+
 ### Added
 
 **Mneme VitePress 文档展示站**
