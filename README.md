@@ -51,12 +51,41 @@ User question
 
 ## Quick start
 
-### Prerequisites
+### Option A: Docker (recommended)
+
+Prerequisites: [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/realhenrylan/mneme.git
+cd mneme
+
+# 2. Configure environment
+cp .env.example .env
+# Edit .env — at minimum set API_KEY and BASE_URL
+
+# 3. Place documents in the data directory
+mkdir -p data
+cp /path/to/your/docs/* data/
+
+# 4. Start the TUI
+docker compose up
+
+# Or use CLI modes:
+docker compose run rag --files /data/xxx --collection my_docs
+docker compose run graph-rag --files /data/xxx --collection my_docs --alpha 0.7
+```
+
+Data persistence: `./data` (documents), `./chroma_db` (vector index), and `./models` (embedding model cache) are mounted as volumes and survive container restarts.
+
+### Option B: Local Python
+
+Prerequisites:
 
 - Python 3.10 or newer
 - An OpenAI-compatible API endpoint and API key (for example, DeepSeek or OpenAI)
 
-### Install
+Install:
 
 ```bash
 git clone https://github.com/realhenrylan/mneme.git
@@ -102,7 +131,7 @@ On first launch, the onboarding wizard can collect and save the API settings. AP
 ### Run the terminal UI
 
 ```bash
-python -m tui
+mneme
 ```
 
 The UI supports Standard RAG and Graph RAG, file management, directory watching, settings, source display, and streaming answers.

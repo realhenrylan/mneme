@@ -51,12 +51,41 @@ Mneme 为本地文档建立索引，并通过 OpenAI 兼容 API 回答问题。�
 
 ## 快速开始
 
-### 环境要求
+### 方式 A：Docker（推荐）
+
+前置条件：[Docker](https://docs.docker.com/get-docker/) 和 [Docker Compose](https://docs.docker.com/compose/install/)。
+
+```bash
+# 1. 克隆仓库
+git clone https://github.com/realhenrylan/mneme.git
+cd mneme
+
+# 2. 配置环境变量
+cp .env.example .env
+# 编辑 .env — 至少设置 API_KEY 和 BASE_URL
+
+# 3. 将文档放入 data 目录
+mkdir -p data
+cp /path/to/your/docs/* data/
+
+# 4. 启动 TUI
+docker compose up
+
+# 或使用 CLI 模式：
+docker compose run rag --files /data/xxx --collection my_docs
+docker compose run graph-rag --files /data/xxx --collection my_docs --alpha 0.7
+```
+
+数据持久化：`./data`（文档）、`./chroma_db`（向量索引）和 `./models`（嵌入模型缓存）通过卷挂载，容器重启后数据不丢失。
+
+### 方式 B：本地 Python
+
+前置条件：
 
 - Python 3.10 或更高版本
 - 一个 OpenAI 兼容 API 端点和 API Key（例如 DeepSeek、OpenAI）
 
-### 安装
+安装：
 
 ```bash
 git clone https://github.com/realhenrylan/mneme.git
@@ -102,7 +131,7 @@ LLM_MODEL=deepseek-chat
 ### 启动终端 UI
 
 ```bash
-python -m tui
+mneme
 ```
 
 UI 支持 Standard RAG、Graph RAG、文件管理、目录监控、设置、来源展示和流式回答。

@@ -1,0 +1,39 @@
+services:
+  # ── TUI 模式（默认） ──
+  # docker compose up
+  tui:
+    build: .
+    container_name: mneme-tui
+    tty: true          # 终端 UI 需要 TTY 支持
+    stdin_open: true   # 保持 stdin 开放以接收键盘输入
+    env_file: .env
+    volumes:
+      - ./data:/data                        # 用户文档目录
+      - ./chroma_db:/app/src/chroma_db      # 向量数据库持久化
+      - ./models:/app/models                # 模型缓存持久化
+
+  # ── 标准 RAG CLI 模式 ──
+  # docker compose run rag --files /data/xxx
+  rag:
+    build: .
+    container_name: mneme-rag
+    entrypoint: ["python", "src/rag.py"]
+    stdin_open: true
+    env_file: .env
+    volumes:
+      - ./data:/data
+      - ./chroma_db:/app/src/chroma_db
+      - ./models:/app/models
+
+  # ── Graph RAG CLI 模式 ──
+  # docker compose run graph-rag --files /data/xxx
+  graph-rag:
+    build: .
+    container_name: mneme-graph-rag
+    entrypoint: ["python", "src/graph_rag.py"]
+    stdin_open: true
+    env_file: .env
+    volumes:
+      - ./data:/data
+      - ./chroma_db:/app/src/chroma_db
+      - ./models:/app/models

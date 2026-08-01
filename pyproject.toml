@@ -28,6 +28,9 @@ dependencies = [
     "watchdog==6.0.0",
 ]
 
+[project.scripts]
+mneme = "tui.__main__:main"
+
 [project.optional-dependencies]
 dev = [
     "pytest==9.0.3",

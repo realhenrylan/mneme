@@ -1,0 +1,47 @@
+# 版本控制
+.git/
+.gitignore
+
+# Python 虚拟环境和缓存
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# 运行时数据（通过 volume 挂载，不需要打包进镜像）
+chroma_db/
+models/
+data/
+
+# 环境变量（敏感信息，通过 .env 文件或 -e 传入）
+.env
+
+# 文档和计划（不影响运行）
+docs/
+plans/
+benchmarks/
+.playwright-mcp/
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 测试
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 其他
+*.md
+!README.md
+LICENSE
+AGENTS.md
+.mcp.json

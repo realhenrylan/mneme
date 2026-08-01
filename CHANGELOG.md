@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Docker 支持** — 新增容器化部署，无需手动配置 Python 虚拟环境
+  - `Dockerfile`：多阶段构建（builder + runtime），构建时预下载 `all-MiniLM-L6-v2` 嵌入模型，运行阶段不包含构建工具以减小镜像体积
+  - `docker-compose.yml`：提供三种服务模式
+    - `tui`（默认）：`docker compose up` 启动终端 UI，支持 `tty` + `stdin_open` 交互
+    - `rag`：`docker compose run rag --files /data/xxx` 标准 RAG CLI
+    - `graph-rag`：`docker compose run graph-rag --files /data/xxx` Graph RAG CLI
+  - `.dockerignore`：排除 `.git`、`venv`、`chroma_db`、`models`、`docs` 等非运行文件
+  - 数据持久化：`./data`（文档）、`./chroma_db`（向量索引）、`./models`（模型缓存）通过 volume 挂载
+  - 环境变量通过 `.env` 文件自动注入，无需手动 `-e` 传递
+  - 更新 `README.md` / `README.zh.md`，新增 Docker 安装方式（方式 A）
+- **`mneme` 命令** — 注册 `console_scripts` 入口点，安装后可直接运行 `mneme` 启动 TUI（替代 `python -m tui`）
+  - `pyproject.toml` 新增 `[project.scripts] mneme = "tui.__main__:main"`
+  - `tui/__main__.py` 提取 `main()` 函数供 console_scripts 调用
+  - `Dockerfile` ENTRYPOINT 改为 `mneme`
+  - 更新 `README.md` / `README.zh.md` 启动命令
+
 ### Removed
 
 - 删除 `docs/` 目录（VitePress 文档站点及相关资源）
