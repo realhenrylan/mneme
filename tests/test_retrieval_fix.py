@@ -88,9 +88,11 @@ def test_tokenize_bilingual():
 
 
 def test_tokenize_chinese():
-    """中文分词"""
+    """中文分词：CJK n-gram tokenizer 生成 unigram + bigram"""
     tokens = _tokenize("这篇文章的作者都属于什么学校？")
-    assert "这篇文章的作者都属于什么学校" in tokens
+    # n-gram tokenizer 生成 unigram 和 bigram，不再将连续 CJK 当作一个 token
+    assert "这篇" in tokens  # bigram
+    assert "文章" in tokens  # bigram
     assert "？" not in str(tokens)
 
 

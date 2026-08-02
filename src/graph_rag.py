@@ -532,7 +532,7 @@ def build_graph_index(
 
     manifest = load_index_manifest(collection_name)
     bm25 = set_manifest_version(
-        build_bm25_index(all_docs),
+        build_bm25_index(all_docs, metadatas=all_metadatas),
         manifest.get("manifest_version") if manifest else None,
     )
 
@@ -594,7 +594,7 @@ def prepare_graph_index(
 
         manifest = load_index_manifest(collection_name)
         bm25 = set_manifest_version(
-            build_bm25_index(all_docs),
+            build_bm25_index(all_docs, metadatas=all_metadatas),
             manifest.get("manifest_version") if manifest else None,
         )
 

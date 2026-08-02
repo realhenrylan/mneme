@@ -31,6 +31,7 @@ from dotenv import load_dotenv
 
 from src.citations import citation_map, make_citation_records
 from src.domain import RetrievalCandidate, compute_context_k
+from src.lexical import cjk_ngram_tokenize, build_bm25_index as _build_bm25_index_lexical
 from src.metrics import GLOBAL_METRICS, QueryMetric, elapsed_ms
 from src.security import (
     remote_context_limit,
@@ -151,22 +152,23 @@ DEFAULT_TEMPERATURE = 0.2
 
 # This is part of the on-disk manifest. Changing a splitter parameter must
 # invalidate the collection instead of silently mixing chunking strategies.
+# 中文标点（。！？；）加入分隔符，确保中文文本在句号处正确分块。
 CHUNKING_CONFIG = {
-    "version": 1,
+    "version": 2,
     "default": {
         "size": DEFAULT_CHUNK_SIZE,
         "overlap": DEFAULT_CHUNK_OVERLAP,
-        "separators": ["\n\n", "\n", ".", " ", ""],
+        "separators": ["\n\n", "\n", "。", "！", "？", "；", ".", " ", ""],
     },
     "pdf": {
         "size": 400,
         "overlap": DEFAULT_CHUNK_OVERLAP,
-        "separators": ["\n\n", "\n", ".", " ", ""],
+        "separators": ["\n\n", "\n", "。", "！", "？", "；", ".", " ", ""],
     },
     "text": {
         "size": 2000,
         "overlap": 200,
-        "separators": ["\n\n", "\n", ".", " ", ""],
+        "separators": ["\n\n", "\n", "。", "！", "？", "；", ".", " ", ""],
     },
 }
 
@@ -745,7 +747,11 @@ def _commit_index_mutation(
 
 
 def index_fingerprint(ids: list[str], metadatas: list[dict]) -> str:
-    """Return a deterministic fingerprint for the current collection contents."""
+    """Return a deterministic fingerprint for the current collection contents.
+
+    Includes tokenizer type and chunking config version so that switching
+    the tokenizer or separators automatically invalidates the index.
+    """
     rows = []
     for chunk_id, metadata in zip(ids, metadatas):
         rows.append({
@@ -753,7 +759,15 @@ def index_fingerprint(ids: list[str], metadatas: list[dict]) -> str:
             "source_id": metadata.get("source_id", ""),
             "content_sha256": metadata.get("content_sha256", ""),
         })
-    payload = json.dumps(sorted(rows, key=lambda row: row["chunk_id"]), sort_keys=True)
+    payload = json.dumps(
+        {
+            "chunks": sorted(rows, key=lambda row: row["chunk_id"]),
+            "tokenizer": "cjk_ngram",
+            "chunking_version": CHUNKING_CONFIG["version"],
+            "embedding_model": EMBEDDING_MODEL_NAME,
+        },
+        sort_keys=True,
+    )
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
@@ -874,6 +888,7 @@ def prepare_index(
             all_docs,
             ids=all_data["ids"],
             previous_snapshot=load_bm25_snapshot(collection_name),
+            metadatas=all_metadatas,
         ),
         manifest.get("manifest_version") if manifest else None,
     )
@@ -1071,6 +1086,7 @@ def add_files_to_index(
             all_docs,
             ids=all_data["ids"],
             previous_snapshot=load_bm25_snapshot(collection_name),
+            metadatas=all_metadatas_full,
         ),
         manifest.get("manifest_version") if manifest else None,
     )
@@ -1085,48 +1101,30 @@ def add_files_to_index(
 from rank_bm25 import BM25Okapi
 
 
-_STRIP_PUNCT = re.compile(r'^[:;,\.!?\"\'\)]+|[:;,\.!?\"\'\(]+$')
-
-
+# _tokenize 保留为向后兼容别名，委托给 src.lexical 的 CJK n-gram tokenizer
 def _tokenize(text: str) -> list[str]:
-    raw = re.findall(r'[a-zA-Z]+[0-9]*|[0-9]+(?:\.[0-9]+)?|[\u4e00-\u9fff]+', text)
-    return [_STRIP_PUNCT.sub('', t).lower() for t in raw if _STRIP_PUNCT.sub('', t)]
+    """Tokenize text using CJK n-gram tokenizer (delegates to src.lexical)."""
+    return cjk_ngram_tokenize(text)
 
 
 def build_bm25_index(
     documents: list[str],
     ids: list[str] | None = None,
     previous_snapshot: dict | None = None,
+    metadatas: list[dict] | None = None,
 ) -> BM25Okapi:
-    """Build BM25 while reusing tokenization for unchanged chunk IDs."""
-    ids = ids or [str(index) for index in range(len(documents))]
-    previous_snapshot = previous_snapshot or {}
-    previous_hashes = previous_snapshot.get("document_hashes", {})
-    previous_tokens = previous_snapshot.get("tokenized", {})
-    tokenized = []
-    cache: dict[str, list[str]] = {}
-    for chunk_id, document in zip(ids, documents):
-        document = document or ""
-        document_hash = hashlib.sha256(
-            document.encode("utf-8", errors="replace")
-        ).hexdigest()
-        if (
-            previous_hashes.get(chunk_id) == document_hash
-            and isinstance(previous_tokens.get(chunk_id), list)
-        ):
-            tokens = previous_tokens[chunk_id]
-        else:
-            tokens = _tokenize(document)
-        tokenized.append(tokens)
-        cache[chunk_id] = tokens
-    # rank_bm25 crashes on empty corpora (ZeroDivisionError in _initialize / _calc_idf).
-    index = BM25Okapi(tokenized if tokenized and any(tokenized) else [["_"]])
-    setattr(index, "tokenized_by_chunk_id", cache)
-    setattr(index, "document_hashes", {
-        chunk_id: hashlib.sha256((document or "").encode("utf-8", errors="replace")).hexdigest()
-        for chunk_id, document in zip(ids, documents)
-    })
-    return index
+    """Build BM25 index with CJK n-gram tokenizer and field weighting.
+
+    Delegates to src.lexical.build_bm25_index for the actual implementation.
+    This wrapper preserves the existing call signature for backward compatibility.
+    """
+    return _build_bm25_index_lexical(
+        documents,
+        ids=ids,
+        previous_snapshot=previous_snapshot,
+        metadatas=metadatas,
+        use_cjk_ngram=True,
+    )
 
 
 def rrf_merge(

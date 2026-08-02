@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 1.1+1.2：CJK n-gram tokenizer + 元数据字段加权 + 分块分隔符修复 + Embedding 对比工具**
+  - 新增 `src/lexical.py`：CJK n-gram tokenizer（unigram + bigram）、元数据字段加权 BM25 语料构建、增量 BM25 索引构建
+  - `_tokenize()` 委托给 `cjk_ngram_tokenize()`，连续 CJK 字符不再被当作一个 token
+  - `build_bm25_index()` 委托给 `src/lexical.py`，支持 `metadatas` 参数实现字段加权
+  - 分块分隔符加入中文标点 `。！？；`，`CHUNKING_CONFIG` version 升至 2
+  - `index_fingerprint()` 包含 tokenizer 类型、chunking 版本、embedding 模型名，自动检测不兼容
+  - 新增 `evaluation/embedding_benchmark.py`：Embedding 模型对比评测工具
+  - 新增 `tests/test_lexical.py`（27 个测试）
+  - 更新 `tests/test_retrieval_fix.py` 适配 n-gram tokenizer 行为
 - **阶段 1.3：统一 Candidate 模型与 Top-K 语义** — 修复检索结果无统一数据模型和硬编码 top-5 的问题
   - 新增 `src/domain.py`：定义 `RetrievalCandidate`（检索候选，保留各通道原始分数和融合分数）、`RefusalFeatures`（拒答特征）、`CitationValidation`（引用校验结果）、`compute_context_k()`（基于 token budget 计算实际进入 prompt 的候选数）
   - 修复 `_build_context()` 硬编码 `[:5]` → 基于 `context_k` 参数动态计算
