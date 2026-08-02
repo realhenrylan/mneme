@@ -24,6 +24,7 @@ class QueryMetric:
     refused: bool = False
     error_category: str | None = None
     context_k: int | None = None  # 实际进入 prompt 的证据数
+    refusal_type: str | None = None  # 拒答类型：retrieval / generation / api_error
 
 
 class MetricsRecorder:

@@ -134,3 +134,109 @@ def apply_source_diversity(
                 break
 
     return result
+
+
+# ── 拒答特征提取与判断 ──
+
+import re
+
+from src.domain import RefusalFeatures
+
+
+_CJK_RE = re.compile(r'[\u4e00-\u9fff]')
+
+
+def extract_refusal_features(
+    candidates: list[RetrievalCandidate],
+    query: str,
+) -> RefusalFeatures:
+    """从检索候选中提取可解释拒答特征。
+
+    每个特征都有明确的业务含义，便于调试和阈值调优：
+    - top_score: 最高相关性分数（reranker 或 RRF）
+    - top1_top2_margin: top1 与 top2 的分数差，差值大说明 top1 独占优势
+    - effective_source_count: 有效来源数（有分数的不同来源）
+    - query_length: 查询长度
+    - has_cjk: 是否含中文（中文查询可能需要更宽松的阈值）
+    - max_dense_similarity: dense 通道最高相似度
+    - max_bm25_score: BM25 通道最高分
+    """
+    if not candidates:
+        return RefusalFeatures(
+            top_score=0.0,
+            top1_top2_margin=0.0,
+            effective_source_count=0,
+            query_length=len(query),
+            has_cjk=bool(_CJK_RE.search(query)),
+            max_dense_similarity=0.0,
+            max_bm25_score=0.0,
+        )
+
+    # top_score：优先用 rerank_score，否则用 rrf_score
+    scores = []
+    for c in candidates:
+        score = c.rerank_score if c.rerank_score is not None else c.rrf_score
+        if score is not None:
+            scores.append(score)
+
+    top_score = max(scores) if scores else 0.0
+    top1_top2_margin = 0.0
+    if len(scores) >= 2:
+        sorted_scores = sorted(scores, reverse=True)
+        top1_top2_margin = sorted_scores[0] - sorted_scores[1]
+
+    # 有效来源数
+    effective_sources = set()
+    for c in candidates:
+        score = c.rerank_score if c.rerank_score is not None else c.rrf_score
+        if score is not None and score > 0:
+            effective_sources.add(c.source_id or c.source_name)
+
+    # 各通道最高分
+    dense_scores = [c.dense_similarity for c in candidates if c.dense_similarity is not None]
+    bm25_scores = [c.bm25_score for c in candidates if c.bm25_score is not None]
+
+    return RefusalFeatures(
+        top_score=top_score,
+        top1_top2_margin=top1_top2_margin,
+        effective_source_count=len(effective_sources),
+        query_length=len(query),
+        has_cjk=bool(_CJK_RE.search(query)),
+        max_dense_similarity=max(dense_scores) if dense_scores else 0.0,
+        max_bm25_score=max(bm25_scores) if bm25_scores else 0.0,
+    )
+
+
+def should_refuse_with_features(
+    features: RefusalFeatures,
+    rrf_threshold: float = 0.015,
+    reranker_threshold: float = 0.3,
+    has_reranker: bool = False,
+) -> bool:
+    """基于可解释特征判断是否拒答。
+
+    决策逻辑：
+    1. 如果有 reranker 分数（has_reranker=True），使用 reranker_threshold（默认 0.3）
+    2. 否则使用 RRF 分数和 rrf_threshold（默认 0.015）
+    3. 无候选时直接拒答
+
+    注意：rrf_threshold 从 0.03 降至 0.015，配合 RRF k=60 的修改，
+    使得拒答在合理场景下能真正触发。
+
+    Args:
+        features: 拒答特征
+        rrf_threshold: RRF 分数拒答阈值
+        reranker_threshold: Reranker 分数拒答阈值
+        has_reranker: 是否启用了 reranker
+
+    Returns:
+        True 表示应拒答
+    """
+    if features.effective_source_count == 0:
+        return True
+
+    if has_reranker:
+        return features.top_score < reranker_threshold
+
+    # 否则用 RRF 阈值
+    return features.top_score < rrf_threshold

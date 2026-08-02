@@ -1,4 +1,4 @@
-"""Tests for src/retrieval.py — Reranker interface, source diversity."""
+"""Tests for src/retrieval.py — Reranker interface, source diversity, refusal features."""
 
 from __future__ import annotations
 
@@ -8,8 +8,10 @@ from src.retrieval import (
     NoOpReranker,
     Reranker,
     apply_source_diversity,
+    extract_refusal_features,
+    should_refuse_with_features,
 )
-from src.domain import RetrievalCandidate
+from src.domain import RefusalFeatures, RetrievalCandidate
 
 
 def _make_candidate(
@@ -136,3 +138,105 @@ class TestApplySourceDiversity:
         ]
         result = apply_source_diversity(candidates, top_k=10)
         assert len(result) == 3  # 默认 max_per_source=3
+
+
+# ── extract_refusal_features ──
+
+
+class TestExtractRefusalFeatures:
+    """拒答特征提取。"""
+
+    def test_empty_candidates(self):
+        features = extract_refusal_features([], "测试查询")
+        assert features.top_score == 0.0
+        assert features.effective_source_count == 0
+        assert features.has_cjk is True
+
+    def test_single_candidate(self):
+        candidates = [
+            _make_candidate(0, rrf_score=0.05),
+        ]
+        features = extract_refusal_features(candidates, "test query")
+        assert features.top_score == 0.05
+        assert features.top1_top2_margin == 0.0  # 只有一个候选
+        assert features.effective_source_count == 1
+        assert features.has_cjk is False
+
+    def test_multiple_candidates(self):
+        candidates = [
+            _make_candidate(0, source_id="s0", rrf_score=0.06),
+            _make_candidate(1, source_id="s1", rrf_score=0.04),
+            _make_candidate(2, source_id="s0", rrf_score=0.02),
+        ]
+        features = extract_refusal_features(candidates, "查询")
+        assert features.top_score == 0.06
+        assert features.top1_top2_margin == pytest.approx(0.02, abs=0.001)
+        assert features.effective_source_count == 2  # s0, s1
+        assert features.has_cjk is True
+
+    def test_reranker_score_preferred(self):
+        """有 rerank_score 时优先使用。"""
+        candidates = [
+            RetrievalCandidate(
+                index=0, chunk_id="c0", source_id="s0", source_name="doc.pdf",
+                rrf_score=0.05, rerank_score=0.8,
+            ),
+        ]
+        features = extract_refusal_features(candidates, "query")
+        assert features.top_score == 0.8  # rerank_score 优先
+
+    def test_zero_score_candidates(self):
+        """分数为 0 的候选不计入有效来源。"""
+        candidates = [
+            _make_candidate(0, source_id="s0", rrf_score=0.0),
+        ]
+        features = extract_refusal_features(candidates, "query")
+        assert features.effective_source_count == 0
+
+
+# ── should_refuse_with_features ──
+
+
+class TestShouldRefuseWithFeatures:
+    """基于特征的拒答判断。"""
+
+    def test_no_sources_refuse(self):
+        """无有效来源时拒答。"""
+        features = RefusalFeatures(
+            top_score=0.0, top1_top2_margin=0.0, effective_source_count=0,
+            query_length=5, has_cjk=False, max_dense_similarity=0.0, max_bm25_score=0.0,
+        )
+        assert should_refuse_with_features(features) is True
+
+    def test_low_rrf_score_refuse(self):
+        """RRF 分数低于阈值时拒答。"""
+        features = RefusalFeatures(
+            top_score=0.01, top1_top2_margin=0.005, effective_source_count=1,
+            query_length=5, has_cjk=False, max_dense_similarity=0.3, max_bm25_score=1.0,
+        )
+        assert should_refuse_with_features(features, rrf_threshold=0.015) is True
+
+    def test_high_rrf_score_accept(self):
+        """RRF 分数高于阈值时不拒答。"""
+        features = RefusalFeatures(
+            top_score=0.03, top1_top2_margin=0.01, effective_source_count=2,
+            query_length=5, has_cjk=False, max_dense_similarity=0.5, max_bm25_score=2.0,
+        )
+        assert should_refuse_with_features(features, rrf_threshold=0.015) is False
+
+    def test_low_reranker_score_refuse(self):
+        """Reranker 分数低于阈值时拒答。"""
+        features = RefusalFeatures(
+            top_score=0.2, top1_top2_margin=0.1, effective_source_count=1,
+            query_length=5, has_cjk=False, max_dense_similarity=0.3, max_bm25_score=1.0,
+        )
+        # has_reranker=True 触发 reranker 阈值判断，0.2 < 0.3 → 拒答
+        assert should_refuse_with_features(features, reranker_threshold=0.3, has_reranker=True) is True
+
+    def test_high_reranker_score_accept(self):
+        """Reranker 分数高于阈值时不拒答。"""
+        features = RefusalFeatures(
+            top_score=0.6, top1_top2_margin=0.2, effective_source_count=2,
+            query_length=5, has_cjk=False, max_dense_similarity=0.7, max_bm25_score=3.0,
+        )
+        assert should_refuse_with_features(features, reranker_threshold=0.3, has_reranker=True) is False

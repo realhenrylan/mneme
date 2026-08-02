@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 1.5：拒答校准 — 可解释拒答特征 + RRF 阈值修复**
+  - 修复 RRF `k=30` → `k=60`：降低单通道第一名的权重，使拒答阈值不再形同虚设
+  - BM25 零分文档剔除：`rrf_merge()` 中 BM25 得分为 0 的文档不参与排名
+  - 新增 `extract_refusal_features()`：从检索候选中提取可解释拒答特征（top_score、top1_top2_margin、effective_source_count、has_cjk 等）
+  - 新增 `should_refuse_with_features()`：基于特征的拒答判断，支持 RRF 阈值（默认 0.015）和 Reranker 阈值（默认 0.3）
+  - `QueryMetric` 新增 `refusal_type` 字段：区分 retrieval / generation / api_error 拒答
+  - `_record_query_metric()` 自动推断拒答类型
+  - 新增 10 个拒答特征提取和判断测试
 - **阶段 1.4：Reranker + 来源多样性约束**
   - 新增 `src/retrieval.py`：Reranker Protocol、CrossEncoderReranker（延迟加载）、NoOpReranker（A/B 对比基线）、apply_source_diversity（每来源上限 3 个 chunk）
   - `answer_query()` 和 `answer_query_stream()` 在 RRF 融合后、`_build_context()` 前插入 reranker 步骤

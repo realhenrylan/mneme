@@ -1157,14 +1157,29 @@ def rrf_merge(
     semantic_results: list[tuple[str, float]],
     bm25_results: list[tuple[str, float]],
     documents: list[str] | None = None,
-    metadatas: list[dict] | None = None,
-    k: int = 30,
+    metadatas: list[str] | None = None,
+    k: int = 60,
     keys: list[str] | None = None,
 ) -> list[tuple[str, float]]:
+    """Reciprocal Rank Fusion of semantic and BM25 results.
+
+    k=60 (changed from 30): a larger k reduces the weight of a single channel's
+    top-1 result, preventing the RRF score from easily exceeding the refusal
+    threshold.  With k=30, a single channel's rank-1 gives 1/31 ≈ 0.032,
+    which already exceeds DEFAULT_REFUSAL_THRESHOLD=0.03, making refusal
+    nearly impossible.  With k=60, rank-1 gives 1/61 ≈ 0.016, well below
+    the threshold, so refusal can actually trigger.
+
+    BM25 results with score 0 are excluded to avoid inflating rankings
+    with irrelevant documents.
+    """
     rrf_scores: dict[str, float] = {}
     for rank, (doc, _) in enumerate(semantic_results):
         rrf_scores[doc] = rrf_scores.get(doc, 0.0) + 1.0 / (rank + k)
-    for rank, (doc, _) in enumerate(bm25_results):
+    for rank, (doc, score) in enumerate(bm25_results):
+        # 剔除 BM25 零分文档，避免无关文档参与排名
+        if score <= 0:
+            continue
         rrf_scores[doc] = rrf_scores.get(doc, 0.0) + 1.0 / (rank + k)
     if metadatas is not None:
         metadata_keys = keys if keys is not None else documents
@@ -1412,7 +1427,12 @@ def format_sources(
 
 
 def retrieval_refused(scores: list[float], threshold: float | None = None) -> bool:
-    """Return whether retrieval is too weak to justify an LLM answer."""
+    """Return whether retrieval is too weak to justify an LLM answer.
+
+    Uses the simple score-based check for backward compatibility.
+    The feature-based refusal (should_refuse_with_features) is available
+    in src.retrieval for more nuanced decisions.
+    """
     if threshold is None:
         try:
             threshold = float(os.getenv("RAG_REFUSAL_THRESHOLD", DEFAULT_REFUSAL_THRESHOLD))
@@ -1429,6 +1449,7 @@ def _record_query_metric(
     bm25,
     refused: bool = False,
     context_k: int | None = None,
+    refusal_type: str | None = None,
 ) -> None:
     source_ids = {
         (metadatas[index] or {}).get("source_id")
@@ -1438,6 +1459,9 @@ def _record_query_metric(
     source_ids.discard(None)
     # selected_count 记录实际进入 prompt 的数量，而非 dynamic_top_k 的值
     actual_selected = context_k if context_k is not None else len(top_indices)
+    # 拒答类型：refused 时必须指定 refusal_type
+    if refused and refusal_type is None:
+        refusal_type = "retrieval"
     GLOBAL_METRICS.record(QueryMetric(
         retrieval_ms=elapsed_ms(start),
         candidate_count=len(scores),
@@ -1446,6 +1470,7 @@ def _record_query_metric(
         manifest_version=getattr(bm25, "manifest_version", None),
         refused=refused,
         context_k=context_k,
+        refusal_type=refusal_type,
     ))
 
 # ═══════════════════════════════════════════════
