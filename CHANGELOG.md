@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 3.4：完整可观测性**
+  - `src/metrics.py` 大幅增强：
+    - `QueryMetric` 新增字段：index_ms、embedding_ms、rewrite_ms、decompose_ms、dense_ms、bm25_ms、rerank_ms、llm_ms、ttft_ms（分阶段延迟）
+    - `QueryMetric` 新增字段：prompt_tokens、completion_tokens、total_tokens、citation_valid、citation_invalid（token 与引用）
+    - `QueryMetric` 新增字段：rewrite_changed、rewrite_merge_overlap（rewrite 信息）
+    - `MetricsRecorder` max_records 从 100 提升到 1000
+    - `MetricsRecorder` 支持磁盘持久化（persist_path 参数），启动时自动加载历史记录
+    - `summary()` 新增分阶段延迟统计、token 统计、引用有效率、rewrite 统计、context_k 统计
+    - 向后兼容：旧格式记录（缺少新字段）加载时自动忽略
+  - 新增 `tests/test_metrics_extended.py`（18 个测试）
 - **阶段 3.3：持久化 Sparse / 增量更新**
   - `src/lexical.py` 新增 BM25 快照持久化与增量更新功能：
     - `save_bm25_snapshot()`：将 BM25 索引快照持久化到磁盘（原子写入）
