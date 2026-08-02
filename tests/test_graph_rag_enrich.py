@@ -9,10 +9,11 @@ Mock 策略注解：
 - input() 是 Python 内建函数，需 patch("builtins.input")
 - time.time() 必须设 return_value，否则 MagicMock - MagicMock 导致 int() TypeError
 - 涉及 print 的测试可 patch("builtins.print") 减少输出噪音
+- _build_context 和 format_sources 现在接收 context_k 参数，使用 ANY 匹配
 """
 import sys
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, ANY
 
 from src.graph_rag import (
     graph_query_stream,
@@ -52,11 +53,11 @@ def test_graph_query_stream_calls_enrich_context():
         # enrich_context 应被调用
         mock_enrich.assert_called_once_with([0, 1, 2], all_docs, all_metas)
 
-        # _build_context 应收到 enriched_docs
-        mock_build.assert_called_once_with([0, 1, 2], enriched_expected, all_metas)
+        # _build_context 应收到 enriched_docs 和 context_k
+        mock_build.assert_called_once_with([0, 1, 2], enriched_expected, all_metas, context_k=ANY)
 
-        # format_sources 应收到 enriched_docs
-        mock_sources.assert_called_once_with([0, 1, 2], enriched_expected, all_metas)
+        # format_sources 应收到 enriched_docs 和 context_k
+        mock_sources.assert_called_once_with([0, 1, 2], enriched_expected, all_metas, context_k=ANY)
 
 
 def test_graph_rag_pipeline_calls_enrich_context():
@@ -92,11 +93,11 @@ def test_graph_rag_pipeline_calls_enrich_context():
         # enrich_context 应被调用
         mock_enrich.assert_called_once_with([0, 1], all_docs, all_metas)
 
-        # _build_context 应收到 enriched_docs
-        mock_build.assert_called_once_with([0, 1], enriched_expected, all_metas)
+        # _build_context 应收到 enriched_docs 和 context_k
+        mock_build.assert_called_once_with([0, 1], enriched_expected, all_metas, context_k=ANY)
 
-        # format_sources 应收到 enriched_docs
-        mock_sources.assert_called_once_with([0, 1], enriched_expected, all_metas)
+        # format_sources 应收到 enriched_docs 和 context_k
+        mock_sources.assert_called_once_with([0, 1], enriched_expected, all_metas, context_k=ANY)
 
 
 def test_interactive_loop_calls_enrich_context():
@@ -137,11 +138,11 @@ def test_interactive_loop_calls_enrich_context():
         # enrich_context 应被调用一次（查询时）
         mock_enrich.assert_called_once_with([0, 1], all_docs, all_metas)
 
-        # _build_context 应收到 enriched_docs
-        mock_build.assert_called_once_with([0, 1], enriched_expected, all_metas)
+        # _build_context 应收到 enriched_docs 和 context_k
+        mock_build.assert_called_once_with([0, 1], enriched_expected, all_metas, context_k=ANY)
 
-        # format_sources 应收到 enriched_docs
-        mock_sources.assert_called_once_with([0, 1], enriched_expected, all_metas)
+        # format_sources 应收到 enriched_docs 和 context_k
+        mock_sources.assert_called_once_with([0, 1], enriched_expected, all_metas, context_k=ANY)
 
 
 def test_cli_query_calls_enrich_context():
@@ -186,8 +187,8 @@ def test_cli_query_calls_enrich_context():
         # enrich_context 应被调用
         mock_enrich.assert_called_once_with([0, 1], all_docs, all_metas)
 
-        # _build_context 应收到 enriched_docs
-        mock_build.assert_called_once_with([0, 1], enriched_expected, all_metas)
+        # _build_context 应收到 enriched_docs 和 context_k
+        mock_build.assert_called_once_with([0, 1], enriched_expected, all_metas, context_k=ANY)
 
-        # format_sources 应收到 enriched_docs
-        mock_sources.assert_called_once_with([0, 1], enriched_expected, all_metas)
+        # format_sources 应收到 enriched_docs 和 context_k
+        mock_sources.assert_called_once_with([0, 1], enriched_expected, all_metas, context_k=ANY)

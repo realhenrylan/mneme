@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 1.3：统一 Candidate 模型与 Top-K 语义** — 修复检索结果无统一数据模型和硬编码 top-5 的问题
+  - 新增 `src/domain.py`：定义 `RetrievalCandidate`（检索候选，保留各通道原始分数和融合分数）、`RefusalFeatures`（拒答特征）、`CitationValidation`（引用校验结果）、`compute_context_k()`（基于 token budget 计算实际进入 prompt 的候选数）
+  - 修复 `_build_context()` 硬编码 `[:5]` → 基于 `context_k` 参数动态计算
+  - 修复 `format_sources()` 硬编码 `[:5]` → 与 `_build_context` 使用相同 `context_k`
+  - 修复 `selected_count` 指标：记录实际进入 prompt 的数量而非 dynamic_top_k 的值
+  - `QueryMetric` 新增 `context_k` 字段
+  - 三层 K 语义明确：candidate_k（召回候选数）→ context_k（进入 prompt 数）→ display_k（展示来源数）
+  - 新增 `tests/test_domain.py`（17 个测试）
 - **Docker 支持** — 新增容器化部署，无需手动配置 Python 虚拟环境
   - `Dockerfile`：多阶段构建（builder + runtime），构建时预下载 `all-MiniLM-L6-v2` 嵌入模型，运行阶段不包含构建工具以减小镜像体积
   - `docker-compose.yml`：提供三种服务模式
@@ -26,6 +34,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `tui/__main__.py` 提取 `main()` 函数供 console_scripts 调用
   - `Dockerfile` ENTRYPOINT 改为 `mneme`
   - 更新 `README.md` / `README.zh.md` 启动命令
+- **RAG 工程与使用效果改进报告** — 新增 `RAG-IMPROVEMENT-REPORT-2026-08-01.md`，基于当前实现与本地验证评估摄取、索引、检索、Graph RAG、回答引用、评测、性能、可观测性和安全，并给出分阶段实施路线图与验收指标
+- **RAG 改进计划** — 新增 `plans/RAG-IMPROVEMENT-PLAN-2026-08-01.md`，基于改进报告制定四阶段实施计划：阶段 0 建立评测基线、阶段 1 修复 Standard RAG 核心闭环（中文 tokenizer、拒答校准、引用闭环、Top-K 统一）、阶段 2 结构化摄取与多轮检索、阶段 3 性能运维、阶段 4 条件性 Graph RAG 产品化；经审核修正 2 处事实错误（查询拆解守卫已存在、runner 函数名）、调整 3 处安排（拒答子集扩充至 25-30 条、Docker 修复提前至阶段 0、1.1/1.2 执行顺序依赖）、补充 4 项内容（CI 触发机制、holdout 子集、第一里程碑、schema/domain 边界）
+
+### Added — 阶段 0：建立可比较基线
+
+- **评测数据 schema** — 新增 `evaluation/schema.py`，定义 JSONL 评测标注格式
+  - `EvalCase` 数据类：包含 `query`、`query_type`（6 类：single_fact / cross_document / metadata / multi_turn / no_answer / mixed_intent）、`language`（zh / en / mixed）、`relevant_source_ids`、`relevant_chunks`、`acceptable_answer_points`、`should_refuse`
+  - `RelevantChunk` 数据类：标注具体相关段落（source_id、snippet、page、section）
+  - 数据集 I/O：`save_dataset()` / `load_dataset()` 支持 JSONL 格式
+  - 分层划分：`split_dataset()` 按 query_type 分层，12% holdout，seed=42 可复现
+  - 完整性校验：`validate_dataset()` 检查 ID 唯一性、拒答矛盾、类型覆盖
+- **评测数据集 v1** — 新增 `evaluation/datasets/v1.jsonl`，110 条评测用例
+  - 覆盖 6 类查询：single_fact 35、metadata 16、no_answer 25、cross_document 13、mixed_intent 11、multi_turn 10
+  - 语言分布：中文 46、英文 46、中英混合 18
+  - 基于项目 test_texts/ 中的 6 份文档（2 份中文、4 份英文）标注
+  - 训练集 97 条 + holdout 集 13 条
+- **标注规范文档** — 新增 `evaluation/ANNOTATION_GUIDE.md`
+- **检索评测指标** — 新增 `evaluation/metrics.py`
+  - Recall@K、MRR、nDCG@K、Source Recall@K
+  - `compute_retrieval_metrics()`：聚合指标计算
+  - `compute_stratified_metrics()`：按语言/查询类型分层报告
+- **检索评测 Runner** — 新增 `evaluation/runner.py`
+  - `RetrievalRunner`：调用 Mneme 实际 parser/embedding/Chroma/BM25/RRF 链路
+  - 逐例输出候选列表与 Recall@K、MRR、nDCG、source recall 指标
+  - 按语言和查询类型分层报告
+  - 拒答准确率评估
+- **生成与引用评测** — 新增 `evaluation/generation_runner.py` 和 `evaluation/citation_metrics.py`
+  - `GenerationRunner`：在检索结果基础上调用 LLM 生成回答
+  - `CitationValidator`：调用 `src/citations.py` 的 `validate_citations()` 校验引用 ID 合法性
+  - 引用 ID 有效性、引用精确率/召回率、faithfulness、拒答准确率
+  - 生成评测独立运行，不把检索失败和生成失败混为一谈
+- **评测 CLI 入口** — 新增 `evaluation/run.py`
+  - `python -m evaluation.run --dataset v1 --output results/baseline.json`
+  - 支持 `--validate-only`、`--corpus-dir`、`--verbose`、`--per-case-output`
+- **CI 三层分层** — 修改 `.github/workflows/ci.yml`
+  - Layer 1：快速纯单元测试，每次 PR 必跑
+  - Layer 2：离线检索评测，main 分支 push / path-based / label-based / 每日定时触发
+  - Layer 3：完整生成评测，仅通过 `run-generation-eval` label 手动触发
+  - 检索回归检测：recall@5 低于阈值则标记失败
+- **Docker 模型遮蔽修复** — 修复 bind mount 遮蔽镜像内预下载模型的问题
+  - 新增 `docker-entrypoint.sh`：启动时检测挂载目录是否为空，若空则从 `/app/models-image` 恢复预下载模型
+  - `Dockerfile`：预下载模型存入 `/app/models-image`（备份位置），挂载点仍为 `/app/models`
+  - `docker-compose.yml`：所有服务使用 `docker-entrypoint.sh` 包装
+
+### Tests
+
+- 新增 `tests/test_eval_schema.py`：15 个测试（序列化、I/O、划分、校验）
+- 新增 `tests/test_eval_metrics.py`：19 个测试（Recall@K、MRR、nDCG、Source Recall、聚合、分层）
+- 新增 `tests/test_eval_citation_metrics.py`：21 个测试（引用有效性、精确率/召回率、faithfulness、拒答准确率）
 
 ### Removed
 

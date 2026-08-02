@@ -23,6 +23,7 @@ class QueryMetric:
     manifest_version: int | None
     refused: bool = False
     error_category: str | None = None
+    context_k: int | None = None  # 实际进入 prompt 的证据数
 
 
 class MetricsRecorder:

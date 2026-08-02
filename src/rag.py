@@ -30,6 +30,7 @@ from typing import Optional
 from dotenv import load_dotenv
 
 from src.citations import citation_map, make_citation_records
+from src.domain import RetrievalCandidate, compute_context_k
 from src.metrics import GLOBAL_METRICS, QueryMetric, elapsed_ms
 from src.security import (
     remote_context_limit,
@@ -1171,6 +1172,7 @@ def _build_context(
     top_indices: list[int],
     docs: list[str],
     metadatas: list[dict],
+    context_k: int | None = None,
 ) -> str:
     """将 top-ranked chunk 拼接为 LLM context，每个 chunk 前标注来源文件名。
 
@@ -1178,11 +1180,18 @@ def _build_context(
         top_indices: 排序后的 chunk 索引列表，值作为 docs 和 metadatas 的索引
         docs:        全量文档文本列表（docs[i] 获取第 i 个文档文本）
         metadatas:   全量元数据列表（metadatas[i]["source"] 获取第 i 个文档的文件名）
+        context_k:   实际进入 prompt 的候选数。None 时基于 token budget 自动计算
 
     Returns:
         带 [Source: filename] 标注的 context 字符串，chunk 间以双换行分隔
     """
-    selected_indices = top_indices[:5]
+    if context_k is None:
+        # 基于候选数和默认 token budget 计算
+        context_k = compute_context_k(
+            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+             for i in top_indices],
+        )
+    selected_indices = top_indices[:context_k]
     source_paths: dict[str, set[str]] = {}
     for metadata in metadatas:
         name = metadata.get("source_name") or metadata.get("source", "unknown")
@@ -1341,9 +1350,15 @@ def format_sources(
         indices: list[int],
         documents: list[str],
         metadatas: list[dict],
+        context_k: int | None = None,
 ) -> str:
     """Format verifiable citations with source, page, and stable chunk ID."""
-    selected = indices[:5]
+    if context_k is None:
+        context_k = compute_context_k(
+            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+             for i in indices],
+        )
+    selected = indices[:context_k]
     records = make_citation_records(selected, documents, metadatas)
     source_paths: dict[str, set[str]] = {}
     for metadata in metadatas:
@@ -1389,6 +1404,7 @@ def _record_query_metric(
     metadatas: list[dict],
     bm25,
     refused: bool = False,
+    context_k: int | None = None,
 ) -> None:
     source_ids = {
         (metadatas[index] or {}).get("source_id")
@@ -1396,13 +1412,16 @@ def _record_query_metric(
         for index in top_indices
     }
     source_ids.discard(None)
+    # selected_count 记录实际进入 prompt 的数量，而非 dynamic_top_k 的值
+    actual_selected = context_k if context_k is not None else len(top_indices)
     GLOBAL_METRICS.record(QueryMetric(
         retrieval_ms=elapsed_ms(start),
         candidate_count=len(scores),
-        selected_count=len(top_indices),
+        selected_count=actual_selected,
         source_count=len(source_ids),
         manifest_version=getattr(bm25, "manifest_version", None),
         refused=refused,
+        context_k=context_k,
     ))
 
 # ═══════════════════════════════════════════════
@@ -1508,17 +1527,23 @@ def answer_query(
         )
         return REFUSAL_MESSAGE, ""
     enriched_docs = enrich_context(top_indices, documents, metadatas)
-    context = _build_context(top_indices, enriched_docs, metadatas)
+    # 计算 context_k：实际进入 prompt 的证据数
+    context_k = compute_context_k(
+        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+         for i in top_indices],
+    )
+    context = _build_context(top_indices, enriched_docs, metadatas, context_k=context_k)
 
     _record_query_metric(
         retrieval_start, top_indices, scores_flat, metadatas, bm25,
+        context_k=context_k,
     )
 
     answer = answer_with_llm_history(
         query, context, history or [], temperature=temperature,
     )
 
-    sources = format_sources(top_indices, enriched_docs, metadatas)
+    sources = format_sources(top_indices, enriched_docs, metadatas, context_k=context_k)
 
     return answer, sources
 
@@ -1692,10 +1717,16 @@ def answer_query_stream(
         return refusal_stream(), ""
 
     enriched_docs = enrich_context(top_indices, documents, metadatas)
-    context = _build_context(top_indices, enriched_docs, metadatas)
-    sources = format_sources(top_indices, enriched_docs, metadatas)
+    # 计算 context_k：实际进入 prompt 的证据数
+    context_k = compute_context_k(
+        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+         for i in top_indices],
+    )
+    context = _build_context(top_indices, enriched_docs, metadatas, context_k=context_k)
+    sources = format_sources(top_indices, enriched_docs, metadatas, context_k=context_k)
     _record_query_metric(
         retrieval_start, top_indices, scores_flat, metadatas, bm25,
+        context_k=context_k,
     )
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,

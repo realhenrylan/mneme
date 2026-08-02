@@ -91,6 +91,7 @@ def _graph_rag_answer(
         format_sources,
         answer_with_llm_history,
     )
+    from src.domain import RetrievalCandidate, compute_context_k
 
     # 1. Graph 增强检索
     indices, fused_docs, fused_scores = graph_augmented_retrieve(
@@ -105,13 +106,17 @@ def _graph_rag_answer(
     enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
 
     # 4. 构建 context
-    context = _build_context(top_indices, enriched_docs, all_metadatas)
+    context_k = compute_context_k(
+        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+         for i in top_indices],
+    )
+    context = _build_context(top_indices, enriched_docs, all_metadatas, context_k=context_k)
 
     # 5. LLM 生成回答
     answer = answer_with_llm_history(query, context, history=history, temperature=0.1)
 
     # 6. 格式化来源
-    sources = format_sources(top_indices, enriched_docs, all_metadatas)
+    sources = format_sources(top_indices, enriched_docs, all_metadatas, context_k=context_k)
 
     return answer, sources
 

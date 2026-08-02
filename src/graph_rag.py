@@ -19,6 +19,7 @@ from src.rag import (
     format_sources,
     _build_context,
     enrich_context,
+    RetrievalCandidate, compute_context_k,
     SentenceTransformer, chromadb,
     EMBEDDING_MODEL_NAME, DEFAULT_COLLECTION_NAME,
     DEFAULT_TOP_K, DEFAULT_MIN_K, DEFAULT_MAX_K,
@@ -690,7 +691,12 @@ def graph_rag_pipeline(
     print("LLM生成回答")
     print("=" * 60)
     enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
-    context = _build_context(top_indices, enriched_docs, all_metadatas)
+    # 计算 context_k：实际进入 prompt 的证据数
+    context_k = compute_context_k(
+        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+         for i in top_indices],
+    )
+    context = _build_context(top_indices, enriched_docs, all_metadatas, context_k=context_k)
     _tq0 = time.time()
     answer = answer_with_llm_history(query, context, history = history or [], temperature=temperature)
     _tq1 = time.time()
@@ -699,7 +705,7 @@ def graph_rag_pipeline(
     _qseconds = int(_qelapsed % 60)
     print(f"\n{answer}（用时{_qminutes}分{_qseconds}秒）")
 
-    sources = format_sources(top_indices, enriched_docs, all_metadatas)
+    sources = format_sources(top_indices, enriched_docs, all_metadatas, context_k=context_k)
     print(f"\n参考来源：\n{sources}")
 
     return answer
@@ -782,10 +788,16 @@ def graph_query_stream(
             yield REFUSAL_MESSAGE
         return refusal_stream(), ""
     enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
-    context = _build_context(top_indices, enriched_docs, all_metadatas)
-    sources = format_sources(top_indices, enriched_docs, all_metadatas)
+    # 计算 context_k：实际进入 prompt 的证据数
+    context_k = compute_context_k(
+        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+         for i in top_indices],
+    )
+    context = _build_context(top_indices, enriched_docs, all_metadatas, context_k=context_k)
+    sources = format_sources(top_indices, enriched_docs, all_metadatas, context_k=context_k)
     _record_query_metric(
         retrieval_start, top_indices, scores, all_metadatas, bm25,
+        context_k=context_k,
     )
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,
