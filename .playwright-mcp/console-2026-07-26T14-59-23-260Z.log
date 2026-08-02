@@ -1,0 +1,10 @@
+[     235ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/features/graph-rag:0
+[     236ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/features/graph-rag:0
+[     236ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/features/graph-rag:0
+[     236ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/features/graph-rag:0
+[     236ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/features/graph-rag:0
+[     236ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/features/graph-rag:0
+[   19913ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/features/graph-rag:0
+[   19913ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/features/graph-rag:0
+[   19925ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/features/graph-rag:0
+[   19925ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/features/graph-rag:0

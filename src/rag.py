@@ -154,8 +154,9 @@ DEFAULT_TEMPERATURE = 0.2
 # This is part of the on-disk manifest. Changing a splitter parameter must
 # invalidate the collection instead of silently mixing chunking strategies.
 # 中文标点（。！？；）加入分隔符，确保中文文本在句号处正确分块。
+# version 3: 结构化分块（基于 Section 边界），由 src/chunking.py 实现
 CHUNKING_CONFIG = {
-    "version": 2,
+    "version": 3,
     "default": {
         "size": DEFAULT_CHUNK_SIZE,
         "overlap": DEFAULT_CHUNK_OVERLAP,
@@ -922,13 +923,59 @@ def prepare_index(
     return model, collection, bm25, all_docs, all_metadatas
 
 def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str], str, str, dict]:
-    """Load one source and return chunks plus its manifest source record."""
+    """Load one source and return chunks plus its manifest source record.
+
+    使用 src/loaders/ 解析文档为 Document 对象，再用 src/chunking.py
+    基于 Section 边界结构化分块。保留旧路径作为降级。
+    """
     file_type = detect_file_type(filepath)
+
+    # 尝试使用新的 loader + chunking 模块
+    try:
+        from src.loaders import LoaderRegistry, PdfLoader, DocxLoader, TextLoader
+        from src.chunking import chunk_document, chunks_to_index_data
+
+        registry = LoaderRegistry()
+        registry.register(PdfLoader())
+        registry.register(DocxLoader())
+        registry.register(TextLoader())
+
+        document = registry.load(filepath)
+        document.chunks = chunk_document(document)
+        texts, metadatas, ids = chunks_to_index_data(document)
+
+        # 构建 source record（兼容旧 manifest 格式）
+        source = {
+            "source_id": document.source_id,
+            "source_path": document.source_path,
+            "source_name": document.source_name,
+            "source": document.source_name,
+            "file_type": document.file_type,
+            "content_sha256": document.content_sha256,
+            "source_size": document.source_size,
+            "source_mtime_ns": document.source_mtime_ns,
+        }
+
+        # 低质量解析警告
+        if document.is_low_quality:
+            print(f"  [警告] 低质量解析: 空文本页率 {document.empty_text_rate:.0%}")
+
+        print(f" -> {file_type}, {len(document.chunks)} 个切片"
+              f" (sections={len(document.sections)}, quality={document.parse_quality.value})")
+        return texts, metadatas, ids, file_type, document.source_id, source
+
+    except Exception as exc:
+        # 降级到旧路径（保持向后兼容）
+        import traceback
+        traceback.print_exc()  # 调试信息，生产环境可移除
+        print(f"  [降级] 新 loader 失败，使用旧路径: {exc}")
+
+    # 旧路径：直接使用 rag.py 内置的解析和分块逻辑
     source = _source_metadata(filepath, file_type)
     splitter = get_splitter(file_type)
     chunks: list[str] = []
-    metadatas: list[dict] = []
-    ids: list[str] = []
+    chunk_metadatas: list[dict] = []
+    chunk_ids: list[str] = []
     source_id = source["source_id"]
 
     if file_type == "pdf":
@@ -944,8 +991,8 @@ def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str],
                     "page": page_num,
                 })
                 chunks.append(chunk)
-                metadatas.append(metadata)
-                ids.append(chunk_id)
+                chunk_metadatas.append(metadata)
+                chunk_ids.append(chunk_id)
                 chunk_counter += 1
 
         if pages:
@@ -961,8 +1008,8 @@ def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str],
                     "page": 1,
                 })
                 chunks.append(anchor_text)
-                metadatas.append(metadata)
-                ids.append(chunk_id)
+                chunk_metadatas.append(metadata)
+                chunk_ids.append(chunk_id)
         print(f" -> {file_type}, {chunk_counter} 个切片")
     else:
         text, _ = load_document(filepath)
@@ -973,10 +1020,10 @@ def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str],
             metadata = dict(source)
             metadata.update({"chunk_id": chunk_id, "chunk_index": chunk_index})
             chunks.append(chunk)
-            metadatas.append(metadata)
-            ids.append(chunk_id)
+            chunk_metadatas.append(metadata)
+            chunk_ids.append(chunk_id)
 
-    return chunks, metadatas, ids, file_type, source_id, source
+    return chunks, chunk_metadatas, chunk_ids, file_type, source_id, source
 
 
 def _valid_index_path(filepath: str) -> bool:
@@ -1257,8 +1304,12 @@ def _build_context(
         document_text = (docs[i] or "").replace(
             "</untrusted_document>", "</untrusted_document_text>"
         )
+        # section_heading：如果 chunk 有标题路径信息，加入 prefix 帮助 LLM 理解上下文
+        section_heading = metadata.get("section_heading", "")
+        heading_line = f"[Section: {section_heading}]\n" if section_heading else ""
         prefix = (
             f"[Source: {source}] [Citation: {citation_id}]\n"
+            f"{heading_line}"
             f"<untrusted_document chunk_id=\"{chunk_id}\">\n"
         )
         suffix = "\n</untrusted_document>"
@@ -1418,6 +1469,10 @@ def format_sources(
             location.append(f"p.{record.page}")
         if record.chunk_index is not None:
             location.append(f"chunk {record.chunk_index}")
+        # section_heading：展示 chunk 所属的标题路径
+        section_heading = meta.get("section_heading", "")
+        if section_heading:
+            location.append(f"§ {section_heading}")
         location_text = ", ".join(location) or "location unavailable"
         lines.append(
             f"[{record.citation_id}] {source} ({location_text}; "

@@ -138,7 +138,7 @@ def build_weighted_bm25_corpus(
     Returns:
         加权后的语料列表，每个元素是对应 chunk 的加权文本
     """
-    weights = field_weights if field_weights is not None else {"source_name": 2.0, "section": 1.5}
+    weights = field_weights if field_weights is not None else {"source_name": 2.0, "section": 1.5, "section_heading": 1.5}
     corpus: list[str] = []
     for doc, meta in zip(documents, metadatas):
         parts = [doc]  # content * 1.0
@@ -150,6 +150,11 @@ def build_weighted_bm25_corpus(
         if section and "section" in weights:
             repeat = max(1, int(weights["section"]))
             parts.extend([section] * repeat)
+        # section_heading：新字段，标题路径参与 BM25 索引
+        section_heading = meta.get("section_heading", "")
+        if section_heading and "section_heading" in weights:
+            repeat = max(1, int(weights["section_heading"]))
+            parts.extend([section_heading] * repeat)
         corpus.append(" ".join(parts))
     return corpus
 

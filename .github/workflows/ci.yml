@@ -3,9 +3,12 @@ name: CI
 on:
   push:
   pull_request:
+  schedule:
+    - cron: "0 6 * * *"  # Daily at 06:00 UTC — runs retrieval eval
 
 jobs:
-  tests:
+  # ── Layer 1: Fast unit tests (every PR) ──
+  unit-tests:
     strategy:
       fail-fast: false
       matrix:
@@ -21,4 +24,98 @@ jobs:
       - name: Install pinned dependencies
         run: python -m pip install -r requirements.txt
       - name: Run unit tests
-        run: python -m pytest -q
+        run: python -m pytest -q --ignore=tests/analysis
+
+  # ── Layer 2: Offline retrieval evaluation ──
+  # Triggered on main push, path-based changes, or via label.
+  retrieval-eval:
+    if: >
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      contains(github.event.pull_request.labels.*.name, 'run-retrieval-eval') ||
+      github.event_name == 'schedule' ||
+      (github.event_name == 'push' && (
+        contains(github.event.head_commit.modified, 'src/rag.py') ||
+        contains(github.event.head_commit.modified, 'src/lexical.py') ||
+        contains(github.event.head_commit.modified, 'src/retrieval.py') ||
+        contains(github.event.head_commit.modified, 'src/graph_rag.py') ||
+        contains(github.event.head_commit.modified, 'evaluation/')
+      ))
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install pinned dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Validate evaluation dataset
+        run: python -m evaluation.run --dataset v1 --validate-only
+      - name: Run retrieval evaluation
+        run: |
+          python -m evaluation.run \
+            --dataset v1 \
+            --corpus-dir ./test_texts \
+            --output results/retrieval-eval.json \
+            --verbose
+      - name: Check for retrieval regression
+        run: |
+          python -c "
+          import json, sys
+          report = json.load(open('results/retrieval-eval.json'))
+          overall = report.get('overall', {})
+          recall_5 = overall.get('recall@5', 0)
+          recall_10 = overall.get('recall@10', 0)
+          print(f'Recall@5: {recall_5:.4f}')
+          print(f'Recall@10: {recall_10:.4f}')
+          # Regression threshold: recall@5 should not drop below 0.3
+          # This is a loose initial gate; tighten as baselines improve.
+          if recall_5 < 0.3:
+              print('Warning: Retrieval regression detected: recall@5 below threshold')
+              sys.exit(1)
+          print('No retrieval regression detected')
+          "
+      - name: Upload retrieval results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: retrieval-eval-results
+          path: results/retrieval-eval.json
+
+  # ── Layer 3: Full generation evaluation (manual trigger only) ──
+  # Requires external LLM API — only triggered via label.
+  generation-eval:
+    if: contains(github.event.pull_request.labels.*.name, 'run-generation-eval')
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install pinned dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run generation evaluation
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python -c "
+          from evaluation.generation_runner import GenerationRunner
+          from pathlib import Path
+          runner = GenerationRunner(
+              dataset_path=Path('evaluation/datasets/v1.jsonl'),
+              corpus_dir=Path('test_texts'),
+          )
+          results, report = runner.run_all()
+          from evaluation.generation_runner import save_generation_report, print_generation_report
+          print_generation_report(report)
+          save_generation_report(report, Path('results/generation-eval.json'))
+          "
+      - name: Upload generation results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generation-eval-results
+          path: results/generation-eval.json

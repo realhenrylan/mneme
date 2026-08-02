@@ -1,0 +1,111 @@
+- generic [ref=f4e3]:
+  - link "Skip to content" [ref=f4e4] [cursor=pointer]:
+    - /url: "#VPContent"
+  - banner:
+    - generic:
+      - generic:
+        - generic:
+          - link [ref=f4e6] [cursor=pointer]:
+            - /url: /zh/
+          - generic [ref=f4e7]:
+            - button "搜索" [ref=f4e10] [cursor=pointer]:
+              - generic [ref=f4e14]:
+                - generic [ref=f4e15]: Ctrl
+                - generic [ref=f4e16]: K
+            - navigation "Main Navigation" [ref=f4e17]:
+              - link "首页" [ref=f4e19] [cursor=pointer]:
+                - /url: /zh/
+              - link "指南" [ref=f4e21] [cursor=pointer]:
+                - /url: /zh/guide/getting-started
+              - link "功能" [ref=f4e23] [cursor=pointer]:
+                - /url: /zh/features/hybrid-retrieval
+              - link "博客" [ref=f4e25] [cursor=pointer]:
+                - /url: /zh/blog/mneme-rag-engineering
+              - link "参考" [ref=f4e27] [cursor=pointer]:
+                - /url: /zh/reference/configuration
+            - button "Change language" [ref=f4e30] [cursor=pointer]
+            - switch "Switch to light theme" [checked] [ref=f4e35] [cursor=pointer]
+            - link "github" [ref=f4e41] [cursor=pointer]:
+              - /url: https://github.com/realhenrylan/mneme
+  - generic [ref=f4e44]:
+    - generic [ref=f4e46]:
+      - generic [ref=f4e47]:
+        - heading "Mneme 本地文档 RAG 与 Graph RAG" [level=1] [ref=f4e48]:
+          - generic [ref=f4e49]: Mneme
+          - generic [ref=f4e50]: 本地文档 RAG 与 Graph RAG
+        - paragraph [ref=f4e51]: 以 Mnemosyne——希腊神话中的记忆女神——命名，一个带有终端 UI 的本地文档检索增强生成系统。
+        - generic [ref=f4e52]:
+          - link "快速开始" [ref=f4e54] [cursor=pointer]:
+            - /url: /zh/guide/getting-started
+          - link "GitHub" [ref=f4e56] [cursor=pointer]:
+            - /url: https://github.com/realhenrylan/mneme
+      - img "Mneme TUI 预览" [ref=f4e60]
+    - generic [ref=f4e63]:
+      - link [ref=f4e65] [cursor=pointer]:
+        - /url: /zh/features/hybrid-retrieval
+        - article [ref=f4e66]:
+          - generic [ref=f4e67]: 🔍
+          - heading "混合检索" [level=2] [ref=f4e68]
+          - paragraph [ref=f4e69]: Sentence-transformers + ChromaDB 语义搜索与 BM25 关键词搜索通过 RRF（倒数排名融合）结合，兼顾语义和词法两个世界。
+      - link [ref=f4e71] [cursor=pointer]:
+        - /url: /zh/features/graph-rag
+        - article [ref=f4e72]:
+          - generic [ref=f4e73]: 🕸️
+          - heading "Graph RAG" [level=2] [ref=f4e74]
+          - paragraph [ref=f4e75]: LLM 提取的实体关系扩展检索，支持跨文档关联问题。共现阈值保持图谱清洁。
+      - link [ref=f4e77] [cursor=pointer]:
+        - /url: /zh/features/query-decomposition
+        - article [ref=f4e78]:
+          - generic [ref=f4e79]: 🧩
+          - heading "查询拆解" [level=2] [ref=f4e80]
+          - paragraph [ref=f4e81]: 复杂问题被拆分为子查询并发检索，然后融合为单一综合回答。
+      - link [ref=f4e83] [cursor=pointer]:
+        - /url: /zh/features/safety
+        - article [ref=f4e84]:
+          - generic [ref=f4e85]: 🛡️
+          - heading "安全设计" [level=2] [ref=f4e86]
+          - paragraph [ref=f4e87]: 默认 HTTPS 端点、有界文档大小、显式不可信文档边界和 Schema 验证的 JSON 缓存。
+      - link [ref=f4e89] [cursor=pointer]:
+        - /url: /zh/guide/tui-commands
+        - article [ref=f4e90]:
+          - generic [ref=f4e91]: 💻
+          - heading "终端 UI" [level=2] [ref=f4e92]
+          - paragraph [ref=f4e93]: 基于 Rich 的双语 TUI，支持流式聊天、斜杠命令、文件管理、设置和防抖目录监听。
+      - link [ref=f4e95] [cursor=pointer]:
+        - /url: /zh/reference/supported-files
+        - article [ref=f4e96]:
+          - generic [ref=f4e97]: 📄
+          - heading "广泛格式支持" [level=2] [ref=f4e98]
+          - paragraph [ref=f4e99]: PDF、DOCX、Markdown、HTML、JSON、CSV、源代码和配置文件。本地索引，可验证引用查询。
+    - generic [ref=f4e102]:
+      - heading [level=2] [ref=f4e103]:
+        - text: 快速预览
+        - link "Permalink to \"快速预览\"" [ref=f4e104] [cursor=pointer]:
+          - /url: "#快速预览"
+          - text: "#"
+      - generic [ref=f4e105]:
+        - button "Copy Code" [ref=f4e106] [cursor=pointer]
+        - generic [ref=f4e107]: bash
+        - code [ref=f4e109]:
+          - generic [ref=f4e110]: "# 克隆并安装"
+          - generic [ref=f4e111]: git clone https://github.com/realhenrylan/mneme.git
+          - generic [ref=f4e112]: cd mneme
+          - generic [ref=f4e113]: python -m venv .venv
+          - generic [ref=f4e114]: ".venv\\Scripts\\Activate.ps1 # Windows"
+          - generic [ref=f4e115]: "# source .venv/bin/activate # macOS / Linux"
+          - generic [ref=f4e116]: python -m pip install -e ".[dev]"
+          - generic [ref=f4e117]: "# 配置"
+          - generic [ref=f4e118]: copy .env.example .env
+          - generic [ref=f4e119]: "# 编辑 .env 填入你的 API_KEY 和 BASE_URL"
+          - generic [ref=f4e120]: "# 启动 TUI"
+          - generic [ref=f4e121]: python -m tui
+        - generic [ref=f4e122]: 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+      - paragraph [ref=f4e123]:
+        - text: 了解更多请阅读
+        - link "快速开始指南" [ref=f4e124] [cursor=pointer]:
+          - /url: /zh/guide/getting-started
+        - text: 。
+  - contentinfo [ref=f4e125]:
+    - generic [ref=f4e126]:
+      - paragraph [ref=f4e127]: Released under the MIT License.
+      - paragraph [ref=f4e128]: Copyright © 2026 Henry Lan

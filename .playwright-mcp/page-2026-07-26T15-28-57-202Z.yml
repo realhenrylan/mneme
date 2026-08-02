@@ -1,0 +1,110 @@
+- generic [ref=f22e3]:
+  - link "Skip to content" [ref=f22e4] [cursor=pointer]:
+    - /url: "#VPContent"
+  - banner:
+    - generic:
+      - generic:
+        - generic:
+          - link "Mneme" [ref=f22e6] [cursor=pointer]:
+            - /url: /
+          - generic [ref=f22e8]:
+            - button "Search" [ref=f22e11] [cursor=pointer]:
+              - generic [ref=f22e15]:
+                - generic [ref=f22e16]: Ctrl
+                - generic [ref=f22e17]: K
+            - navigation "Main Navigation" [ref=f22e18]:
+              - link "Home" [ref=f22e20] [cursor=pointer]:
+                - /url: /
+              - link "Guide" [ref=f22e22] [cursor=pointer]:
+                - /url: /guide/getting-started
+              - link "Features" [ref=f22e24] [cursor=pointer]:
+                - /url: /features/hybrid-retrieval
+              - link "Blog" [ref=f22e26] [cursor=pointer]:
+                - /url: /blog/mneme-rag-engineering
+              - link "Reference" [ref=f22e28] [cursor=pointer]:
+                - /url: /reference/configuration
+            - switch "Switch to light theme" [checked] [ref=f22e31] [cursor=pointer]
+            - link "github" [ref=f22e37] [cursor=pointer]:
+              - /url: https://github.com/realhenrylan/mneme
+  - generic [ref=f22e40]:
+    - generic [ref=f22e42]:
+      - generic [ref=f22e43]:
+        - heading "Mneme Local-document RAG with Graph RAG" [level=1] [ref=f22e44]:
+          - generic [ref=f22e45]: Mneme
+          - generic [ref=f22e46]: Local-document RAG with Graph RAG
+        - paragraph [ref=f22e47]: Named after Mnemosyne, the Greek goddess of memory — a local-document Retrieval-Augmented Generation system with a terminal UI.
+        - generic [ref=f22e48]:
+          - link "Get Started" [ref=f22e50] [cursor=pointer]:
+            - /url: /guide/getting-started
+          - link "View on GitHub" [ref=f22e52] [cursor=pointer]:
+            - /url: https://github.com/realhenrylan/mneme
+      - img "Mneme Logo" [ref=f22e56]
+    - generic [ref=f22e59]:
+      - link [ref=f22e61] [cursor=pointer]:
+        - /url: /features/hybrid-retrieval
+        - article [ref=f22e62]:
+          - generic [ref=f22e63]: 🔍
+          - heading "Hybrid Retrieval" [level=2] [ref=f22e64]
+          - paragraph [ref=f22e65]: Sentence-transformers + ChromaDB semantic search fused with BM25 keyword search using RRF (Reciprocal Rank Fusion). Best of both semantic and lexical worlds.
+      - link [ref=f22e67] [cursor=pointer]:
+        - /url: /features/graph-rag
+        - article [ref=f22e68]:
+          - generic [ref=f22e69]: 🕸️
+          - heading "Graph RAG" [level=2] [ref=f22e70]
+          - paragraph [ref=f22e71]: LLM-extracted entity relationships expand retrieval for connected, cross-document questions. Co-occurrence thresholds keep the graph clean.
+      - link [ref=f22e73] [cursor=pointer]:
+        - /url: /features/query-decomposition
+        - article [ref=f22e74]:
+          - generic [ref=f22e75]: 🧩
+          - heading "Query Decomposition" [level=2] [ref=f22e76]
+          - paragraph [ref=f22e77]: Complex questions are split into sub-queries and retrieved concurrently, then fused into a single comprehensive answer.
+      - link [ref=f22e79] [cursor=pointer]:
+        - /url: /features/safety
+        - article [ref=f22e80]:
+          - generic [ref=f22e81]: 🛡️
+          - heading "Safety by Design" [level=2] [ref=f22e82]
+          - paragraph [ref=f22e83]: HTTPS-by-default endpoints, bounded document sizes, explicit untrusted-document boundaries, and schema-validated JSON caches.
+      - link [ref=f22e85] [cursor=pointer]:
+        - /url: /guide/tui-commands
+        - article [ref=f22e86]:
+          - generic [ref=f22e87]: 💻
+          - heading "Terminal UI" [level=2] [ref=f22e88]
+          - paragraph [ref=f22e89]: Rich-based bilingual TUI with streaming chat, slash commands, file management, settings, and debounced directory watching.
+      - link [ref=f22e91] [cursor=pointer]:
+        - /url: /reference/supported-files
+        - article [ref=f22e92]:
+          - generic [ref=f22e93]: 📄
+          - heading "Wide Format Support" [level=2] [ref=f22e94]
+          - paragraph [ref=f22e95]: PDF, DOCX, Markdown, HTML, JSON, CSV, source code, and configuration files. Index locally, query with verifiable citations.
+    - generic [ref=f22e98]:
+      - heading [level=2] [ref=f22e99]:
+        - text: Quick Preview
+        - link "Permalink to \"Quick Preview\"" [ref=f22e100] [cursor=pointer]:
+          - /url: "#quick-preview"
+          - text: "#"
+      - generic [ref=f22e101]:
+        - button "Copy Code" [ref=f22e102] [cursor=pointer]
+        - generic [ref=f22e103]: bash
+        - code [ref=f22e105]:
+          - generic [ref=f22e106]: "# Clone and install"
+          - generic [ref=f22e107]: git clone https://github.com/realhenrylan/mneme.git
+          - generic [ref=f22e108]: cd mneme
+          - generic [ref=f22e109]: python -m venv .venv
+          - generic [ref=f22e110]: ".venv\\Scripts\\Activate.ps1 # Windows"
+          - generic [ref=f22e111]: "# source .venv/bin/activate # macOS / Linux"
+          - generic [ref=f22e112]: python -m pip install -e ".[dev]"
+          - generic [ref=f22e113]: "# Configure"
+          - generic [ref=f22e114]: copy .env.example .env
+          - generic [ref=f22e115]: "# Edit .env with your API_KEY and BASE_URL"
+          - generic [ref=f22e116]: "# Launch the TUI"
+          - generic [ref=f22e117]: python -m tui
+        - generic [ref=f22e118]: 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+      - paragraph [ref=f22e119]:
+        - text: Learn more in the
+        - link "Getting Started guide" [ref=f22e120] [cursor=pointer]:
+          - /url: /guide/getting-started
+        - text: .
+  - contentinfo [ref=f22e121]:
+    - generic [ref=f22e122]:
+      - paragraph [ref=f22e123]: Released under the MIT License.
+      - paragraph [ref=f22e124]: Copyright © 2026 Henry Lan

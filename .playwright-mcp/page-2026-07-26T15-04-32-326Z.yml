@@ -1,0 +1,172 @@
+- generic [ref=f20e3]:
+  - link "Skip to content" [ref=f20e4] [cursor=pointer]:
+    - /url: "#VPContent"
+  - banner:
+    - generic:
+      - generic:
+        - generic:
+          - link "Mneme" [ref=f20e6] [cursor=pointer]:
+            - /url: /
+          - generic [ref=f20e8]:
+            - button "Search" [ref=f20e11] [cursor=pointer]:
+              - generic [ref=f20e15]:
+                - generic [ref=f20e16]: Ctrl
+                - generic [ref=f20e17]: K
+            - navigation "Main Navigation" [ref=f20e18]:
+              - link "Home" [ref=f20e20] [cursor=pointer]:
+                - /url: /
+              - link "Guide" [ref=f20e22] [cursor=pointer]:
+                - /url: /guide/getting-started
+              - link "Features" [ref=f20e24] [cursor=pointer]:
+                - /url: /features/hybrid-retrieval
+              - link "Blog" [ref=f20e26] [cursor=pointer]:
+                - /url: /blog/mneme-rag-engineering
+              - link "Reference" [ref=f20e28] [cursor=pointer]:
+                - /url: /reference/configuration
+            - switch "Switch to light theme" [checked] [active] [ref=f20e139] [cursor=pointer]
+            - link "github" [ref=f20e37] [cursor=pointer]:
+              - /url: https://github.com/realhenrylan/mneme
+  - generic [ref=f20e41]:
+    - navigation [ref=f20e47]:
+      - generic [ref=f20e48]:
+        - heading "On this page" [level=2] [ref=f20e50]
+        - list [ref=f20e51]:
+          - listitem [ref=f20e52]:
+            - link "Project Goal" [ref=f20e53] [cursor=pointer]:
+              - /url: "#project-goal"
+          - listitem [ref=f20e54]:
+            - link "What Mneme Is" [ref=f20e55] [cursor=pointer]:
+              - /url: "#what-mneme-is"
+          - listitem [ref=f20e56]:
+            - link "What Mneme Is Not" [ref=f20e57] [cursor=pointer]:
+              - /url: "#what-mneme-is-not"
+          - listitem [ref=f20e58]:
+            - link "Architecture Principles" [ref=f20e59] [cursor=pointer]:
+              - /url: "#architecture-principles"
+          - listitem [ref=f20e60]:
+            - link "License" [ref=f20e61] [cursor=pointer]:
+              - /url: "#license"
+          - listitem [ref=f20e62]:
+            - link "Author" [ref=f20e63] [cursor=pointer]:
+              - /url: "#author"
+          - listitem [ref=f20e64]:
+            - link "Links" [ref=f20e65] [cursor=pointer]:
+              - /url: "#links"
+    - generic [ref=f20e68]:
+      - main [ref=f20e69]:
+        - generic [ref=f20e71]:
+          - heading [level=1] [ref=f20e72]:
+            - text: About Mneme
+            - link "Permalink to \"About Mneme\"" [ref=f20e73] [cursor=pointer]:
+              - /url: "#about-mneme"
+              - text: "#"
+          - paragraph [ref=f20e74]:
+            - text: Mneme is a local-document Retrieval-Augmented Generation (RAG) system named after
+            - strong [ref=f20e75]: Mnemosyne
+            - text: ", the Greek goddess of memory in Greek mythology."
+          - heading [level=2] [ref=f20e76]:
+            - text: Project Goal
+            - link "Permalink to \"Project Goal\"" [ref=f20e77] [cursor=pointer]:
+              - /url: "#project-goal"
+              - text: "#"
+          - paragraph [ref=f20e78]: Turn a local document collection into a verifiable, queryable memory. Every answer should be traceable to a specific file, page, and chunk.
+          - heading [level=2] [ref=f20e79]:
+            - text: What Mneme Is
+            - link "Permalink to \"What Mneme Is\"" [ref=f20e80] [cursor=pointer]:
+              - /url: "#what-mneme-is"
+              - text: "#"
+          - list [ref=f20e81]:
+            - listitem [ref=f20e82]:
+              - text: A
+              - strong [ref=f20e83]: Python CLI
+              - text: for one-shot and batch document Q&A
+            - listitem [ref=f20e84]:
+              - text: A
+              - strong [ref=f20e85]: bilingual terminal UI
+              - text: (TUI) for interactive sessions with file watching
+            - listitem [ref=f20e86]:
+              - text: A
+              - strong [ref=f20e87]: hybrid retrieval engine
+              - text: combining semantic search (ChromaDB + Sentence Transformers) and lexical search (BM25)
+            - listitem [ref=f20e88]:
+              - text: A
+              - strong [ref=f20e89]: Graph RAG
+              - text: mode for cross-document relationship queries
+            - listitem [ref=f20e90]:
+              - text: A
+              - strong [ref=f20e91]: safety-first
+              - text: system with explicit data boundaries, endpoint validation, and resource limits
+          - heading [level=2] [ref=f20e92]:
+            - text: What Mneme Is Not
+            - link "Permalink to \"What Mneme Is Not\"" [ref=f20e93] [cursor=pointer]:
+              - /url: "#what-mneme-is-not"
+              - text: "#"
+          - list [ref=f20e94]:
+            - listitem [ref=f20e95]: Not a cloud service — all indexing happens locally
+            - listitem [ref=f20e96]: Not a guarantee that data never leaves your machine — retrieved snippets are sent to your configured LLM endpoint
+            - listitem [ref=f20e97]: Not a replacement for reading the original documents — it augments reading with fast retrieval and summarization
+          - heading [level=2] [ref=f20e98]:
+            - text: Architecture Principles
+            - link "Permalink to \"Architecture Principles\"" [ref=f20e99] [cursor=pointer]:
+              - /url: "#architecture-principles"
+              - text: "#"
+          - list [ref=f20e100]:
+            - listitem [ref=f20e101]:
+              - strong [ref=f20e102]: Identity first
+              - text: — stable
+              - code [ref=f20e103]: source_id
+              - text: ","
+              - code [ref=f20e104]: chunk_id
+              - text: ", and content hashes prevent index drift"
+            - listitem [ref=f20e105]:
+              - strong [ref=f20e106]: Versioned mutations
+              - text: — atomic manifest updates keep vector store, BM25, and graph cache aligned
+            - listitem [ref=f20e107]:
+              - strong [ref=f20e108]: Explicit boundaries
+              - text: — untrusted-document tags separate retrieved text from system instructions
+            - listitem [ref=f20e109]:
+              - strong [ref=f20e110]: Measurable quality
+              - text: — benchmark utilities for Recall@k, MRR, nDCG, and quality gates
+            - listitem [ref=f20e111]:
+              - strong [ref=f20e112]: Offline-safe tests
+              - text: — CI runs without API keys; integration tests are opt-in
+          - heading [level=2] [ref=f20e113]:
+            - text: License
+            - link "Permalink to \"License\"" [ref=f20e114] [cursor=pointer]:
+              - /url: "#license"
+              - text: "#"
+          - paragraph [ref=f20e115]:
+            - link "MIT License" [ref=f20e116] [cursor=pointer]:
+              - /url: https://github.com/realhenrylan/mneme/blob/main/LICENSE
+          - heading [level=2] [ref=f20e117]:
+            - text: Author
+            - link "Permalink to \"Author\"" [ref=f20e118] [cursor=pointer]:
+              - /url: "#author"
+              - text: "#"
+          - paragraph [ref=f20e119]:
+            - text: Built by
+            - link "Henry Lan" [ref=f20e120] [cursor=pointer]:
+              - /url: https://github.com/realhenrylan
+            - text: .
+          - heading [level=2] [ref=f20e121]:
+            - text: Links
+            - link "Permalink to \"Links\"" [ref=f20e122] [cursor=pointer]:
+              - /url: "#links"
+              - text: "#"
+          - list [ref=f20e123]:
+            - listitem [ref=f20e124]:
+              - link "GitHub Repository" [ref=f20e125] [cursor=pointer]:
+                - /url: https://github.com/realhenrylan/mneme
+            - listitem [ref=f20e126]:
+              - link "Issues & Discussions" [ref=f20e127] [cursor=pointer]:
+                - /url: https://github.com/realhenrylan/mneme/issues
+            - listitem [ref=f20e128]:
+              - link "Homepage" [ref=f20e129] [cursor=pointer]:
+                - /url: /
+      - contentinfo [ref=f20e130]:
+        - link "Edit this page on GitHub" [ref=f20e133] [cursor=pointer]:
+          - /url: https://github.com/realhenrylan/mneme/edit/main/docs/about.md
+  - contentinfo [ref=f20e135]:
+    - generic [ref=f20e136]:
+      - paragraph [ref=f20e137]: Released under the MIT License.
+      - paragraph [ref=f20e138]: Copyright © 2026 Henry Lan

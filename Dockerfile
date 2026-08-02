@@ -45,7 +45,12 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 COPY --from=builder /app/src /app/src
 COPY --from=builder /app/tui /app/tui
 COPY --from=builder /app/pyproject.toml /app/pyproject.toml
-COPY --from=builder /app/models /app/models
+COPY --from=builder /app/models /app/models-image
+
+# Entrypoint script: restores pre-downloaded models when bind mount
+# shadows the image-bundled copy on a fresh host.
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
 
 # 环境变量
 ENV HF_HUB_OFFLINE=1 \
@@ -56,5 +61,5 @@ ENV HF_HUB_OFFLINE=1 \
 # 通过 docker-compose volume 挂载持久化
 VOLUME ["/data", "/app/src/chroma_db", "/app/models"]
 
-# 默认入口：TUI 模式
-ENTRYPOINT ["mneme"]
+# 默认入口：先恢复模型，再启动应用
+ENTRYPOINT ["/app/docker-entrypoint.sh", "mneme"]

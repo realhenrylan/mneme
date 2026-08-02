@@ -17,7 +17,7 @@ services:
   rag:
     build: .
     container_name: mneme-rag
-    entrypoint: ["python", "src/rag.py"]
+    entrypoint: ["/app/docker-entrypoint.sh", "python", "src/rag.py"]
     stdin_open: true
     env_file: .env
     volumes:
@@ -30,7 +30,7 @@ services:
   graph-rag:
     build: .
     container_name: mneme-graph-rag
-    entrypoint: ["python", "src/graph_rag.py"]
+    entrypoint: ["/app/docker-entrypoint.sh", "python", "src/graph_rag.py"]
     stdin_open: true
     env_file: .env
     volumes:

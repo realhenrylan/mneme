@@ -11,6 +11,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 2.1：标准文档模型 — Document → Section → Chunk 数据模型 + loaders/ 目录**
+  - 新增 `src/domain.py` 文档结构模型：
+    - `Section` 数据类：文档语义段落（标题、段落、表格等），含 heading_level、heading_path、page、char_start/end
+    - `Chunk` 数据类：分块后的文本片段，保留 section_heading、section_type、parent_chunk_id
+    - `Document` 数据类：解析后的文档，含 sections、chunks、parse_quality、parser_version
+    - `SectionType` 枚举：HEADING/PARAGRAPH/TABLE/LIST/CODE/IMAGE/OTHER
+    - `ParseQuality` 枚举：NATIVE_TEXT/STRUCTURED/OCR/LOW
+    - `Document.is_low_quality` 属性：空文本页率 > 30% 视为低质量
+  - 新增 `src/loaders/` 目录，将文档解析逻辑从 `src/rag.py` 迁移到独立模块：
+    - `base.py`：`BaseLoader` 抽象基类 + `LoaderRegistry` 注册表
+    - `pdf_loader.py`：PDF 解析器（PyMuPDF 优先/pdfplumber 降级），检测标题层级，计算解析质量
+    - `docx_loader.py`：DOCX 解析器，提取段落标题层级和表格
+    - `text_loader.py`：纯文本解析器，Markdown 检测 # 标题层级
+  - 新增 `src/chunking.py`：基于 Section 边界的结构化分块
+    - `chunk_document()`：优先在 Section 边界切分，超长 Section 二次切分
+    - `chunks_to_index_data()`：将 Chunks 转换为索引所需数据
+    - `CHUNKING_CONFIG_V3`：chunking version 升至 3
+  - `_load_index_chunks()` 使用新 loader + chunking 模块，保留旧路径作为降级
+  - `_build_context()` 在 chunk 前缀加入 `[Section: heading_path]` 信息
+  - `format_sources()` 在来源信息中加入 `§ heading_path`
+  - BM25 字段权重新增 `section_heading`（权重 1.5），标题路径参与 BM25 索引
+  - PDF 标题检测正则：支持中文编号（一、二、）、括号编号（(1)/（2）），中文后空格可选
+  - 低质量解析警告：`_load_index_chunks()` 在空文本页率过高时打印警告
+  - 新增 `tests/test_document_model.py`（47 个测试）
 - **阶段 1.6：引用闭环 — validate_citations 集成 + 一次修复 + 失败标记**
   - `answer_query()` 生成回答后自动调用 `validate_citations()` 校验引用 ID 合法性
   - 非法引用触发一次受限修复：`_repair_citations()` 将非法 ID 替换为数字最接近的合法 ID

@@ -1,0 +1,10 @@
+[     323ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/:0
+[     324ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/:0
+[     324ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/:0
+[     324ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/:0
+[     324ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/:0
+[     324ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/:0
+[   14763ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/:0
+[   14763ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/:0
+[   14770ms] [WARNING] Failed to decode downloaded font: http://localhost:5174/@fs/C:/Users/Henry%20Lan/AppData/Local/npm-cache/_npx/a3af1b0fdbe56d97/node_modules/vitepress/dist/client/theme-default/fonts/inter-roman-latin.woff2 @ http://localhost:5174/:0
+[   14770ms] [WARNING] OTS parsing error: invalid sfntVersion: 1008813135 @ http://localhost:5174/:0
