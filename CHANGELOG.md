@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 2.3：PDF/DOCX 重点解析增强 — 表格提取 + 字号标题检测 + 质量升级**
+  - `pdf_loader.py` 新增 `_detect_heading_by_font_size()`：基于字号比例检测标题（众数字号 vs 最大字号）
+  - `pdf_loader.py` 新增 `_format_table()`：将 pdfplumber 提取的二维表格格式化为 pipe-delimited 文本
+  - `_extract_with_pdfplumber()` 集成 `page.extract_tables()` 提取表格，创建 TABLE 类型 Section
+  - `_extract_with_fitz()` 返回 `table_count` 统计
+  - `load()` 在 `table_count > 0` 时将 ParseQuality 从 NATIVE_TEXT 升级为 STRUCTURED
+  - parser_version 升至 "2.0"
+  - 新增 `tests/test_pdf_docx_parsing.py`（17 个测试）
 - **阶段 2.2：Parent-Child/邻接扩展 — 小 chunk 召回 + 大 parent/邻接窗口回答**
   - `chunk_document()` 对超长 Section 创建 parent chunk（完整 Section 文本）+ child chunks（切分片段）
   - parent chunk 上限 `MAX_PARENT_CHUNK_CHARS=2000`，超过此长度的 Section 只创建 child chunks
