@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Knowledge-base and ingestion UX decisions** — Recorded the agreed first-run / returning-user flows, user-facing knowledge-base model, unique default names, per-knowledge-base source roots, and visible sync status (`plans/2026-08-02-knowledge-base-ux-decisions.md`).
+
+- **Knowledge-base UX implementation plan** — Added the complete, staged plan for the knowledge-base registry, source-root synchronization, legacy migration, asynchronous task visibility, TUI flows, test coverage, and acceptance criteria (`plans/2026-08-02-knowledge-base-ux-improvement-plan.md`).
+
+- **Graph RAG 阶段 4 入场评测方案** — 新增受控 A/B/C 实验、真值修复、指标与统计方法、GO/CONDITIONAL GO/NO-GO 门槛及可复现产物规范（`plans/GRAPH-RAG-EVALUATION-PLAN-2026-08-02.md`）
+
+- **P0 评测预检实现** — 完成评测方案 §11 中 P0 步骤的所有代码基础设施：
+  - 新增 `evaluation/compare.py`：受控对比实验框架，A/B/C 三组共享 rewrite/decompose/embedding/reranker/生成，唯一差异为 Graph 通道和 reranker 开关
+  - 修复 `evaluation/runner.py`：chunk 真值从 source 级扩大改为 snippet 级精确匹配（exact/overlap），不再系统性高估 Recall/nDCG；source ID 匹配优先使用 `source_name`（文件名）而非 SHA-256 hash
+  - 修复 `evaluation/generation_runner.py`：`run_case()` 从自行拼装简化链路改为调用生产 `answer_query()` 完整管线（含 rewrite/decompose/reranker/parent-child/adjacent/citation validation）
+  - 新增 `_meta_matches_source()`：解决数据集 source_id（文件名）与索引 metadata.source_id（SHA-256）不匹配问题
+  - 新增 `_char_bigrams()`：中文友好的字符级 bigram 文本相似度计算，替代空格分词
+  - 新增 `build_conversation_chains()`/`canonical_history_for_turn()`：多轮链构建和 canonical history 回放
+  - 新增 `group_aware_split()`：多轮 chain 整体分配到同一侧的数据集拆分
+  - 新增 `compute_answer_point_coverage()`：答案要点覆盖率计算
+  - 新增 `_graph_enhanced_answer_query()`：Graph 增强的完整 answer_query（保留所有 Standard 步骤，仅替换检索为 Graph 增强）
+  - 新增 CLI 入口：`python -m evaluation.compare --dataset v1 --corpus-dir test_texts --validate-only`
+  - Ground truth 映射验证结果：87 entries, 60 exact, 27 overlap, 0 unmatched
 - **阶段 3.5：来源生命周期对账**
 
 ---

@@ -120,89 +120,68 @@ class GenerationRunner:
         print(f"Index built: {len(self._all_docs)} chunks")
 
     def run_case(self, case: EvalCase) -> GenerationResult:
-        """Run generation for a single evaluation case."""
+        """Run generation for a single evaluation case.
+
+        Calls the production answer_query() pipeline directly, ensuring
+        the evaluation measures real-world behavior including query
+        rewrite, decomposition, reranking, parent-child/adjacent
+        expansion, and citation validation (evaluation plan §2.2 item 5).
+        """
         if not self._index_built:
             raise RuntimeError("Call build_index() before run_case()")
 
-        from src.rag import (
-            retrieve_hybrid_with_sources,
-            _build_context,
-            dynamic_top_k,
-            retrieval_refused,
-        )
-        from src.citations import make_citation_records
-        from src.domain import RetrievalCandidate, compute_context_k
+        from src.rag import answer_query, REFUSAL_MESSAGE
+        from src.citations import referenced_citation_ids
 
-        # Step 1: Retrieval
-        retrieval_start = time.perf_counter()
-        indices, docs, scores = retrieve_hybrid_with_sources(
-            query=case.query,
-            model=self._model,
-            collection=self._collection,
-            bm25=self._bm25,
-            documents=self._all_docs,
-            metadatas=self._all_metadatas,
-        )
-        retrieval_ms = (time.perf_counter() - retrieval_start) * 1000
+        # Call the full production pipeline
+        total_start = time.perf_counter()
+        try:
+            answer, sources = answer_query(
+                query=case.query,
+                model=self._model,
+                collection=self._collection,
+                bm25=self._bm25,
+                documents=self._all_docs,
+                metadatas=self._all_metadatas,
+            )
+        except Exception as e:
+            answer = f"[Generation error: {e}]"
+            sources = ""
+        total_ms = (time.perf_counter() - total_start) * 1000
 
-        # Step 2: Check refusal
-        refused = retrieval_refused(scores)
+        # Build valid citation IDs from sources string
+        # sources format: [S1] filename (p.X; chunk_id=...): snippet...
+        import re
+        valid_ids: set[str] = set()
+        for match in re.finditer(r'\[(S\d+)\]', sources):
+            valid_ids.add(match.group(1))
 
-        # Step 3: Build context
-        top_k = dynamic_top_k(scores)
-        top_indices = indices[:top_k]
-        context_k = compute_context_k(
-            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
-             for i in top_indices],
-        )
-        context = _build_context(top_indices, self._all_docs, self._all_metadatas, context_k=context_k)
-
-        # Step 4: Generate answer
-        generation_start = time.perf_counter()
-        if refused:
-            answer = "未找到足够可靠的文档依据，暂时无法回答该问题。"
-            generation_ms = 0.0
-        else:
-            answer = self._generate_answer(case.query, context)
-            generation_ms = (time.perf_counter() - generation_start) * 1000
-
-        total_ms = retrieval_ms + generation_ms
-
-        # Step 5: Compute citation metrics
-        # Build valid citation IDs from the context
-        selected_indices = top_indices[:5]
-        records = make_citation_records(
-            selected_indices, self._all_docs, self._all_metadatas,
-        )
-        valid_ids = {r.citation_id for r in records}
-
-        # Build relevant chunk IDs from ground truth
+        # Build relevant chunk IDs from ground truth.
+        # Use snippet-level matching instead of source-level expansion (§5.1).
         relevant_chunk_ids: set[str] = set()
+        from evaluation.compare import match_snippet_to_chunks
         for rc in case.relevant_chunks:
-            source_id = rc.source_id
-            for idx, meta in enumerate(self._all_metadatas):
-                meta_source = (
-                    meta.get("source_id")
-                    or meta.get("source_name")
-                    or meta.get("source", "")
+            if rc.chunk_text_snippet:
+                matched_ids, method = match_snippet_to_chunks(
+                    rc.chunk_text_snippet, rc.source_id,
+                    self._all_metadatas, self._all_docs,
                 )
-                if meta_source == source_id:
-                    chunk_id = meta.get("chunk_id", f"chunk_{idx}")
-                    relevant_chunk_ids.add(chunk_id)
+                if method in ("exact", "overlap"):
+                    relevant_chunk_ids.update(matched_ids)
 
+        # All retrieved IDs (from sources string)
         all_retrieved_ids: set[str] = set()
-        for idx in indices[:top_k]:
-            meta = self._all_metadatas[idx] if idx < len(self._all_metadatas) else {}
-            chunk_id = meta.get("chunk_id", f"chunk_{idx}")
-            all_retrieved_ids.add(chunk_id)
+        for match in re.finditer(r'chunk_id=([^\s);:]+)', sources):
+            all_retrieved_ids.add(match.group(1))
 
+        # Compute citation metrics
         citation_metrics = evaluate_citations(
             answer=answer,
             valid_ids=valid_ids,
             relevant_chunk_ids=relevant_chunk_ids,
             all_retrieved_ids=all_retrieved_ids,
             answer_points=case.acceptable_answer_points,
-            context=context,
+            context="",  # Not stored; faithfulness uses heuristic
             should_refuse=case.should_refuse,
         )
 
@@ -213,29 +192,12 @@ class GenerationRunner:
             language=case.language.value,
             should_refuse=case.should_refuse,
             answer=answer,
-            context=context[:500],  # Truncate for storage
+            context=sources[:500],  # Store truncated sources as context
             citation_metrics=citation_metrics,
             total_ms=total_ms,
-            retrieval_ms=retrieval_ms,
-            generation_ms=generation_ms,
+            retrieval_ms=0.0,  # Not separately timed in production pipeline
+            generation_ms=total_ms,
         )
-
-    def _generate_answer(self, query: str, context: str) -> str:
-        """Generate an answer using the LLM.
-
-        This calls the same LLM generation function as the production
-        pipeline.  Override this method for testing with mock LLMs.
-        """
-        try:
-            from src.rag import answer_query
-            # answer_query returns the answer string
-            result = answer_query(
-                query=query,
-                context=context,
-            )
-            return result if isinstance(result, str) else str(result)
-        except Exception as e:
-            return f"[Generation error: {e}]"
 
     def run_all(self) -> tuple[list[GenerationResult], dict[str, Any]]:
         """Run generation for all cases and compute aggregate metrics."""

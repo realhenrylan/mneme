@@ -173,25 +173,35 @@ class RetrievalRunner:
             chunk_id = meta.get("chunk_id", f"chunk_{idx}")
             retrieved_chunk_ids.append(chunk_id)
 
-            source_id = meta.get("source_id") or meta.get("source_name") or meta.get("source", "")
+            # Use source_name (filename) for source recall matching,
+            # since dataset relevant_source_ids use filenames, not SHA-256 hashes.
+            source_id = (
+                meta.get("source_name")
+                or meta.get("source", "")
+                or meta.get("source_id", "")
+            )
             if source_id and source_id not in seen_sources:
                 retrieved_source_ids.append(source_id)
                 seen_sources.add(source_id)
 
-        # Build ground truth chunk IDs from relevant_chunks annotations
+        # Build ground truth chunk IDs from relevant_chunks annotations.
+        # Use snippet-level matching instead of source-level expansion to avoid
+        # systematically inflating Recall/nDCG (evaluation plan §5.1).
         relevant_chunk_ids: set[str] = set()
+        from evaluation.compare import match_snippet_to_chunks
         for rc in case.relevant_chunks:
-            # Match by source_id + snippet overlap
-            relevant_chunk_ids.add(rc.source_id)  # At minimum, the source is relevant
-
-        # Also try to match specific chunks by source_id prefix
-        for rc in case.relevant_chunks:
-            source_id = rc.source_id
-            for idx, meta in enumerate(self._all_metadatas):
-                meta_source = meta.get("source_id") or meta.get("source_name") or meta.get("source", "")
-                if meta_source == source_id:
-                    chunk_id = meta.get("chunk_id", f"chunk_{idx}")
-                    relevant_chunk_ids.add(chunk_id)
+            if rc.chunk_text_snippet:
+                matched_ids, method = match_snippet_to_chunks(
+                    rc.chunk_text_snippet, rc.source_id,
+                    self._all_metadatas, self._all_docs,
+                )
+                # Only use exact and overlap matches for chunk-level metrics.
+                # source_fallback entries are excluded from chunk recall denominator
+                # but still count for source recall and answer evaluation.
+                if method in ("exact", "overlap"):
+                    relevant_chunk_ids.update(matched_ids)
+            # If no snippet, this case has no chunk-level truth;
+            # it will still be evaluated at source and answer levels.
 
         return RetrievalResult(
             case_id=case.id,
