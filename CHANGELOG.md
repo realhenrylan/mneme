@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 1.4：Reranker + 来源多样性约束**
+  - 新增 `src/retrieval.py`：Reranker Protocol、CrossEncoderReranker（延迟加载）、NoOpReranker（A/B 对比基线）、apply_source_diversity（每来源上限 3 个 chunk）
+  - `answer_query()` 和 `answer_query_stream()` 在 RRF 融合后、`_build_context()` 前插入 reranker 步骤
+  - Reranker 通过环境变量 `RAG_RERANKER` 控制：`"cross-encoder"` 启用，`"none"` 或未设置则不启用
+  - 进程级 reranker 缓存，避免重复加载模型
+  - 新增 `tests/test_retrieval.py`（11 个测试）
 - **阶段 1.1+1.2：CJK n-gram tokenizer + 元数据字段加权 + 分块分隔符修复 + Embedding 对比工具**
   - 新增 `src/lexical.py`：CJK n-gram tokenizer（unigram + bigram）、元数据字段加权 BM25 语料构建、增量 BM25 索引构建
   - `_tokenize()` 委托给 `cjk_ngram_tokenize()`，连续 CJK 字符不再被当作一个 token
