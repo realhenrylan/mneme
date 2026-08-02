@@ -2084,3 +2084,182 @@ def remove_file_from_index(
             remove_source_paths={target_path},
         )
     return len(ids_to_delete)
+
+
+# ═══════════════════════════════════════════════════════════════
+# 来源生命周期对账：sync_sources / add_sources
+# ═══════════════════════════════════════════════════════════════
+
+
+def compute_source_diff(
+    desired_paths: list[str],
+    collection: chromadb.Collection,
+) -> dict:
+    """计算 desired_paths 与当前索引的差异。
+
+    Returns:
+        {
+            "to_add": [path, ...],      # 新增文件
+            "to_update": [path, ...],   # 已存在但内容变更的文件
+            "to_remove": [path, ...],   # 索引中存在但不在 desired_paths 中的文件
+            "unchanged": [path, ...],   # 已存在且未变更的文件
+        }
+    """
+    manifest = load_index_manifest(
+        getattr(collection, "name", DEFAULT_COLLECTION_NAME)
+    )
+    # 当前索引中的来源路径集合
+    indexed_sources: dict[str, dict] = {}  # source_path → source_record
+    if manifest and "sources" in manifest:
+        for src in manifest["sources"]:
+            sp = src.get("source_path", "")
+            if sp:
+                indexed_sources[sp] = src
+
+    # 规范化 desired_paths
+    desired_set: dict[str, str] = {}  # canonical_path → original_path
+    for p in desired_paths:
+        cp = canonical_source_path(p)
+        desired_set[cp] = p
+
+    to_add = []
+    to_update = []
+    to_remove = []
+    unchanged = []
+
+    # 检查 desired 中的文件
+    for cp, orig in desired_set.items():
+        if cp not in indexed_sources:
+            to_add.append(orig)
+        else:
+            # 检查内容是否变更
+            if _source_needs_sync(collection, orig):
+                to_update.append(orig)
+            else:
+                unchanged.append(orig)
+
+    # 检查索引中多余的来源
+    for cp, src in indexed_sources.items():
+        if cp not in desired_set:
+            to_remove.append(src.get("source_path", cp))
+
+    return {
+        "to_add": to_add,
+        "to_update": to_update,
+        "to_remove": to_remove,
+        "unchanged": unchanged,
+    }
+
+
+def sync_sources(
+    desired_paths: list[str],
+    model: SentenceTransformer,
+    collection: chromadb.Collection,
+    dry_run: bool = False,
+) -> dict:
+    """同步索引来源到 desired_paths 集合。
+
+    - 索引中多余的来源会被删除
+    - 新增的文件会被添加
+    - 变更的文件会被重新索引
+    - 未变更的文件保持不变
+
+    Args:
+        desired_paths: 期望的文件路径列表
+        model: embedding 模型
+        collection: ChromaDB collection
+        dry_run: 只计算差异，不执行变更
+
+    Returns:
+        {
+            "diff": compute_source_diff() 的结果,
+            "added": int,
+            "updated": int,
+            "removed": int,
+        }
+    """
+    diff = compute_source_diff(desired_paths, collection)
+
+    if dry_run:
+        return {
+            "diff": diff,
+            "added": 0,
+            "updated": 0,
+            "removed": 0,
+        }
+
+    added = 0
+    updated = 0
+    removed = 0
+
+    # 1. 删除多余来源
+    for path in diff["to_remove"]:
+        count = remove_file_from_index(path, collection)
+        removed += 1
+
+    # 2. 添加新文件
+    if diff["to_add"]:
+        bm25, docs, metas = add_files_to_index(
+            diff["to_add"], model, collection,
+        )
+        added = len(diff["to_add"])
+
+    # 3. 更新变更文件（先删后加）
+    if diff["to_update"]:
+        for path in diff["to_update"]:
+            remove_file_from_index(path, collection)
+        bm25, docs, metas = add_files_to_index(
+            diff["to_update"], model, collection,
+        )
+        updated = len(diff["to_update"])
+
+    return {
+        "diff": diff,
+        "added": added,
+        "updated": updated,
+        "removed": removed,
+    }
+
+
+def add_sources(
+    delta_paths: list[str],
+    model: SentenceTransformer,
+    collection: chromadb.Collection,
+) -> dict:
+    """只增不删：添加新文件/更新变更文件，不删除多余来源。
+
+    Args:
+        delta_paths: 要添加/更新的文件路径列表
+        model: embedding 模型
+        collection: ChromaDB collection
+
+    Returns:
+        {
+            "added": int,
+            "updated": int,
+        }
+    """
+    diff = compute_source_diff(delta_paths, collection)
+
+    added = 0
+    updated = 0
+
+    # 只处理 to_add 和 to_update，不处理 to_remove
+    if diff["to_add"]:
+        bm25, docs, metas = add_files_to_index(
+            diff["to_add"], model, collection,
+        )
+        added = len(diff["to_add"])
+
+    if diff["to_update"]:
+        for path in diff["to_update"]:
+            remove_file_from_index(path, collection)
+        bm25, docs, metas = add_files_to_index(
+            diff["to_update"], model, collection,
+        )
+        updated = len(diff["to_update"])
+
+    return {
+        "added": added,
+        "updated": updated,
+    }

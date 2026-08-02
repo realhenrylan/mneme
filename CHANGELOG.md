@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 3.5：来源生命周期对账**
+  - 新增 `compute_source_diff()`：计算 desired_paths 与当前索引的差异（to_add/to_update/to_remove/unchanged）
+  - 新增 `sync_sources(desired_paths)`：同步索引到 desired-set 语义，删除多余来源、添加新文件、更新变更文件
+  - 新增 `add_sources(delta_paths)`：只增不删模式，添加新文件/更新变更文件，不删除多余来源
+  - `sync_sources()` 支持 `dry_run=True`：只计算差异不执行变更，用于展示差异并要求显式确认
+  - CLI `--files` 语义文档化：sync 为 desired-set 语义，add 为增量语义
+  - 新增 `tests/test_source_lifecycle.py`（9 个测试）
 - **阶段 3.4：完整可观测性**
   - `src/metrics.py` 大幅增强：
     - `QueryMetric` 新增字段：index_ms、embedding_ms、rewrite_ms、decompose_ms、dense_ms、bm25_ms、rerank_ms、llm_ms、ttft_ms（分阶段延迟）
