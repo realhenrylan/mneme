@@ -33,6 +33,7 @@ from src.citations import citation_map, make_citation_records, validate_citation
 from src.domain import RetrievalCandidate, CitationValidation, compute_context_k
 from src.lexical import cjk_ngram_tokenize, build_bm25_index as _build_bm25_index_lexical
 from src.retrieval import CrossEncoderReranker, NoOpReranker, apply_source_diversity
+from src.chunking import expand_with_parent, expand_with_adjacent
 from src.metrics import GLOBAL_METRICS, QueryMetric, elapsed_ms
 from src.security import (
     remote_context_limit,
@@ -1752,7 +1753,17 @@ def answer_query(
         top_indices = [c.index for c in reranked]
 
     enriched_docs = enrich_context(top_indices, documents, metadatas)
-    # 计算 context_k：实际进入 prompt 的证据数
+    # ── Parent-Child 扩展：child chunk → 用 parent chunk 替换 ──
+    context_k = compute_context_k(
+        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+         for i in top_indices],
+    )
+    top_indices, _ = expand_with_parent(
+        top_indices, enriched_docs, metadatas, context_k,
+    )
+    # ── 邻接扩展：召回 chunk 时自动包含前后相邻 chunk ──
+    top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
+    # 扩展后重新计算 context_k
     context_k = compute_context_k(
         [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
          for i in top_indices],
@@ -1965,7 +1976,17 @@ def answer_query_stream(
         top_indices = [c.index for c in reranked]
 
     enriched_docs = enrich_context(top_indices, documents, metadatas)
-    # 计算 context_k：实际进入 prompt 的证据数
+    # ── Parent-Child 扩展：child chunk → 用 parent chunk 替换 ──
+    context_k = compute_context_k(
+        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+         for i in top_indices],
+    )
+    top_indices, _ = expand_with_parent(
+        top_indices, enriched_docs, metadatas, context_k,
+    )
+    # ── 邻接扩展：召回 chunk 时自动包含前后相邻 chunk ──
+    top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
+    # 扩展后重新计算 context_k
     context_k = compute_context_k(
         [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
          for i in top_indices],

@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 2.2：Parent-Child/邻接扩展 — 小 chunk 召回 + 大 parent/邻接窗口回答**
+  - `chunk_document()` 对超长 Section 创建 parent chunk（完整 Section 文本）+ child chunks（切分片段）
+  - parent chunk 上限 `MAX_PARENT_CHUNK_CHARS=2000`，超过此长度的 Section 只创建 child chunks
+  - child chunks 通过 `parent_chunk_id` 关联到 parent chunk
+  - 新增 `expand_with_parent()`：召回 child chunk 时用 parent chunk 替换，提供更完整上下文
+  - 新增 `expand_with_adjacent()`：召回 chunk 时自动包含前后相邻 chunk（max_expand=2）
+  - `answer_query()` 和 `answer_query_stream()` 在 enrich_context 后依次应用 parent-child 扩展和邻接扩展
+  - `chunks_to_index_data()` 输出 parent_chunk_id 和 chunk_type（parent/child/anchor）元数据
+  - 新增 `tests/test_parent_child.py`（16 个测试）
 - **阶段 2.1：标准文档模型 — Document → Section → Chunk 数据模型 + loaders/ 目录**
   - 新增 `src/domain.py` 文档结构模型：
     - `Section` 数据类：文档语义段落（标题、段落、表格等），含 heading_level、heading_path、page、char_start/end
