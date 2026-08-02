@@ -887,7 +887,8 @@ def prepare_index(
         collection_name, force_rebuild, file_paths=file_paths,
     )
 
-    model = _load_sentence_transformer(EMBEDDING_MODEL_NAME)
+    from src.llm_gateway import get_or_load_model
+    model = get_or_load_model(EMBEDDING_MODEL_NAME, _load_sentence_transformer)
     manifest = load_index_manifest(collection_name)
     config_mismatch = bool(file_paths) and (
         manifest is None or not _manifest_config_matches(manifest, model=model)
@@ -1658,30 +1659,27 @@ def answer_with_llm_history(
     model: str = DEFAULT_LLM_MODEL,
     temperature: float = DEFAULT_TEMPERATURE,
 ) -> str:
-    api_key = os.getenv("API_KEY")
-    base_url = os.getenv("BASE_URL")
-
-    if not api_key or not base_url:
-        raise ValueError("请在 .env 文件中设置 API_KEY 和 BASE_URL")
-
-    base_url = validate_endpoint(base_url)
-    client = OpenAI(api_key=api_key, base_url=base_url)
+    from src.llm_gateway import llm_call, LLMErrorCategory, classify_error
 
     messages = _build_llm_messages(question, context, history)
     try:
-        response = client.chat.completions.create(
-            model=model,
+        response, _ = llm_call(
+            call_type="answer",
             messages=messages,
+            model=model,
             temperature=temperature,
+            max_tokens=2000,
         )
-    except RateLimitError:
-        return "API 请求频率超限，请稍后重试。"
-    except APIConnectionError:
-        return "无法连接到 API 服务，请检查网络或 BASE_URL 配置。"
-    except APIError as e:
-        return f"API 请求失败: {e}"
-
-    return response.choices[0].message.content
+        return response.choices[0].message.content
+    except Exception as exc:
+        category = classify_error(exc)
+        if category == LLMErrorCategory.RATE_LIMIT:
+            return "API 请求频率超限，请稍后重试。"
+        if category == LLMErrorCategory.CONNECTION:
+            return "无法连接到 API 服务，请检查网络或 BASE_URL 配置。"
+        if category == LLMErrorCategory.TIMEOUT:
+            return "API 请求超时，请稍后重试。"
+        return f"API 请求失败: {exc}"
 
 def answer_query(
         query: str,
@@ -1891,32 +1889,32 @@ def answer_with_llm_history_stream(
     model: str = DEFAULT_LLM_MODEL,
     temperature: float = DEFAULT_TEMPERATURE,
 ) -> Generator[str, None, None]:
-    api_key = os.getenv("API_KEY")
-    base_url = os.getenv("BASE_URL")
-    if not api_key or not base_url:
-        yield "[错误] 请在 .env 文件中设置 API_KEY 和 BASE_URL"
-        return
-    try:
-        base_url = validate_endpoint(base_url)
-    except ValueError as exc:
-        yield f"[错误] 远程端点配置无效：{exc}"
-        return
-    client = OpenAI(api_key=api_key, base_url=base_url)
+    from src.llm_gateway import llm_call, LLMErrorCategory, classify_error
+
     messages = _build_llm_messages(question, context, history)
     try:
-        response = client.chat.completions.create(
-            model=model, messages=messages, temperature=temperature, stream=True,
+        response, _ = llm_call(
+            call_type="answer",
+            messages=messages,
+            model=model,
+            temperature=temperature,
+            max_tokens=2000,
+            stream=True,
         )
         for chunk in response:
             delta = chunk.choices[0].delta
             if delta.content:
                 yield delta.content
-    except RateLimitError:
-        yield "\n[API 请求频率超限，请稍后重试]"
-    except APIConnectionError:
-        yield "\n[无法连接到 API 服务，请检查网络或 BASE_URL 配置]"
-    except APIError as e:
-        yield f"\n[API 请求失败: {e}]"
+    except Exception as exc:
+        category = classify_error(exc)
+        if category == LLMErrorCategory.RATE_LIMIT:
+            yield "\n[API 请求频率超限，请稍后重试]"
+        elif category == LLMErrorCategory.CONNECTION:
+            yield "\n[无法连接到 API 服务，请检查网络或 BASE_URL 配置]"
+        elif category == LLMErrorCategory.TIMEOUT:
+            yield "\n[API 请求超时，请稍后重试]"
+        else:
+            yield f"\n[API 请求失败: {exc}]"
 
 
 def answer_query_stream(

@@ -11,7 +11,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **阶段 2.4：多轮检索改写 — History-aware standalone query rewrite + 原查询保底召回**
+- **阶段 3.1：单例模型与统一 LLM Gateway**
+  - 新增 `src/llm_gateway.py`：统一 LLM 调用网关
+    - `LLMErrorCategory` 枚举：错误分类（TIMEOUT/RATE_LIMIT/CONNECTION/AUTH/MODEL_NOT_FOUND/CONTEXT_LENGTH/SERVER_ERROR/CANCELLED/UNKNOWN）
+    - `classify_error()`：将异常自动分类为 LLMErrorCategory
+    - `get_or_load_model()`：进程级线程安全模型缓存，避免重复加载 embedding model
+    - `llm_call()`：统一 LLM 调用入口，提供连接复用、timeout、有限重试+指数退避、并发控制、错误分类、token 统计
+    - `llm_call_safe()`：安全版 LLM 调用，不抛异常，返回 (content, record)
+    - `TokenUsage`/`LLMCallRecord` 数据类：token 使用量和调用记录
+    - `get_call_summary()`：调用统计摘要（总调用数、错误率、平均延迟、token 用量、按类型/错误分类统计）
+  - `answer_with_llm_history()` 和 `answer_with_llm_history_stream()` 改为通过 `llm_call()` 调用，不再各自创建 OpenAI client
+  - `decompose_query_llm()` 改为通过 `llm_call_safe()` 调用
+  - `rewrite_query_llm()` 改为通过 `llm_call_safe()` 调用
+  - `tui/service.py` 的 `_ensure_model()` 改为使用 `get_or_load_model()` 进程级缓存
+  - `prepare_index()` 改为使用 `get_or_load_model()` 进程级缓存
+  - 增强 `should_decompose()` 守卫规则：中文简单问题（无多意图关键词、无中英混合、无分号分隔）跳过 LLM 拆解
+  - 新增 `tests/test_llm_gateway.py`（31 个测试）
+  - 修复 `test_query_decomposer.py` 和 `test_phase_c_quality.py` 适配 gateway
   - 新增 `src/rag_query_rewriter.py`：多轮对话查询改写模块
     - `should_rewrite()`：判断是否需要改写（无历史/过短/无代词则跳过）
     - `rewrite_query_llm()`：利用最近 5 轮历史将省略主语的追问改写为独立可检索问题

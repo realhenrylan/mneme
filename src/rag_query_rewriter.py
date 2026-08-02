@@ -10,11 +10,9 @@
 4. 记录 rewrite 文本与原查询的结果覆盖差异（通过 rewrite_log）
 """
 
-import json
 import os
 import re
 from dotenv import load_dotenv
-from openai import OpenAI
 from src.security import endpoint_validation_error, validate_endpoint
 
 load_dotenv()
@@ -113,48 +111,47 @@ def rewrite_query_llm(
     if endpoint_validation_error(base_url):
         rewrite_log["reason"] = "invalid_endpoint"
         return query, rewrite_log
-    base_url = validate_endpoint(base_url)
 
     # 构建历史上下文（最近 5 轮）
     history_text = ""
     for q, a in (history or [])[-5:]:
         history_text += f"Q: {q}\nA: {a}\n"
 
-    for attempt in range(max_retries):
-        try:
-            client = OpenAI(api_key=api_key, base_url=base_url)
-            response = client.chat.completions.create(
-                model=model,
-                messages=[
-                    {"role": "system", "content": REWRITE_PROMPT},
-                    {"role": "user", "content": (
-                        f"History:\n{history_text}\n"
-                        f"Follow-up: {query}"
-                    )},
-                ],
-                temperature=temperature,
-                max_tokens=200,
-                timeout=15,
-            )
-            content = response.choices[0].message.content.strip()
-            # 清理 markdown 包裹
-            content = re.sub(r'^["\']', '', content)
-            content = re.sub(r'["\']$', '', content)
-            content = re.sub(r'^```(?:json)?\s*', '', content)
-            content = re.sub(r'\s*```$', '', content)
+    from src.llm_gateway import llm_call_safe
+    content, record = llm_call_safe(
+        call_type="rewrite",
+        messages=[
+            {"role": "system", "content": REWRITE_PROMPT},
+            {"role": "user", "content": (
+                f"History:\n{history_text}\n"
+                f"Follow-up: {query}"
+            )},
+        ],
+        model=model,
+        temperature=temperature,
+        max_tokens=200,
+        timeout=15,
+        max_retries=max_retries,
+    )
 
-            if content and content != query:
-                rewrite_log["rewritten"] = content
-                rewrite_log["changed"] = True
-                rewrite_log["reason"] = "llm_rewrite"
-                return content, rewrite_log
-            # LLM 返回原 query 或空 → 不改写
-            rewrite_log["reason"] = "llm_returned_unchanged"
-            return query, rewrite_log
-        except Exception:
-            pass
+    if content is None:
+        rewrite_log["reason"] = "llm_failed"
+        return query, rewrite_log
 
-    rewrite_log["reason"] = "llm_failed"
+    # 清理 markdown 包裹
+    content = re.sub(r'^["\']', '', content)
+    content = re.sub(r'["\']$', '', content)
+    content = re.sub(r'^```(?:json)?\s*', '', content)
+    content = re.sub(r'\s*```$', '', content)
+
+    if content and content != query:
+        rewrite_log["rewritten"] = content
+        rewrite_log["changed"] = True
+        rewrite_log["reason"] = "llm_rewrite"
+        return content, rewrite_log
+
+    # LLM 返回原 query 或空 → 不改写
+    rewrite_log["reason"] = "llm_returned_unchanged"
     return query, rewrite_log
 
 

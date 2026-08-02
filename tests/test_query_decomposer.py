@@ -24,20 +24,18 @@ def test_should_decompose_single_word():
 
 
 def test_should_decompose_normal():
-    assert should_decompose("这篇论文讲了什么？") is True
+    # 简单中文问题（无多意图关键词、无中英混合）不再拆解
+    assert should_decompose("这篇论文讲了什么？") is False
+    # 中英混合需要拆解
     assert should_decompose("LLMs for mobility") is True
 
 
 def test_llm_mock_returns_json():
     """mock API → 返回合法 JSON → 正确解析"""
-    mock_response = MagicMock()
-    mock_response.choices = [MagicMock()]
-    mock_response.choices[0].message.content = (
-        '["LLMs for mobility","作者都属于什么学校？"]'
-    )
+    mock_response_content = '["LLMs for mobility","作者都属于什么学校？"]'
     with patch.dict(os.environ, _MOCK_ENV):
-        with patch("src.rag_query_decomposer.OpenAI") as mock_openai:
-            mock_openai.return_value.chat.completions.create.return_value = mock_response
+        with patch("src.llm_gateway.llm_call_safe") as mock_call:
+            mock_call.return_value = (mock_response_content, MagicMock())
             result = decompose_query_llm("LLMs for mobility这篇文章的作者？")
     assert len(result) == 2
     assert "LLMs for mobility" in result[0]
@@ -46,12 +44,9 @@ def test_llm_mock_returns_json():
 
 def test_llm_mock_bad_json_fallback():
     """mock API 返回非法 JSON → 降级为 [query]"""
-    mock_response = MagicMock()
-    mock_response.choices = [MagicMock()]
-    mock_response.choices[0].message.content = "not valid json"
     with patch.dict(os.environ, _MOCK_ENV):
-        with patch("src.rag_query_decomposer.OpenAI") as mock_openai:
-            mock_openai.return_value.chat.completions.create.return_value = mock_response
+        with patch("src.llm_gateway.llm_call_safe") as mock_call:
+            mock_call.return_value = ("not valid json", MagicMock())
             result = decompose_query_llm("LLMs for mobility")
     assert result == ["LLMs for mobility"]
 
@@ -59,8 +54,8 @@ def test_llm_mock_bad_json_fallback():
 def test_llm_mock_api_error_fallback():
     """mock API 抛异常 → 重试后降级为 [query]"""
     with patch.dict(os.environ, _MOCK_ENV):
-        with patch("src.rag_query_decomposer.OpenAI") as mock_openai:
-            mock_openai.return_value.chat.completions.create.side_effect = Exception("boom")
+        with patch("src.llm_gateway.llm_call_safe") as mock_call:
+            mock_call.return_value = (None, MagicMock(error_category="timeout"))
             result = decompose_query_llm("LLMs for mobility")
     assert result == ["LLMs for mobility"]
 

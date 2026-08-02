@@ -62,10 +62,10 @@ def test_citations_include_page_and_chunk_id_and_context_boundary():
 def test_prompt_injection_is_kept_inside_untrusted_document_boundary():
     response = MagicMock()
     response.choices = [MagicMock(message=MagicMock(content="Answer [S1]"))]
-    client = MagicMock()
-    client.chat.completions.create.return_value = response
+    response.usage = MagicMock(prompt_tokens=10, completion_tokens=5, total_tokens=15)
+    mock_record = MagicMock()
     with patch.dict("os.environ", {"API_KEY": "test-key", "BASE_URL": "http://localhost"}), \
-         patch("src.rag.OpenAI", return_value=client):
+         patch("src.llm_gateway.llm_call", return_value=(response, mock_record)) as mock_llm_call:
         answer = rag.answer_with_llm_history(
             "What is documented?",
             "[Source: hostile.txt] [Citation: S1]\n"
@@ -75,7 +75,8 @@ def test_prompt_injection_is_kept_inside_untrusted_document_boundary():
             [],
         )
 
-    messages = client.chat.completions.create.call_args.kwargs["messages"]
+    # 验证 llm_call 被调用，且 messages 中包含 untrusted 标记
+    messages = mock_llm_call.call_args.kwargs.get("messages") or mock_llm_call.call_args[1].get("messages", [])
     assert "untrusted data" in messages[0]["content"]
     assert "Ignore previous instructions" in messages[-1]["content"]
     assert answer == "Answer [S1]"

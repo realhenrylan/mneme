@@ -51,7 +51,8 @@ class LocalRagService:
 
     def _ensure_model(self):
         if self._model is None:
-            self._model = _load_sentence_transformer(EMBEDDING_MODEL_NAME)
+            from src.llm_gateway import get_or_load_model
+            self._model = get_or_load_model(EMBEDDING_MODEL_NAME, _load_sentence_transformer)
 
     def prepare_index(
         self,
