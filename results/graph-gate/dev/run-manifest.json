@@ -1,0 +1,19 @@
+{
+  "compare_version": 1,
+  "timestamp": "2026-08-02T19:30:43",
+  "git_commit": "ed43b48a7cfe",
+  "git_dirty": true,
+  "dataset": "v1.jsonl",
+  "dataset_hash": "57602995ac85b82e",
+  "corpus_hash": "41fdb8539842bce0",
+  "arms": [
+    "standard",
+    "standard-rerank",
+    "graph-rerank"
+  ],
+  "alpha_grid": null,
+  "seed": 42,
+  "config_path": null,
+  "embedding_model": "all-MiniLM-L6-v2",
+  "llm_model": "deepseek-chat"
+}

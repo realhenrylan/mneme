@@ -29,15 +29,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - 新增 `_graph_enhanced_answer_query()`：Graph 增强的完整 answer_query（保留所有 Standard 步骤，仅替换检索为 Graph 增强）
   - 新增 CLI 入口：`python -m evaluation.compare --dataset v1 --corpus-dir test_texts --validate-only`
   - Ground truth 映射验证结果：87 entries, 60 exact, 27 overlap, 0 unmatched
+
+- **P1 检索实验完成 — 结论：NO-GO**
+  - 运行 A/B/C 三组受控检索实验（development split，95 条，alpha=0.7）
+  - Graph 目标切片（21 条）context_recall C-B 差值：**-6.55pp**（门槛要求 ≥ +5pp）
+  - 全部可回答查询（73 条）context_recall C-B 差值：**-5.54pp**（门槛要求下降 ≤ 2pp）
+  - Graph pollution rate 19%：非相关 Graph chunk 挤出了 Standard 已召回的相关 chunk
+  - 在线延迟翻倍：p50 从 750ms 增至 1524ms（C/B = 2.03，超出 ≤ 2.0 门槛）
+  - 多轮切片严重退化：context_recall -21.43pp
+  - 决策报告：`results/graph-gate/decision-report.md`
+  - **不进入阶段 4**，保留 Standard RAG 作为生产默认
 - **阶段 3.5：来源生命周期对账**
 
 ---
 
-## 阶段 4 状态：条件未满足 — 暂不进入
+## 阶段 4 状态：NO-GO — 评测证明 Graph 无净收益
 
-> 计划要求：**只有阶段 0-2 的评测证明 Graph 对目标查询有净收益时才进入阶段 4**。
-> 当前状态：评测集 v1 已存在（110 条），但尚未运行 Standard RAG vs Graph RAG 的对比评测。
-> 结论：**暂不进入阶段 4**，待评测结果证明 Graph 有显著净收益后再启动。
+> 评测结果（2026-08-02）：受控 A/B/C 检索实验显示，Graph RAG 在目标切片的 context_recall **低于** Standard RAG 6.55pp（门槛要求 ≥ +5pp），且 Graph pollution rate 达 19%。延迟翻倍。
+> 结论：**NO-GO**，不进入阶段 4。保留 Standard RAG 作为生产默认。详见 `results/graph-gate/decision-report.md`。
 
 ---
   - 新增 `compute_source_diff()`：计算 desired_paths 与当前索引的差异（to_add/to_update/to_remove/unchanged）
