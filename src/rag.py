@@ -29,8 +29,8 @@ from typing import Optional
 
 from dotenv import load_dotenv
 
-from src.citations import citation_map, make_citation_records
-from src.domain import RetrievalCandidate, compute_context_k
+from src.citations import citation_map, make_citation_records, validate_citations
+from src.domain import RetrievalCandidate, CitationValidation, compute_context_k
 from src.lexical import cjk_ngram_tokenize, build_bm25_index as _build_bm25_index_lexical
 from src.retrieval import CrossEncoderReranker, NoOpReranker, apply_source_diversity
 from src.metrics import GLOBAL_METRICS, QueryMetric, elapsed_ms
@@ -1473,6 +1473,106 @@ def _record_query_metric(
         refusal_type=refusal_type,
     ))
 
+
+def _validate_and_repair_citations(
+    answer: str,
+    top_indices: list[int],
+    docs: list[str],
+    metadatas: list[dict],
+    context_k: int | None = None,
+) -> tuple[str, CitationValidation]:
+    """校验回答中的引用 ID 合法性，必要时触发一次修复。
+
+    流程：
+    1. 调用 validate_citations() 检查非法引用
+    2. 有非法引用 → 一次修复请求
+    3. 修复失败 → 标记"不可验证"
+
+    Args:
+        answer: LLM 生成的回答
+        top_indices: 排序后的 chunk 索引
+        docs: 全量文档文本
+        metadatas: 全量元数据
+        context_k: 实际进入 prompt 的候选数
+
+    Returns:
+        (可能修复后的回答, CitationValidation)
+    """
+    from src.domain import CitationValidation
+
+    # 计算实际进入 context 的候选
+    if context_k is None:
+        context_k = compute_context_k(
+            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+             for i in top_indices],
+        )
+    selected_indices = top_indices[:context_k]
+
+    # 获取合法引用 ID
+    citations = citation_map(selected_indices, docs, metadatas)
+    valid_ids = {record.citation_id for record in citations.values()}
+
+    # 校验
+    invalid_ids = validate_citations(answer, valid_ids)
+
+    if not invalid_ids:
+        return answer, CitationValidation(
+            valid_ids=valid_ids, invalid_ids=set(),
+        )
+
+    # 有非法引用：触发一次修复
+    repaired_answer = _repair_citations(answer, invalid_ids, valid_ids)
+
+    if repaired_answer != answer:
+        # 修复成功，再次校验
+        remaining_invalid = validate_citations(repaired_answer, valid_ids)
+        return repaired_answer, CitationValidation(
+            valid_ids=valid_ids,
+            invalid_ids=remaining_invalid,
+            repaired=True,
+            repair_success=len(remaining_invalid) < len(invalid_ids),
+        )
+
+    # 修复失败，标记不可验证
+    return answer, CitationValidation(
+        valid_ids=valid_ids,
+        invalid_ids=invalid_ids,
+        repaired=True,
+        repair_success=False,
+        unverified=True,
+    )
+
+
+def _repair_citations(
+    answer: str,
+    invalid_ids: set[str],
+    valid_ids: set[str],
+) -> str:
+    """尝试一次受限修复非法引用。
+
+    策略：简单替换。将非法引用 ID 替换为最接近的合法 ID，
+    如果无法确定对应关系则不修复。
+
+    不使用 LLM 修复以避免额外延迟和成本。
+    """
+    repaired = answer
+    # 按引用 ID 的数字部分排序，将非法 ID 映射到最接近的合法 ID
+    valid_list = sorted(valid_ids, key=lambda x: int(x[1:]) if x[1:].isdigit() else 0)
+    for invalid_id in invalid_ids:
+        # 尝试找到数字部分最接近的合法 ID
+        invalid_num = int(invalid_id[1:]) if invalid_id[1:].isdigit() else 0
+        best_match = None
+        best_dist = float("inf")
+        for vid in valid_list:
+            vnum = int(vid[1:]) if vid[1:].isdigit() else 0
+            dist = abs(vnum - invalid_num)
+            if dist < best_dist:
+                best_dist = dist
+                best_match = vid
+        if best_match is not None:
+            repaired = repaired.replace(invalid_id, best_match)
+    return repaired
+
 # ═══════════════════════════════════════════════
 # 第六步：LLM 生成回答
 # ═══════════════════════════════════════════════
@@ -1611,6 +1711,11 @@ def answer_query(
 
     answer = answer_with_llm_history(
         query, context, history or [], temperature=temperature,
+    )
+
+    # ── 引用闭环：校验引用 ID 合法性 ──
+    answer, citation_validation = _validate_and_repair_citations(
+        answer, top_indices, enriched_docs, metadatas, context_k,
     )
 
     sources = format_sources(top_indices, enriched_docs, metadatas, context_k=context_k)

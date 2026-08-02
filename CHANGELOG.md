@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 1.6：引用闭环 — validate_citations 集成 + 一次修复 + 失败标记**
+  - `answer_query()` 生成回答后自动调用 `validate_citations()` 校验引用 ID 合法性
+  - 非法引用触发一次受限修复：`_repair_citations()` 将非法 ID 替换为数字最接近的合法 ID
+  - 修复仍失败则标记 `unverified=True`，TUI 可据此展示警告
+  - 新增 `_validate_and_repair_citations()` 和 `_repair_citations()` 函数
+  - context_k 限制合法引用 ID 范围，确保只校验实际进入 prompt 的候选
+  - 新增 `tests/test_citation_loop.py`（8 个测试）
 - **阶段 1.5：拒答校准 — 可解释拒答特征 + RRF 阈值修复**
   - 修复 RRF `k=30` → `k=60`：降低单通道第一名的权重，使拒答阈值不再形同虚设
   - BM25 零分文档剔除：`rrf_merge()` 中 BM25 得分为 0 的文档不参与排名
