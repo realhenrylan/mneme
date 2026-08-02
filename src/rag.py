@@ -1694,13 +1694,17 @@ def answer_query(
         temperature: float = DEFAULT_TEMPERATURE,
 ):
     from src.rag_query_decomposer import decompose_query_llm
+    from src.rag_query_rewriter import rewrite_query_llm, merge_rewrite_results
 
     retrieval_start = perf_counter()
 
-    # ── LLM 查询拆解 ──
-    sub_queries = decompose_query_llm(query)
+    # ── 多轮改写：将省略主语的追问改写为独立可检索问题 ──
+    rewritten_query, rewrite_log = rewrite_query_llm(query, history=history)
+
+    # ── LLM 查询拆解（基于改写后的查询） ──
+    sub_queries = decompose_query_llm(rewritten_query)
     if not sub_queries:
-        sub_queries = [query]
+        sub_queries = [rewritten_query]
 
     # ── 子查询并发检索 ──
     all_entries = []
@@ -1722,8 +1726,24 @@ def answer_query(
         if idx not in best_score or score > best_score[idx]:
             best_score[idx] = score
 
-    merged = sorted(best_score.keys(), key=lambda i: best_score[i], reverse=True)
-    scores_flat = sorted(best_score.values(), reverse=True)
+    # ── 漂移防护：原 query 保底召回 ──
+    # 改写成功时，额外用原 query 检索一路，合并去重
+    if rewrite_log.get("changed"):
+        orig_indices, _, orig_scores = retrieve_hybrid_with_sources(
+            query, model, collection, bm25, documents, metadatas,
+        )
+        orig_score_map: dict[int, float] = {}
+        for idx, score in zip(orig_indices, orig_scores):
+            orig_score_map[idx] = score
+        merged_indices, best_score, merge_log = merge_rewrite_results(
+            list(best_score.keys()), best_score,
+            orig_indices, orig_score_map,
+        )
+        merged = merged_indices
+        scores_flat = sorted(best_score.values(), reverse=True)
+    else:
+        merged = sorted(best_score.keys(), key=lambda i: best_score[i], reverse=True)
+        scores_flat = sorted(best_score.values(), reverse=True)
     k = dynamic_top_k(scores_flat)
     top_indices = merged[:k]
     if retrieval_refused(scores_flat):
@@ -1912,13 +1932,19 @@ def answer_query_stream(
     llm_model: str = DEFAULT_LLM_MODEL,
 ) -> tuple[Generator[str, None, None], str]:
     from src.rag_query_decomposer import decompose_query_llm
+    from src.rag_query_rewriter import rewrite_query_llm, merge_rewrite_results
 
     retrieval_start = perf_counter()
 
-    # ── LLM 查询拆解 ──
-    sub_queries = decompose_query_llm(query, model=llm_model)
+    # ── 多轮改写：将省略主语的追问改写为独立可检索问题 ──
+    rewritten_query, rewrite_log = rewrite_query_llm(
+        query, history=history, model=llm_model,
+    )
+
+    # ── LLM 查询拆解（基于改写后的查询） ──
+    sub_queries = decompose_query_llm(rewritten_query, model=llm_model)
     if not sub_queries:
-        sub_queries = [query]
+        sub_queries = [rewritten_query]
 
     # ── 子查询并发检索 ──
     all_entries = []  # [(idx, score), ...]
@@ -1941,11 +1967,25 @@ def answer_query_stream(
         if idx not in best_score or score > best_score[idx]:
             best_score[idx] = score
 
-    # ── 降序排列 ──
-    merged = sorted(best_score.keys(), key=lambda i: best_score[i], reverse=True)
-
-    # dynamic_top_k 作用于去重后的分数列表
-    scores_flat = sorted(best_score.values(), reverse=True)
+    # ── 漂移防护：原 query 保底召回 ──
+    if rewrite_log.get("changed"):
+        orig_indices, _, orig_scores = retrieve_hybrid_with_sources(
+            query, model, collection, bm25, documents, metadatas,
+            k=max(top_k_range),
+        )
+        orig_score_map: dict[int, float] = {}
+        for idx, score in zip(orig_indices, orig_scores):
+            orig_score_map[idx] = score
+        merged_indices, best_score, merge_log = merge_rewrite_results(
+            list(best_score.keys()), best_score,
+            orig_indices, orig_score_map,
+        )
+        merged = merged_indices
+        scores_flat = sorted(best_score.values(), reverse=True)
+    else:
+        # ── 降序排列 ──
+        merged = sorted(best_score.keys(), key=lambda i: best_score[i], reverse=True)
+        scores_flat = sorted(best_score.values(), reverse=True)
     k = dynamic_top_k(scores_flat, min_k=top_k_range[0], max_k=top_k_range[1])
     top_indices = merged[:k]
 

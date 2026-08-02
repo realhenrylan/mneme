@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 2.4：多轮检索改写 — History-aware standalone query rewrite + 原查询保底召回**
+  - 新增 `src/rag_query_rewriter.py`：多轮对话查询改写模块
+    - `should_rewrite()`：判断是否需要改写（无历史/过短/无代词则跳过）
+    - `rewrite_query_llm()`：利用最近 5 轮历史将省略主语的追问改写为独立可检索问题
+    - `merge_rewrite_results()`：合并原查询与改写查询的检索结果，去重取最优分数
+    - `_PRONOUN_PATTERNS`：中英文代词/省略指示词正则匹配
+    - `_QUESTION_STARTERS`：中文疑问词开头模式（怎么/如何/为什么/有哪些/有什么等）
+  - 漂移防护：改写成功时额外用原 query 检索一路，合并去重，防止改写偏离丢失相关结果
+  - `answer_query()` 和 `answer_query_stream()` 在查询拆解前先执行改写，改写后查询用于拆解和检索
+  - 新增 `tests/test_query_rewriter.py`（24 个测试）
 - **阶段 2.3：PDF/DOCX 重点解析增强 — 表格提取 + 字号标题检测 + 质量升级**
   - `pdf_loader.py` 新增 `_detect_heading_by_font_size()`：基于字号比例检测标题（众数字号 vs 最大字号）
   - `pdf_loader.py` 新增 `_format_table()`：将 pdfplumber 提取的二维表格格式化为 pipe-delimited 文本
