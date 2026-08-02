@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **阶段 3.5：来源生命周期对账**
+
+---
+
+## 阶段 4 状态：条件未满足 — 暂不进入
+
+> 计划要求：**只有阶段 0-2 的评测证明 Graph 对目标查询有净收益时才进入阶段 4**。
+> 当前状态：评测集 v1 已存在（110 条），但尚未运行 Standard RAG vs Graph RAG 的对比评测。
+> 结论：**暂不进入阶段 4**，待评测结果证明 Graph 有显著净收益后再启动。
+
+---
   - 新增 `compute_source_diff()`：计算 desired_paths 与当前索引的差异（to_add/to_update/to_remove/unchanged）
   - 新增 `sync_sources(desired_paths)`：同步索引到 desired-set 语义，删除多余来源、添加新文件、更新变更文件
   - 新增 `add_sources(delta_paths)`：只增不删模式，添加新文件/更新变更文件，不删除多余来源
