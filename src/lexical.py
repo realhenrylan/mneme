@@ -2,11 +2,15 @@
 
 从 src/rag.py 的 _tokenize() 迁移并增强，解决连续 CJK 字符被当作一个 token 的问题。
 同时支持元数据字段加权，让 BM25 能利用 source_name、section 等结构化信息。
+
+3.3 增强：持久化 BM25 快照 + 增量更新，避免每次启动全量重建。
 """
 
 from __future__ import annotations
 
 import hashlib
+import json
+import os
 import re
 from typing import Sequence
 
@@ -221,4 +225,154 @@ def build_bm25_index(
         chunk_id: hashlib.sha256((document or "").encode("utf-8", errors="replace")).hexdigest()
         for chunk_id, document in zip(ids, corpus)
     })
+    return index
+
+
+# ═══════════════════════════════════════════════════════════════
+# BM25 快照持久化与增量更新
+# ═══════════════════════════════════════════════════════════════
+
+BM25_SNAPSHOT_VERSION = 2  # 快照格式版本
+
+
+def save_bm25_snapshot(
+    bm25_index: BM25Okapi,
+    filepath: str,
+    manifest_version: int | None = None,
+) -> None:
+    """将 BM25 索引快照持久化到磁盘。
+
+    保存 tokenized 结果和 document hashes，下次启动可直接加载，
+    避免全量重新 tokenize。
+    """
+    tokenized = getattr(bm25_index, "tokenized_by_chunk_id", {})
+    doc_hashes = getattr(bm25_index, "document_hashes", {})
+
+    snapshot = {
+        "schema_version": BM25_SNAPSHOT_VERSION,
+        "manifest_version": manifest_version,
+        "chunk_ids": sorted(tokenized.keys()),
+        "document_hashes": doc_hashes,
+        "tokenized": tokenized,
+    }
+
+    # 原子写入：先写临时文件，再 rename
+    tmp_path = filepath + ".tmp"
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        json.dump(snapshot, f, ensure_ascii=False)
+    # Windows 需要先删除目标文件
+    if os.path.exists(filepath):
+        os.replace(tmp_path, filepath)
+    else:
+        os.rename(tmp_path, filepath)
+
+
+def load_bm25_snapshot_from_disk(filepath: str) -> dict | None:
+    """从磁盘加载 BM25 快照。
+
+    Returns:
+        快照字典，或 None（文件不存在或格式错误）
+    """
+    if not os.path.exists(filepath):
+        return None
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            snapshot = json.load(f)
+        # 版本检查
+        if snapshot.get("schema_version", 1) < BM25_SNAPSHOT_VERSION:
+            # 旧版快照格式不兼容，返回 None 触发全量重建
+            return None
+        return snapshot
+    except (json.JSONDecodeError, OSError, ValueError):
+        return None
+
+
+def incremental_bm25_update(
+    existing_snapshot: dict | None,
+    new_documents: list[str],
+    new_ids: list[str],
+    new_metadatas: list[dict] | None = None,
+    removed_ids: set[str] | None = None,
+    field_weights: dict[str, float] | None = None,
+    use_cjk_ngram: bool = True,
+) -> dict:
+    """增量更新 BM25 快照数据。
+
+    只对新增/变更的 chunk 重新 tokenize，已存在且未变更的 chunk 复用缓存。
+    删除的 chunk 从快照中移除。
+
+    Args:
+        existing_snapshot: 现有快照（来自 load_bm25_snapshot_from_disk）
+        new_documents: 新增/更新的 chunk 文本
+        new_ids: 对应的 chunk ID
+        new_metadatas: 对应的元数据
+        removed_ids: 需要删除的 chunk ID 集合
+        field_weights: 字段权重
+        use_cjk_ngram: 是否使用 CJK n-gram
+
+    Returns:
+        更新后的快照字典（可直接传给 build_bm25_index 的 previous_snapshot）
+    """
+    existing_snapshot = existing_snapshot or {}
+    previous_hashes = existing_snapshot.get("document_hashes", {})
+    previous_tokens = existing_snapshot.get("tokenized", {})
+
+    tokenize_fn = cjk_ngram_tokenize if use_cjk_ngram else _tokenize_legacy
+    removed_ids = removed_ids or set()
+
+    # 移除已删除的 chunk
+    for rid in removed_ids:
+        previous_hashes.pop(rid, None)
+        previous_tokens.pop(rid, None)
+
+    # 构建加权语料
+    if new_metadatas is not None and field_weights is not False:
+        corpus = build_weighted_bm25_corpus(new_documents, new_metadatas, field_weights)
+    else:
+        corpus = new_documents
+
+    # 增量 tokenize：只处理新增/变更的 chunk
+    for chunk_id, document in zip(new_ids, corpus):
+        document = document or ""
+        doc_hash = hashlib.sha256(
+            document.encode("utf-8", errors="replace")
+        ).hexdigest()
+
+        if previous_hashes.get(chunk_id) == doc_hash and isinstance(previous_tokens.get(chunk_id), list):
+            # 未变更，复用缓存
+            continue
+
+        # 新增或变更，重新 tokenize
+        previous_tokens[chunk_id] = tokenize_fn(document)
+        previous_hashes[chunk_id] = doc_hash
+
+    return {
+        "schema_version": BM25_SNAPSHOT_VERSION,
+        "document_hashes": previous_hashes,
+        "tokenized": previous_tokens,
+    }
+
+
+def build_bm25_from_snapshot(
+    snapshot: dict,
+    use_cjk_ngram: bool = True,
+) -> BM25Okapi:
+    """从快照数据构建 BM25 索引（跳过 tokenize 步骤）。
+
+    适用于启动时从持久化快照恢复，避免全量重新 tokenize。
+    """
+    tokenized_by_id = snapshot.get("tokenized", {})
+    chunk_ids = sorted(tokenized_by_id.keys())
+
+    if not chunk_ids or not any(tokenized_by_id.values()):
+        index = BM25Okapi([["_"]])
+        setattr(index, "tokenized_by_chunk_id", {})
+        setattr(index, "document_hashes", {})
+        return index
+
+    tokenized_list = [tokenized_by_id[cid] for cid in chunk_ids]
+    index = BM25Okapi(tokenized_list)
+    setattr(index, "tokenized_by_chunk_id", tokenized_by_id)
+    setattr(index, "document_hashes", snapshot.get("document_hashes", {}))
     return index

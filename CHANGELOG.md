@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 3.3：持久化 Sparse / 增量更新**
+  - `src/lexical.py` 新增 BM25 快照持久化与增量更新功能：
+    - `save_bm25_snapshot()`：将 BM25 索引快照持久化到磁盘（原子写入）
+    - `load_bm25_snapshot_from_disk()`：从磁盘加载快照，版本不兼容时返回 None 触发全量重建
+    - `incremental_bm25_update()`：增量更新快照数据，只对新增/变更的 chunk 重新 tokenize，删除的 chunk 从快照移除
+    - `build_bm25_from_snapshot()`：从快照数据构建 BM25 索引（跳过 tokenize 步骤）
+    - `BM25_SNAPSHOT_VERSION = 2`：快照格式版本，旧版自动触发全量重建
+  - 新增 `tests/test_bm25_persistence.py`（14 个测试）
 - **阶段 3.2：数据目录与配置统一**
   - 新增 `src/config.py`：统一配置管理
     - `Settings` 数据类：集中管理所有配置项（data_dir、chroma_db_path、embedding/LLM 参数、安全限制、离线模式等）
