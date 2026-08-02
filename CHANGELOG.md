@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **阶段 3.2：数据目录与配置统一**
+  - 新增 `src/config.py`：统一配置管理
+    - `Settings` 数据类：集中管理所有配置项（data_dir、chroma_db_path、embedding/LLM 参数、安全限制、离线模式等）
+    - `MNEME_DATA_DIR` 环境变量：控制数据目录，默认 `~/.mneme`，不再写入 `src/chroma_db`
+    - `get_settings()` 全局单例，所有模块使用同一份配置
+    - `ensure_dirs()` 自动创建数据目录
+    - `to_dict()` 导出配置用于 status 展示
+  - `CHROMA_DB_PATH` 改为从 Settings 动态计算，兼容旧路径
+  - `DEFAULT_TEMPERATURE` 统一为 0.1（与 TUI/CLI 一致）
+  - `.env.example` 新增 `MNEME_DATA_DIR`、`MNEME_OFFLINE`、`RAG_REFUSAL_THRESHOLD` 文档
+  - 新增 `tests/test_config.py`（18 个测试）
 - **阶段 3.1：单例模型与统一 LLM Gateway**
   - 新增 `src/llm_gateway.py`：统一 LLM 调用网关
     - `LLMErrorCategory` 枚举：错误分类（TIMEOUT/RATE_LIMIT/CONNECTION/AUTH/MODEL_NOT_FOUND/CONTEXT_LENGTH/SERVER_ERROR/CANCELLED/UNKNOWN）

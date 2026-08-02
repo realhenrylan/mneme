@@ -140,7 +140,12 @@ def _load_sentence_transformer(model_name: str) -> SentenceTransformer:
 
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-CHROMA_DB_PATH = os.path.join(PROJECT_ROOT, "chroma_db")
+# Chroma DB 路径：优先使用 Settings（MNEME_DATA_DIR），降级到旧路径
+def _default_chroma_db_path():
+    from src.config import get_settings
+    return str(get_settings().chroma_db_path)
+
+CHROMA_DB_PATH = _default_chroma_db_path()
 
 # ── 配置常量 ──
 DEFAULT_COLLECTION_NAME = "rag_demo"
@@ -150,7 +155,7 @@ DEFAULT_TOP_K = 70
 DEFAULT_MIN_K = 12
 DEFAULT_MAX_K = 70
 DEFAULT_LLM_MODEL = "deepseek-chat"
-DEFAULT_TEMPERATURE = 0.2
+DEFAULT_TEMPERATURE = 0.1  # 统一为 0.1（与 TUI/CLI 一致）
 
 # This is part of the on-disk manifest. Changing a splitter parameter must
 # invalidate the collection instead of silently mixing chunking strategies.
