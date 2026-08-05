@@ -1,0 +1,2103 @@
+{
+ "corpus_version": "v2.0.0",
+ "case_ids": [
+  "cross-001",
+  "cross-002",
+  "cross-003",
+  "cross-004",
+  "cross-005",
+  "cross-006",
+  "cross-007",
+  "cross-008",
+  "cross-009",
+  "cross-010",
+  "en-001",
+  "en-002",
+  "en-003",
+  "en-004",
+  "en-005",
+  "en-006",
+  "en-007",
+  "en-008",
+  "en-009",
+  "en-010",
+  "en-011",
+  "en-012",
+  "en-013",
+  "en-014",
+  "en-015",
+  "en-016",
+  "en-017",
+  "en-018",
+  "en-019",
+  "en-020",
+  "en-021",
+  "en-022",
+  "en-023",
+  "en-024",
+  "en-025",
+  "en-026",
+  "en-027",
+  "en-028",
+  "en-029",
+  "en-030",
+  "en-031",
+  "en-032",
+  "en-033",
+  "en-034",
+  "en-035",
+  "en-036",
+  "en-037",
+  "en-038",
+  "en-039",
+  "en-040",
+  "en-041",
+  "en-042",
+  "en-043",
+  "en-044",
+  "en-045",
+  "en-046",
+  "en-047",
+  "en-048",
+  "en-049",
+  "en-050",
+  "en-051",
+  "en-052",
+  "en-053",
+  "en-054",
+  "en-055",
+  "en-056",
+  "en-057",
+  "meta-001",
+  "meta-002",
+  "meta-003",
+  "meta-004",
+  "meta-005",
+  "meta-006",
+  "meta-007",
+  "meta-008",
+  "meta-009",
+  "meta-010",
+  "mixed-001",
+  "mixed-002",
+  "mixed-003",
+  "mixed-004",
+  "mixed-005",
+  "mixed-006",
+  "mixed-007",
+  "mixed-008",
+  "mixed-009",
+  "mixed-010",
+  "mixed-011",
+  "mixed-012",
+  "mixed-013",
+  "mixed-014",
+  "mixed-015",
+  "mixed-016",
+  "mixed-017",
+  "mixed-018",
+  "mixed-019",
+  "mixed-020",
+  "mixed-021",
+  "mixed-022",
+  "mixed-023",
+  "mixed-024",
+  "mixed-025",
+  "mixed-026",
+  "mixed-027",
+  "mixed-028",
+  "mixed-029",
+  "mixed-030",
+  "mixed-031",
+  "mixed-032",
+  "mixed-033",
+  "mixed-034",
+  "mixed-035",
+  "multi-001",
+  "multi-002",
+  "multi-003",
+  "multi-004",
+  "multi-005",
+  "multi-006",
+  "multi-007",
+  "multi-008",
+  "multi-009",
+  "multi-010",
+  "multi-011",
+  "multi-012",
+  "multi-013",
+  "multi-014",
+  "multi-015",
+  "multi-016",
+  "multi-017",
+  "multi-018",
+  "multi-019",
+  "multi-020",
+  "multi-021",
+  "multi-022",
+  "multi-023",
+  "multi-024",
+  "multi-025",
+  "multi-026",
+  "multi-027",
+  "multi-028",
+  "multi-029",
+  "multi-030",
+  "multi-031",
+  "multi-032",
+  "multi-033",
+  "multi-034",
+  "noanswer-001",
+  "noanswer-002",
+  "noanswer-003",
+  "noanswer-004",
+  "noanswer-005",
+  "noanswer-006",
+  "noanswer-007",
+  "noanswer-008",
+  "noanswer-009",
+  "noanswer-010",
+  "noanswer-011",
+  "noanswer-012",
+  "noanswer-013",
+  "noanswer-014",
+  "noanswer-015",
+  "noanswer-016",
+  "noanswer-017",
+  "noanswer-018",
+  "noanswer-019",
+  "noanswer-020",
+  "noanswer-021",
+  "noanswer-022",
+  "noanswer-023",
+  "noanswer-024",
+  "noanswer-025",
+  "noanswer-026",
+  "noanswer-027",
+  "noanswer-028",
+  "noanswer-029",
+  "noanswer-030",
+  "noanswer-031",
+  "noanswer-032",
+  "noanswer-033",
+  "noanswer-034",
+  "noanswer-035",
+  "noanswer-036",
+  "noanswer-037",
+  "noanswer-038",
+  "noanswer-039",
+  "noanswer-040",
+  "noanswer-041",
+  "noanswer-042",
+  "noanswer-043",
+  "noanswer-044",
+  "noanswer-045",
+  "noanswer-046",
+  "noanswer-047",
+  "noanswer-048",
+  "noanswer-049",
+  "noanswer-050",
+  "noanswer-051",
+  "noanswer-052",
+  "noanswer-053",
+  "noanswer-054",
+  "noanswer-055",
+  "zh-001",
+  "zh-002",
+  "zh-003",
+  "zh-004",
+  "zh-005",
+  "zh-006",
+  "zh-007",
+  "zh-008",
+  "zh-009",
+  "zh-010",
+  "zh-011",
+  "zh-012",
+  "zh-013",
+  "zh-014",
+  "zh-015",
+  "zh-016",
+  "zh-017",
+  "zh-018",
+  "zh-019",
+  "zh-020",
+  "zh-021",
+  "zh-022",
+  "zh-023",
+  "zh-024",
+  "zh-025",
+  "zh-026",
+  "zh-027",
+  "zh-028",
+  "zh-029",
+  "zh-030",
+  "zh-031",
+  "zh-032",
+  "zh-033",
+  "zh-034",
+  "zh-035",
+  "zh-036",
+  "zh-037",
+  "zh-038",
+  "zh-039",
+  "zh-040",
+  "zh-041",
+  "zh-042",
+  "zh-043",
+  "zh-044",
+  "zh-045",
+  "zh-046",
+  "zh-047",
+  "zh-048",
+  "zh-049",
+  "zh-050",
+  "zh-051",
+  "zh-052",
+  "zh-053",
+  "zh-054",
+  "zh-055",
+  "zh-056",
+  "zh-057",
+  "zh-058",
+  "zh-059"
+ ],
+ "case_ids_sha256": "3335e7b169f458019b815c9a0a5b2c6a8229fcd170f1b530cc607dee7c205b2a",
+ "partition": {
+  "legacy_dev": [
+   "cross-001",
+   "cross-002",
+   "cross-003",
+   "cross-004",
+   "cross-005",
+   "cross-006",
+   "cross-007",
+   "cross-008",
+   "cross-009",
+   "cross-010",
+   "en-001",
+   "en-002",
+   "en-003",
+   "en-004",
+   "en-005",
+   "en-006",
+   "en-007",
+   "en-008",
+   "en-009",
+   "en-010",
+   "en-011",
+   "en-012",
+   "en-013",
+   "en-014",
+   "en-015",
+   "en-016",
+   "en-017",
+   "en-018",
+   "en-019",
+   "en-020",
+   "meta-001",
+   "meta-002",
+   "meta-003",
+   "meta-004",
+   "meta-005",
+   "meta-006",
+   "meta-007",
+   "meta-008",
+   "meta-009",
+   "meta-010",
+   "mixed-001",
+   "mixed-002",
+   "mixed-003",
+   "mixed-004",
+   "mixed-005",
+   "mixed-006",
+   "mixed-007",
+   "mixed-008",
+   "mixed-009",
+   "mixed-010",
+   "mixed-011",
+   "mixed-012",
+   "mixed-013",
+   "mixed-014",
+   "mixed-015",
+   "multi-001",
+   "multi-002",
+   "multi-003",
+   "multi-004",
+   "multi-005",
+   "multi-006",
+   "multi-007",
+   "multi-008",
+   "multi-009",
+   "multi-010",
+   "noanswer-001",
+   "noanswer-002",
+   "noanswer-003",
+   "noanswer-004",
+   "noanswer-005",
+   "noanswer-006",
+   "noanswer-007",
+   "noanswer-008",
+   "noanswer-009",
+   "noanswer-010",
+   "noanswer-011",
+   "noanswer-012",
+   "noanswer-013",
+   "noanswer-014",
+   "noanswer-015",
+   "noanswer-016",
+   "noanswer-017",
+   "noanswer-018",
+   "noanswer-019",
+   "noanswer-020",
+   "noanswer-021",
+   "noanswer-022",
+   "noanswer-023",
+   "noanswer-024",
+   "noanswer-025",
+   "zh-001",
+   "zh-002",
+   "zh-003",
+   "zh-004",
+   "zh-005",
+   "zh-006",
+   "zh-007",
+   "zh-008",
+   "zh-009",
+   "zh-010",
+   "zh-011",
+   "zh-012",
+   "zh-013",
+   "zh-014",
+   "zh-015",
+   "zh-016",
+   "zh-017",
+   "zh-018",
+   "zh-019",
+   "zh-020"
+  ],
+  "new": [
+   "en-021",
+   "en-022",
+   "en-023",
+   "en-024",
+   "en-025",
+   "en-026",
+   "en-027",
+   "en-028",
+   "en-029",
+   "en-030",
+   "en-031",
+   "en-032",
+   "en-033",
+   "en-034",
+   "en-035",
+   "en-036",
+   "en-037",
+   "en-038",
+   "en-039",
+   "en-040",
+   "en-041",
+   "en-042",
+   "en-043",
+   "en-044",
+   "en-045",
+   "en-046",
+   "en-047",
+   "en-048",
+   "en-049",
+   "en-050",
+   "en-051",
+   "en-052",
+   "en-053",
+   "en-054",
+   "en-055",
+   "en-056",
+   "en-057",
+   "mixed-016",
+   "mixed-017",
+   "mixed-018",
+   "mixed-019",
+   "mixed-020",
+   "mixed-021",
+   "mixed-022",
+   "mixed-023",
+   "mixed-024",
+   "mixed-025",
+   "mixed-026",
+   "mixed-027",
+   "mixed-028",
+   "mixed-029",
+   "mixed-030",
+   "mixed-031",
+   "mixed-032",
+   "mixed-033",
+   "mixed-034",
+   "mixed-035",
+   "multi-011",
+   "multi-012",
+   "multi-013",
+   "multi-014",
+   "multi-015",
+   "multi-016",
+   "multi-017",
+   "multi-018",
+   "multi-019",
+   "multi-020",
+   "multi-021",
+   "multi-022",
+   "multi-023",
+   "multi-024",
+   "multi-025",
+   "multi-026",
+   "multi-027",
+   "multi-028",
+   "multi-029",
+   "multi-030",
+   "multi-031",
+   "multi-032",
+   "multi-033",
+   "multi-034",
+   "noanswer-026",
+   "noanswer-027",
+   "noanswer-028",
+   "noanswer-029",
+   "noanswer-030",
+   "noanswer-031",
+   "noanswer-032",
+   "noanswer-033",
+   "noanswer-034",
+   "noanswer-035",
+   "noanswer-036",
+   "noanswer-037",
+   "noanswer-038",
+   "noanswer-039",
+   "noanswer-040",
+   "noanswer-041",
+   "noanswer-042",
+   "noanswer-043",
+   "noanswer-044",
+   "noanswer-045",
+   "noanswer-046",
+   "noanswer-047",
+   "noanswer-048",
+   "noanswer-049",
+   "noanswer-050",
+   "noanswer-051",
+   "noanswer-052",
+   "noanswer-053",
+   "noanswer-054",
+   "noanswer-055",
+   "zh-021",
+   "zh-022",
+   "zh-023",
+   "zh-024",
+   "zh-025",
+   "zh-026",
+   "zh-027",
+   "zh-028",
+   "zh-029",
+   "zh-030",
+   "zh-031",
+   "zh-032",
+   "zh-033",
+   "zh-034",
+   "zh-035",
+   "zh-036",
+   "zh-037",
+   "zh-038",
+   "zh-039",
+   "zh-040",
+   "zh-041",
+   "zh-042",
+   "zh-043",
+   "zh-044",
+   "zh-045",
+   "zh-046",
+   "zh-047",
+   "zh-048",
+   "zh-049",
+   "zh-050",
+   "zh-051",
+   "zh-052",
+   "zh-053",
+   "zh-054",
+   "zh-055",
+   "zh-056",
+   "zh-057",
+   "zh-058",
+   "zh-059"
+  ]
+ },
+ "prefix_max_seq": {
+  "cross": 10,
+  "en": 57,
+  "meta": 10,
+  "mixed": 35,
+  "multi": 34,
+  "noanswer": 55,
+  "zh": 59
+ },
+ "cases": {
+  "zh-001": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-001"
+  },
+  "zh-002": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-002"
+  },
+  "zh-003": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-003"
+  },
+  "zh-004": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-004"
+  },
+  "zh-005": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-005"
+  },
+  "zh-006": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-006"
+  },
+  "zh-007": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-007"
+  },
+  "zh-008": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-008"
+  },
+  "zh-009": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-009"
+  },
+  "zh-010": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-010"
+  },
+  "zh-011": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-011"
+  },
+  "zh-012": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-012"
+  },
+  "zh-013": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-013"
+  },
+  "zh-014": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-014"
+  },
+  "zh-015": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-015"
+  },
+  "zh-016": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-016"
+  },
+  "zh-017": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-017"
+  },
+  "zh-018": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-018"
+  },
+  "zh-019": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-019"
+  },
+  "zh-020": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "zh-020"
+  },
+  "en-001": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-001"
+  },
+  "en-002": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-002"
+  },
+  "en-003": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-003"
+  },
+  "en-004": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-004"
+  },
+  "en-005": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-005"
+  },
+  "en-006": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-006"
+  },
+  "en-007": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-007"
+  },
+  "en-008": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-008"
+  },
+  "en-009": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-009"
+  },
+  "en-010": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-010"
+  },
+  "en-011": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-011"
+  },
+  "en-012": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-012"
+  },
+  "en-013": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-013"
+  },
+  "en-014": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-014"
+  },
+  "en-015": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-015"
+  },
+  "en-016": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-016"
+  },
+  "en-017": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-017"
+  },
+  "en-018": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-018"
+  },
+  "en-019": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-019"
+  },
+  "en-020": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "en-020"
+  },
+  "mixed-001": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-001"
+  },
+  "mixed-002": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-002"
+  },
+  "mixed-003": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-003"
+  },
+  "mixed-004": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-004"
+  },
+  "mixed-005": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-005"
+  },
+  "mixed-006": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-006"
+  },
+  "mixed-007": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-007"
+  },
+  "mixed-008": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-008"
+  },
+  "mixed-009": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-009"
+  },
+  "mixed-010": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-010"
+  },
+  "mixed-011": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-011"
+  },
+  "mixed-012": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-012"
+  },
+  "mixed-013": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-013"
+  },
+  "mixed-014": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-014"
+  },
+  "mixed-015": {
+   "query_type": "single_fact",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "mixed-015"
+  },
+  "meta-001": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "meta-001"
+  },
+  "meta-002": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "meta-002"
+  },
+  "meta-003": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "meta-003"
+  },
+  "meta-004": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "meta-004"
+  },
+  "meta-005": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "meta-005"
+  },
+  "meta-006": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "meta-006"
+  },
+  "meta-007": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "meta-007"
+  },
+  "meta-008": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "meta-008"
+  },
+  "meta-009": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "meta-009"
+  },
+  "meta-010": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "meta-010"
+  },
+  "cross-001": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "cross-001"
+  },
+  "cross-002": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "cross-002"
+  },
+  "cross-003": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "cross-003"
+  },
+  "cross-004": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "cross-004"
+  },
+  "cross-005": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "cross-005"
+  },
+  "cross-006": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "cross-006"
+  },
+  "cross-007": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "cross-007"
+  },
+  "cross-008": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "cross-008"
+  },
+  "cross-009": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "cross-009"
+  },
+  "cross-010": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "cross-010"
+  },
+  "multi-001": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-001"
+  },
+  "multi-002": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-001"
+  },
+  "multi-003": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-001"
+  },
+  "multi-004": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-004"
+  },
+  "multi-005": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-004"
+  },
+  "multi-006": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-004"
+  },
+  "multi-007": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-007"
+  },
+  "multi-008": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-007"
+  },
+  "multi-009": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-007"
+  },
+  "multi-010": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-007"
+  },
+  "noanswer-001": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-001"
+  },
+  "noanswer-002": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-002"
+  },
+  "noanswer-003": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-003"
+  },
+  "noanswer-004": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-004"
+  },
+  "noanswer-005": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-005"
+  },
+  "noanswer-006": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-006"
+  },
+  "noanswer-007": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-007"
+  },
+  "noanswer-008": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-008"
+  },
+  "noanswer-009": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-009"
+  },
+  "noanswer-010": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-010"
+  },
+  "noanswer-011": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-011"
+  },
+  "noanswer-012": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-012"
+  },
+  "noanswer-013": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-013"
+  },
+  "noanswer-014": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-014"
+  },
+  "noanswer-015": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-015"
+  },
+  "noanswer-016": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-016"
+  },
+  "noanswer-017": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-017"
+  },
+  "noanswer-018": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-018"
+  },
+  "noanswer-019": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-019"
+  },
+  "noanswer-020": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-020"
+  },
+  "noanswer-021": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-021"
+  },
+  "noanswer-022": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-022"
+  },
+  "noanswer-023": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-023"
+  },
+  "noanswer-024": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": "noanswer-024"
+  },
+  "noanswer-025": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": "noanswer-025"
+  },
+  "multi-011": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-011"
+  },
+  "multi-012": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-011"
+  },
+  "multi-013": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-011"
+  },
+  "multi-014": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-011"
+  },
+  "multi-015": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-015"
+  },
+  "multi-016": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-015"
+  },
+  "multi-017": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-015"
+  },
+  "multi-018": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-016"
+  },
+  "multi-019": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-016"
+  },
+  "multi-020": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-018"
+  },
+  "multi-021": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-018"
+  },
+  "multi-022": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-020"
+  },
+  "multi-023": {
+   "query_type": "multi_turn",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": "multi-020"
+  },
+  "multi-024": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-022"
+  },
+  "multi-025": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-022"
+  },
+  "multi-026": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-022"
+  },
+  "multi-027": {
+   "query_type": "multi_turn",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "multi-025"
+  },
+  "multi-028": {
+   "query_type": "multi_turn",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "multi-025"
+  },
+  "multi-029": {
+   "query_type": "multi_turn",
+   "language": "mixed",
+   "should_refuse": true,
+   "chain_id": "multi-025"
+  },
+  "multi-030": {
+   "query_type": "multi_turn",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "multi-028"
+  },
+  "multi-031": {
+   "query_type": "multi_turn",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": "multi-028"
+  },
+  "multi-032": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-030"
+  },
+  "multi-033": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-030"
+  },
+  "multi-034": {
+   "query_type": "multi_turn",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": "multi-030"
+  },
+  "zh-021": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-022": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-023": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-024": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-025": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-026": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-027": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-028": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-029": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-030": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-031": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-032": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-033": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-034": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-035": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-036": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-037": {
+   "query_type": "single_fact",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-021": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-022": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-023": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-024": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-025": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-026": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-027": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-028": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-029": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-030": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-031": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-032": {
+   "query_type": "single_fact",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-016": {
+   "query_type": "single_fact",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-017": {
+   "query_type": "single_fact",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-018": {
+   "query_type": "single_fact",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-019": {
+   "query_type": "single_fact",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-020": {
+   "query_type": "single_fact",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-038": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-039": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-040": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-041": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-042": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-043": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-044": {
+   "query_type": "metadata",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-033": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-034": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-035": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-036": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-037": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-038": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-039": {
+   "query_type": "metadata",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-021": {
+   "query_type": "metadata",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-022": {
+   "query_type": "metadata",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-023": {
+   "query_type": "metadata",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-024": {
+   "query_type": "metadata",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-025": {
+   "query_type": "metadata",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-045": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-046": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-047": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-048": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-049": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-050": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-051": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-052": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-053": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-054": {
+   "query_type": "cross_document",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-040": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-041": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-042": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-043": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-044": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-045": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-046": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-047": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-048": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-049": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-050": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-051": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-052": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-053": {
+   "query_type": "cross_document",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-026": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-027": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-028": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-029": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-030": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-031": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-032": {
+   "query_type": "cross_document",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-055": {
+   "query_type": "mixed_intent",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-056": {
+   "query_type": "mixed_intent",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-057": {
+   "query_type": "mixed_intent",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-058": {
+   "query_type": "mixed_intent",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "zh-059": {
+   "query_type": "mixed_intent",
+   "language": "zh",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-054": {
+   "query_type": "mixed_intent",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-055": {
+   "query_type": "mixed_intent",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-056": {
+   "query_type": "mixed_intent",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "en-057": {
+   "query_type": "mixed_intent",
+   "language": "en",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-033": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-034": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "mixed-035": {
+   "query_type": "mixed_intent",
+   "language": "mixed",
+   "should_refuse": false,
+   "chain_id": null
+  },
+  "noanswer-026": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-027": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-028": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-029": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-030": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-031": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-032": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-033": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-034": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-035": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-036": {
+   "query_type": "no_answer",
+   "language": "zh",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-037": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-038": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-039": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-040": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-041": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-042": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-043": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-044": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-045": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-046": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-047": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-048": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-049": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-050": {
+   "query_type": "no_answer",
+   "language": "en",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-051": {
+   "query_type": "no_answer",
+   "language": "mixed",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-052": {
+   "query_type": "no_answer",
+   "language": "mixed",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-053": {
+   "query_type": "no_answer",
+   "language": "mixed",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-054": {
+   "query_type": "no_answer",
+   "language": "mixed",
+   "should_refuse": true,
+   "chain_id": null
+  },
+  "noanswer-055": {
+   "query_type": "no_answer",
+   "language": "mixed",
+   "should_refuse": true,
+   "chain_id": null
+  }
+ }
+}

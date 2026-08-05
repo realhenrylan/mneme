@@ -1,0 +1,8 @@
+# v2 corpus staging pack: raw downloaded documents and license evidence
+# files must stay byte-identical to their upstream sources — trailing
+# whitespace / tabs are part of the original text and must not be
+# rewritten to satisfy whitespace checks.
+# Only these two path trees are exempt; code, JSONL, annotations and
+# manifests keep full whitespace checking.
+data/v2-corpus/documents/** -whitespace
+data/v2-corpus/attribution/licenses/** -whitespace

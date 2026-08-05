@@ -1,0 +1,23 @@
+{
+ "corpus_version": "v2.0.0",
+ "n_documents": 13,
+ "n_chunks": 1006,
+ "chunker": "src.rag.get_splitter (RecursiveCharacterTextSplitter, text size=2000 overlap=200 separators=\\n\\n,\\n,。！？；., )",
+ "chunks_sha256": "3724ce4e32526c5d7ee0a3c98f2576f0c11fa73dc01442e1acd06f66719e12df",
+ "per_source": {
+  "python-tutorial-zh.md": 74,
+  "python-whatsnew313-zh.md": 49,
+  "python-datetime-zh.md": 43,
+  "vue-guide-zh.md": 35,
+  "sqlite-lang.md": 69,
+  "postgresql-tutorial.md": 20,
+  "rust-book-core.md": 73,
+  "rfc3986.txt": 86,
+  "art-of-war.txt": 203,
+  "nodejs-fs.md": 160,
+  "python-tutorial-en.md": 144,
+  "python-glossary-zh.md": 21,
+  "react-learn-zh.md": 29
+ },
+ "chunk_id_format": "{source_sha256_prefix12}_chunk_{n}"
+}

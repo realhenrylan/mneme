@@ -1,0 +1,27 @@
+{
+ "scan_date": "2026-08-05",
+ "policy": "凭据类 0 容忍；个人数据脱敏或排除；官方文档原文署名邮箱保留并记录",
+ "hits": {
+  "python-tutorial-zh.md": {
+   "real_emails": [
+    "me@kennethreitz.com"
+   ],
+   "verdict": "KEEP"
+  },
+  "python-tutorial-en.md": {
+   "real_emails": [
+    "me@kennethreitz.com"
+   ],
+   "verdict": "KEEP"
+  },
+  "rfc3986.txt": {
+   "real_emails": [
+    "LMM@acm.org",
+    "fielding@gbiv.com",
+    "ipr@ietf.org",
+    "timbl@w3.org"
+   ],
+   "verdict": "KEEP"
+  }
+ }
+}

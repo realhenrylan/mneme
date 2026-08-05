@@ -1,0 +1,125 @@
+{
+ "sealed_at": "2026-08-05",
+ "pool": {
+  "total": 260,
+  "legacy_dev": 110,
+  "new": 150
+ },
+ "freeze": {
+  "case_ids_sha256": "3335e7b169f458019b815c9a0a5b2c6a8229fcd170f1b530cc607dee7c205b2a",
+  "file": "case-freeze.json"
+ },
+ "split": {
+  "seed": 42,
+  "fingerprint": "eed351d2f97ef6e1506d9ac154d070840143c5ea134486787ed2a9511389f123",
+  "n_dev_new": 110,
+  "n_holdout": 40,
+  "holdout_ratio": 0.2667,
+  "per_stratum": {
+   "cross_document/False/en": {
+    "groups": 14,
+    "holdout_groups": 4,
+    "cases": 14
+   },
+   "cross_document/False/mixed": {
+    "groups": 7,
+    "holdout_groups": 2,
+    "cases": 7
+   },
+   "cross_document/False/zh": {
+    "groups": 10,
+    "holdout_groups": 2,
+    "cases": 10
+   },
+   "metadata/False/en": {
+    "groups": 7,
+    "holdout_groups": 2,
+    "cases": 7
+   },
+   "metadata/False/mixed": {
+    "groups": 5,
+    "holdout_groups": 1,
+    "cases": 5
+   },
+   "metadata/False/zh": {
+    "groups": 7,
+    "holdout_groups": 2,
+    "cases": 7
+   },
+   "mixed_intent/False/en": {
+    "groups": 4,
+    "holdout_groups": 1,
+    "cases": 4
+   },
+   "mixed_intent/False/mixed": {
+    "groups": 3,
+    "holdout_groups": 1,
+    "cases": 3
+   },
+   "mixed_intent/False/zh": {
+    "groups": 5,
+    "holdout_groups": 1,
+    "cases": 5
+   },
+   "multi_turn/False/en": {
+    "groups": 4,
+    "holdout_groups": 1,
+    "cases": 9
+   },
+   "multi_turn/False/mixed": {
+    "groups": 2,
+    "holdout_groups": 1,
+    "cases": 5
+   },
+   "multi_turn/False/zh": {
+    "groups": 3,
+    "holdout_groups": 1,
+    "cases": 10
+   },
+   "no_answer/True/en": {
+    "groups": 14,
+    "holdout_groups": 4,
+    "cases": 14
+   },
+   "no_answer/True/mixed": {
+    "groups": 5,
+    "holdout_groups": 1,
+    "cases": 5
+   },
+   "no_answer/True/zh": {
+    "groups": 11,
+    "holdout_groups": 3,
+    "cases": 11
+   },
+   "single_fact/False/en": {
+    "groups": 12,
+    "holdout_groups": 3,
+    "cases": 12
+   },
+   "single_fact/False/mixed": {
+    "groups": 5,
+    "holdout_groups": 1,
+    "cases": 5
+   },
+   "single_fact/False/zh": {
+    "groups": 17,
+    "holdout_groups": 4,
+    "cases": 17
+   }
+  },
+  "ratio_gate": "[0.22, 0.30]"
+ },
+ "verify_lock": true,
+ "guard": {
+  "holdout_ids_in_lock": false,
+  "holdout_viewed": false,
+  "note": "封存前未对任何新用例运行检索/特征扫描（阶段 A/B/C 均无 v2 检索）"
+ },
+ "seed_attempts": [
+  {
+   "seed": 42,
+   "ratio": 0.2667,
+   "n_holdout": 40
+  }
+ ]
+}
