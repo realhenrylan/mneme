@@ -1,0 +1,1077 @@
+{
+  "case_ids": [
+    "cross-005",
+    "cross-007",
+    "cross-009",
+    "cross-010",
+    "en-012",
+    "en-013",
+    "en-016",
+    "meta-006",
+    "meta-008",
+    "mixed-006",
+    "mixed-008",
+    "multi-009",
+    "zh-011",
+    "zh-014",
+    "meta-002"
+  ],
+  "a_refused": 15,
+  "b_refused": 14,
+  "improved": 1,
+  "rows": [
+    {
+      "case_id": "cross-005",
+      "language": "en",
+      "query_type": "cross_document",
+      "query": "How do the forecasting methods in the mobility survey compare to the decoding methods in DSpark?",
+      "a_answer": "根据提供的文档内容，我无法回答关于“DSpark”的解码方法的问题，因为文档中完全没有提及“DSpark”或相关的解码方法。文档仅涉及大型语言模型在交通系统移动性分析中的应用，包括交通预测、人类移动性、需求预测和缺失数据填补等任务，以及相关的挑战和展望（如可解释性和可解释性）[S1][S2][S5][S8]。因此，我无法进行任何比较或提供相关信息。",
+      "b_answer": "我无法回答这个问题，因为提供的文档中没有包含关于“DSpark”或其解码方法的任何信息。文档内容仅涉及大型语言模型（LLMs）在交通系统移动性分析中的应用，包括流量预测、需求预测、缺失数据填补等，但未提及DSpark。因此，缺少比较所需的DSpark相关证据。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "3f4449b6ddcf00437e4e7d8450cae9fadb1981772fdd92f61495977ee3aeed43",
+      "evidence_plan_fingerprint": "df641664cfd2ce394fbf084f97db67a69b6c39f4a1cc4606e4f4fcda12b2f828",
+      "evidence_retrieval_fingerprint": "c5d5577bb8a23cdcfef971340f25545431de6aeff7a7e380aeb0403e315e86c9",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor"
+        ],
+        [
+          "S2",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_33"
+        ],
+        [
+          "S3",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_32"
+        ],
+        [
+          "S4",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_34"
+        ],
+        [
+          "S5",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_1"
+        ],
+        [
+          "S6",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+        ],
+        [
+          "S7",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_2"
+        ],
+        [
+          "S8",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_26"
+        ],
+        [
+          "S9",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_25"
+        ],
+        [
+          "S10",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_27"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_33",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_1",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_26",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_8",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_5",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_5",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_8",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_26",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_46",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_110",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_84",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_137",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_36",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_119",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_170",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_140",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_83",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_anchor",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_14",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_124",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_27",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_18",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_66"
+      ],
+      "sources_a": "[S1] 2405.02357v2.pdf (p.1, chunk -1; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor): Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks Zijian Zhang, Co-first Author The Department of C...\n[S2] LLMs_for_Mobility_Analysis_Survey.md (chunk 33, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 5. Challenges and Outlook; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_33): ## 5. Challenges and Outlook  In this section, we discuss the limitations of current research and potential further research directions in the field o...\n[S3] LLMs_for_Mobility_Analysis_Survey.md (chunk 32, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 4. Applications > Missing Data Imputation; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_32): ### Missing Data Imputation Several studies represent how LLMs help traffic spatial-temporal imputation tasks. In (31), GPT-3.5 is applied to generate...\n[S4] LLMs_for_Mobility_Analysis_Survey.md (chunk 34, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 5. Challenges and Outlook > Interpretability and Explainability; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_34): ### Interpretability and Explainability Unlike traditional computer science or artificial intelligence research, the studies in traffic forecasting do...\n[S5] LLMs_for_Mobility_Analysis_Survey.md (chunk 1, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > Abstract; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_1): ## Abstract  Mobility analysis is a crucial element in the research area of transportation systems. Forecasting traffic information offers a viable so...\n[S6] LLMs_for_Mobility_Analysis_Survey.md (chunk 0, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0): # Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks  **Authors:** Zijian Zhang, Yujie Sun, Zepu Wan...\n[S7] LLMs_for_Mobility_Analysis_Survey.md (chunk 2, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 1. Introduction; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_2): ## 1. Introduction  Forecasting the mobility of vehicles and pedestrians is crucial for planning and optimizing transportation systems that enable the...\n[S8] LLMs_for_Mobility_Analysis_Survey.md (chunk 26, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 4. Applications; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_26): ## 4. Applications  In this section, we present recent innovative deep learning applications of LLMs and foundation models in the mobility analysis of...\n[S9] LLMs_for_Mobility_Analysis_Survey.md (chunk 25, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 3. Methodology > 3.2 Model Framework > Integration; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_25): #### Integration Integration means that an LLM serves as an integral component to process or produce informative intermediate results in a large frame...\n[S10] LLMs_for_Mobility_Analysis_Survey.md (chunk 27, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 4. Applications > Traffic Forecasting; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_27): ### Traffic Forecasting Traditional statistical methods typically treat traffic forecasting as time series problems (2, 71). One of the common approac...",
+      "sources_b": "[S1] 2405.02357v2.pdf (p.1, chunk -1; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor): Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks Zijian Zhang, Co-first Author The Department of C...\n[S2] LLMs_for_Mobility_Analysis_Survey.md (chunk 33, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 5. Challenges and Outlook; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_33): ## 5. Challenges and Outlook  In this section, we discuss the limitations of current research and potential further research directions in the field o...\n[S3] LLMs_for_Mobility_Analysis_Survey.md (chunk 32, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 4. Applications > Missing Data Imputation; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_32): ### Missing Data Imputation Several studies represent how LLMs help traffic spatial-temporal imputation tasks. In (31), GPT-3.5 is applied to generate...\n[S4] LLMs_for_Mobility_Analysis_Survey.md (chunk 34, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 5. Challenges and Outlook > Interpretability and Explainability; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_34): ### Interpretability and Explainability Unlike traditional computer science or artificial intelligence research, the studies in traffic forecasting do...\n[S5] LLMs_for_Mobility_Analysis_Survey.md (chunk 1, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > Abstract; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_1): ## Abstract  Mobility analysis is a crucial element in the research area of transportation systems. Forecasting traffic information offers a viable so...\n[S6] LLMs_for_Mobility_Analysis_Survey.md (chunk 0, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0): # Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks  **Authors:** Zijian Zhang, Yujie Sun, Zepu Wan...\n[S7] LLMs_for_Mobility_Analysis_Survey.md (chunk 2, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 1. Introduction; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_2): ## 1. Introduction  Forecasting the mobility of vehicles and pedestrians is crucial for planning and optimizing transportation systems that enable the...\n[S8] LLMs_for_Mobility_Analysis_Survey.md (chunk 26, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 4. Applications; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_26): ## 4. Applications  In this section, we present recent innovative deep learning applications of LLMs and foundation models in the mobility analysis of...\n[S9] LLMs_for_Mobility_Analysis_Survey.md (chunk 25, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 3. Methodology > 3.2 Model Framework > Integration; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_25): #### Integration Integration means that an LLM serves as an integral component to process or produce informative intermediate results in a large frame...\n[S10] LLMs_for_Mobility_Analysis_Survey.md (chunk 27, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 4. Applications > Traffic Forecasting; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_27): ### Traffic Forecasting Traditional statistical methods typically treat traffic forecasting as time series problems (2, 71). One of the common approac..."
+    },
+    {
+      "case_id": "cross-007",
+      "language": "mixed",
+      "query_type": "cross_document",
+      "query": "南京的历史文化遗产和现代科技论文（DSpark、mobility survey）分别属于什么领域？",
+      "a_answer": "根据提供的文档内容：\n\n- **南京的历史文化遗产**属于**人文资源**领域，具体包括历史古迹（如江南贡院、夫子庙）、爱国主义教育基地（如雨花台、中山陵）、世界文化遗产（明孝陵）以及非物质文化遗产（如南京云锦、南京绒花）[S5][S6]。\n\n- **现代科技论文（mobility survey）** 属于**交通系统与人工智能**领域，具体涉及大型语言模型（LLMs）在交通系统移动性分析中的应用，包括时间序列预测、交通预测等任务[S8]。\n\n关于“DSpark”，在提供的文档中未找到相关信息，因此无法回答其所属领域。",
+      "b_answer": "根据提供的文档，南京的历史文化遗产属于**人文资源**领域，具体包括历史古迹、爱国主义教育基地、世界文化遗产（明孝陵）以及非物质文化遗产（如南京云锦、南京绒花）[S5][S6]。而关于“现代科技论文（DSpark、mobility survey）”，文档中仅提到了“mobility survey”相关的论文，即《Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks》，它属于**交通系统与机器学习**领域，涉及大语言模型在交通预测中的应用[S1][S8]。但文档中未提及“DSpark”相关内容，因此无法回答该部分。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "6f04a32d1ea426e30ed0b6c2627d7102d7a03d0558e3e5bd5ff04cae97d9eab2",
+      "evidence_plan_fingerprint": "3e6e1e0c0e8ea32b62f1273662b7d31ff2e17183f0c82186ccede6cb13eaaf1e",
+      "evidence_retrieval_fingerprint": "6ca78f055e3193e2707f8910dd65bbe48a05b596e02b5e4173a6f724d3525ca7",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor"
+        ],
+        [
+          "S2",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+        ],
+        [
+          "S3",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8"
+        ],
+        [
+          "S4",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7"
+        ],
+        [
+          "S5",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9"
+        ],
+        [
+          "S6",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10"
+        ],
+        [
+          "S7",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+        ],
+        [
+          "S8",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_1"
+        ],
+        [
+          "S9",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_33"
+        ],
+        [
+          "S10",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_32"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_33",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_1",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0"
+      ],
+      "sources_a": "[S1] 2405.02357v2.pdf (p.1, chunk -1; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor): Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks Zijian Zhang, Co-first Author The Department of C...\n[S2] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S3] 南京城市地理环境.docx (chunk 8, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8): 1.3南京市人文资源概况...\n[S4] 南京城市地理环境.docx (chunk 7, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7): 南京市林木覆盖率为26.4%，建成区内绿化覆盖率45%，人均公共绿地面积13.7平方米，林木与绿地资源丰富。截止2022年，已记录到2530种不同物种，其中，国家重点保护野生动植物物种72种，生物资源丰富。...\n[S5] 南京城市地理环境.docx (chunk 9, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9): 南京是中国历史文化名城，拥有6000余年的文明史、近2600年的建城史以及近500年的建都史。享有“六朝古都”、“十朝都会”的盛誉。境内人文资源极为丰富，拥有江南贡院、夫子庙等历史古迹，雨花台、中山陵等爱国主义教育基地，更坐拥世界文化遗产——明孝陵。在此基础上，南京市推进文旅融合，创建了秦淮河等多个...\n[S6] 南京城市地理环境.docx (chunk 10, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10): 同时，南京市非物质文化遗产也十分丰富，如南京云锦、南京绒花等。其中，云锦入选了《人类非物质文化遗产代表作名录》。...\n[S7] LLMs_for_Mobility_Analysis_Survey.md (chunk 0, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0): # Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks  **Authors:** Zijian Zhang, Yujie Sun, Zepu Wan...\n[S8] LLMs_for_Mobility_Analysis_Survey.md (chunk 1, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > Abstract; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_1): ## Abstract  Mobility analysis is a crucial element in the research area of transportation systems. Forecasting traffic information offers a viable so...\n[S9] LLMs_for_Mobility_Analysis_Survey.md (chunk 33, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 5. Challenges and Outlook; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_33): ## 5. Challenges and Outlook  In this section, we discuss the limitations of current research and potential further research directions in the field o...\n[S10] LLMs_for_Mobility_Analysis_Survey.md (chunk 32, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 4. Applications > Missing Data Imputation; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_32): ### Missing Data Imputation Several studies represent how LLMs help traffic spatial-temporal imputation tasks. In (31), GPT-3.5 is applied to generate...",
+      "sources_b": "[S1] 2405.02357v2.pdf (p.1, chunk -1; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor): Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks Zijian Zhang, Co-first Author The Department of C...\n[S2] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S3] 南京城市地理环境.docx (chunk 8, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8): 1.3南京市人文资源概况...\n[S4] 南京城市地理环境.docx (chunk 7, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7): 南京市林木覆盖率为26.4%，建成区内绿化覆盖率45%，人均公共绿地面积13.7平方米，林木与绿地资源丰富。截止2022年，已记录到2530种不同物种，其中，国家重点保护野生动植物物种72种，生物资源丰富。...\n[S5] 南京城市地理环境.docx (chunk 9, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9): 南京是中国历史文化名城，拥有6000余年的文明史、近2600年的建城史以及近500年的建都史。享有“六朝古都”、“十朝都会”的盛誉。境内人文资源极为丰富，拥有江南贡院、夫子庙等历史古迹，雨花台、中山陵等爱国主义教育基地，更坐拥世界文化遗产——明孝陵。在此基础上，南京市推进文旅融合，创建了秦淮河等多个...\n[S6] 南京城市地理环境.docx (chunk 10, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10): 同时，南京市非物质文化遗产也十分丰富，如南京云锦、南京绒花等。其中，云锦入选了《人类非物质文化遗产代表作名录》。...\n[S7] LLMs_for_Mobility_Analysis_Survey.md (chunk 0, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0): # Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks  **Authors:** Zijian Zhang, Yujie Sun, Zepu Wan...\n[S8] LLMs_for_Mobility_Analysis_Survey.md (chunk 1, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > Abstract; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_1): ## Abstract  Mobility analysis is a crucial element in the research area of transportation systems. Forecasting traffic information offers a viable so...\n[S9] LLMs_for_Mobility_Analysis_Survey.md (chunk 33, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 5. Challenges and Outlook; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_33): ## 5. Challenges and Outlook  In this section, we discuss the limitations of current research and potential further research directions in the field o...\n[S10] LLMs_for_Mobility_Analysis_Survey.md (chunk 32, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 4. Applications > Missing Data Imputation; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_32): ### Missing Data Imputation Several studies represent how LLMs help traffic spatial-temporal imputation tasks. In (31), GPT-3.5 is applied to generate..."
+    },
+    {
+      "case_id": "cross-009",
+      "language": "zh",
+      "query_type": "cross_document",
+      "query": "南京的绿化覆盖率和城镇化率分别是多少？这两个数据来自同一份文档吗？",
+      "a_answer": "根据提供的文档内容，**南京的城镇化率为87.2%**，但**文档中没有提及南京的绿化覆盖率**，因此无法提供该数据。城镇化率数据来自《南京城市地理环境.docx》[S4]。由于绿化覆盖率未在文档中出现，无法确认两个数据是否来自同一份文档。",
+      "b_answer": "根据提供的文档，可以找到南京的城镇化率为87.2%[S4]，但文档中没有提及南京的绿化覆盖率。因此，无法回答绿化覆盖率的数据。城镇化率数据来自《南京城市地理环境.docx》[S4]，而绿化覆盖率信息缺失，无法确认是否来自同一份文档。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "b989a4718f8a49823548e86ceb181224952cc9b3e95ba41e80986621a339f427",
+      "evidence_plan_fingerprint": "90f8e5bb504c3e6bd8efa2a8b829370b6a0ae1dd83ac9e964f029f82067a428f",
+      "evidence_retrieval_fingerprint": "60868d7e85ccf4eb4c9a1266bd120ee6143b21b5e4f735197ee42238ab669cc8",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+        ],
+        [
+          "S2",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0"
+        ],
+        [
+          "S3",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1"
+        ],
+        [
+          "S4",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+        ],
+        [
+          "S5",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+        ],
+        [
+          "S6",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4"
+        ],
+        [
+          "S7",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+        ],
+        [
+          "S8",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+        ],
+        [
+          "S9",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4"
+        ],
+        [
+          "S10",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+      ],
+      "sources_a": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 南京城市地理环境.docx (chunk 0, § 南京城市地理环境; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0): 南京城市地理环境...\n[S3] 南京城市地理环境.docx (chunk 1, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1): 1.1南京市地理概况...\n[S4] 南京城市地理环境.docx (chunk 3, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3): 南京市现下辖玄武、秦淮、建邺等一共11个市辖区。截止2023年6月，南京市辖区总面积约为6587.04平方千米，其中建成区面积约为868.28平方千米，市内常住人口为954.70万人，城镇常住人口为832.49万人，城镇化率87.2%。...\n[S5] 南京城市地理环境.docx (chunk 2, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2): 南京市大致位于东经118°46′至119°5′，北纬31°14′至32°37′之间。属亚热带季风气候，降水充沛，夏季高温多雨，冬季温和少雨。南京处于长江中下游平原腹地，长江穿城而过，地势特征主要为西南高，东北低，以低山、丘陵、岗地为主，约占总面积的60.8%，平原、洼地及河流湖泊等约占39.2%。南...\n[S6] 南京城市地理环境.docx (chunk 4, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4): 1.2南京市自然资源概况...\n[S7] OneDrive 入门.pdf (p.3, chunk 3; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3): Office 集成 OneDrive 可与 Office 网页版无缝协作。 免费使用 Word、PowerPoint 和 Excel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了...\n[S8] OneDrive 入门.pdf (p.2, chunk 2, § 5 GB 的免费存储空间，也可升级到; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2): 5 GB 的免费存储空间，也可升级到  Microsoft 365，获取 1 TB 的空间。 了解如何上传文件...\n[S9] OneDrive 入门.pdf (p.4, chunk 4; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4): 使用移动应用获取更多 功能 本机照片自动备份 自动备份手机里的照片和视频，永远 保留你的回忆。 了解详细信息：iOS 或 Android 扫描并保存纸质文档 使用手机扫描纸质文档、收据或白板 备注，并将存储其在 OneDrive 中。 了解详细信息：iOS 或 Android 有关 OneDrive...\n[S10] 南京城市地理环境.docx (chunk 10, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10): 同时，南京市非物质文化遗产也十分丰富，如南京云锦、南京绒花等。其中，云锦入选了《人类非物质文化遗产代表作名录》。...",
+      "sources_b": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 南京城市地理环境.docx (chunk 0, § 南京城市地理环境; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0): 南京城市地理环境...\n[S3] 南京城市地理环境.docx (chunk 1, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1): 1.1南京市地理概况...\n[S4] 南京城市地理环境.docx (chunk 3, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3): 南京市现下辖玄武、秦淮、建邺等一共11个市辖区。截止2023年6月，南京市辖区总面积约为6587.04平方千米，其中建成区面积约为868.28平方千米，市内常住人口为954.70万人，城镇常住人口为832.49万人，城镇化率87.2%。...\n[S5] 南京城市地理环境.docx (chunk 2, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2): 南京市大致位于东经118°46′至119°5′，北纬31°14′至32°37′之间。属亚热带季风气候，降水充沛，夏季高温多雨，冬季温和少雨。南京处于长江中下游平原腹地，长江穿城而过，地势特征主要为西南高，东北低，以低山、丘陵、岗地为主，约占总面积的60.8%，平原、洼地及河流湖泊等约占39.2%。南...\n[S6] 南京城市地理环境.docx (chunk 4, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4): 1.2南京市自然资源概况...\n[S7] OneDrive 入门.pdf (p.3, chunk 3; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3): Office 集成 OneDrive 可与 Office 网页版无缝协作。 免费使用 Word、PowerPoint 和 Excel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了...\n[S8] OneDrive 入门.pdf (p.2, chunk 2, § 5 GB 的免费存储空间，也可升级到; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2): 5 GB 的免费存储空间，也可升级到  Microsoft 365，获取 1 TB 的空间。 了解如何上传文件...\n[S9] OneDrive 入门.pdf (p.4, chunk 4; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4): 使用移动应用获取更多 功能 本机照片自动备份 自动备份手机里的照片和视频，永远 保留你的回忆。 了解详细信息：iOS 或 Android 扫描并保存纸质文档 使用手机扫描纸质文档、收据或白板 备注，并将存储其在 OneDrive 中。 了解详细信息：iOS 或 Android 有关 OneDrive...\n[S10] 南京城市地理环境.docx (chunk 10, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10): 同时，南京市非物质文化遗产也十分丰富，如南京云锦、南京绒花等。其中，云锦入选了《人类非物质文化遗产代表作名录》。..."
+    },
+    {
+      "case_id": "cross-010",
+      "language": "en",
+      "query_type": "cross_document",
+      "query": "What do the mobility analysis survey and the URL exfiltration paper have in common regarding LLMs?",
+      "a_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "b_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": true,
+      "evidence_refusal_reason": "retrieval",
+      "evidence_context_sha256": "",
+      "evidence_plan_fingerprint": "22bc3f8a85bcf6e99636e91a87afecdca05a0e65fcbdd6d8db9c9a655c2e7599",
+      "evidence_retrieval_fingerprint": "9ca7b163bcea891a0adc40ea46415ccdcda708c661e91450bad64c1dd800fcf4",
+      "evidence_citation_map": [],
+      "evidence_candidate_chunk_ids": [
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_33",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_11",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_171",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_124",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_27",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_59",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_49",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_26",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_16",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_168",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_25",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_5",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_35",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_157",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_15",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_8",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_36",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_19",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_26",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_144",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_122",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_40",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_101",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_38"
+      ],
+      "sources_a": "",
+      "sources_b": ""
+    },
+    {
+      "case_id": "en-012",
+      "language": "en",
+      "query_type": "single_fact",
+      "query": "What are the key features of OneDrive security?",
+      "a_answer": "根据提供的文档内容，我无法找到关于OneDrive安全性的具体关键功能信息。文档[Source: OneDrive 入门.pdf]仅提到将文件保存到OneDrive可以“进行保护、备份和访问”[S1][S2]，以及提供“安全的位 置来存储文件和照片”[S3]，但未详细说明安全功能的具体细节。其他文档[Source: 2405.02357v2.pdf]和[Source: LLMs_for_Mobility_Analysis_Survey.md]涉及交通系统和LLM的隐私问题，与OneDrive安全无关。因此，基于现有文档，无法回答此问题。",
+      "b_answer": "根据提供的文档，OneDrive 的安全功能描述为“OneDrive 提供了一个安全的位置来存储文件和照片”，并提到“将文件保存到 OneDrive，以便从任意位置使用所有设备对其进行保护、备份和访问” [S1][S2][S3]。文档未详细说明具体的安全机制（如加密、密钥管理等），因此无法提供更深入的安全特性细节。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "8be42c5f451bf25ab3c2313efbcc58102551792e5583e122f3d286c12bd0fb2f",
+      "evidence_plan_fingerprint": "7d202397d3e221895269af84520794cc9bd14d099e4fb274b4e39d557ed046fc",
+      "evidence_retrieval_fingerprint": "2cbce28236d934536a854d08dc2d3ac6228c870d570fda3b6feea37f88d3f700",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+        ],
+        [
+          "S2",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0"
+        ],
+        [
+          "S3",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+        ],
+        [
+          "S4",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_159"
+        ],
+        [
+          "S5",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_158"
+        ],
+        [
+          "S6",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_160"
+        ],
+        [
+          "S7",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_145"
+        ],
+        [
+          "S8",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_144"
+        ],
+        [
+          "S9",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_146"
+        ],
+        [
+          "S10",
+          "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_36"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_159",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_145",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_36",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_147",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_154",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_170",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_43",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_52",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_6",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_158",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_254",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_255",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_16",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_250",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_19",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_37"
+      ],
+      "sources_a": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] OneDrive 入门.pdf (p.1, chunk 0; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。...\n[S3] OneDrive 入门.pdf (p.2, chunk 1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1): 随处访问 借助 OneDrive.com 和 OneDrive 移 动应用，几乎可以从你所在的任意位置 使用所有设备创建、访问和编辑文件。 电脑文件夹备份 打开电脑文件夹备份，将“桌面”、  “文档”和“图片”文件夹自动备份并 同步到 OneDrive。 如何设置电脑文件夹备份 云存储 OneDri...\n[S4] 2405.02357v2.pdf (p.17, chunk 159; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_159): on that (131). Therefore, it is important for the companies to collaborate with the government to gain the necessary data, and this collaboration nece...\n[S5] 2405.02357v2.pdf (p.17, chunk 158; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_158): application development. Many important data sources, such as the environmental and traffic condition data, are collected by roadside cameras and sens...\n[S6] 2405.02357v2.pdf (p.17, chunk 160; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_160): challenges related to data interoperability and standardization. Different government agencies and companies may use various formats and protocols for...\n[S7] 2405.02357v2.pdf (p.16, chunk 145; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_145): ence results and diagnosing errors or unexpected behaviors. Also, the interpretability and explain- ability of LLMs will make the overall framework mu...\n[S8] 2405.02357v2.pdf (p.16, chunk 144; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_144): Zhang, Sun, Wang, Nie, Ma, Li, Sun and Ban 16 does not include much transportation-specific background. Therefore, a promising future direction for re...\n[S9] 2405.02357v2.pdf (p.16, chunk 146; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_146): is also a major concern for wider utilization of LLMs (119). Therefore, even though the strong generalization ability is an important advantage of LLM...\n[S10] LLMs_for_Mobility_Analysis_Survey.md (chunk 36, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 5. Challenges and Outlook > Privacy Concerns about LLM-Powered Transportation Frameworks; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_36): ### Privacy Concerns about LLM-Powered Transportation Frameworks Privacy is a key bottleneck for collecting real-world data in transportation systems ...",
+      "sources_b": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] OneDrive 入门.pdf (p.1, chunk 0; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。...\n[S3] OneDrive 入门.pdf (p.2, chunk 1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1): 随处访问 借助 OneDrive.com 和 OneDrive 移 动应用，几乎可以从你所在的任意位置 使用所有设备创建、访问和编辑文件。 电脑文件夹备份 打开电脑文件夹备份，将“桌面”、  “文档”和“图片”文件夹自动备份并 同步到 OneDrive。 如何设置电脑文件夹备份 云存储 OneDri...\n[S4] 2405.02357v2.pdf (p.17, chunk 159; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_159): on that (131). Therefore, it is important for the companies to collaborate with the government to gain the necessary data, and this collaboration nece...\n[S5] 2405.02357v2.pdf (p.17, chunk 158; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_158): application development. Many important data sources, such as the environmental and traffic condition data, are collected by roadside cameras and sens...\n[S6] 2405.02357v2.pdf (p.17, chunk 160; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_160): challenges related to data interoperability and standardization. Different government agencies and companies may use various formats and protocols for...\n[S7] 2405.02357v2.pdf (p.16, chunk 145; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_145): ence results and diagnosing errors or unexpected behaviors. Also, the interpretability and explain- ability of LLMs will make the overall framework mu...\n[S8] 2405.02357v2.pdf (p.16, chunk 144; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_144): Zhang, Sun, Wang, Nie, Ma, Li, Sun and Ban 16 does not include much transportation-specific background. Therefore, a promising future direction for re...\n[S9] 2405.02357v2.pdf (p.16, chunk 146; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_146): is also a major concern for wider utilization of LLMs (119). Therefore, even though the strong generalization ability is an important advantage of LLM...\n[S10] LLMs_for_Mobility_Analysis_Survey.md (chunk 36, § Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks > 5. Challenges and Outlook > Privacy Concerns about LLM-Powered Transportation Frameworks; chunk_id=e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_36): ### Privacy Concerns about LLM-Powered Transportation Frameworks Privacy is a key bottleneck for collecting real-world data in transportation systems ..."
+    },
+    {
+      "case_id": "en-013",
+      "language": "en",
+      "query_type": "metadata",
+      "query": "How many pages does the DSpark paper have?",
+      "a_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "b_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": true,
+      "evidence_refusal_reason": "retrieval",
+      "evidence_context_sha256": "",
+      "evidence_plan_fingerprint": "49bdb44666f4ba893e1d004dd4d8088c18d8685a28d8133f4eff311577651c70",
+      "evidence_retrieval_fingerprint": "6a528b8b944b0d489113c33c450ecacb4f0ef1e232bfcb352869f02dbd2bdd44",
+      "evidence_citation_map": [],
+      "evidence_candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_71",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_70",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_157",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_164",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_22",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_16",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_43",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_182",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_132",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_4",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_154",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_219",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_185"
+      ],
+      "sources_a": "",
+      "sources_b": ""
+    },
+    {
+      "case_id": "en-016",
+      "language": "en",
+      "query_type": "single_fact",
+      "query": "What does DFlash stand for in the DSpark paper?",
+      "a_answer": "根据提供的文档内容，我无法找到“DFlash”具体代表什么的定义或全称。文档中仅将其作为对比基线（parallel baseline）提及，未给出其全称或含义解释[S1][S4]。因此，我无法回答此问题。",
+      "b_answer": "根据提供的文档内容，无法找到“DFlash”具体代表什么的定义或全称。文档中仅将“DFlash”作为并行基线（parallel baseline）提及，例如“the parallel baseline (DFlash)”[S4]，但未解释其名称含义。因此，缺少关于“DFlash”全称或缩写来源的信息。",
+      "a_refused": true,
+      "b_refused": false,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "cf412680243e636750d06a5f9bdc2856276fae96af8c9a40dae16b0a1dce70d7",
+      "evidence_plan_fingerprint": "52b540d5ee09ccc4a2b8584a991f48eabde59f7264134ae563c19e898b8eb4f5",
+      "evidence_retrieval_fingerprint": "a1e0fe6751677ff853367dc26a4729b67997867e7c40aa33ca10bb9df63fff9a",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_154"
+        ],
+        [
+          "S2",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_153"
+        ],
+        [
+          "S3",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_155"
+        ],
+        [
+          "S4",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+        ],
+        [
+          "S5",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_129"
+        ],
+        [
+          "S6",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_131"
+        ],
+        [
+          "S7",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_165"
+        ],
+        [
+          "S8",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_164"
+        ],
+        [
+          "S9",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_166"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_157",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_132",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_165",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_164",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_154",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_159",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_162",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_156",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_71",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_118",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_70",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_51",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_55",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_16",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_25",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_43",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_117",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_48",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_40",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_161",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_114",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_148",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_155",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_138",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_168",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_213",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_116",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_247"
+      ],
+      "sources_a": "[S1] DSpark_paper.pdf (p.13, chunk 154; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_154): GSM8K MATH500 AIME25 MBPP HumanEval LiveCodeBench MT-Bench Alpaca Arena-Hard v2 2 3 4 5 6 Accepted Length Method DSpark DFlash Depth 1L 2L 5L Figure 3...\n[S2] DSpark_paper.pdf (p.12, chunk 153, § 2 through 7) exposes the inherent limitation of independent parallel generation. As earlier > 0.72 to 0.63 on Chat. Because each parallel position marginalizes over all possible prior tokens; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_153): The preceding analysis highlights a clear architectural objective: combining the high capacity of a parallel backbone for the initial token with the d...\n[S3] DSpark_paper.pdf (p.13, chunk 155; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_155): GSM8K MATH500 AIME25 MBPP HumanEval LiveCodeBench MT-Bench Alpaca Arena-Hard v2 2 3 4 5 6 Accepted Length Method DSpark DFlash Depth 1L 2L 5L Figure 3...\n[S4] DSpark_paper.pdf (p.11, chunk 130, § 3. Daily Chat, including MT-Bench (Zheng et al., 2023), Alpaca (Taori et al., 2023) and > 4.2. Experimental Results; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130): 4.2. Experimental Results To isolate the raw draft quality from system-level scheduling policies, our offline evaluation disables the confidence sched...\n[S5] DSpark_paper.pdf (p.11, chunk 129; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_129): 4.33 3.10 2.94 2.72 DSpark 6.21 5.74 4.94 5.26 5.43 5.02 3.70 3.58 3.13 Gemma4-12B Eagle3 5.87 5.46 4.83 4.72 5.37 4.16 3.19 3.06 2.72 DFlash 5.45 5.0...\n[S6] DSpark_paper.pdf (p.11, chunk 131, § 3. Daily Chat, including MT-Bench (Zheng et al., 2023), Alpaca (Taori et al., 2023) and > 4.2. Experimental Results; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_131): 4.2. Experimental Results To isolate the raw draft quality from system-level scheduling policies, our offline evaluation disables the confidence sched...\n[S7] DSpark_paper.pdf (p.14, chunk 165; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_165): parallel generation (DFlash) suffers from rapid acceptance decay (Figure 2), its marginal utility diminishes for long blocks. DSpark mitigates this de...\n[S8] DSpark_paper.pdf (p.14, chunk 164; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_164): length 𝛾plus one anchor token) across {4, 8, 12, 16} to evaluate performance on longer draft blocks. For DSpark, we evaluate both the default Markov h...\n[S9] DSpark_paper.pdf (p.14, chunk 166; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_166): RNN head provides only marginal additional gains over the Markov head, mainly at longer proposal lengths. Given its higher implementation complexity a...",
+      "sources_b": "[S1] DSpark_paper.pdf (p.13, chunk 154; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_154): GSM8K MATH500 AIME25 MBPP HumanEval LiveCodeBench MT-Bench Alpaca Arena-Hard v2 2 3 4 5 6 Accepted Length Method DSpark DFlash Depth 1L 2L 5L Figure 3...\n[S2] DSpark_paper.pdf (p.12, chunk 153, § 2 through 7) exposes the inherent limitation of independent parallel generation. As earlier > 0.72 to 0.63 on Chat. Because each parallel position marginalizes over all possible prior tokens; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_153): The preceding analysis highlights a clear architectural objective: combining the high capacity of a parallel backbone for the initial token with the d...\n[S3] DSpark_paper.pdf (p.13, chunk 155; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_155): GSM8K MATH500 AIME25 MBPP HumanEval LiveCodeBench MT-Bench Alpaca Arena-Hard v2 2 3 4 5 6 Accepted Length Method DSpark DFlash Depth 1L 2L 5L Figure 3...\n[S4] DSpark_paper.pdf (p.11, chunk 130, § 3. Daily Chat, including MT-Bench (Zheng et al., 2023), Alpaca (Taori et al., 2023) and > 4.2. Experimental Results; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130): 4.2. Experimental Results To isolate the raw draft quality from system-level scheduling policies, our offline evaluation disables the confidence sched...\n[S5] DSpark_paper.pdf (p.11, chunk 129; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_129): 4.33 3.10 2.94 2.72 DSpark 6.21 5.74 4.94 5.26 5.43 5.02 3.70 3.58 3.13 Gemma4-12B Eagle3 5.87 5.46 4.83 4.72 5.37 4.16 3.19 3.06 2.72 DFlash 5.45 5.0...\n[S6] DSpark_paper.pdf (p.11, chunk 131, § 3. Daily Chat, including MT-Bench (Zheng et al., 2023), Alpaca (Taori et al., 2023) and > 4.2. Experimental Results; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_131): 4.2. Experimental Results To isolate the raw draft quality from system-level scheduling policies, our offline evaluation disables the confidence sched...\n[S7] DSpark_paper.pdf (p.14, chunk 165; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_165): parallel generation (DFlash) suffers from rapid acceptance decay (Figure 2), its marginal utility diminishes for long blocks. DSpark mitigates this de...\n[S8] DSpark_paper.pdf (p.14, chunk 164; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_164): length 𝛾plus one anchor token) across {4, 8, 12, 16} to evaluate performance on longer draft blocks. For DSpark, we evaluate both the default Markov h...\n[S9] DSpark_paper.pdf (p.14, chunk 166; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_166): RNN head provides only marginal additional gains over the Markov head, mainly at longer proposal lengths. Given its higher implementation complexity a..."
+    },
+    {
+      "case_id": "meta-006",
+      "language": "en",
+      "query_type": "metadata",
+      "query": "What is the source document that contains information about Nanjing's geography?",
+      "a_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "b_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": true,
+      "evidence_refusal_reason": "retrieval",
+      "evidence_context_sha256": "",
+      "evidence_plan_fingerprint": "831ff1519d7420b9ca330870433012009b286334ceb05ff369ba21c1e4e2bc64",
+      "evidence_retrieval_fingerprint": "54431d41eaede26c3ca0874610cdd1d2b18eafa15b6c0704a46346433a1d5bf1",
+      "evidence_citation_map": [],
+      "evidence_candidate_chunk_ids": [
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_205",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_165",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_159",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_163",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_33",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_6",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_20",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_84",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_83",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_48",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_36",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_43",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_239",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_41",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_170",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_148",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_6",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_21",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_166",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_24",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_172",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_187"
+      ],
+      "sources_a": "",
+      "sources_b": ""
+    },
+    {
+      "case_id": "meta-008",
+      "language": "en",
+      "query_type": "metadata",
+      "query": "How many PDF documents are in the corpus?",
+      "a_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "b_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": true,
+      "evidence_refusal_reason": "retrieval",
+      "evidence_context_sha256": "",
+      "evidence_plan_fingerprint": "d6e1fbcb2925ca491cd08da8092a37fa4ae766c5ce53a2014096937431582e50",
+      "evidence_retrieval_fingerprint": "bb5b252aa528e3604905f5056faa22ff64ac2f0d5766ebf854419f0ad9c046e9",
+      "evidence_citation_map": [],
+      "evidence_candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_341",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_29",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_266",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_89",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_7",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_32",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_30",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_194",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_158",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_187",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_16",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_327"
+      ],
+      "sources_a": "",
+      "sources_b": ""
+    },
+    {
+      "case_id": "mixed-006",
+      "language": "mixed",
+      "query_type": "cross_document",
+      "query": "南京的紫金山海拔和OneDrive的免费存储空间哪个数值更大？",
+      "a_answer": "根据提供的文档内容，无法回答该问题。文档中未提及南京紫金山的海拔信息，也未提及OneDrive的免费存储空间具体数值（仅提到“1 TB 的 OneDrive 云存储空间”但未说明是否为免费额度）[S4]。因此无法比较两者数值大小。",
+      "b_answer": "无法回答该问题。文档中未提供南京紫金山海拔的具体数值，也未提及 OneDrive 的免费存储空间大小（仅提到 1 TB 的 OneDrive 云存储空间，但未说明是否为免费额度）。因此缺少回答所需的关键信息。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "13721065e90c905ca838ace8d5ad99d577263e0ddae1d761b1d9573b8046bdaf",
+      "evidence_plan_fingerprint": "07b291997c7647339750267069cff2d5de6a397fc09411879f9ae21455cb606a",
+      "evidence_retrieval_fingerprint": "85e6ac60416e6499b1545e1aff3fc4b5d0256b94ee5d56341c75056ef1b4a2ff",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+        ],
+        [
+          "S2",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0"
+        ],
+        [
+          "S3",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1"
+        ],
+        [
+          "S4",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6"
+        ],
+        [
+          "S5",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5"
+        ],
+        [
+          "S6",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0"
+        ],
+        [
+          "S7",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+        ],
+        [
+          "S8",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6"
+        ],
+        [
+          "S9",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5"
+        ],
+        [
+          "S10",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7"
+      ],
+      "sources_a": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 南京城市地理环境.docx (chunk 0, § 南京城市地理环境; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0): 南京城市地理环境...\n[S3] 南京城市地理环境.docx (chunk 1, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1): 1.1南京市地理概况...\n[S4] OneDrive 入门.pdf (p.5, chunk 6, § 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6): 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。 利用高级安全性来保护文件和照片。 获取适合各种设备的 Word、Excel 和 PowerPoint 等高级 应用。 要详细了解 Microsoft 365，  请查看 OneDrive 计划...\n[S5] OneDrive 入门.pdf (p.5, chunk 5; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5): 更具创造性、更井然有序且更安全，这都得益于 Microsoft 365...\n[S6] OneDrive 入门.pdf (p.1, chunk 0; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。...\n[S7] OneDrive 入门.pdf (p.2, chunk 1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1): 随处访问 借助 OneDrive.com 和 OneDrive 移 动应用，几乎可以从你所在的任意位置 使用所有设备创建、访问和编辑文件。 电脑文件夹备份 打开电脑文件夹备份，将“桌面”、  “文档”和“图片”文件夹自动备份并 同步到 OneDrive。 如何设置电脑文件夹备份 云存储 OneDri...\n[S8] 南京城市地理环境.docx (chunk 6, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6): 南京市地下水资源同样丰富，且水质优良，拥有汤山温泉、珍珠泉等著名的温泉旅游资源。...\n[S9] 南京城市地理环境.docx (chunk 5, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5): 南京市境内水网密布，河湖水系主要属于长江水系，长江、秦淮河、玄武湖与莫愁湖均是南京重要的河湖。...\n[S10] 南京城市地理环境.docx (chunk 7, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7): 南京市林木覆盖率为26.4%，建成区内绿化覆盖率45%，人均公共绿地面积13.7平方米，林木与绿地资源丰富。截止2022年，已记录到2530种不同物种，其中，国家重点保护野生动植物物种72种，生物资源丰富。...",
+      "sources_b": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 南京城市地理环境.docx (chunk 0, § 南京城市地理环境; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0): 南京城市地理环境...\n[S3] 南京城市地理环境.docx (chunk 1, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1): 1.1南京市地理概况...\n[S4] OneDrive 入门.pdf (p.5, chunk 6, § 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6): 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。 利用高级安全性来保护文件和照片。 获取适合各种设备的 Word、Excel 和 PowerPoint 等高级 应用。 要详细了解 Microsoft 365，  请查看 OneDrive 计划...\n[S5] OneDrive 入门.pdf (p.5, chunk 5; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5): 更具创造性、更井然有序且更安全，这都得益于 Microsoft 365...\n[S6] OneDrive 入门.pdf (p.1, chunk 0; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。...\n[S7] OneDrive 入门.pdf (p.2, chunk 1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1): 随处访问 借助 OneDrive.com 和 OneDrive 移 动应用，几乎可以从你所在的任意位置 使用所有设备创建、访问和编辑文件。 电脑文件夹备份 打开电脑文件夹备份，将“桌面”、  “文档”和“图片”文件夹自动备份并 同步到 OneDrive。 如何设置电脑文件夹备份 云存储 OneDri...\n[S8] 南京城市地理环境.docx (chunk 6, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6): 南京市地下水资源同样丰富，且水质优良，拥有汤山温泉、珍珠泉等著名的温泉旅游资源。...\n[S9] 南京城市地理环境.docx (chunk 5, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5): 南京市境内水网密布，河湖水系主要属于长江水系，长江、秦淮河、玄武湖与莫愁湖均是南京重要的河湖。...\n[S10] 南京城市地理环境.docx (chunk 7, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7): 南京市林木覆盖率为26.4%，建成区内绿化覆盖率45%，人均公共绿地面积13.7平方米，林木与绿地资源丰富。截止2022年，已记录到2530种不同物种，其中，国家重点保护野生动植物物种72种，生物资源丰富。..."
+    },
+    {
+      "case_id": "mixed-008",
+      "language": "mixed",
+      "query_type": "cross_document",
+      "query": "南京的城镇化率87.2%和DSpark对Eagle3的提升30.9%分别来自哪些文档？",
+      "a_answer": "根据提供的文档内容：\n\n- **南京的城镇化率87.2%** 来自文档《南京城市地理环境.docx》[S2]，其中明确提到“城镇化率87.2%”。\n- **DSpark对Eagle3的提升30.9%** 在提供的文档片段中**未找到**。文档《DSpark_paper.pdf》[S8][S10]中仅包含表格数据（如accepted length），但未提及“30.9%”这一具体提升比例，且没有相关文字说明。因此，无法确认该数据来源，不能编造。",
+      "b_answer": "南京的城镇化率87.2%来自《南京城市地理环境.docx》[S2]；DSpark对Eagle3的提升30.9%在提供的文档中未找到对应数据，无法确认来源。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "d42bf3b3495df3fe399aa019440234bb38c46ac3349c60d4f83376e4376f602e",
+      "evidence_plan_fingerprint": "34c188b0c98e225df7a66455c4d62f05f253d4394a8ebbfee579bdd8bd91253a",
+      "evidence_retrieval_fingerprint": "5a8889228594ae060379e3ad3fe03f6c73a0d7f819fb8a18a12e52aca7b04b81",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+        ],
+        [
+          "S2",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+        ],
+        [
+          "S3",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+        ],
+        [
+          "S4",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4"
+        ],
+        [
+          "S5",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0"
+        ],
+        [
+          "S6",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1"
+        ],
+        [
+          "S7",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5"
+        ],
+        [
+          "S8",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_126"
+        ],
+        [
+          "S9",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_125"
+        ],
+        [
+          "S10",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_127"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_128",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_132",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_126",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_129",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+      ],
+      "sources_a": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 南京城市地理环境.docx (chunk 3, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3): 南京市现下辖玄武、秦淮、建邺等一共11个市辖区。截止2023年6月，南京市辖区总面积约为6587.04平方千米，其中建成区面积约为868.28平方千米，市内常住人口为954.70万人，城镇常住人口为832.49万人，城镇化率87.2%。...\n[S3] 南京城市地理环境.docx (chunk 2, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2): 南京市大致位于东经118°46′至119°5′，北纬31°14′至32°37′之间。属亚热带季风气候，降水充沛，夏季高温多雨，冬季温和少雨。南京处于长江中下游平原腹地，长江穿城而过，地势特征主要为西南高，东北低，以低山、丘陵、岗地为主，约占总面积的60.8%，平原、洼地及河流湖泊等约占39.2%。南...\n[S4] 南京城市地理环境.docx (chunk 4, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4): 1.2南京市自然资源概况...\n[S5] 南京城市地理环境.docx (chunk 0, § 南京城市地理环境; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0): 南京城市地理环境...\n[S6] 南京城市地理环境.docx (chunk 1, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1): 1.1南京市地理概况...\n[S7] 南京城市地理环境.docx (chunk 5, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5): 南京市境内水网密布，河湖水系主要属于长江水系，长江、秦淮河、玄武湖与莫愁湖均是南京重要的河湖。...\n[S8] DSpark_paper.pdf (p.11, chunk 126; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_126): Table 1 | Main speculative decoding results. We report accepted length (𝜏) per decoding round (higher is better) for different target models and domai...\n[S9] DSpark_paper.pdf (p.10, chunk 125, § 3. Daily Chat, including MT-Bench (Zheng et al., 2023), Alpaca (Taori et al., 2023) and; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_125): 2https://huggingface.co/datasets/mlabonne/open-perfectblend 3For clarity, unless otherwise stated, all reported metrics for accepted length and accept...\n[S10] DSpark_paper.pdf (p.11, chunk 127; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_127): Table 1 | Main speculative decoding results. We report accepted length (𝜏) per decoding round (higher is better) for different target models and domai...",
+      "sources_b": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 南京城市地理环境.docx (chunk 3, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3): 南京市现下辖玄武、秦淮、建邺等一共11个市辖区。截止2023年6月，南京市辖区总面积约为6587.04平方千米，其中建成区面积约为868.28平方千米，市内常住人口为954.70万人，城镇常住人口为832.49万人，城镇化率87.2%。...\n[S3] 南京城市地理环境.docx (chunk 2, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2): 南京市大致位于东经118°46′至119°5′，北纬31°14′至32°37′之间。属亚热带季风气候，降水充沛，夏季高温多雨，冬季温和少雨。南京处于长江中下游平原腹地，长江穿城而过，地势特征主要为西南高，东北低，以低山、丘陵、岗地为主，约占总面积的60.8%，平原、洼地及河流湖泊等约占39.2%。南...\n[S4] 南京城市地理环境.docx (chunk 4, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4): 1.2南京市自然资源概况...\n[S5] 南京城市地理环境.docx (chunk 0, § 南京城市地理环境; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0): 南京城市地理环境...\n[S6] 南京城市地理环境.docx (chunk 1, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1): 1.1南京市地理概况...\n[S7] 南京城市地理环境.docx (chunk 5, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5): 南京市境内水网密布，河湖水系主要属于长江水系，长江、秦淮河、玄武湖与莫愁湖均是南京重要的河湖。...\n[S8] DSpark_paper.pdf (p.11, chunk 126; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_126): Table 1 | Main speculative decoding results. We report accepted length (𝜏) per decoding round (higher is better) for different target models and domai...\n[S9] DSpark_paper.pdf (p.10, chunk 125, § 3. Daily Chat, including MT-Bench (Zheng et al., 2023), Alpaca (Taori et al., 2023) and; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_125): 2https://huggingface.co/datasets/mlabonne/open-perfectblend 3For clarity, unless otherwise stated, all reported metrics for accepted length and accept...\n[S10] DSpark_paper.pdf (p.11, chunk 127; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_127): Table 1 | Main speculative decoding results. We report accepted length (𝜏) per decoding round (higher is better) for different target models and domai..."
+    },
+    {
+      "case_id": "multi-009",
+      "language": "en",
+      "query_type": "multi_turn",
+      "query": "How can I share files with it?",
+      "a_answer": "根据提供的文档内容，没有找到关于如何共享文件的具体说明。文档中仅提到“将文件保存到 OneDrive，以便从任意位置使用所有设备对其进行保护、备份和访问”[S1]，但未涉及共享文件的操作步骤。因此，我无法回答此问题。",
+      "b_answer": "根据提供的文档，没有找到关于如何共享文件的具体说明。文档中仅提到“将文件保存到 OneDrive，以便从任意位置使用所有设备对其进行保护、备份和访问”[S1]，但未涉及文件共享的操作步骤或功能。因此，无法回答此问题，缺少关于文件共享方法的具体信息。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "b8f38b76834ca315d4feb80a2803a0c642e17e827fef88f6fcef0ff9c8a625d4",
+      "evidence_plan_fingerprint": "336393d60a925ce42316672bf3f9f4905f3e5506ec6124a0c42c985e34080a21",
+      "evidence_retrieval_fingerprint": "c10cade655becf49b4650d83dd33ef394438052e017b64310b0a9efaadda6992",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+        ],
+        [
+          "S2",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_157"
+        ],
+        [
+          "S3",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_156"
+        ],
+        [
+          "S4",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_158"
+        ],
+        [
+          "S5",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_159"
+        ],
+        [
+          "S6",
+          "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_160"
+        ],
+        [
+          "S7",
+          "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_4"
+        ],
+        [
+          "S8",
+          "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_3"
+        ],
+        [
+          "S9",
+          "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_5"
+        ],
+        [
+          "S10",
+          "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_288"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_157",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_159",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_4",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_288",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_153",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_48",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_36",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_210",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_11",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_149",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_160",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_37"
+      ],
+      "sources_a": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 2405.02357v2.pdf (p.17, chunk 157; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_157): fied staff, and training current staff to learn to use LLMs. To address these challenges, traditional transportation companies may have to work closel...\n[S3] 2405.02357v2.pdf (p.17, chunk 156; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_156): GPUs/TPUs as computational resources. The financial cost for LLM application development and maintenance will be very expensive. Hybrid professionals ...\n[S4] 2405.02357v2.pdf (p.17, chunk 158; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_158): application development. Many important data sources, such as the environmental and traffic condition data, are collected by roadside cameras and sens...\n[S5] 2405.02357v2.pdf (p.17, chunk 159; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_159): on that (131). Therefore, it is important for the companies to collaborate with the government to gain the necessary data, and this collaboration nece...\n[S6] 2405.02357v2.pdf (p.17, chunk 160; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_160): challenges related to data interoperability and standardization. Different government agencies and companies may use various formats and protocols for...\n[S7] prevent-url-data-exfil.pdf (p.1, chunk 4; chunk_id=e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_4): images. Query parameters in the URLs are frequently necessary to define the specific resource in question. If instead, sensitive user data is added in...\n[S8] prevent-url-data-exfil.pdf (p.1, chunk 3; chunk_id=e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_3): continuous monitoring and adaptation of this policy, ensuring it evolves as more sophisticated adversarial techniques emerge over time. Problem Space ...\n[S9] prevent-url-data-exfil.pdf (p.1, chunk 5; chunk_id=e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_5): email. These types of URLs can be crafted by attackers using prompt injections that attempt to leak very specific, and potentially high value user dat...\n[S10] DSpark_paper.pdf (p.25, chunk 288; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_288): Jul 2025b. URL https://proceedings.mlr.press/v267/li25h.html. X. L. Li, J. Thickstun, I. Gulrajani, P. Liang, and T. Hashimoto. Diffusion-LM improves ...",
+      "sources_b": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 2405.02357v2.pdf (p.17, chunk 157; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_157): fied staff, and training current staff to learn to use LLMs. To address these challenges, traditional transportation companies may have to work closel...\n[S3] 2405.02357v2.pdf (p.17, chunk 156; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_156): GPUs/TPUs as computational resources. The financial cost for LLM application development and maintenance will be very expensive. Hybrid professionals ...\n[S4] 2405.02357v2.pdf (p.17, chunk 158; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_158): application development. Many important data sources, such as the environmental and traffic condition data, are collected by roadside cameras and sens...\n[S5] 2405.02357v2.pdf (p.17, chunk 159; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_159): on that (131). Therefore, it is important for the companies to collaborate with the government to gain the necessary data, and this collaboration nece...\n[S6] 2405.02357v2.pdf (p.17, chunk 160; chunk_id=9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_160): challenges related to data interoperability and standardization. Different government agencies and companies may use various formats and protocols for...\n[S7] prevent-url-data-exfil.pdf (p.1, chunk 4; chunk_id=e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_4): images. Query parameters in the URLs are frequently necessary to define the specific resource in question. If instead, sensitive user data is added in...\n[S8] prevent-url-data-exfil.pdf (p.1, chunk 3; chunk_id=e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_3): continuous monitoring and adaptation of this policy, ensuring it evolves as more sophisticated adversarial techniques emerge over time. Problem Space ...\n[S9] prevent-url-data-exfil.pdf (p.1, chunk 5; chunk_id=e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_5): email. These types of URLs can be crafted by attackers using prompt injections that attempt to leak very specific, and potentially high value user dat...\n[S10] DSpark_paper.pdf (p.25, chunk 288; chunk_id=3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_288): Jul 2025b. URL https://proceedings.mlr.press/v267/li25h.html. X. L. Li, J. Thickstun, I. Gulrajani, P. Liang, and T. Hashimoto. Diffusion-LM improves ..."
+    },
+    {
+      "case_id": "zh-011",
+      "language": "zh",
+      "query_type": "single_fact",
+      "query": "南京建城史有多少年？",
+      "a_answer": "根据提供的文档内容，没有找到关于南京建城史的信息。文档中仅包含南京的地理概况（如位置、气候、地势、面积和人口等）[S4][S5]，未涉及建城历史。因此，无法回答该问题。",
+      "b_answer": "根据提供的文档，没有找到关于南京建城史的信息。文档中仅包含南京的地理概况（如位置、气候、面积、人口等）[S4][S5]，未涉及建城历史或年代。因此，无法回答该问题。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "d0ae23e569aee7541bc099b4b218ecc34197c4b07e17122476e5f12fdff2c058",
+      "evidence_plan_fingerprint": "c533db77bdd5c45ca788b52402c15ee10c0d89bd43bcc834c6080e387985da56",
+      "evidence_retrieval_fingerprint": "909670ba07613082f262ab87223c5726a8dce1f8f8294f0fe4596258a729b9c7",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+        ],
+        [
+          "S2",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0"
+        ],
+        [
+          "S3",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1"
+        ],
+        [
+          "S4",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+        ],
+        [
+          "S5",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+        ],
+        [
+          "S6",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4"
+        ],
+        [
+          "S7",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5"
+        ],
+        [
+          "S8",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4"
+        ],
+        [
+          "S9",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6"
+        ],
+        [
+          "S10",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "sources_a": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 南京城市地理环境.docx (chunk 0, § 南京城市地理环境; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0): 南京城市地理环境...\n[S3] 南京城市地理环境.docx (chunk 1, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1): 1.1南京市地理概况...\n[S4] 南京城市地理环境.docx (chunk 3, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3): 南京市现下辖玄武、秦淮、建邺等一共11个市辖区。截止2023年6月，南京市辖区总面积约为6587.04平方千米，其中建成区面积约为868.28平方千米，市内常住人口为954.70万人，城镇常住人口为832.49万人，城镇化率87.2%。...\n[S5] 南京城市地理环境.docx (chunk 2, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2): 南京市大致位于东经118°46′至119°5′，北纬31°14′至32°37′之间。属亚热带季风气候，降水充沛，夏季高温多雨，冬季温和少雨。南京处于长江中下游平原腹地，长江穿城而过，地势特征主要为西南高，东北低，以低山、丘陵、岗地为主，约占总面积的60.8%，平原、洼地及河流湖泊等约占39.2%。南...\n[S6] 南京城市地理环境.docx (chunk 4, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4): 1.2南京市自然资源概况...\n[S7] OneDrive 入门.pdf (p.5, chunk 5; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5): 更具创造性、更井然有序且更安全，这都得益于 Microsoft 365...\n[S8] OneDrive 入门.pdf (p.4, chunk 4; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4): 使用移动应用获取更多 功能 本机照片自动备份 自动备份手机里的照片和视频，永远 保留你的回忆。 了解详细信息：iOS 或 Android 扫描并保存纸质文档 使用手机扫描纸质文档、收据或白板 备注，并将存储其在 OneDrive 中。 了解详细信息：iOS 或 Android 有关 OneDrive...\n[S9] OneDrive 入门.pdf (p.5, chunk 6, § 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6): 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。 利用高级安全性来保护文件和照片。 获取适合各种设备的 Word、Excel 和 PowerPoint 等高级 应用。 要详细了解 Microsoft 365，  请查看 OneDrive 计划...\n[S10] OneDrive 入门.pdf (p.3, chunk 3; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3): Office 集成 OneDrive 可与 Office 网页版无缝协作。 免费使用 Word、PowerPoint 和 Excel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了...",
+      "sources_b": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] 南京城市地理环境.docx (chunk 0, § 南京城市地理环境; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0): 南京城市地理环境...\n[S3] 南京城市地理环境.docx (chunk 1, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1): 1.1南京市地理概况...\n[S4] 南京城市地理环境.docx (chunk 3, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3): 南京市现下辖玄武、秦淮、建邺等一共11个市辖区。截止2023年6月，南京市辖区总面积约为6587.04平方千米，其中建成区面积约为868.28平方千米，市内常住人口为954.70万人，城镇常住人口为832.49万人，城镇化率87.2%。...\n[S5] 南京城市地理环境.docx (chunk 2, § 1.1南京市地理概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2): 南京市大致位于东经118°46′至119°5′，北纬31°14′至32°37′之间。属亚热带季风气候，降水充沛，夏季高温多雨，冬季温和少雨。南京处于长江中下游平原腹地，长江穿城而过，地势特征主要为西南高，东北低，以低山、丘陵、岗地为主，约占总面积的60.8%，平原、洼地及河流湖泊等约占39.2%。南...\n[S6] 南京城市地理环境.docx (chunk 4, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4): 1.2南京市自然资源概况...\n[S7] OneDrive 入门.pdf (p.5, chunk 5; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5): 更具创造性、更井然有序且更安全，这都得益于 Microsoft 365...\n[S8] OneDrive 入门.pdf (p.4, chunk 4; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4): 使用移动应用获取更多 功能 本机照片自动备份 自动备份手机里的照片和视频，永远 保留你的回忆。 了解详细信息：iOS 或 Android 扫描并保存纸质文档 使用手机扫描纸质文档、收据或白板 备注，并将存储其在 OneDrive 中。 了解详细信息：iOS 或 Android 有关 OneDrive...\n[S9] OneDrive 入门.pdf (p.5, chunk 6, § 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6): 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。 利用高级安全性来保护文件和照片。 获取适合各种设备的 Word、Excel 和 PowerPoint 等高级 应用。 要详细了解 Microsoft 365，  请查看 OneDrive 计划...\n[S10] OneDrive 入门.pdf (p.3, chunk 3; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3): Office 集成 OneDrive 可与 Office 网页版无缝协作。 免费使用 Word、PowerPoint 和 Excel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了..."
+    },
+    {
+      "case_id": "zh-014",
+      "language": "zh",
+      "query_type": "single_fact",
+      "query": "OneDrive的免费存储空间有多大？",
+      "a_answer": "根据提供的文档，未找到关于 OneDrive 免费存储空间大小的具体信息。文档中仅提到“1 TB 的 OneDrive 云存储空间”与 Microsoft 365 相关 [S4]，但未说明这是免费额度还是付费计划内容。因此，无法从文档中确认免费存储空间的大小。",
+      "b_answer": "根据提供的文档，没有找到关于 OneDrive 免费存储空间大小的具体信息。文档中仅提到 OneDrive 提供云存储空间，并提及“1 TB 的 OneDrive 云存储空间”是 Microsoft 365 计划的一部分，但未说明免费版的存储容量 [S4]。因此，无法回答免费存储空间的具体大小。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": false,
+      "evidence_refusal_reason": null,
+      "evidence_context_sha256": "1bb8580e527e189a7b2028ff74449cd55c5e50f3b1063b9af20df00f9458d455",
+      "evidence_plan_fingerprint": "a027d8d9d6157f9cd198d52fcf52537d48d0aa52f7353598f94a977b97c6a68b",
+      "evidence_retrieval_fingerprint": "1415c96e8e587934f963a17b28fbaa04e8484af11f21ab82f083689192f7e142",
+      "evidence_citation_map": [
+        [
+          "S1",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+        ],
+        [
+          "S2",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0"
+        ],
+        [
+          "S3",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+        ],
+        [
+          "S4",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6"
+        ],
+        [
+          "S5",
+          "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5"
+        ],
+        [
+          "S6",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6"
+        ],
+        [
+          "S7",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5"
+        ],
+        [
+          "S8",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7"
+        ],
+        [
+          "S9",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4"
+        ],
+        [
+          "S10",
+          "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9"
+        ]
+      ],
+      "evidence_candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+      ],
+      "sources_a": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] OneDrive 入门.pdf (p.1, chunk 0; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。...\n[S3] OneDrive 入门.pdf (p.2, chunk 1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1): 随处访问 借助 OneDrive.com 和 OneDrive 移 动应用，几乎可以从你所在的任意位置 使用所有设备创建、访问和编辑文件。 电脑文件夹备份 打开电脑文件夹备份，将“桌面”、  “文档”和“图片”文件夹自动备份并 同步到 OneDrive。 如何设置电脑文件夹备份 云存储 OneDri...\n[S4] OneDrive 入门.pdf (p.5, chunk 6, § 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6): 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。 利用高级安全性来保护文件和照片。 获取适合各种设备的 Word、Excel 和 PowerPoint 等高级 应用。 要详细了解 Microsoft 365，  请查看 OneDrive 计划...\n[S5] OneDrive 入门.pdf (p.5, chunk 5; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5): 更具创造性、更井然有序且更安全，这都得益于 Microsoft 365...\n[S6] 南京城市地理环境.docx (chunk 6, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6): 南京市地下水资源同样丰富，且水质优良，拥有汤山温泉、珍珠泉等著名的温泉旅游资源。...\n[S7] 南京城市地理环境.docx (chunk 5, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5): 南京市境内水网密布，河湖水系主要属于长江水系，长江、秦淮河、玄武湖与莫愁湖均是南京重要的河湖。...\n[S8] 南京城市地理环境.docx (chunk 7, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7): 南京市林木覆盖率为26.4%，建成区内绿化覆盖率45%，人均公共绿地面积13.7平方米，林木与绿地资源丰富。截止2022年，已记录到2530种不同物种，其中，国家重点保护野生动植物物种72种，生物资源丰富。...\n[S9] 南京城市地理环境.docx (chunk 4, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4): 1.2南京市自然资源概况...\n[S10] 南京城市地理环境.docx (chunk 9, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9): 南京是中国历史文化名城，拥有6000余年的文明史、近2600年的建城史以及近500年的建都史。享有“六朝古都”、“十朝都会”的盛誉。境内人文资源极为丰富，拥有江南贡院、夫子庙等历史古迹，雨花台、中山陵等爱国主义教育基地，更坐拥世界文化遗产——明孝陵。在此基础上，南京市推进文旅融合，创建了秦淮河等多个...",
+      "sources_b": "[S1] OneDrive 入门.pdf (p.1, chunk -1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。 ...\n[S2] OneDrive 入门.pdf (p.1, chunk 0; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0): Microsoft  OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。...\n[S3] OneDrive 入门.pdf (p.2, chunk 1; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1): 随处访问 借助 OneDrive.com 和 OneDrive 移 动应用，几乎可以从你所在的任意位置 使用所有设备创建、访问和编辑文件。 电脑文件夹备份 打开电脑文件夹备份，将“桌面”、  “文档”和“图片”文件夹自动备份并 同步到 OneDrive。 如何设置电脑文件夹备份 云存储 OneDri...\n[S4] OneDrive 入门.pdf (p.5, chunk 6, § 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6): 1 TB 的 OneDrive 云存储空间助你访问、编辑和共享文件。 利用高级安全性来保护文件和照片。 获取适合各种设备的 Word、Excel 和 PowerPoint 等高级 应用。 要详细了解 Microsoft 365，  请查看 OneDrive 计划...\n[S5] OneDrive 入门.pdf (p.5, chunk 5; chunk_id=092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5): 更具创造性、更井然有序且更安全，这都得益于 Microsoft 365...\n[S6] 南京城市地理环境.docx (chunk 6, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6): 南京市地下水资源同样丰富，且水质优良，拥有汤山温泉、珍珠泉等著名的温泉旅游资源。...\n[S7] 南京城市地理环境.docx (chunk 5, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5): 南京市境内水网密布，河湖水系主要属于长江水系，长江、秦淮河、玄武湖与莫愁湖均是南京重要的河湖。...\n[S8] 南京城市地理环境.docx (chunk 7, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7): 南京市林木覆盖率为26.4%，建成区内绿化覆盖率45%，人均公共绿地面积13.7平方米，林木与绿地资源丰富。截止2022年，已记录到2530种不同物种，其中，国家重点保护野生动植物物种72种，生物资源丰富。...\n[S9] 南京城市地理环境.docx (chunk 4, § 1.2南京市自然资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4): 1.2南京市自然资源概况...\n[S10] 南京城市地理环境.docx (chunk 9, § 1.3南京市人文资源概况; chunk_id=d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9): 南京是中国历史文化名城，拥有6000余年的文明史、近2600年的建城史以及近500年的建都史。享有“六朝古都”、“十朝都会”的盛誉。境内人文资源极为丰富，拥有江南贡院、夫子庙等历史古迹，雨花台、中山陵等爱国主义教育基地，更坐拥世界文化遗产——明孝陵。在此基础上，南京市推进文旅融合，创建了秦淮河等多个..."
+    },
+    {
+      "case_id": "meta-002",
+      "language": "en",
+      "query_type": "metadata",
+      "query": "Which documents are in Chinese language?",
+      "a_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "b_answer": "未找到足够可靠的文档依据，暂时无法回答该问题。",
+      "a_refused": true,
+      "b_refused": true,
+      "evidence_refused": true,
+      "evidence_refusal_reason": "retrieval",
+      "evidence_context_sha256": "",
+      "evidence_plan_fingerprint": "36d99acc5509283e21471247f99d623171effecbc39fab7db7db2c344337d273",
+      "evidence_retrieval_fingerprint": "2b44da9ae5b29553a7008f6dab23e7c75dd79655d201536644e518e1d02730ea",
+      "evidence_citation_map": [],
+      "evidence_candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_341",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_70",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_290",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_16",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_77",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_20",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_21",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_139",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_23",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_4",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_327",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_18",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_79",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_158",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_18",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_3",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_205",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_18",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_172",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_89",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_286",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_91",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_217",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_29",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_11",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_194",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_142",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_6",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_0",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_199",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_49",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_306",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_32",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_311",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_8",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_10",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_253",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_147",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_9",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_266",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_122",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_22",
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3",
+        "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_23"
+      ],
+      "sources_a": "",
+      "sources_b": ""
+    }
+  ]
+}

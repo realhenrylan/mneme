@@ -1,0 +1,136 @@
+[
+  {
+    "case_id": "zh-001",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "南京市辖区总面积约为6587.04平方千米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto",
+    "relevance_level": null
+  },
+  {
+    "case_id": "zh-002",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "南京市海拔最高点为紫金山,海拔448.9米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto",
+    "relevance_level": null
+  },
+  {
+    "case_id": "mixed-001",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "confirmed",
+    "relevance_level": null
+  },
+  {
+    "case_id": "mixed-006",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "海拔448.9米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto",
+    "relevance_level": null
+  },
+  {
+    "case_id": "mixed-006",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "5 gb 的免费存储空间",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto",
+    "relevance_level": null
+  },
+  {
+    "case_id": "cross-001",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "地势特征主要为西南高,东北低",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto",
+    "relevance_level": null
+  },
+  {
+    "case_id": "cross-001",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "5 gb 的免费存储空间",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto",
+    "relevance_level": null
+  },
+  {
+    "case_id": "cross-002",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "implement robust safeguards",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "confirmed",
+    "relevance_level": null
+  },
+  {
+    "case_id": "cross-002",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "confirmed",
+    "relevance_level": null
+  },
+  {
+    "case_id": "multi-001",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "大致位于东经118°46′至119°5′,北纬31°14′至32°37′之间",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto",
+    "relevance_level": null
+  },
+  {
+    "case_id": "multi-002",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "南京市海拔最高点为紫金山,海拔448.9米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto",
+    "relevance_level": null
+  },
+  {
+    "case_id": "multi-003",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "拥有汤山温泉、珍珠泉等著名的温泉旅游资源",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto",
+    "relevance_level": null
+  }
+]

@@ -1,0 +1,1087 @@
+[
+  {
+    "case_id": "cross-001",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "地势特征主要为西南高,东北低",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-001",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "5 gb 的免费存储空间",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-002",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "implement robust safeguards",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "cross-002",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "cross-003",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "speculative decoding",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_0",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_1",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_3",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_6",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_8",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_9",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_15",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_27",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_28",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_43",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_44",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_93",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_98",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_99",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_123",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_124",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_126",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_127",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_137",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_140",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_146",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_202",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_229",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_234",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_235",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_238",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_241",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_243",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_244",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_245",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_248",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_250",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_255",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_258",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_264",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_266",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_273",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_274",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_278",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_279",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_284",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_285",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_295",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_296",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_297",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_298",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_300",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_301",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_307",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_312",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_314",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_321",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_324",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_325",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_326",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_328",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_329",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_330",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_332",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_337",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_338",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_339",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_348",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-003",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "mobility analysis in transportation systems",
+    "matched_chunk_ids": [
+      "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-004",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "河湖水系主要属于长江水系",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-004",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "自动备份并同步到 onedrive",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "cross-005",
+    "source_id": "2405.02357v2.pdf",
+    "normalized_snippet": "machine learning and deep learning methods",
+    "matched_chunk_ids": [
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_5",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_7"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-005",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "speculative decoding",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_0",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_1",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_3",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_6",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_8",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_9",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_15",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_27",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_28",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_43",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_44",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_93",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_98",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_99",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_123",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_124",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_126",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_127",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_137",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_140",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_146",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_202",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_229",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_234",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_235",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_238",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_241",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_243",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_244",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_245",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_248",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_250",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_255",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_258",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_264",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_266",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_273",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_274",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_278",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_279",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_284",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_285",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_295",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_296",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_297",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_298",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_300",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_301",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_307",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_312",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_314",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_321",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_324",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_325",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_326",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_328",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_329",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_330",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_332",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_337",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_338",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_339",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_348",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-007",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "六朝古都",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-007",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "speculative decoding",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_0",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_1",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_3",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_6",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_8",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_9",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_15",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_27",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_28",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_43",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_44",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_93",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_98",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_99",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_123",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_124",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_126",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_127",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_137",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_140",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_146",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_202",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_229",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_234",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_235",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_238",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_241",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_243",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_244",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_245",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_248",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_250",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_255",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_258",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_264",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_266",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_273",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_274",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_278",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_279",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_284",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_285",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_295",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_296",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_297",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_298",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_300",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_301",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_307",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_312",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_314",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_321",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_324",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_325",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_326",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_328",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_329",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_330",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_332",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_337",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_338",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_339",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_348",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-009",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "建成区内绿化覆盖率45%",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-009",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "城镇化率87.2%",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-010",
+    "source_id": "2405.02357v2.pdf",
+    "normalized_snippet": "large language models",
+    "matched_chunk_ids": [
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_0",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_1",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_5",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_7",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_9",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_12",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_29",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_30",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_194",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_199",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_201",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_204",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_205",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_209",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_211",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_213",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_220",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_221",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_232",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_236",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_237",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_238",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_239",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_240",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_241",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_242",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_247",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_248",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_254",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_259",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "cross-010",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "large language models, through autonomous agents",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_0"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-002",
+    "source_id": "2405.02357v2.pdf",
+    "normalized_snippet": "common methods include the arima model, bayesian",
+    "matched_chunk_ids": [
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_11"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-003",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "dspark: confidence-scheduled speculative decoding with semi-autoregressive generation",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_0",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-004",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "the target model verifies all candidates in a single forward pass, accepting the longest prefix consistent with its own distribution",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_27",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_29"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-005",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "en-006",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "the attacker is assumed to have the ability to influence model behavior indirectly, for example by shaping prompts or page content via prompt injection techniques",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_6",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_7"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-007",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "urls queried by the model could leak conversation data directly in the query string",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-008",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "zijian zhang, yujie sun, zepu wang, yuqi nie, xiaobo ma, ruolin li, peng sun, xuegang ban",
+    "matched_chunk_ids": [
+      "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-009",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "arxiv: 2405.02357v2",
+    "matched_chunk_ids": [
+      "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "en-010",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "2025-01-20",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_0",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-011",
+    "source_id": "2405.02357v2.pdf",
+    "normalized_snippet": "machine learning and deep learning methods",
+    "matched_chunk_ids": [
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_5",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_7"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-011",
+    "source_id": "2405.02357v2.pdf",
+    "normalized_snippet": "common methods include the arima model, bayesian",
+    "matched_chunk_ids": [
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_11"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-012",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "en-014",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "across the qwen3-4b, 8b, and 14b target models",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-015",
+    "source_id": "2405.02357v2.pdf",
+    "normalized_snippet": "forecasting traffic information offers a viable solution to address the conflict between increasing transportation demands and the limitations of transportation infrastructure",
+    "matched_chunk_ids": [
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_5",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_6"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-016",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "the parallel dflash",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-017",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "en-018",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "university of pennsylvania, university of washington, princeton university, the university of arizona, university of south california, duke kunshan university",
+    "matched_chunk_ids": [
+      "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "en-019",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "over the parallel dflash by 16.3%, 18.4%, and 18.3%",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "en-020",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "submission date: february 24, 2025",
+    "matched_chunk_ids": [
+      "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "meta-001",
+    "source_id": "2405.02357v2.pdf",
+    "normalized_snippet": "this survey explores existing approaches using llms for time series forecasting problems for mobility in transportation systems.",
+    "matched_chunk_ids": [
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_5",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_8"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-001",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "large language models for mobility analysis in transportation systems: a survey on forecasting tasks",
+    "matched_chunk_ids": [
+      "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-001",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "speculative decoding accelerates large language model (llm) inference",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_1"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-001",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "preventing url-based data exfiltration in language-model agents",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_0",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-004",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "microsoft onedrive 入门",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-005",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "preventing url-based data exfiltration in language-model agents",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_0",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-006",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "南京市大致位于东经118°46′至119°5′",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-009",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "preventing url-based data exfiltration in language-model agents adrian spânu thomas shadwell 2025-01-20",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_0",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-010",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "microsoft onedrive 入门",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-001",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "mixed-002",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "最初提供 5 gb 的免费存储空间,也可升级到 microsoft 365,获取 1 tb 的空间",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "mixed-003",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "mixed-004",
+    "source_id": "2405.02357v2.pdf",
+    "normalized_snippet": "common methods include the arima model",
+    "matched_chunk_ids": [
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_11"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-005",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "the target model verifies all candidates in a single forward pass, accepting the longest prefix consistent with its own distribution",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_27",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_29"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-006",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "海拔448.9米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-006",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "5 gb 的免费存储空间",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-007",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "shaping prompts or page content via prompt injection techniques",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_6",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_7"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-008",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "城镇化率87.2%",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-008",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "mixed-009",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "large language models for mobility analysis in transportation systems: a survey on forecasting tasks",
+    "matched_chunk_ids": [
+      "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-011",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "a lightweight draft model proposes a block of candidate tokens, and the full-size target model verifies",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_8"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-013",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "mixed-013",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "shaping prompts or page content via prompt injection techniques",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_6",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_7"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-014",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "across the qwen3-4b, 8b, and 14b target models",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-015",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "6000余年的文明史、近2600年的建城史以及近500年的建都史",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "multi-001",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "大致位于东经118°46′至119°5′,北纬31°14′至32°37′之间",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "multi-002",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "南京市海拔最高点为紫金山,海拔448.9米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "multi-003",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "拥有汤山温泉、珍珠泉等著名的温泉旅游资源",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "multi-007",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "将文件保存到 onedrive,以便从任意位置使用所有设备对其进行保护、备份和访问",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "multi-008",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "最初提供 5 gb 的免费存储空间",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "multi-009",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "与任何人共享文档、文件夹和照片",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "multi-010",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "zh-001",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "南京市辖区总面积约为6587.04平方千米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-002",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "南京市海拔最高点为紫金山,海拔448.9米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-003",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "属亚热带季风气候,降水充沛,夏季高温多雨,冬季温和少雨",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-004",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "市内常住人口为954.70万人",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-005",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "长江、秦淮河、玄武湖与莫愁湖均是南京重要的河湖",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-007",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "云锦入选了《人类非物质文化遗产代表作名录》",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_10"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-008",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "现下辖玄武、秦淮、建邺等一共11个市辖区",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-009",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "南京市林木覆盖率为26.4%",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-011",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "近2600年的建城史",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-012",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "建成区面积约为868.28平方千米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-014",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "最初提供 5 gb 的免费存储空间",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "zh-015",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "zh-016",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "也可升级到 microsoft 365,获取 1 tb 的空间",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-017",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "将\"桌面\"、\"文档\"和\"图片\"文件夹自动备份并同步到 onedrive",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "zh-018",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "享有\"六朝古都\"、\"十朝都会\"的盛誉",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "zh-019",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "人均公共绿地面积13.7平方米",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-020",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "大致位于东经118°46′至119°5′,北纬31°14′至32°37′之间",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  }
+]

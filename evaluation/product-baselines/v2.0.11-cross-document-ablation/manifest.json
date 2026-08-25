@@ -1,0 +1,810 @@
+{
+ "case_counts": {
+  "chunk_metrics_cases": 105,
+  "cross_document": 26,
+  "mapping_failure_rows": 0,
+  "no_chunk_truth_cases": 31,
+  "total_cases": 136
+ },
+ "code": {
+  "dirty": true,
+  "head": "8e3be0c6e58bfa4c03ec15a96f9a3913f0d9285b"
+ },
+ "dependencies": {
+  "chromadb": "1.5.9",
+  "langchain-text-splitters": "1.1.2",
+  "python": "3.12.10",
+  "rank-bm25": "0.2.2",
+  "sentence-transformers": "5.6.0"
+ },
+ "determinism": {
+  "baseline": {
+   "difference_count": 77,
+   "differences": [
+    {
+     "case_id": "multi-013",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-013",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-016",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-016",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-021",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-025",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-025",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-029",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-029",
+     "field": "scores"
+    },
+    {
+     "case_id": "zh-030",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "zh-030",
+     "field": "scores"
+    },
+    {
+     "case_id": "zh-031",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "zh-031",
+     "field": "scores"
+    },
+    {
+     "case_id": "en-021",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "en-021",
+     "field": "retrieved_source_ids"
+    },
+    {
+     "case_id": "en-021",
+     "field": "scores"
+    },
+    {
+     "case_id": "en-023",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "en-023",
+     "field": "scores"
+    },
+    {
+     "case_id": "en-024",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "en-024",
+     "field": "retrieved_source_ids"
+    }
+   ],
+   "metric_difference_count": 1,
+   "metric_differences": [
+    {
+     "build1": 0.041666666666666664,
+     "build2": 0.04,
+     "case_id": "en-024",
+     "key": "mrr"
+    }
+   ]
+  },
+  "build2": {
+   "baseline_cd": {
+    "mrr": 0.35343349424755127,
+    "n": 26,
+    "ndcg@10": 0.28019684362137476,
+    "ndcg@20": 0.3341108688296591,
+    "ndcg@5": 0.25065301138432833,
+    "recall@10": 0.37820512820512825,
+    "recall@20": 0.5544871794871795,
+    "recall@5": 0.2948717948717949,
+    "source_recall@10": 0.9807692307692307,
+    "source_recall@20": 0.9807692307692307,
+    "source_recall@5": 0.9423076923076923
+   },
+   "baseline_metrics": {
+    "denominators": {
+     "chunk_metrics_cases": 105,
+     "mapping_failure_rows": 0,
+     "no_chunk_truth_cases": 31,
+     "total_cases": 136
+    },
+    "mrr": 0.5397608419752167,
+    "ndcg@10": 0.5448505949761953,
+    "ndcg@20": 0.5708344613744473,
+    "ndcg@5": 0.5272425723090965,
+    "recall@10": 0.666984126984127,
+    "recall@20": 0.7582539682539682,
+    "recall@5": 0.6158730158730159,
+    "source_recall@10": 0.9809523809523809,
+    "source_recall@20": 0.9809523809523809,
+    "source_recall@5": 0.9523809523809523
+   },
+   "candidate_cd": {
+    "mrr": 0.29091784990952113,
+    "n": 26,
+    "ndcg@10": 0.23350583460466418,
+    "ndcg@20": 0.2766550136978486,
+    "ndcg@5": 0.20863355129265276,
+    "recall@10": 0.33974358974358976,
+    "recall@20": 0.46794871794871795,
+    "recall@5": 0.2692307692307692,
+    "source_recall@10": 1.0,
+    "source_recall@20": 1.0,
+    "source_recall@5": 0.9615384615384616
+   },
+   "candidate_metrics": {
+    "denominators": {
+     "chunk_metrics_cases": 105,
+     "mapping_failure_rows": 0,
+     "no_chunk_truth_cases": 31,
+     "total_cases": 136
+    },
+    "mrr": 0.45473817439734154,
+    "ndcg@10": 0.4790305469177859,
+    "ndcg@20": 0.5053581831147599,
+    "ndcg@5": 0.44475303454069254,
+    "recall@10": 0.6574603174603174,
+    "recall@20": 0.7463492063492063,
+    "recall@5": 0.5571428571428572,
+    "source_recall@10": 0.9952380952380953,
+    "source_recall@20": 0.9952380952380953,
+    "source_recall@5": 0.9761904761904762
+   }
+  },
+  "candidate": {
+   "difference_count": 225,
+   "differences": [
+    {
+     "case_id": "multi-011",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-011",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-012",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-012",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-013",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-013",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-013",
+     "field": "metrics"
+    },
+    {
+     "case_id": "multi-015",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-015",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-016",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-016",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-020",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-020",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-021",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-021",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-022",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-022",
+     "field": "scores"
+    },
+    {
+     "case_id": "multi-024",
+     "field": "retrieved_chunk_ids"
+    },
+    {
+     "case_id": "multi-024",
+     "field": "retrieved_source_ids"
+    },
+    {
+     "case_id": "multi-025",
+     "field": "retrieved_chunk_ids"
+    }
+   ],
+   "metric_difference_count": 20,
+   "metric_differences": [
+    {
+     "build1": 0.16666666666666666,
+     "build2": 0.14285714285714285,
+     "case_id": "multi-013",
+     "key": "mrr"
+    },
+    {
+     "build1": 0.3562071871080222,
+     "build2": 0.3333333333333333,
+     "case_id": "multi-013",
+     "key": "ndcg@10"
+    },
+    {
+     "build1": 0.3562071871080222,
+     "build2": 0.3333333333333333,
+     "case_id": "multi-013",
+     "key": "ndcg@20"
+    },
+    {
+     "build1": 0.011235955056179775,
+     "build2": 0.011363636363636364,
+     "case_id": "multi-028",
+     "key": "mrr"
+    },
+    {
+     "build1": 0.011235955056179775,
+     "build2": 0.011363636363636364,
+     "case_id": "mixed-019",
+     "key": "mrr"
+    },
+    {
+     "build1": 0.012345679012345678,
+     "build2": 0.012658227848101266,
+     "case_id": "mixed-021",
+     "key": "mrr"
+    },
+    {
+     "build1": 0.5,
+     "build2": 0.3333333333333333,
+     "case_id": "mixed-022",
+     "key": "mrr"
+    },
+    {
+     "build1": 0.6309297535714575,
+     "build2": 0.5,
+     "case_id": "mixed-022",
+     "key": "ndcg@10"
+    },
+    {
+     "build1": 0.6309297535714575,
+     "build2": 0.5,
+     "case_id": "mixed-022",
+     "key": "ndcg@20"
+    },
+    {
+     "build1": 0.6309297535714575,
+     "build2": 0.5,
+     "case_id": "mixed-022",
+     "key": "ndcg@5"
+    },
+    {
+     "build1": 0.535564774235096,
+     "build2": 0.5374562960931598,
+     "case_id": "en-040",
+     "key": "ndcg@20"
+    },
+    {
+     "build1": 0.16666666666666666,
+     "build2": 0.2,
+     "case_id": "zh-057",
+     "key": "mrr"
+    },
+    {
+     "build1": 0.3562071871080222,
+     "build2": 0.38685280723454163,
+     "case_id": "zh-057",
+     "key": "ndcg@10"
+    },
+    {
+     "build1": 0.3562071871080222,
+     "build2": 0.38685280723454163,
+     "case_id": "zh-057",
+     "key": "ndcg@20"
+    },
+    {
+     "build1": 0.0,
+     "build2": 0.38685280723454163,
+     "case_id": "zh-057",
+     "key": "ndcg@5"
+    },
+    {
+     "build1": 0.0,
+     "build2": 1.0,
+     "case_id": "zh-057",
+     "key": "recall@5"
+    },
+    {
+     "build1": 0.125,
+     "build2": 0.1,
+     "case_id": "mixed-034",
+     "key": "mrr"
+    },
+    {
+     "build1": 0.3706656904013186,
+     "build2": 0.17723928678404774,
+     "case_id": "mixed-034",
+     "key": "ndcg@10"
+    },
+    {
+     "build1": 0.3706656904013186,
+     "build2": 0.3482723708517659,
+     "case_id": "mixed-034",
+     "key": "ndcg@20"
+    },
+    {
+     "build1": 1.0,
+     "build2": 0.5,
+     "case_id": "mixed-034",
+     "key": "recall@10"
+    }
+   ]
+  },
+  "cases_compared": 136,
+  "cd_recall5_noise": 0.0,
+  "note": "第二次构建使用独立临时目录与独立 collection；比较除 retrieval_ms 外全部字段。raw ranking 差异源于 Chroma/HNSW 索引构建的非确定性（同索引重复查询逐位一致，跨构建在深 rank 处有近邻扰动）；metric_difference_count 是 per-case 指标受影响的 case 数，聚合指标应稳定；cd recall@5 噪声量级进入 gate 条件 5",
+  "verified": false
+ },
+ "frozen_outputs": {
+  "FROZEN_EVALUATION_BASELINE.md": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\evaluation-freeze\\FROZEN_EVALUATION_BASELINE.md",
+   "sha256": "458cfe70fa0708cb76dbdafc5aa0ca11193d917154d3fa9bdd77a33b5689c99c"
+  },
+  "deferred-owner-decisions.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\evaluation-freeze\\deferred-owner-decisions.jsonl",
+   "sha256": "ce521f18cfb56148c2146a18101208d675c7b7888af689dd5016362dfa5a9e66"
+  },
+  "freeze-summary.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\evaluation-freeze\\freeze-summary.json",
+   "sha256": "17c8ba4f2c5d18a3ff9aa0ca0a6a7a53f32229ffcb5992852aaa4844c627dade"
+  }
+ },
+ "frozen_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "frozen_revision_status": "CANDIDATE",
+ "gate": {
+  "decision": "NO_PROMOTION",
+  "failures": [
+   "cd_recall@5_gain",
+   "overall_recall@5_no_drop",
+   "overall_ndcg10_mrr_no_drop",
+   "exceeds_recorded_noise"
+  ]
+ },
+ "hardened_outputs": {
+  "comparison-to-phase6a.md": "b03881013687238babcebcb617abc70bb26dc99c0ec7ab7db3fb0765edb2a5dc",
+  "comparison-to-phase6b0.md": "30fbbfd1a5097e0c7861a6148b7f4daa36648b053eb276e37dade00f0e7b0cc8",
+  "contract-baseline-summary.json": "1fac728b50ee2222a3048f26e4158fd7fa926663d9eabd95c0574f582ede2e4a",
+  "contract-validation-report.md": "3b9d5aa713cdd26c6b3ec152df139e45ccdfb5f3b103c80090d898b4c1cffde0",
+  "data-quality-report.json": "146557b037338a44bfaa820edc2febe9d055018a259aaf5a6d5ff935c5addb1f",
+  "manifest.json": "c9a403fd51d6ca3609600347b52f208706195572aa232e309df10c91add956dc",
+  "per-case-retrieval-results.jsonl": "0d9dd4568dec0f3d2881515b5d5a7130e7ccd6f35777aad784d86fee56f8dc22"
+ },
+ "inputs": {
+  "candidate-draft-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\draft-after.jsonl",
+   "sha256": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720"
+  },
+  "candidate-evidence-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\evidence-after.jsonl",
+   "sha256": "6df8e175ee0a028062c806a910c70890820576d62857cee41551ad777b829d17"
+  },
+  "candidate-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\manifest.json",
+   "sha256": "6cab6786a47f077ced789066d42f9c1c3739d9f24a3af2e44eefbf386c60707e"
+  },
+  "chunk-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunk-manifest.json",
+   "sha256": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a"
+  },
+  "chunks.jsonl": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "corpus-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\corpus-manifest.json",
+   "sha256": "84f04699c07ff1a7a8d13caabba3e377569b217816bb39db73f65df842037943"
+  },
+  "current-v2-draft.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\annotations\\v2-cases-draft.jsonl",
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc"
+  },
+  "diagnostic-issues.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\contract-error-diagnostic-issues.jsonl",
+   "sha256": "575c5c0d440b4b31b2e1f8660def921d457f93d7d60c94a0366fcfb54f23499e"
+  },
+  "diagnostic-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\manifest.json",
+   "sha256": "b9016a13d88382858f9451769e1a7ce9f1c0853979fe83098f723efb6eacf9d1"
+  },
+  "diagnostic-raw-model-attempts.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\raw-model-attempts.jsonl",
+   "sha256": "725d71d2344241df30eebb3c84ea7955aea694ca7a221411854479bfc71cd5ca"
+  },
+  "diagnostic-results.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\contract-error-diagnostic-results.jsonl",
+   "sha256": "575c5c0d440b4b31b2e1f8660def921d457f93d7d60c94a0366fcfb54f23499e"
+  },
+  "diagnostic-summary.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\contract-error-diagnostic-summary.json",
+   "sha256": "ecdbb0d61433b6691eef0a646d76f6de470fac8aa973997f588f4aa63e77d753"
+  },
+  "hardened-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\product-baselines\\v2.0.11-frozen-contract-hardened\\manifest.json",
+   "sha256": "c9a403fd51d6ca3609600347b52f208706195572aa232e309df10c91add956dc"
+  },
+  "owner-decision-template.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\owner-decision-template.jsonl",
+   "sha256": "c57f97726e5c025fc3479b87bbb6bc752605f1eb8f3ca06db7ae9e06c4c2ac36"
+  },
+  "pack-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\owner-decision-pack\\manifest.json",
+   "sha256": "ed2b8fccfd08fb79886a95fcc89de4c9ff70e8a06b6fcacda2e92a60de041aa9"
+  },
+  "pack-owner-decision-template.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\owner-decision-pack\\owner-decision-template.jsonl",
+   "sha256": "bf056ab25e58399635016ba21002c1222eb31f43811ec8079ae63b35c4001044"
+  },
+  "pack-persistent-contract-errors.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\owner-decision-pack\\persistent-contract-errors.jsonl",
+   "sha256": "4b69d2533af56ea78a7fd66c0c30786292aa481de6f3f8bf0a3776f376728cc0"
+  },
+  "pack-stable-reject-root-cause-triage.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\owner-decision-pack\\stable-reject-root-cause-triage.jsonl",
+   "sha256": "6f0873b47d3414bec5c1f2a303b824c521493ec662ff9730692850a43ccbf240"
+  },
+  "phase6a-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\product-baselines\\v2.0.11-frozen-current\\manifest.json",
+   "sha256": "a05b5bf592b5f5d504a3f3652fe12bd163c81dec9963e3d7e82386c782811c5a"
+  },
+  "phase6b0-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\product-baselines\\v2.0.11-frozen-contract\\manifest.json",
+   "sha256": "95d797523d9104ace77a0af2adb58dc5c07e701d27938d69097ecf3411c6e44b"
+  },
+  "reject-root-cause-triage.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\reject-root-cause-triage.jsonl",
+   "sha256": "5cbffc6dd59979115c235a520e9bb7e592aca54b9d354eb506c3825850a34e19"
+  },
+  "review-coherence-errors.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\review-coherence-errors.jsonl",
+   "sha256": "10b4e07e7328be1506ebf24894ad72d84aeed4e5256f9dcaef171ba776401fc6"
+  },
+  "review-issues.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\automated-review-issues.jsonl",
+   "sha256": "dc005d12a4e68a49a9018be2ea7f25da32fb69e083cb919725e1601287f7b478"
+  },
+  "review-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\manifest.json",
+   "sha256": "220ed9c23c7d55550bdc25ac78c84d74de454a1ab7f31a56dccf4e5aa84f4320"
+  },
+  "source:art-of-war.txt": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\art-of-war.txt",
+   "sha256": "0aa964ddb252df7f02e84174ff1a65c6fd971c067303c1da320f5734a3b05c37"
+  },
+  "source:nodejs-fs.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\nodejs-fs.md",
+   "sha256": "16358b59eaddb5a85dd33bf15eae4e14ede315be058a409124e029deaa0eea68"
+  },
+  "source:postgresql-tutorial.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\postgresql-tutorial.md",
+   "sha256": "3b10f283915cd41ec725b8414312e7c3a6759f62ba22a680a14a9b69f2f485d1"
+  },
+  "source:python-datetime-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-datetime-zh.md",
+   "sha256": "b66276d873861e9c7c6e0ccbb18b956829e767004764424d9375554d64955033"
+  },
+  "source:python-glossary-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-glossary-zh.md",
+   "sha256": "3de198d4ce12fb8f621f39612fcae6ef2b735427adf736bb482e5857356a0756"
+  },
+  "source:python-tutorial-en.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-tutorial-en.md",
+   "sha256": "7a9bb4e0a0cc3a69fd13fea955f876586680694aab0ab0be4b6e05c50c4baf9e"
+  },
+  "source:python-tutorial-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-tutorial-zh.md",
+   "sha256": "086d7591f1b2eddb54bcbd3382473e1f751450528eb23a1b8f7f329f17de2a8b"
+  },
+  "source:python-whatsnew313-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-whatsnew313-zh.md",
+   "sha256": "cfefeb2950496c198dc0c7c198578e34612e7f485638317c23411b31f2554af1"
+  },
+  "source:react-learn-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\react-learn-zh.md",
+   "sha256": "4c9708e90662a62b11d3a2a29b95d249593257ed7e263064c87f2aba50a9efc3"
+  },
+  "source:rfc3986.txt": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\rfc3986.txt",
+   "sha256": "338de951ebeb1dfb55c0016cc0d904939cda2bd15e0bb1e3ccb5f9ff0754958a"
+  },
+  "source:rust-book-core.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\rust-book-core.md",
+   "sha256": "3259dbd90a3fe522716384799857b930ea80446aaf9b8cd0d1d12a0808f421cf"
+  },
+  "source:sqlite-lang.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\sqlite-lang.md",
+   "sha256": "d6141a33adc3cd842a662f7c248f711dbbc2d623271696f1c6532d156dc1c8bb"
+  },
+  "source:vue-guide-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\vue-guide-zh.md",
+   "sha256": "e52a60ed06601a0f2d6f71d7aa5e080aefb453834c1a54834fb1e7b2edab28fe"
+  },
+  "targeted-review-issues.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\targeted-review-issues.jsonl",
+   "sha256": "355100248eac64b8611ab32e3ea9af76ea2214754ccc981e96257e9152d39661"
+  },
+  "targeted-review-results.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\targeted-review-results.jsonl",
+   "sha256": "ec441bfa98d5b834eba14b7431d19a90cd4b0ce19ba2cfeba9b2f36e889e69f2"
+  },
+  "translation-equivalence-policy-ledger.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.8-owner-authorized-semantic-quality-remediation\\translation-equivalence-policy-ledger.jsonl",
+   "sha256": "43e9840fb44a3979ba3392bc1320e1422e179e0b56ecb4b03afc83d28abc7fb9"
+  },
+  "translation-equivalence-policy.md": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.8-owner-authorized-semantic-quality-remediation\\translation-equivalence-policy.md",
+   "sha256": "5990645b488dce68f581b34b267b53839f6bf2c0cae184453d2afe4dc56c2678"
+  },
+  "triage-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\manifest.json",
+   "sha256": "0a6e2f85aa861b3747ae6ad8ba748e0f500abcaddb4aabab794bdd27ffccd453"
+  },
+  "triage-owner-decision-template.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\owner-decision-template.jsonl",
+   "sha256": "c57f97726e5c025fc3479b87bbb6bc752605f1eb8f3ca06db7ae9e06c4c2ac36"
+  },
+  "triage-reject-root-cause-triage.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\reject-root-cause-triage.jsonl",
+   "sha256": "5cbffc6dd59979115c235a520e9bb7e592aca54b9d354eb506c3825850a34e19"
+  },
+  "triage-review-coherence-errors.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\review-coherence-errors.jsonl",
+   "sha256": "10b4e07e7328be1506ebf24894ad72d84aeed4e5256f9dcaef171ba776401fc6"
+  },
+  "v210-candidate-draft-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\draft-after.jsonl",
+   "sha256": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720"
+  },
+  "v210-candidate-evidence-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\evidence-after.jsonl",
+   "sha256": "0778c7c679bab9e96c944c050d7dcd40047ec0d7a7a04f05e0ac2455239ea977"
+  },
+  "v210-candidate-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\manifest.json",
+   "sha256": "adcf5c608c8164bde8b80cb9c1a58a4d9a6c456a7f0dbbc862af6326683f7f1d"
+  },
+  "v210-draft-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\draft-after.jsonl",
+   "sha256": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720"
+  },
+  "v210-evidence-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\evidence-after.jsonl",
+   "sha256": "0778c7c679bab9e96c944c050d7dcd40047ec0d7a7a04f05e0ac2455239ea977"
+  },
+  "v210-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\manifest.json",
+   "sha256": "adcf5c608c8164bde8b80cb9c1a58a4d9a6c456a7f0dbbc862af6326683f7f1d"
+  },
+  "v210-review-issues.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\automated-review-issues.jsonl",
+   "sha256": "dc005d12a4e68a49a9018be2ea7f25da32fb69e083cb919725e1601287f7b478"
+  },
+  "v210-review-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\manifest.json",
+   "sha256": "5d3e17f1c90b2028e9abb5bd048e8e295f0dc90278fb3bf7994ca3a250d8b523"
+  },
+  "v210-triage-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\manifest.json",
+   "sha256": "0a6e2f85aa861b3747ae6ad8ba748e0f500abcaddb4aabab794bdd27ffccd453"
+  },
+  "v210-triage-owner-decision-template.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\owner-decision-template.jsonl",
+   "sha256": "c57f97726e5c025fc3479b87bbb6bc752605f1eb8f3ca06db7ae9e06c4c2ac36"
+  },
+  "v210-triage-reject-root-cause-triage.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\reject-root-cause-triage.jsonl",
+   "sha256": "5cbffc6dd59979115c235a520e9bb7e592aca54b9d354eb506c3825850a34e19"
+  },
+  "v210-triage-review-coherence-errors.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\review-coherence-errors.jsonl",
+   "sha256": "10b4e07e7328be1506ebf24894ad72d84aeed4e5256f9dcaef171ba776401fc6"
+  }
+ },
+ "isolation": {
+  "chroma_dir": "C:\\Users\\HENRYL~1\\AppData\\Local\\Temp\\mneme-v211-ablation-c9iwah5d\\chroma_db",
+  "cleaned": true,
+  "collection_name": "v211_frozen_contract_baseline",
+  "data_dir": "C:\\Users\\HENRYL~1\\AppData\\Local\\Temp\\mneme-v211-ablation-c9iwah5d",
+  "entry": "src.rag.prepare_index（完整产品路径，含 collection manifest + BM25 sidecar）",
+  "no_user_index_touched": true
+ },
+ "lineage": {
+  "frozen_checks": 61,
+  "frozen_verified": true,
+  "hardened_checks": 71,
+  "hardened_manifest_sha256": "57e3ede9bbcfa2fca3bc74ed228864748ea3860ac131e29eb79eaff448990095",
+  "hardened_verified": true,
+  "note": "冻结 61 项 + 6A + 旧 B0 + hardened 全部字节复算；任一漂移 → 本消融零产物",
+  "phase6a_checks": 50,
+  "phase6a_verified": true,
+  "phase6b0_checks": 64,
+  "phase6b0_manifest_sha256": "b3fc4b6ea575530f69e09a801a56dc4470769620e62834dbdde4c48fb601fe26",
+  "phase6b0_verified": true
+ },
+ "manifest_sha256": "45f40c63e5dccb18ebe855f575d10410ff59af186585af1d943f5ca35b0cf350",
+ "model": {
+  "embedding_dimension": 384,
+  "name": "all-MiniLM-L6-v2",
+  "note": "本地缓存离线加载（HF_HUB_OFFLINE=1/TRANSFORMERS_OFFLINE=1）；检索期间无网络调用",
+  "offline": true
+ },
+ "not_measured": {
+  "answer_quality": {
+   "measured": false,
+   "reason": "Phase 6-C1 只做检索消融：不调用生成模型、不做 LLM judge；answer-quality 无真值无产出"
+  },
+  "citation_faithfulness": {
+   "measured": false,
+   "reason": "citation-faithfulness 依赖生成判定与人工审计，本阶段未测"
+  },
+  "refusal_accuracy": {
+   "measured": false,
+   "reason": "answer 级拒答精度依赖生成判定，本阶段未测；refusal 组仅有检索分数观测"
+  }
+ },
+ "outputs": {
+  "ablation-summary.json": "66cd06e064c3aa1a27a6daab41134b4dc2fa995dda4226e8fe0dcf9415d7f329",
+  "cross-document-analysis.md": "9e5ed717a08ef65c7de40a2ee3a016482c235fd15d9b4cd5ea0c2744ca075447",
+  "data-quality-report.json": "15a4d6162a9312497a849f215c1982ca93197c59de3b9cf00bfa397a9a67add5",
+  "per-case-results-baseline.jsonl": "14d99d77ea42933774c00ade7adeba5e09b1490f4078cbc9616d14aebd8e522a",
+  "per-case-results-candidate.jsonl": "9850fe8efee65a9d702729af093fc3baf31dcb7b8fcddd4c55a5f74f7edba0b5",
+  "selection-decision.md": "9f6eab3d47fd429658d95ac47085130bb72a36c7ea3482330c89acf280fba57d"
+ },
+ "parameters": {
+  "collection_name": "v211_frozen_contract_baseline",
+  "entry": "src.rag.prepare_index(snapshot=ChunkSnapshot, chroma_path=临时目录) + src.rag.retrieve_hybrid_with_sources",
+  "ks": [
+   5,
+   10,
+   20
+  ],
+  "provenance_top_n": 200,
+  "rrf_k": 60,
+  "strategy": "mechanical-clause-rrf",
+  "strategy_params": {
+   "max_variants": 8,
+   "rrf_k": 60,
+   "split_delimiters": "strong=。！？；!?;+换行；weak=，,、；语言边界=CJK/非CJK 最大连续段",
+   "tie_break": "chunk_id_asc",
+   "top_k": 70,
+   "weak_split_threshold": 60
+  },
+  "top_k_retrieval": 70,
+  "verify_determinism": true
+ },
+ "phase6a_outputs": {
+  "BASELINE_SCOPE.md": "e8d16567c19ab5a823b80f09d211eaf65648d81a0125695fa3662390c9824333",
+  "baseline-summary.json": "1387e6355fb16cca6e39e23c8a0b31ad89168da194bd440a8ea95084fc6a310b",
+  "data-quality-mechanical-check.json": "05441c4adba34669ca756b1703c4a5c85530e1e73444a86fc0d664d917316140",
+  "failure-analysis.md": "374406459d4ffd3d5aabd9853688517f6db59c838645b16c6ac64faa6a9e4f39",
+  "per-case-retrieval-results.jsonl": "d11031dbbdc434cee54f4531f26a7ba4830e06abd2449ba6a74d2b6a94c0fd0c",
+  "schema-compatibility-report.md": "bd310626d199a540854746299654465776be2a84cb68e4d4c118d0e14c32441e"
+ },
+ "phase6b0_outputs": {
+  "comparison-to-phase6a.md": "d3e9804fd32f57ad991cc6ff869b9338213ee51e3db208db84aa899a1554d357",
+  "contract-baseline-summary.json": "1f3e22ae767a3ca2f4de2a7e6fc0f46bc521f881c1485ac6a90b9ce7d5c0e57e",
+  "contract-validation-report.md": "2e001ada846b5466ffe72527c1c7ac78344413c54fdc779d22de80b7d05ca022",
+  "data-quality-report.json": "4f1df6e0bc93bc000149939238689df2f140d74cde3de08ed13866d7bad69c63",
+  "manifest.json": "95d797523d9104ace77a0af2adb58dc5c07e701d27938d69097ecf3411c6e44b",
+  "per-case-retrieval-results.jsonl": "e2b21b5689c6dd6dc56ec0a4906964556c08aa7d429d0e8bde3003270752b119"
+ },
+ "run_at": "2026-08-12T20:34:58+0800",
+ "strategy": {
+  "baseline": {
+   "entry": "src.rag.retrieve_hybrid_with_sources（dense + BM25 + RRF k=60，既有产品代码）",
+   "name": "single-query",
+   "no_llm": true,
+   "version": "1.0"
+  },
+  "candidate": {
+   "mechanism": "从原 query 机械提取字面子串 variants（完整 query + 强分句 + 长句弱分句 + 中英语言边界段），逐 variant 复用产品检索核心，跨 variant RRF(k=60) 融合，tie-break 按 chunk_id 升序；保留每个结果的 source/citation 身份与 variant provenance",
+   "name": "mechanical-clause-rrf",
+   "no_llm": true,
+   "params": {
+    "max_variants": 8,
+    "rrf_k": 60,
+    "split_delimiters": "strong=。！？；!?;+换行；weak=，,、；语言边界=CJK/非CJK 最大连续段",
+    "tie_break": "chunk_id_asc",
+    "top_k": 70,
+    "weak_split_threshold": 60
+   },
+   "version": "1.0"
+  }
+ },
+ "task": "v2.0.11-cross-document-retrieval-ablation",
+ "verification": {
+  "prior_run": {
+   "aggregate_deltas": {
+    "baseline": {
+     "mrr": -2.6e-05,
+     "ndcg@10": 0.0,
+     "ndcg@20": -2e-05,
+     "ndcg@5": 0.0,
+     "recall@10": 0.0,
+     "recall@20": 0.0,
+     "recall@5": 0.0,
+     "source_recall@10": 0.0,
+     "source_recall@20": 0.0,
+     "source_recall@5": 0.0
+    },
+    "candidate": {
+     "mrr": 0.005215,
+     "ndcg@10": 0.004215,
+     "ndcg@20": 0.002619,
+     "ndcg@5": 0.002155,
+     "recall@10": 0.004762,
+     "recall@20": 0.0,
+     "recall@5": 0.0,
+     "source_recall@10": 0.0,
+     "source_recall@20": 0.0,
+     "source_recall@5": 0.0
+    }
+   },
+   "cd_recall5_delta": {
+    "baseline": 0.0,
+    "candidate": 0.0
+   },
+   "note": "两次独立完整运行间的聚合差异；跨运行 HNSW 扰动与运行内determinism 一致，如实记录，不做掩盖",
+   "per_case_diff_count": {
+    "baseline": 34,
+    "candidate": 90
+   },
+   "prior_gate_decision": "NO_PROMOTION",
+   "prior_manifest_sha256": "9492a90db73f2c3fa39dd447306f45c0eef8601dd1358d60384b0c198918e772",
+   "prior_run_dir": "C:\\Users\\Henry Lan\\AppData\\Local\\Temp\\mneme-c1-run1"
+  }
+ }
+}

@@ -1,0 +1,356 @@
+{
+  "version": 1,
+  "dataset_sha256": "57602995ac85b82eabc61fc9867561f38d57c5118c067be33601553699ac7a89",
+  "ground_truth_sha256": "e5c60903b78388d6938ff90c1437f1c23fedba97f66d4f6851bae02232f1bf8d",
+  "entries": [
+    {
+      "case_id": "cross-002",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; 候选 chunk 与 dataset snippet 均无强匹配（pack best=0.11, ds best=0.11），但 case 有 relevant_source_ids=['prevent-url-data-exfil.pdf', 'OneDrive 入门.pdf']，保守判 confirmed 保留资格; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "cross-002",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "normalized_snippet": "implement robust safeguards",
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; 候选 chunk 与 dataset snippet 均无强匹配（pack best=0.13, ds best=0.13），但 case 有 relevant_source_ids=['prevent-url-data-exfil.pdf', 'OneDrive 入门.pdf']，保守判 confirmed 保留资格; 候选 chunk_ids 命中 3/3"
+    },
+    {
+      "case_id": "cross-004",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "自动备份并同步到 onedrive",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.16），保守判 confirmed；pack 候选匹配 bigram=0.13; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "cross-006",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; 候选 chunk 与 dataset snippet 均无强匹配（pack best=0.11, ds best=0.11），但 case 有 relevant_source_ids=['prevent-url-data-exfil.pdf', 'OneDrive 入门.pdf']，保守判 confirmed 保留资格; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "cross-006",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "normalized_snippet": "implement robust safeguards",
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; 候选 chunk 与 dataset snippet 均无强匹配（pack best=0.13, ds best=0.13），但 case 有 relevant_source_ids=['prevent-url-data-exfil.pdf', 'OneDrive 入门.pdf']，保守判 confirmed 保留资格; 候选 chunk_ids 命中 3/3"
+    },
+    {
+      "case_id": "en-004",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "a lightweight draft model proposes a block of candidate tokens, and the full-size target model verifies the entire block in a single forward pass via rejection sampling",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_184"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto; dataset snippet 与 source chunk 3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_8 高度重叠（bigram=0.49 ≥ 0.4）; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "en-005",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.38），保守判 confirmed；pack 候选匹配 bigram=0.19; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "en-009",
+      "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+      "normalized_snippet": "arxiv: 2405.02357v2",
+      "candidate_chunk_ids": [
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; 候选 chunk 与 dataset snippet 均无强匹配（pack best=0.07, ds best=0.07），但 case 有 relevant_source_ids=['LLMs_for_Mobility_Analysis_Survey.md']，保守判 confirmed 保留资格; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "en-012",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; 候选 chunk 与 dataset snippet 均无强匹配（pack best=0.14, ds best=0.14），但 case 有 relevant_source_ids=['OneDrive 入门.pdf']，保守判 confirmed 保留资格; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "en-017",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.33），保守判 confirmed；pack 候选匹配 bigram=0.33; 候选 chunk_ids 命中 2/2"
+    },
+    {
+      "case_id": "en-019",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "over the parallel dflash by 16.3%, 18.4%, and 18.3%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.20），保守判 confirmed；pack 候选匹配 bigram=0.20; 候选 chunk_ids 命中 2/2"
+    },
+    {
+      "case_id": "en-020",
+      "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+      "normalized_snippet": "submission date: february 24, 2025",
+      "candidate_chunk_ids": [
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; 候选 chunk 与 dataset snippet 均无强匹配（pack best=0.13, ds best=0.13），但 case 有 relevant_source_ids=['LLMs_for_Mobility_Analysis_Survey.md']，保守判 confirmed 保留资格; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "mixed-001",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.38），保守判 confirmed；pack 候选匹配 bigram=0.19; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "mixed-002",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "最初提供 5 gb 的免费存储空间,也可升级到 microsoft 365,获取 1 tb 的空间",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto; dataset snippet 与 source chunk 092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2 高度重叠（bigram=0.72 ≥ 0.4）; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "mixed-003",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.15），保守判 confirmed；pack 候选匹配 bigram=0.15; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "mixed-005",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "a lightweight draft model proposes a block of candidate tokens, and the full-size target model verifies the entire block in a single forward pass via rejection sampling",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_184"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto; dataset snippet 与 source chunk 3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_8 高度重叠（bigram=0.49 ≥ 0.4）; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "mixed-008",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.31），保守判 confirmed；pack 候选匹配 bigram=0.15; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "mixed-012",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "onedrive 提供了一个安全的位置来存储文件和照片",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.22），保守判 confirmed；pack 候选匹配 bigram=0.22; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "mixed-013",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto; dataset chunk_text_snippet 在 source chunk e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_7 中以 substring 精确命中（bigram=0.25）; 候选 chunk_ids 命中 2/2"
+    },
+    {
+      "case_id": "multi-006",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.38），保守判 confirmed；pack 候选匹配 bigram=0.19; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "multi-007",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "将文件保存到 onedrive,以便从任意位置使用所有设备对其进行保护、备份和访问",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto; dataset snippet 与 source chunk 092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0 高度重叠（bigram=0.75 ≥ 0.4）; 候选 chunk_ids 命中 2/2"
+    },
+    {
+      "case_id": "multi-008",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "最初提供 5 gb 的免费存储空间",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.19），保守判 confirmed；pack 候选匹配 bigram=0.19; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "multi-010",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; 候选 chunk 与 dataset snippet 均无强匹配（pack best=0.11, ds best=0.11），但 case 有 relevant_source_ids=['OneDrive 入门.pdf']，保守判 confirmed 保留资格; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "zh-014",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "最初提供 5 gb 的免费存储空间",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.19），保守判 confirmed；pack 候选匹配 bigram=0.19; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "zh-015",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.15），保守判 confirmed；pack 候选匹配 bigram=0.15; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "zh-017",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "将\"桌面\"、\"文档\"和\"图片\"文件夹自动备份并同步到 onedrive",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; dataset snippet 在 source chunk 中找到弱-中匹配（bigram=0.17），保守判 confirmed；pack 候选匹配 bigram=0.17; 候选 chunk_ids 命中 1/1"
+    },
+    {
+      "case_id": "zh-018",
+      "source_id": "南京城市地理环境.docx",
+      "normalized_snippet": "享有\"六朝古都\"、\"十朝都会\"的盛誉",
+      "candidate_chunk_ids": [
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "auto_provisional; 候选 chunk 与 dataset snippet 均无强匹配（pack best=0.06, ds best=0.06），但 case 有 relevant_source_ids=['南京城市地理环境.docx']，保守判 confirmed 保留资格; 候选 chunk_ids 命中 1/1"
+    }
+  ],
+  "case_relevance_levels": [
+    {
+      "case_id": "cross-008",
+      "relevance_level": "source",
+      "reviewer_notes": "auto; answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source"
+    },
+    {
+      "case_id": "en-013",
+      "relevance_level": "source",
+      "reviewer_notes": "auto; answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source"
+    },
+    {
+      "case_id": "meta-001",
+      "relevance_level": "source",
+      "reviewer_notes": "auto; answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source"
+    },
+    {
+      "case_id": "meta-002",
+      "relevance_level": "source",
+      "reviewer_notes": "auto_provisional; 部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（0.58, 0.16）；保守判 source"
+    },
+    {
+      "case_id": "meta-003",
+      "relevance_level": "source",
+      "reviewer_notes": "auto; answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source"
+    },
+    {
+      "case_id": "meta-004",
+      "relevance_level": "source",
+      "reviewer_notes": "auto; answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source"
+    },
+    {
+      "case_id": "meta-005",
+      "relevance_level": "source",
+      "reviewer_notes": "auto; answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source"
+    },
+    {
+      "case_id": "meta-006",
+      "relevance_level": "source",
+      "reviewer_notes": "auto_provisional; 部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（0.58）；保守判 source"
+    },
+    {
+      "case_id": "meta-007",
+      "relevance_level": "source",
+      "reviewer_notes": "auto_provisional; 部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（0.21, 0.20）；保守判 source"
+    },
+    {
+      "case_id": "meta-008",
+      "relevance_level": "source",
+      "reviewer_notes": "auto_provisional; 部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（1.00）；保守判 source；含极短 answer_point（页码/文件名）"
+    },
+    {
+      "case_id": "meta-009",
+      "relevance_level": "source",
+      "reviewer_notes": "auto_provisional; 部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（0.19, 0.21）；保守判 source"
+    },
+    {
+      "case_id": "meta-010",
+      "relevance_level": "source",
+      "reviewer_notes": "auto; answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source"
+    }
+  ],
+  "counts": {
+    "overlap_decisions": 27,
+    "confirmed": 27,
+    "rejected": 0,
+    "case_relevance_decisions": 12,
+    "chunk_level": 0,
+    "source_only": 12
+  },
+  "notes": "review_decision=confirmed -> reviewer_status=confirmed; reject -> reviewer_status=rejected (never treated as confirmed); relevance_level=source -> source-only, excluded from chunk/context/citation denominators."
+}

@@ -1,0 +1,12 @@
+{
+  "review_pack_version": 1,
+  "dataset_path": "evaluation\\datasets\\v1.jsonl",
+  "dataset_sha256": "57602995ac85b82eabc61fc9867561f38d57c5118c067be33601553699ac7a89",
+  "ground_truth_path": "results\\graph-gate\\dev\\ground-truth-map.json",
+  "ground_truth_sha256": "e5c60903b78388d6938ff90c1437f1c23fedba97f66d4f6851bae02232f1bf8d",
+  "corpus_json": null,
+  "corpus_json_sha256": null,
+  "overlap_needs_review_count": 27,
+  "missing_chunk_truth_count": 12,
+  "notes": "review_decision / relevance_level / reviewer_notes 均为空字段，由人工填写，工具不替人判定。"
+}

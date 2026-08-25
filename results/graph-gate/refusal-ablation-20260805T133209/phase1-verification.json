@@ -1,0 +1,17 @@
+{
+  "phase": 1,
+  "name": "TDD 实现阶段独立子代理验证",
+  "verdict": "PASS",
+  "checks": [
+    "策略常量与函数（baseline 默认/非法值 fail-fast/system_prompt_for_policy）",
+    "addendum 无真值泄露（11 模式全部 absent）",
+    "PreparedAnswerEvidence frozen 字段齐全",
+    "answer_query prepare+generate 拆分（query_plan 路径零 rewrite/decompose/retrieve）",
+    "locked_config（refusal_policy/effective_prompt_ids 必填/键集==arms/漂移拒绝/legacy 放行）",
+    "53 个新测试全绿 + 281 回归无回归",
+    "py_compile 9 文件 OK",
+    "git diff --check exit 0",
+    "评测端接线（臂覆盖+finally 恢复、evidence 一次构建、JSONL 指纹字段、paired fail-closed）"
+  ],
+  "summary": "9/9 PASS — 实现阶段通过"
+}

@@ -1,0 +1,17 @@
+case_id,alpha,query_type,b_context_recall,c_context_recall,outcome,graph_lift,graph_pollution,flip,has_chunk_truth,notes
+cross-006,1.0,cross_document,0.25,0.25,equal,False,False,False,True,
+en-001,1.0,single_fact,1.0,1.0,equal,False,False,False,True,
+meta-002,1.0,metadata,,,,False,False,False,False,source_level_only
+meta-007,1.0,metadata,,,,False,False,False,False,source_level_only
+mixed-010,1.0,mixed_intent,1.0,1.0,equal,False,False,False,True,
+mixed-012,1.0,cross_document,0.5,0.5,equal,False,False,False,True,
+multi-007,1.0,multi_turn,1.0,1.0,equal,False,False,False,True,
+multi-008,1.0,multi_turn,0.0,0.0,equal,False,False,False,True,
+multi-009,1.0,multi_turn,0.0,0.0,equal,False,False,False,True,
+multi-010,1.0,multi_turn,0.0,0.0,equal,False,False,False,True,
+noanswer-010,1.0,no_answer,,,,False,False,False,False,refusal_case
+noanswer-015,1.0,no_answer,,,,False,False,False,False,refusal_case
+noanswer-025,1.0,no_answer,,,,False,False,False,False,refusal_case
+zh-006,1.0,single_fact,1.0,1.0,equal,False,False,False,True,
+zh-010,1.0,single_fact,1.0,1.0,equal,False,False,False,True,
+zh-013,1.0,single_fact,1.0,1.0,equal,False,False,False,True,

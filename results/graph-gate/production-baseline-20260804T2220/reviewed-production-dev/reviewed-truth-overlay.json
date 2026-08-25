@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "dataset_sha256": "8ce1b46b9eeaa54323c9533663088a222ed5e816d04335da1a23dd2a20ff7bb8",
+  "ground_truth_sha256": "0606c0eed593d5aa2d4a41abc8b93598c1b2e7c486d49ee6533d8099fdc53ba9",
+  "entries": [
+    {
+      "case_id": "cross-002",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_3 explicitly lists the three security features."
+    },
+    {
+      "case_id": "cross-002",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "normalized_snippet": "implement robust safeguards",
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunks_13 and _14 explicitly say 'implement robust safeguards'."
+    },
+    {
+      "case_id": "cross-004",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "自动备份并同步到 onedrive",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_1 states folders are automatically backed up and synced to OneDrive."
+    },
+    {
+      "case_id": "en-005",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_130 gives the Eagle3 percentages for Qwen3-4B, 8B, and 14B."
+    },
+    {
+      "case_id": "en-009",
+      "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+      "normalized_snippet": "arxiv: 2405.02357v2",
+      "candidate_chunk_ids": [
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_0 explicitly records arXiv: 2405.02357v2."
+    },
+    {
+      "case_id": "en-012",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_3 explicitly lists these OneDrive security features."
+    },
+    {
+      "case_id": "en-017",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunks_13 and _15 describe WebPilot triggering Zapier to exfiltrate emails."
+    },
+    {
+      "case_id": "en-019",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "over the parallel dflash by 16.3%, 18.4%, and 18.3%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunks_20 and _21 state the DFlash percentages exactly."
+    },
+    {
+      "case_id": "en-020",
+      "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+      "normalized_snippet": "submission date: february 24, 2025",
+      "candidate_chunk_ids": [
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": ""
+    },
+    {
+      "case_id": "mixed-001",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_130 gives the three Eagle3 improvement percentages."
+    },
+    {
+      "case_id": "mixed-002",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "最初提供 5 gb 的免费存储空间,也可升级到 microsoft 365,获取 1 tb 的空间",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_2 states 5 GB free storage and 1 TB with Microsoft 365."
+    },
+    {
+      "case_id": "mixed-003",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_3 explicitly lists the named security features."
+    },
+    {
+      "case_id": "mixed-008",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_130 assigns 30.9% Eagle3 improvement to Qwen3-4B."
+    },
+    {
+      "case_id": "mixed-013",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunks_13 and _15 describe WebPilot-triggered email exfiltration."
+    },
+    {
+      "case_id": "multi-006",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_130 gives the Qwen3 4B, 8B, and 14B Eagle3 results."
+    },
+    {
+      "case_id": "zh-014",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "最初提供 5 gb 的免费存储空间",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_2 states 5 GB of free storage."
+    },
+    {
+      "case_id": "zh-015",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_3 explicitly lists the named security features."
+    },
+    {
+      "case_id": "zh-017",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "将\"桌面\"、\"文档\"和\"图片\"文件夹自动备份并同步到 onedrive",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_1 names Desktop, Documents, and Pictures and says they sync."
+    },
+    {
+      "case_id": "zh-018",
+      "source_id": "南京城市地理环境.docx",
+      "normalized_snippet": "享有\"六朝古都\"、\"十朝都会\"的盛誉",
+      "candidate_chunk_ids": [
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": ""
+    }
+  ],
+  "case_relevance_levels": [
+    {
+      "case_id": "cross-008",
+      "relevance_level": "source",
+      "reviewer_notes": "source-only: page counts are PDF metadata, not answer-bearing body text."
+    },
+    {
+      "case_id": "en-013",
+      "relevance_level": "source",
+      "reviewer_notes": "source-only: page count is PDF metadata, not answer-bearing body text."
+    },
+    {
+      "case_id": "meta-003",
+      "relevance_level": "source",
+      "reviewer_notes": "source-only: page count is PDF metadata, not answer-bearing body text."
+    },
+    {
+      "case_id": "meta-008",
+      "relevance_level": "source",
+      "reviewer_notes": "source-only: corpus-wide PDF count is derived from inventory, not answer-bearing document text."
+    }
+  ],
+  "counts": {
+    "overlap_decisions": 19,
+    "confirmed": 19,
+    "rejected": 0,
+    "case_relevance_decisions": 4,
+    "chunk_level": 0,
+    "source_only": 4
+  },
+  "notes": "review_decision=confirmed -> reviewer_status=confirmed; reject -> reviewer_status=rejected (never treated as confirmed); relevance_level=source -> source-only, excluded from chunk/context/citation denominators."
+}

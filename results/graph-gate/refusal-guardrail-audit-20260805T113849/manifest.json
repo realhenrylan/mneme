@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-08-05T11:42:25",
+  "generator": "generate_refusal_audit.py",
+  "generator_sha256": "7a08a4af8ebac708de1446ed9d12c4056872d7d5c7f601d117b9e63c7f1a92fc",
+  "inputs": {
+    "D:\\GitHub\\mneme\\results\\graph-gate\\production-baseline-stable-20260805T084256\\dev-full\\generation-cases.jsonl": "0a3c7e320c0ab494e8298615c6b1641bbcee17de3a6c00a6dbc7a8c98cedf5cc",
+    "D:\\GitHub\\mneme\\results\\graph-gate\\production-baseline-stable-20260805T084256\\dev-full\\retrieval-cases.jsonl": "cc552c461a25af31ae8642d9b516200777abe5f2d5a64122f86fc0e53b2dc9d3",
+    "D:\\GitHub\\mneme\\results\\graph-gate\\production-baseline-stable-20260805T084256\\dev-full\\ground-truth-map.json": "a4ce5dfe07476200110054b76af43b46b3e3690b219d044fca30ad093b9a977c",
+    "D:\\GitHub\\mneme\\results\\graph-gate\\production-baseline-stable-20260805T084256\\holdout-full\\generation-cases.jsonl": "3d300aaf4adce3637fdf5b9d474eb03502735969ec5f52ce220553b6378e251e",
+    "D:\\GitHub\\mneme\\results\\graph-gate\\production-baseline-stable-20260805T084256\\holdout-full\\retrieval-cases.jsonl": "d3db8be3f89dd48df08c2eedc1be64516bbf5aaea03993adc5dc9e3573896885",
+    "D:\\GitHub\\mneme\\results\\graph-gate\\production-baseline-stable-20260805T084256\\holdout-full\\ground-truth-map.json": "1c66e28854bb1d585e417077fed18d1c2f408ae144fc096e3fdd91cab1a7ed7f",
+    "D:\\GitHub\\mneme\\evaluation\\datasets\\v1.jsonl": "8ce1b46b9eeaa54323c9533663088a222ed5e816d04335da1a23dd2a20ff7bb8",
+    "D:\\GitHub\\mneme\\results\\graph-gate\\production-baseline-stable-20260805T084256\\candidate-report-data.json": "4157b3a33503436ff718b6e7ab40678794989a6f4e66630264447073d4030d41"
+  },
+  "refusal_indicators": [
+    "未找到",
+    "无法回答",
+    "没有足够",
+    "暂无",
+    "无法提供",
+    "cannot",
+    "unable to",
+    "no information",
+    "not found",
+    "don't have",
+    "does not contain",
+    "not available"
+  ],
+  "counts": {
+    "dev": {
+      "total_cases": 95,
+      "answerable": 73,
+      "false_refusal": 14,
+      "false_refusal_ids": [
+        "cross-005",
+        "cross-007",
+        "cross-009",
+        "cross-010",
+        "en-012",
+        "en-013",
+        "en-016",
+        "meta-006",
+        "meta-008",
+        "mixed-006",
+        "mixed-008",
+        "multi-009",
+        "zh-011",
+        "zh-014"
+      ]
+    },
+    "holdout": {
+      "total_cases": 15,
+      "answerable": 12,
+      "false_refusal": 1,
+      "false_refusal_ids": [
+        "meta-002"
+      ]
+    }
+  },
+  "pack_rows": 15,
+  "immutability": "Read-only audit: no input file is modified; no production config or guardrail threshold is changed; no LLM/API is called; historical results and candidate-report.md are untouched. Outputs are written only to this new directory."
+}

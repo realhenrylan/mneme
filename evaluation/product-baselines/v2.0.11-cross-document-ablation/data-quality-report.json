@@ -1,0 +1,160 @@
+{
+ "checks": [
+  {
+   "detail": "rows=136 expected=136",
+   "name": "completeness.baseline_rows",
+   "ok": true
+  },
+  {
+   "detail": "rows=136 expected=136",
+   "name": "completeness.candidate_rows",
+   "ok": true
+  },
+  {
+   "detail": "missing keys=[]",
+   "name": "completeness.baseline_keys",
+   "ok": true
+  },
+  {
+   "detail": "missing keys=[]",
+   "name": "completeness.candidate_keys",
+   "ok": true
+  },
+  {
+   "detail": "duplicates=[]",
+   "name": "uniqueness.case_ids",
+   "ok": true
+  },
+  {
+   "detail": "baseline/candidate 行序不一致",
+   "name": "uniqueness.candidate_case_ids",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "validity.metric_ranges",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "consistency.per_case_recompute",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "consistency.aggregates_vs_mean",
+   "ok": true
+  },
+  {
+   "detail": "orphan=[]",
+   "name": "referential.retrieved_ids_in_corpus",
+   "ok": true
+  },
+  {
+   "detail": "orphan=[]",
+   "name": "referential.relevant_ids_in_corpus",
+   "ok": true
+  },
+  {
+   "detail": "{}",
+   "name": "referential.mapping_failures_zero",
+   "ok": true
+  },
+  {
+   "detail": "{'total_cases': 136, 'chunk_metrics_cases': 105, 'no_chunk_truth_cases': 31, 'mapping_failure_rows': 0}",
+   "name": "conservation.case_counts",
+   "ok": true
+  },
+  {
+   "detail": "{'total_cases': 136, 'chunk_metrics_cases': 105, 'no_chunk_truth_cases': 31, 'mapping_failure_rows': 0}",
+   "name": "conservation.mapping_failures_zero",
+   "ok": true
+  },
+  {
+   "detail": "cd n=26",
+   "name": "conservation.cross_document_n",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "strategy.variants_literal_substrings",
+   "ok": true
+  },
+  {
+   "detail": "见 strategy.variants_literal_substrings",
+   "name": "strategy.candidate_no_duplicate_chunk_ids",
+   "ok": true
+  },
+  {
+   "detail": "conditions=6",
+   "name": "gate.conditions_complete",
+   "ok": true
+  },
+  {
+   "detail": "NO_PROMOTION",
+   "name": "gate.decision_recorded",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "lineage.frozen_verified",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "lineage.phase6a_verified",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "lineage.phase6b0_verified",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "lineage.hardened_verified",
+   "ok": true
+  },
+  {
+   "detail": "NO_PROMOTION",
+   "name": "gate.decision_recorded",
+   "ok": true
+  },
+  {
+   "detail": "NO_PROMOTION",
+   "name": "gate.cd_recall@5_gain",
+   "ok": false
+  },
+  {
+   "detail": "NO_PROMOTION",
+   "name": "gate.overall_recall@5_no_drop",
+   "ok": false
+  },
+  {
+   "detail": "NO_PROMOTION",
+   "name": "gate.overall_ndcg10_mrr_no_drop",
+   "ok": false
+  },
+  {
+   "detail": "NO_PROMOTION",
+   "name": "gate.cd_source_recall@5_no_drop",
+   "ok": true
+  },
+  {
+   "detail": "NO_PROMOTION",
+   "name": "gate.exceeds_recorded_noise",
+   "ok": false
+  },
+  {
+   "detail": "NO_PROMOTION",
+   "name": "gate.all_checks_passed",
+   "ok": true
+  }
+ ],
+ "error_count": 0,
+ "errors": [],
+ "note": "data-analytics:analyze-data-quality 不在当前可用技能列表；~/.zcode/skills 仅含 brainstorming/test-driven-development，~/.agents/skills 仅含 browser-skill，插件目录无 data-analytics——实际检查不可用，实施等价的确定性机械检查",
+ "passed": true,
+ "warning_count": 0,
+ "warnings": []
+}

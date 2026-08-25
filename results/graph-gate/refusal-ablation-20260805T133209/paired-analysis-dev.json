@@ -1,0 +1,77 @@
+{
+  "evidence_consistency": {
+    "ok": true,
+    "diffs": []
+  },
+  "paired": {
+    "n_cases": 95,
+    "wins_b": 8,
+    "losses_b": 4,
+    "ties": 83,
+    "false_refusal": {
+      "a": 16,
+      "b": 18,
+      "delta": 2,
+      "n_answerable": 73,
+      "bootstrap95ci_delta": [
+        -0.07368421052631578,
+        0.031578947368421054
+      ]
+    },
+    "answer_point_coverage": {
+      "a_mean": 0.6982456140350877,
+      "b_mean": 0.7017543859649124,
+      "delta": 0.003508771929824561,
+      "bootstrap95ci_delta": [
+        -0.012280701754385965,
+        0.021052631578947368
+      ]
+    },
+    "mcnemar": {
+      "n_pairs": 95,
+      "n_discordant": 12,
+      "b_only": 8,
+      "c_only": 4,
+      "p_value": 0.3876953125,
+      "test": "mcnemar_exact_two_sided"
+    }
+  },
+  "slices": {
+    "cross_document": {
+      "n_cases": 11,
+      "false_refusal": {
+        "a": 6,
+        "b": 9,
+        "n_answerable": 11
+      },
+      "answer_point_coverage_delta_mean": -0.045454545454545456
+    },
+    "hard": {
+      "n_cases": 10,
+      "false_refusal": {
+        "a": 5,
+        "b": 6,
+        "n_answerable": 10
+      },
+      "answer_point_coverage_delta_mean": 0.0
+    },
+    "metadata": {
+      "n_cases": 14,
+      "false_refusal": {
+        "a": 3,
+        "b": 3,
+        "n_answerable": 14
+      },
+      "answer_point_coverage_delta_mean": 0.0
+    },
+    "multi_turn": {
+      "n_cases": 7,
+      "false_refusal": {
+        "a": 2,
+        "b": 1,
+        "n_answerable": 7
+      },
+      "answer_point_coverage_delta_mean": 0.0
+    }
+  }
+}

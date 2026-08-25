@@ -1,0 +1,16 @@
+{
+  "phase": 2,
+  "name": "受控评测阶段独立子代理验证",
+  "verdict": "PASS",
+  "checks": [
+    "锁：split_fingerprint 454892e4… 一致、dataset/corpus/index SHA 与稳定锁逐字段一致、arms/refusal_policy/effective_prompt_ids 键集==arms",
+    "precheck：20 项 immutability 快照 SHA 逐项一致、四指纹独立重算匹配",
+    "dev generation JSONL：190 行（95×2）、false_refusal A=16/B=18、false_answer A=9/B=3、micro 1.0（142/142、134/134）、answer_rate 0.8767/0.8219、coverage 0.6073/0.6119 全部独立复算一致",
+    "evidence 共享：95 例 A/B 的 context_sha256/citation map/candidate 集零差异；10 个检索拒答 case 指纹两臂一致且 answer==REFUSAL_MESSAGE",
+    "paired-analysis：evidence_consistency ok、W/L/T 8/4/83、McNemar p=0.3877、bootstrap CI 逐位一致、切片 cross_document 6→9 / hard 5→6",
+    "门槛判定：G1/G4 FAIL → NO_GO，与 gate-eval-dev.json 一致；holdout 未运行符合 fail-closed",
+    "smoke-results：15 case_id 与审计包一致、A 15/15 B 14/15"
+  ],
+  "observation": "G1 预注册绝对口径（B≤10）与实现相对口径（B≤A−4=12）不同，但 B=18 两种口径均 FAIL，判定不变；decision-report 已记录 A 臂波动（16 vs 历史 14）。",
+  "summary": "7/7 PASS — 评测阶段通过，NO_GO 判定正确"
+}

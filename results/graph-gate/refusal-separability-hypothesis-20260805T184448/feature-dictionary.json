@@ -1,0 +1,176 @@
+{
+  "status": "HYPOTHESIS_GENERATING_ONLY",
+  "baseline_threshold": 0.03,
+  "features": [
+    {
+      "name": "top1",
+      "description": "最高候选分数",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "top2",
+      "description": "第二高候选分数",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "top3",
+      "description": "第三高候选分数",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "gap12",
+      "description": "top1 − top2 分数差",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "mean5",
+      "description": "前 5 个候选分数均值",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "mean10",
+      "description": "前 10 个候选分数均值",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "mean_all",
+      "description": "全部候选分数均值",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "std_all",
+      "description": "全部候选分数总体标准差",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "count_ge_001",
+      "description": "分数 ≥ 0.01 的候选数",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": false,
+      "note": ""
+    },
+    {
+      "name": "count_ge_002",
+      "description": "分数 ≥ 0.02 的候选数",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "count_ge_0025",
+      "description": "分数 ≥ 0.025 的候选数",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "n_candidate_sources",
+      "description": "候选去重来源数",
+      "source": "candidate_source_ids",
+      "recorded": true,
+      "has_variance": true,
+      "note": ""
+    },
+    {
+      "name": "n_candidates",
+      "description": "候选 chunk 数",
+      "source": "candidate_scores",
+      "recorded": true,
+      "has_variance": false,
+      "note": "恒定 70（不可区分）"
+    },
+    {
+      "name": "n_context_sources",
+      "description": "context 去重来源数",
+      "source": "context_source_ids",
+      "recorded": true,
+      "has_variance": true,
+      "note": "拒答 case 恒 0"
+    },
+    {
+      "name": "n_context_chunks",
+      "description": "context chunk 数",
+      "source": "context_chunk_ids",
+      "recorded": true,
+      "has_variance": true,
+      "note": "拒答 case 恒 0"
+    },
+    {
+      "name": "context_tokens",
+      "description": "context token 数",
+      "source": "context_token_count",
+      "recorded": true,
+      "has_variance": true,
+      "note": "拒答 case 恒 0"
+    },
+    {
+      "name": "rewrite_flag",
+      "description": "rewrite 是否发生（ms>0）",
+      "source": "rewrite_ms",
+      "recorded": true,
+      "has_variance": false,
+      "note": "本运行恒 False（不可区分）"
+    },
+    {
+      "name": "decompose_flag",
+      "description": "decompose 是否发生（ms>0）",
+      "source": "decompose_ms",
+      "recorded": true,
+      "has_variance": false,
+      "note": "本运行恒 True"
+    },
+    {
+      "name": "subquery_count",
+      "description": "QueryPlan 子查询数量",
+      "source": "未记录",
+      "recorded": false,
+      "has_variance": false,
+      "note": ""
+    },
+    {
+      "name": "per_source_chunk_max",
+      "description": "每来源最大 chunk 数",
+      "source": "未记录（无 chunk→source 映射）",
+      "recorded": false,
+      "has_variance": false,
+      "note": ""
+    }
+  ],
+  "forbidden_label_fields": [
+    "case_id",
+    "difficulty",
+    "has_chunk_truth",
+    "language",
+    "query_type",
+    "relevant_chunk_ids",
+    "relevant_source_ids",
+    "should_refuse"
+  ]
+}

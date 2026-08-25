@@ -1,0 +1,683 @@
+{
+ "activation_blocked": true,
+ "determinism": {
+  "cases_compared": 136,
+  "difference_count": 82,
+  "differences": [
+   {
+    "case_id": "multi-013",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-013",
+    "field": "scores"
+   },
+   {
+    "case_id": "multi-016",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-016",
+    "field": "scores"
+   },
+   {
+    "case_id": "multi-018",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-020",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-020",
+    "field": "scores"
+   },
+   {
+    "case_id": "multi-025",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-025",
+    "field": "retrieved_source_ids"
+   },
+   {
+    "case_id": "multi-025",
+    "field": "scores"
+   },
+   {
+    "case_id": "zh-030",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "zh-030",
+    "field": "scores"
+   },
+   {
+    "case_id": "zh-031",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "zh-031",
+    "field": "scores"
+   },
+   {
+    "case_id": "zh-037",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "zh-037",
+    "field": "scores"
+   },
+   {
+    "case_id": "zh-037",
+    "field": "metrics"
+   },
+   {
+    "case_id": "en-023",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "en-023",
+    "field": "scores"
+   },
+   {
+    "case_id": "en-024",
+    "field": "retrieved_chunk_ids"
+   }
+  ],
+  "metric_difference_count": 2,
+  "metric_differences": [
+   {
+    "build1": 0.07142857142857142,
+    "build2": 0.06666666666666667,
+    "case_id": "zh-037",
+    "key": "mrr"
+   },
+   {
+    "build1": 0.2559580248098155,
+    "build2": 0.25,
+    "case_id": "zh-037",
+    "key": "ndcg@20"
+   }
+  ],
+  "note": "第二次构建使用独立临时目录与独立 collection；比较除 retrieval_ms 外全部字段。raw ranking 差异源于 Chroma/HNSW 索引构建的非确定性（同索引重复查询逐位一致，跨构建在深 rank 处有近邻扰动）；metric_difference_count 是 per-case 指标受影响的 case 数，metric_differences 给出明细，聚合指标仍稳定",
+  "verified": false
+ },
+ "failure_counts": {
+  "chunk_not_retrieved_top20": 33,
+  "failure_analysis_rows": 105,
+  "note": "failure_analysis_rows 覆盖全部真值 case（含 recall@20=1.0 的行），后两项才是真正的失败计数",
+  "source_not_retrieved_top20": 3
+ },
+ "frozen_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "frozen_revision_status": "CANDIDATE",
+ "mapping": {
+  "case_counts": {
+   "mapping_failure_rows": 0,
+   "no_chunk_truth": 31,
+   "total": 136,
+   "with_chunk_truth": 105
+  },
+  "divergences": [
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "multi-020",
+    "draft_only": [],
+    "evidence_only": [
+     "761b22915b5e_chunk_3"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "multi-028",
+    "draft_only": [],
+    "evidence_only": [
+     "761b22915b5e_chunk_12"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-026",
+    "draft_only": [
+     "32c427fb50e2_chunk_25"
+    ],
+    "evidence_only": [
+     "32c427fb50e2_chunk_22"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-035",
+    "draft_only": [],
+    "evidence_only": [
+     "32c427fb50e2_chunk_31",
+     "e564a122a7a2_chunk_61",
+     "e564a122a7a2_chunk_64",
+     "e564a122a7a2_chunk_65"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-035",
+    "draft_only": [],
+    "evidence_only": [
+     "python-tutorial-en.md"
+    ],
+    "kind": "draft_vs_evidence_sources"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-036",
+    "draft_only": [
+     "32c427fb50e2_chunk_32"
+    ],
+    "evidence_only": [
+     "32c427fb50e2_chunk_31"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-037",
+    "draft_only": [
+     "32c427fb50e2_chunk_33"
+    ],
+    "evidence_only": [
+     "32c427fb50e2_chunk_32"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-046",
+    "draft_only": [],
+    "evidence_only": [
+     "761b22915b5e_chunk_3"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-052",
+    "draft_only": [],
+    "evidence_only": [
+     "761b22915b5e_chunk_0"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-054",
+    "draft_only": [
+     "81544765752f_chunk_3",
+     "c9fd20815ea8_chunk_7"
+    ],
+    "evidence_only": [
+     "c9fd20815ea8_chunk_10"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-054",
+    "draft_only": [
+     "python-whatsnew313-zh.md"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_sources"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "en-042",
+    "draft_only": [
+     "86ef1bf559c5_chunk_0"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "en-042",
+    "draft_only": [
+     "rfc3986.txt"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_sources"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "en-043",
+    "draft_only": [
+     "postgresql-tutorial.md"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_sources"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "en-047",
+    "draft_only": [],
+    "evidence_only": [
+     "761b22915b5e_chunk_7"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "en-048",
+    "draft_only": [],
+    "evidence_only": [
+     "761b22915b5e_chunk_14"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "en-049",
+    "draft_only": [
+     "4f9001ca8c15_chunk_38"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "en-049",
+    "draft_only": [
+     "rust-book-core.md"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_sources"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "en-051",
+    "draft_only": [
+     "e564a122a7a2_chunk_14"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "en-051",
+    "draft_only": [
+     "python-tutorial-en.md"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_sources"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "mixed-028",
+    "draft_only": [
+     "5927c70d0f8e_chunk_9",
+     "993955159403_chunk_7"
+    ],
+    "evidence_only": [
+     "5927c70d0f8e_chunk_0"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "mixed-028",
+    "draft_only": [
+     "react-learn-zh.md"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_sources"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "mixed-029",
+    "draft_only": [
+     "81544765752f_chunk_3",
+     "c9fd20815ea8_chunk_7"
+    ],
+    "evidence_only": [
+     "c9fd20815ea8_chunk_10"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "mixed-029",
+    "draft_only": [
+     "python-whatsnew313-zh.md"
+    ],
+    "evidence_only": [],
+    "kind": "draft_vs_evidence_sources"
+   },
+   {
+    "authoritative": "evidence-after.jsonl",
+    "case_id": "zh-055",
+    "draft_only": [
+     "32c427fb50e2_chunk_39"
+    ],
+    "evidence_only": [
+     "32c427fb50e2_chunk_1"
+    ],
+    "kind": "draft_vs_evidence_chunks"
+   }
+  ],
+  "draft_fields": {
+   "mapped": [
+    "acceptable_answer_points",
+    "id",
+    "language",
+    "metadata",
+    "query",
+    "query_type",
+    "relevant_chunks",
+    "relevant_source_ids",
+    "should_refuse"
+   ],
+   "reasons": {
+    "annotation": "标注溯源元数据（annotated_by/review_status），不是评测真值，v1 EvalCase 无此字段",
+    "doc_target": "草稿构造字段（仅 18/136 行存在），运行时无真值角色",
+    "is_refusal_turn": "草稿链内标记（18/136 行），拒答语义由 v1 兼容的 should_refuse 表达",
+    "note": "人工可读标注备注，不进入指标",
+    "relevance_level": "派生标记（chunk/none），与真值存在性冗余",
+    "relevant_chunk_ids": "draft 侧镜像；真值以 evidence-after.jsonl 为准，不一致时记录 divergence"
+   },
+   "unmapped": [
+    "annotation",
+    "doc_target",
+    "is_refusal_turn",
+    "note",
+    "relevance_level",
+    "relevant_chunk_ids"
+   ]
+  },
+  "evidence_fields": {
+   "mapped": [
+    "case_id",
+    "chunk_id",
+    "chunk_text_sha256",
+    "source_id"
+   ],
+   "note": "chunk_text_sha256 已与冻结 chunks.jsonl 逐字节核验；snippet/char_range 等溯源字段不进入指标",
+   "unmapped": [
+    "char_range",
+    "char_range_end",
+    "char_range_start",
+    "coordinate_contract",
+    "legacy_char_range",
+    "mapping_algorithm_version",
+    "raw_chunk_char_range",
+    "raw_evidence_span",
+    "snippet",
+    "snippet_normalization",
+    "snippet_sha256"
+   ]
+  },
+  "mapping_failures": {}
+ },
+ "metrics": {
+  "by_language": {
+   "en": {
+    "mrr": 0.6086118659508717,
+    "n": 43,
+    "ndcg@10": 0.6315553535523059,
+    "ndcg@20": 0.653022508682006,
+    "ndcg@5": 0.6067950017342818,
+    "recall@10": 0.7790697674418605,
+    "recall@20": 0.8468992248062015,
+    "recall@5": 0.7015503875968992
+   },
+   "mixed": {
+    "mrr": 0.4182941348750172,
+    "n": 20,
+    "ndcg@10": 0.40519343663795393,
+    "ndcg@20": 0.43308809159024053,
+    "ndcg@5": 0.3981300879949625,
+    "recall@10": 0.5166666666666667,
+    "recall@20": 0.6083333333333333,
+    "recall@5": 0.5
+   },
+   "zh": {
+    "mrr": 0.5272648582247248,
+    "n": 42,
+    "ndcg@10": 0.5225848461188635,
+    "ndcg@20": 0.5524249229522791,
+    "ndcg@5": 0.5072781728090897,
+    "recall@10": 0.6238095238095238,
+    "recall@20": 0.7388888888888889,
+    "recall@5": 0.5833333333333334
+   }
+  },
+  "by_query_type": {
+   "cross_document": {
+    "mrr": 0.35343349424755127,
+    "n": 26,
+    "ndcg@10": 0.28019684362137476,
+    "ndcg@20": 0.3341108688296591,
+    "ndcg@5": 0.25065301138432833,
+    "recall@10": 0.37820512820512825,
+    "recall@20": 0.5544871794871795,
+    "recall@5": 0.2948717948717949
+   },
+   "metadata": {
+    "mrr": 0.5888361575861576,
+    "n": 18,
+    "ndcg@10": 0.6419721148156561,
+    "ndcg@20": 0.6558610037045449,
+    "ndcg@5": 0.6234535962971375,
+    "recall@10": 0.8333333333333334,
+    "recall@20": 0.8888888888888888,
+    "recall@5": 0.7777777777777778
+   },
+   "mixed_intent": {
+    "mrr": 0.6499019607843137,
+    "n": 12,
+    "ndcg@10": 0.6504692346912451,
+    "ndcg@20": 0.698514344391335,
+    "ndcg@5": 0.6504692346912451,
+    "recall@10": 0.75,
+    "recall@20": 0.9166666666666666,
+    "recall@5": 0.75
+   },
+   "multi_turn": {
+    "mrr": 0.5466950581137432,
+    "n": 17,
+    "ndcg@10": 0.5833977092391792,
+    "ndcg@20": 0.5981035915921203,
+    "ndcg@5": 0.5624443452916484,
+    "recall@10": 0.7058823529411765,
+    "recall@20": 0.7647058823529411,
+    "recall@5": 0.6470588235294118
+   },
+   "single_fact": {
+    "mrr": 0.6187611179529282,
+    "n": 32,
+    "ndcg@10": 0.6451657686969362,
+    "ndcg@20": 0.6531644569722429,
+    "ndcg@5": 0.6329419492769112,
+    "recall@10": 0.75625,
+    "recall@20": 0.7875,
+    "recall@5": 0.71875
+   }
+  },
+  "by_refusal": {
+   "non_refusal": {
+    "denominators": {
+     "chunk_metrics_cases": 105,
+     "mapping_failure_rows": 0,
+     "no_chunk_truth_cases": 31,
+     "total_cases": 136
+    },
+    "mrr": 0.5398220664650126,
+    "n": 105,
+    "ndcg@10": 0.5448505949761953,
+    "ndcg@20": 0.5708912044678742,
+    "ndcg@5": 0.5272425723090965,
+    "recall@10": 0.666984126984127,
+    "recall@20": 0.7582539682539682,
+    "recall@5": 0.6158730158730159,
+    "source_recall@10": 0.9809523809523809,
+    "source_recall@20": 0.9809523809523809,
+    "source_recall@5": 0.9523809523809523
+   },
+   "refusal": {
+    "max_score_observation": {
+     "mean_max_rrf_score": 0.03164144419758124,
+     "p50_max_rrf_score": 0.031818181818181815,
+     "product_threshold": 0.03,
+     "share_below_product_refusal_threshold": 0.12903225806451613
+    },
+    "n": 31,
+    "note": "refusal cases 无 chunk-level truth；此处仅为检索分数观测，不代表 answer 级拒答精度（后者属生成质量，本阶段未测）"
+   }
+  },
+  "overall": {
+   "denominators": {
+    "chunk_metrics_cases": 105,
+    "mapping_failure_rows": 0,
+    "no_chunk_truth_cases": 31,
+    "total_cases": 136
+   },
+   "mrr": 0.5398220664650126,
+   "ndcg@10": 0.5448505949761953,
+   "ndcg@20": 0.5708912044678742,
+   "ndcg@5": 0.5272425723090965,
+   "recall@10": 0.666984126984127,
+   "recall@20": 0.7582539682539682,
+   "recall@5": 0.6158730158730159,
+   "source_recall@10": 0.9809523809523809,
+   "source_recall@20": 0.9809523809523809,
+   "source_recall@5": 0.9523809523809523
+  }
+ },
+ "not_measured": {
+  "generation_and_citation": {
+   "measured": false,
+   "reason": "Phase 6-A 只做 Retrieval Baseline：不调用生成模型、不做 136 条生成答案、不做 LLM judge；answer-quality / citation-faithfulness 无真值无产出，不伪造数值"
+  },
+  "refusal_accuracy": {
+   "measured": false,
+   "reason": "answer 级拒答精度依赖生成判定，本阶段未测；仅提供 refusal 组的检索分数观测"
+  }
+ },
+ "parser_drift_audit": {
+  "note": "当前运行时 chunker（Section 分块）对冻结语料（get_splitter 纯分块）的复现审计；仅回答 chunk 级真值可映射性，不是检索指标",
+  "per_source": {
+   "art-of-war.txt": {
+    "exact_text_matches": 36,
+    "exact_text_share": 0.17733990147783252,
+    "frozen_chunks": 203,
+    "id_format_matches": true,
+    "rebuilt_chunks": 1195,
+    "source": "art-of-war.txt"
+   },
+   "nodejs-fs.md": {
+    "exact_text_matches": 88,
+    "exact_text_share": 0.55,
+    "frozen_chunks": 160,
+    "id_format_matches": true,
+    "rebuilt_chunks": 190,
+    "source": "nodejs-fs.md"
+   },
+   "postgresql-tutorial.md": {
+    "exact_text_matches": 18,
+    "exact_text_share": 0.9,
+    "frozen_chunks": 20,
+    "id_format_matches": true,
+    "rebuilt_chunks": 22,
+    "source": "postgresql-tutorial.md"
+   },
+   "python-datetime-zh.md": {
+    "exact_text_matches": 17,
+    "exact_text_share": 0.3953488372093023,
+    "frozen_chunks": 43,
+    "id_format_matches": true,
+    "rebuilt_chunks": 72,
+    "source": "python-datetime-zh.md"
+   },
+   "python-glossary-zh.md": {
+    "exact_text_matches": 18,
+    "exact_text_share": 0.8571428571428571,
+    "frozen_chunks": 21,
+    "id_format_matches": true,
+    "rebuilt_chunks": 26,
+    "source": "python-glossary-zh.md"
+   },
+   "python-tutorial-en.md": {
+    "exact_text_matches": 42,
+    "exact_text_share": 0.2916666666666667,
+    "frozen_chunks": 144,
+    "id_format_matches": true,
+    "rebuilt_chunks": 258,
+    "source": "python-tutorial-en.md"
+   },
+   "python-tutorial-zh.md": {
+    "exact_text_matches": 7,
+    "exact_text_share": 0.0945945945945946,
+    "frozen_chunks": 74,
+    "id_format_matches": true,
+    "rebuilt_chunks": 212,
+    "source": "python-tutorial-zh.md"
+   },
+   "python-whatsnew313-zh.md": {
+    "exact_text_matches": 2,
+    "exact_text_share": 0.04081632653061224,
+    "frozen_chunks": 49,
+    "id_format_matches": true,
+    "rebuilt_chunks": 132,
+    "source": "python-whatsnew313-zh.md"
+   },
+   "react-learn-zh.md": {
+    "exact_text_matches": 3,
+    "exact_text_share": 0.10344827586206896,
+    "frozen_chunks": 29,
+    "id_format_matches": true,
+    "rebuilt_chunks": 44,
+    "source": "react-learn-zh.md"
+   },
+   "rfc3986.txt": {
+    "exact_text_matches": 7,
+    "exact_text_share": 0.08139534883720931,
+    "frozen_chunks": 86,
+    "id_format_matches": true,
+    "rebuilt_chunks": 554,
+    "source": "rfc3986.txt"
+   },
+   "rust-book-core.md": {
+    "exact_text_matches": 8,
+    "exact_text_share": 0.1095890410958904,
+    "frozen_chunks": 73,
+    "id_format_matches": true,
+    "rebuilt_chunks": 98,
+    "source": "rust-book-core.md"
+   },
+   "sqlite-lang.md": {
+    "exact_text_matches": 27,
+    "exact_text_share": 0.391304347826087,
+    "frozen_chunks": 69,
+    "id_format_matches": true,
+    "rebuilt_chunks": 83,
+    "source": "sqlite-lang.md"
+   },
+   "vue-guide-zh.md": {
+    "exact_text_matches": 1,
+    "exact_text_share": 0.02857142857142857,
+    "frozen_chunks": 35,
+    "id_format_matches": true,
+    "rebuilt_chunks": 61,
+    "source": "vue-guide-zh.md"
+   }
+  },
+  "total_exact_text_matches": 274,
+  "total_frozen_chunks": 1006,
+  "total_rebuilt_chunks": 2947
+ },
+ "scope": "v2.0.11-frozen-current retrieval baseline (Phase 6-A)",
+ "verification": {
+  "drift_count": 0,
+  "verified": true
+ }
+}

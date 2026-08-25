@@ -1,14 +1,32 @@
 # Mneme Graph RAG 阶段 4 入场评测决策报告
 
-> 版本：1.0  
-> 日期：2026-08-02  
-> 结论：**NO-GO**
+> 版本：1.1
+> 日期：2026-08-02
+> 结论：**暂不进入阶段 4** — alpha=0.7 当前实现未通过，但 Graph 边际价值仍待公平复测。
 
 ---
 
 ## 1. 结论
 
-**NO-GO** — Graph RAG 在当前实现下对目标查询没有净收益，不应进入阶段 4。
+**暂不进入阶段 4** — alpha=0.7 的 Graph RAG 在当前实验框架下未通过 GO 门槛，但实验框架存在多处系统性偏差，无法准确测量 Graph 的边际价值。需修复框架后重新评测。
+
+### 1.1 已确认的问题
+
+1. **C 组整体替换而非增量合并**：`_run_retrieval_arm` 中 C 组调用 `graph_augmented_retrieve` 完全替换了 B 组的检索结果，而非在 B 的基础上合并 Graph candidates。这导致 B 已召回的相关 chunk 可能被丢弃。
+2. **rewrite/decompose 重复调用**：每个 arm 独立调用 rewrite/decompose，LLM 非确定性导致同一 query 在不同 arm 获得不同 rewrite 结果，破坏了可比性。
+3. **实体抽取重复调用**：C 组在 `graph_augmented_retrieve` 内部抽取实体，又在 `_run_retrieval_arm` 中额外调用 `extract_entities_from_query`，浪费 LLM 调用且结果不一致。
+4. **reranker 未显式加载验证**：B/C 组依赖 `_get_reranker()` 的懒加载，若加载失败静默降级为无 reranker，但 arm 名称仍标记为 `+Reranker`。
+5. **B 组 context 跨 arm 丢失**：`b_context_ids` 字典在 arm 循环外声明，但 B 组先于 C 组运行时，B 的结果在 arm 循环内收集，C 组在同一轮循环中无法获取 B 的 context。
+6. **alpha 结果混合汇总**：多个 alpha 值的结果追加到同一 `all_results` 列表，`compute_summary` 无法区分不同 alpha。
+7. **Manifest 缺少关键配置**：未记录 alpha 值、reranker 模型、KG hash、代码 hash。
+
+### 1.2 修正方向
+
+- C 组应在 B 组检索结果基础上增量合并 Graph candidates
+- 共享 rewrite/decompose/实体抽取结果
+- 显式加载并验证 reranker
+- 每个 alpha 独立保存结果和汇总
+- Manifest 增加完整配置信息
 
 ## 2. 核心证据
 
@@ -90,12 +108,13 @@
 
 ## 6. 后续建议
 
-1. **保留 Standard RAG** 作为生产默认，不进入阶段 4 产品化。
-2. **Graph 分数标定**：若未来重新评估，需先将 Graph 分数与 RRF 转换为同量纲（评测方案 §4.4 价值验证轨），再做 alpha 扫描。
-3. **Graph pollution 根因**：分析 19% pollution case 中 Graph 引入了哪些无关实体和 chunk，确定是实体抽取精度问题还是图遍历深度问题。
-4. **扩大评测集**：当前 6 文件语料可能不足以产生高连接密度图谱，可考虑在更大语料上重新评估。
-5. 本结论 6 个月后或有重大架构变更时可重新评估。
+1. **修复实验框架**（最高优先级）：按 §1.1 列出的 7 个问题逐一修复，确保 A/B/C 三组真正可比。
+2. **修复评测真值**：人工确认 27 条 overlap 映射，无 chunk 真值的样本不进入 chunk/context 指标分母。
+3. **alpha 网格复测**：修复后运行 `alpha ∈ {1.0, 0.9, 0.8, 0.7, 0.6, 0.5}` 扫描，每个 alpha 独立汇总。
+4. **成本止损**：若最优 alpha 的目标 context recall 提升仍不足 5pp，或总体退化超过 2pp，直接正式 NO-GO。
+5. **条件性 GO**：若仅跨文档查询获益，结论应为 CONDITIONAL GO，采用按需 Graph 路由。
+6. 本结论 6 个月后或有重大架构变更时可重新评估。
 
 ---
 
-*报告自动生成于 P1 检索实验结果。生成实验（P2）和 holdout 验证因检索层已明确 NO-GO 而跳过。*
+*报告 v1.1 更新：将结论从 NO-GO 修正为"暂不进入阶段 4"，因实验框架存在系统性偏差需修复后复测。*

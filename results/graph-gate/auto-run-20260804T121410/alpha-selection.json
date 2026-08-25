@@ -1,0 +1,43 @@
+{
+  "decision_notes": "selected alpha=1.00 by §4.4: max graph_target context_recall tied candidates [1.0, 0.9]; survivors after 2pp context_precision drop filter: [1.0, 0.9]",
+  "eliminated": [],
+  "records": {
+    "0.50": {
+      "B_context_precision": 0.07555555555555556,
+      "C_context_precision": 0.07055555555555557,
+      "C_context_recall": 0.3522960372960373,
+      "C_n_chunk_valid": 20
+    },
+    "0.60": {
+      "B_context_precision": 0.07555555555555556,
+      "C_context_precision": 0.06555555555555556,
+      "C_context_recall": 0.3397960372960373,
+      "C_n_chunk_valid": 20
+    },
+    "0.70": {
+      "B_context_precision": 0.07555555555555556,
+      "C_context_precision": 0.06555555555555556,
+      "C_context_recall": 0.3397960372960373,
+      "C_n_chunk_valid": 20
+    },
+    "0.80": {
+      "B_context_precision": 0.07555555555555556,
+      "C_context_precision": 0.06555555555555556,
+      "C_context_recall": 0.3522960372960373,
+      "C_n_chunk_valid": 20
+    },
+    "0.90": {
+      "B_context_precision": 0.07555555555555556,
+      "C_context_precision": 0.07555555555555556,
+      "C_context_recall": 0.3897960372960373,
+      "C_n_chunk_valid": 20
+    },
+    "1.00": {
+      "B_context_precision": 0.07555555555555556,
+      "C_context_precision": 0.07555555555555556,
+      "C_context_recall": 0.3897960372960373,
+      "C_n_chunk_valid": 20
+    }
+  },
+  "selected_alpha": 1.0
+}

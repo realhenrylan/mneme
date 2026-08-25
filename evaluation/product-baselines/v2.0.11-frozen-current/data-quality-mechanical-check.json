@@ -1,0 +1,115 @@
+{
+ "checks": [
+  {
+   "detail": "rows=136 expected=136",
+   "name": "completeness.per_case_rows",
+   "ok": true
+  },
+  {
+   "detail": "missing keys=[]",
+   "name": "completeness.per_case_keys",
+   "ok": true
+  },
+  {
+   "detail": "group by_language absent",
+   "name": "completeness.group_by_language",
+   "ok": true
+  },
+  {
+   "detail": "group by_query_type absent",
+   "name": "completeness.group_by_query_type",
+   "ok": true
+  },
+  {
+   "detail": "group by_refusal absent",
+   "name": "completeness.group_by_refusal",
+   "ok": true
+  },
+  {
+   "detail": "duplicates=[]",
+   "name": "uniqueness.case_ids",
+   "ok": true
+  },
+  {
+   "detail": "duplicates=[]",
+   "name": "uniqueness.failure_rows",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "validity.metric_ranges",
+   "ok": true
+  },
+  {
+   "detail": "empty scores: []",
+   "name": "validity.scores_nonempty",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "consistency.per_case_recompute",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "consistency.aggregates_vs_mean",
+   "ok": true
+  },
+  {
+   "detail": "orphan chunk_ids=[]",
+   "name": "referential.chunk_ids_in_corpus",
+   "ok": true
+  },
+  {
+   "detail": "",
+   "name": "referential.mapping_failures_zero",
+   "ok": true
+  },
+  {
+   "detail": "mismatched=[]",
+   "name": "referential.failure_expected_matches",
+   "ok": true
+  },
+  {
+   "detail": "skipped (manifest=None)",
+   "name": "referential.manifest_self_hash",
+   "ok": true
+  },
+  {
+   "detail": "skipped (manifest=None)",
+   "name": "referential.manifest_input_shas",
+   "ok": true
+  },
+  {
+   "detail": "{'total_cases': 136, 'chunk_metrics_cases': 105, 'no_chunk_truth_cases': 31, 'mapping_failure_rows': 0}",
+   "name": "denominators.sum_equals_total",
+   "ok": true
+  },
+  {
+   "detail": "{'total_cases': 136, 'chunk_metrics_cases': 105, 'no_chunk_truth_cases': 31, 'mapping_failure_rows': 0}",
+   "name": "denominators.no_chunk_truth_equals_refusal",
+   "ok": true
+  },
+  {
+   "detail": "sum=105 expected=105",
+   "name": "denominators.by_language_sums",
+   "ok": true
+  },
+  {
+   "detail": "sum=105 expected=105",
+   "name": "denominators.by_query_type_sums",
+   "ok": true
+  },
+  {
+   "detail": "refusal=31 expected=31",
+   "name": "denominators.refusal_count",
+   "ok": true
+  }
+ ],
+ "error_count": 0,
+ "errors": [],
+ "note": "data-analytics:analyze-data-quality skill 在本环境中不可用（可用技能列表中不存在）；此为等价的确定性机械复算",
+ "passed": true,
+ "warning_count": 0,
+ "warnings": []
+}

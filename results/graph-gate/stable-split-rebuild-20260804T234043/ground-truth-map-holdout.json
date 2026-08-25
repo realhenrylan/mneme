@@ -1,0 +1,167 @@
+[
+  {
+    "case_id": "cross-006",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "implement robust safeguards",
+    "matched_chunk_ids": [
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+      "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "cross-006",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "en-001",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "large language models for mobility analysis in transportation systems: a survey on forecasting tasks",
+    "matched_chunk_ids": [
+      "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-002",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "南京市大致位于东经118°46′至119°5′",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-002",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "microsoft onedrive 入门",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-007",
+    "source_id": "2405.02357v2.pdf",
+    "normalized_snippet": "arxiv:2405.02357v2 [cs.lg] 21 feb 2025",
+    "matched_chunk_ids": [
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_0",
+      "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_4"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "meta-007",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "2405.02357v2 [cs.lg] 21 feb 2025",
+    "matched_chunk_ids": [
+      "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-010",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-012",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "河湖水系主要属于长江水系",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "mixed-012",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "onedrive 提供了一个安全的位置来存储文件和照片",
+    "matched_chunk_ids": [
+      "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "multi-004",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "a lightweight draft model proposes a block of candidate tokens",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_8"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "multi-005",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "confidence-scheduled speculative decoding with semi-autoregressive generation",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_0",
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_anchor"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "multi-006",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+    "matched_chunk_ids": [
+      "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+    ],
+    "match_method": "overlap",
+    "reviewer_status": "needs_review"
+  },
+  {
+    "case_id": "zh-006",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "城镇化率87.2%",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-010",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "拥有汤山温泉、珍珠泉等著名的温泉旅游资源",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  },
+  {
+    "case_id": "zh-013",
+    "source_id": "南京城市地理环境.docx",
+    "normalized_snippet": "国家重点保护野生动植物物种72种",
+    "matched_chunk_ids": [
+      "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7"
+    ],
+    "match_method": "exact",
+    "reviewer_status": "auto"
+  }
+]

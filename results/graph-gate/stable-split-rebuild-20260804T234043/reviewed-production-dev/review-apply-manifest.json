@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "overlay_file": "reviewed-truth-overlay.json",
+  "dataset_sha256": "8ce1b46b9eeaa54323c9533663088a222ed5e816d04335da1a23dd2a20ff7bb8",
+  "ground_truth_sha256": "e5c7bcbf94ff269233335c13dba7d1377b58b14e97e998280ffbd3c877b2e849",
+  "review_pack_manifest_sha256": "a0c42a90246729f7e530369f7007431647ab629a18eecaea208f9eb6d44e1981",
+  "counts": {
+    "overlap_decisions": 21,
+    "confirmed": 21,
+    "rejected": 0,
+    "case_relevance_decisions": 4,
+    "chunk_level": 0,
+    "source_only": 4
+  },
+  "notes": "stable split (fixed group_aware_split) rebuild; decisions migrated by stable key from review-pack-chunk-annotated"
+}

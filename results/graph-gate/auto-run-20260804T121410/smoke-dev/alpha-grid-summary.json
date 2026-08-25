@@ -1,0 +1,22 @@
+{
+  "compare_version": 1,
+  "alpha_grid": [
+    1.0,
+    0.7
+  ],
+  "arms": [
+    "standard",
+    "standard-rerank",
+    "graph-rerank"
+  ],
+  "alphas": {
+    "0.7": {
+      "path": "alpha-0.7\\summary.json",
+      "summary_file": "summary.json"
+    },
+    "1": {
+      "path": "alpha-1\\summary.json",
+      "summary_file": "summary.json"
+    }
+  }
+}

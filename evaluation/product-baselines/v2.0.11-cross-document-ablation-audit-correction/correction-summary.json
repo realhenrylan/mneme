@@ -1,0 +1,230 @@
+{
+ "audit_version": "1.0",
+ "corrected_verdict": {
+  "data_quality": {
+   "core_check_count": 21,
+   "error_count": 0,
+   "passed": true
+  },
+  "promotion_eligibility": {
+   "decision": "NO_PROMOTION",
+   "failures": [
+    "cd_recall@5_gain",
+    "overall_recall@5_no_drop",
+    "overall_ndcg10_mrr_no_drop",
+    "exceeds_recorded_noise"
+   ]
+  }
+ },
+ "declarations": {
+  "chroma_index_built": false,
+  "llm_called": false,
+  "network_used": false,
+  "original_c1_overwritten": false,
+  "overlay_generated": false,
+  "retrieval_rerun": false,
+  "split_created": false,
+  "v2_1_entered": false
+ },
+ "determinism": {
+  "cd_recall5_noise": 0.0,
+  "cross_run": {
+   "aggregate_deltas": {
+    "baseline": {
+     "mrr": -2.6e-05,
+     "ndcg@10": 0.0,
+     "ndcg@20": -2e-05,
+     "ndcg@5": 0.0,
+     "recall@10": 0.0,
+     "recall@20": 0.0,
+     "recall@5": 0.0,
+     "source_recall@10": 0.0,
+     "source_recall@20": 0.0,
+     "source_recall@5": 0.0
+    },
+    "candidate": {
+     "mrr": 0.005215,
+     "ndcg@10": 0.004215,
+     "ndcg@20": 0.002619,
+     "ndcg@5": 0.002155,
+     "recall@10": 0.004762,
+     "recall@20": 0.0,
+     "recall@5": 0.0,
+     "source_recall@10": 0.0,
+     "source_recall@20": 0.0,
+     "source_recall@5": 0.0
+    }
+   },
+   "per_case_diff_count": {
+    "baseline": 34,
+    "candidate": 90
+   },
+   "prior_manifest_sha256": "9492a90db73f2c3fa39dd447306f45c0eef8601dd1358d60384b0c198918e772"
+  },
+  "in_run_second_build": {
+   "baseline_aggregate_deltas": {
+    "mrr": -1.6e-05,
+    "ndcg@10": 0.0,
+    "ndcg@20": 0.0,
+    "ndcg@5": 0.0,
+    "recall@10": 0.0,
+    "recall@20": 0.0,
+    "recall@5": 0.0,
+    "source_recall@10": 0.0,
+    "source_recall@20": 0.0,
+    "source_recall@5": 0.0
+   },
+   "baseline_max_abs_delta": 1.6e-05,
+   "baseline_metric_difference_count": 1,
+   "baseline_raw_difference_count": 77,
+   "candidate_aggregate_deltas": {
+    "mrr": -0.001729,
+    "ndcg@10": -0.003015,
+    "ndcg@20": -0.001368,
+    "ndcg@5": 0.002437,
+    "recall@10": -0.004762,
+    "recall@20": 0.0,
+    "recall@5": 0.009524,
+    "source_recall@10": 0.0,
+    "source_recall@20": 0.0,
+    "source_recall@5": 0.0
+   },
+   "candidate_max_abs_delta": 0.009524,
+   "candidate_metric_difference_count": 20,
+   "candidate_raw_difference_count": 225
+  }
+ },
+ "manifest_sha256": "09baea4b9ef6da856f2419be72a1c7738d416a1c5e2287978e5e336fd39f57b7",
+ "not_measured": {
+  "answer_quality": {
+   "measured": false,
+   "reason": "C1.1 只做报告语义修正，不重跑检索、不调用生成模型；answer-quality 无真值无产出（沿用 C1 声明）"
+  },
+  "citation_faithfulness": {
+   "measured": false,
+   "reason": "citation-faithfulness 依赖生成判定与人工审计，未测（沿用 C1 声明）"
+  },
+  "refusal_accuracy": {
+   "measured": false,
+   "reason": "answer 级拒答精度依赖生成判定，未测（沿用 C1 声明）"
+  }
+ },
+ "original_c1": {
+  "checks": 7,
+  "dir": "D:\\GitHub\\mneme\\evaluation\\product-baselines\\v2.0.11-cross-document-ablation",
+  "manifest_sha256": "45f40c63e5dccb18ebe855f575d10410ff59af186585af1d943f5ca35b0cf350",
+  "outputs": {
+   "ablation-summary.json": "66cd06e064c3aa1a27a6daab41134b4dc2fa995dda4226e8fe0dcf9415d7f329",
+   "cross-document-analysis.md": "9e5ed717a08ef65c7de40a2ee3a016482c235fd15d9b4cd5ea0c2744ca075447",
+   "data-quality-report.json": "15a4d6162a9312497a849f215c1982ca93197c59de3b9cf00bfa397a9a67add5",
+   "per-case-results-baseline.jsonl": "14d99d77ea42933774c00ade7adeba5e09b1490f4078cbc9616d14aebd8e522a",
+   "per-case-results-candidate.jsonl": "9850fe8efee65a9d702729af093fc3baf31dcb7b8fcddd4c55a5f74f7edba0b5",
+   "selection-decision.md": "9f6eab3d47fd429658d95ac47085130bb72a36c7ea3482330c89acf280fba57d"
+  },
+  "verified": true
+ },
+ "phase": "C1.1",
+ "scope": "报告/产物语义修正（只读审计；不重跑实验、不改原 C1 产物）",
+ "semantic_corrections": [
+  {
+   "corrected_statement": "NO_PROMOTION 结论与 cross-document recall@5 失败方向在两次独立完整运行间稳定；但 raw ranking（跨运行 per-case 差异 baseline 34 / candidate 90；运行内第二次构建 raw 差异 baseline 77 / candidate 225）、逐案例指标（运行内 metric 差异 baseline 1 / candidate 20 case）与候选整体聚合指标（运行内 build2 相对主构建：recall@5 Δ+0.009524, recall@10 Δ-0.004762, ndcg@5 Δ+0.002437, ndcg@10 Δ-0.003015, ndcg@20 Δ-0.001368, mrr Δ-0.001729，max|Δ|=0.009524；跨运行聚合 Δ max|Δ|=0.005215）存在已记录的 HNSW 非确定性差异——任何「完全一致/逐位一致」的表述均不成立",
+   "evidence": {
+    "cd_recall5_noise": 0.0,
+    "cross_run": {
+     "aggregate_deltas": {
+      "baseline": {
+       "mrr": -2.6e-05,
+       "ndcg@10": 0.0,
+       "ndcg@20": -2e-05,
+       "ndcg@5": 0.0,
+       "recall@10": 0.0,
+       "recall@20": 0.0,
+       "recall@5": 0.0,
+       "source_recall@10": 0.0,
+       "source_recall@20": 0.0,
+       "source_recall@5": 0.0
+      },
+      "candidate": {
+       "mrr": 0.005215,
+       "ndcg@10": 0.004215,
+       "ndcg@20": 0.002619,
+       "ndcg@5": 0.002155,
+       "recall@10": 0.004762,
+       "recall@20": 0.0,
+       "recall@5": 0.0,
+       "source_recall@10": 0.0,
+       "source_recall@20": 0.0,
+       "source_recall@5": 0.0
+      }
+     },
+     "per_case_diff_count": {
+      "baseline": 34,
+      "candidate": 90
+     },
+     "prior_manifest_sha256": "9492a90db73f2c3fa39dd447306f45c0eef8601dd1358d60384b0c198918e772"
+    },
+    "in_run_second_build": {
+     "baseline_aggregate_deltas": {
+      "mrr": -1.6e-05,
+      "ndcg@10": 0.0,
+      "ndcg@20": 0.0,
+      "ndcg@5": 0.0,
+      "recall@10": 0.0,
+      "recall@20": 0.0,
+      "recall@5": 0.0,
+      "source_recall@10": 0.0,
+      "source_recall@20": 0.0,
+      "source_recall@5": 0.0
+     },
+     "baseline_max_abs_delta": 1.6e-05,
+     "baseline_metric_difference_count": 1,
+     "baseline_raw_difference_count": 77,
+     "candidate_aggregate_deltas": {
+      "mrr": -0.001729,
+      "ndcg@10": -0.003015,
+      "ndcg@20": -0.001368,
+      "ndcg@5": 0.002437,
+      "recall@10": -0.004762,
+      "recall@20": 0.0,
+      "recall@5": 0.009524,
+      "source_recall@10": 0.0,
+      "source_recall@20": 0.0,
+      "source_recall@5": 0.0
+     },
+     "candidate_max_abs_delta": 0.009524,
+     "candidate_metric_difference_count": 20,
+     "candidate_raw_difference_count": 225
+    }
+   },
+   "id": "run_consistency_wording",
+   "original_statement": "原 CHANGELOG/记录以「运行一致」概括两次独立完整运行（并称基线聚合与 hardened 相同、cd recall@5 跨构建噪声为 0），未区分「结论方向稳定」与「逐案例/部分聚合指标一致」——该表述不成立",
+   "title": "运行一致性表述：NO_PROMOTION 结论与失败方向稳定，raw ranking / 逐案例 / 部分聚合指标存在已记录的 HNSW 非确定性差异"
+  },
+  {
+   "corrected_statement": "核心 data-quality 检查（完整性/唯一性/指标复算/引用完整性/谱系与 manifest 闭环）共 21 项全部通过；promotion gate 6 条中 4 条未通过 → NO_PROMOTION；失败 gate 是实验决策结果，不是 data-quality 失败，也不得混入 data-quality checks",
+   "evidence": {
+    "corrected": {
+     "core_check_count": 21,
+     "data_quality_passed": true,
+     "promotion_failures": [
+      "cd_recall@5_gain",
+      "overall_recall@5_no_drop",
+      "overall_ndcg10_mrr_no_drop",
+      "exceeds_recorded_noise"
+     ]
+    },
+    "original": {
+     "check_count": 30,
+     "error_count": 0,
+     "gate_named_check_count": 9,
+     "passed": true
+    }
+   },
+   "id": "data_quality_gate_separation",
+   "original_statement": "原 data-quality-report.json passed=True / error_count=0，但 30 条 checks 中追加了 4 条 ok=false 的 gate 条件（追加于 error_count 计算之后）——「全部通过」的表述不成立",
+   "title": "分离 data_quality 与 promotion_eligibility：失败 gate 不是数据质量失败，passed 不暗示 promotion 通过"
+  }
+ ],
+ "skill_evidence": "data-analytics:analyze-data-quality 实际检查：zcode 运行环境不可用（本次会话可用技能列表、~/.zcode/skills 仅 brainstorming/test-driven-development、~/.agents/skills 仅 browser-skill、插件目录均无 data-analytics）——不能声称所有环境均不可用；实施等价的确定性机械复算",
+ "task": "v2.0.11-cross-document-ablation-audit-correction"
+}

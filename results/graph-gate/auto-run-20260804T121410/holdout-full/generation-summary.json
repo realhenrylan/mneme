@@ -1,0 +1,271 @@
+{
+  "compare_version": 1,
+  "case_count": 16,
+  "arm_count": 3,
+  "standard": {
+    "overall": {
+      "answer_point_coverage": 0.4743589743589744,
+      "citation_id_validity": 0.6875,
+      "false_answer_rate": 0.33333333333333337,
+      "false_refusal_rate": 0.07692307692307693,
+      "total_ms_p50": 2564.2287000009674,
+      "total_ms_p95": 4970.500799998263,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "graph_target": {
+      "answer_point_coverage": 0.5555555555555555,
+      "citation_id_validity": 1.0,
+      "false_refusal_rate": 0.0,
+      "total_ms_p50": 2878.232199997001,
+      "total_ms_p95": 4970.500799998263,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "all_answerable": {
+      "answer_point_coverage": 0.4743589743589744,
+      "citation_id_validity": 0.8461538461538461,
+      "false_refusal_rate": 0.07692307692307693,
+      "total_ms_p50": 2824.9968999989505,
+      "total_ms_p95": 4970.500799998263,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "no_answer": {
+      "answer_point_coverage": 0.0,
+      "citation_id_validity": 0.0,
+      "false_answer_rate": 0.33333333333333337,
+      "total_ms_p50": 1415.6711000032374,
+      "total_ms_p95": 1808.1612999994832,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "multi_turn": {
+      "answer_point_coverage": 0.375,
+      "citation_id_validity": 1.0,
+      "false_refusal_rate": 0.0,
+      "total_ms_p50": 3191.0179000005883,
+      "total_ms_p95": 3647.151199998916,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "hard": {
+      "answer_point_coverage": 0.3333333333333333,
+      "citation_id_validity": 1.0,
+      "false_refusal_rate": 0.0,
+      "total_ms_p50": 2828.554499999882,
+      "total_ms_p95": 4970.500799998263,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "lang_zh": {
+      "answer_point_coverage": 0.75,
+      "citation_id_validity": 0.625,
+      "false_answer_rate": 0.5,
+      "false_refusal_rate": 0.0,
+      "total_ms_p50": 1708.2768000000215,
+      "total_ms_p95": 3191.9968999973207,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "lang_en": {
+      "answer_point_coverage": 0.0,
+      "citation_id_validity": 0.6,
+      "false_answer_rate": 0.0,
+      "false_refusal_rate": 0.25,
+      "total_ms_p50": 2824.9968999989505,
+      "total_ms_p95": 3647.151199998916,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "lang_mixed": {
+      "answer_point_coverage": 0.5555555555555555,
+      "citation_id_validity": 1.0,
+      "false_refusal_rate": 0.0,
+      "total_ms_p50": 2878.232199997001,
+      "total_ms_p95": 4970.500799998263,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    }
+  },
+  "standard_rerank": {
+    "overall": {
+      "answer_point_coverage": 0.37179487179487175,
+      "citation_id_validity": 0.5,
+      "false_answer_rate": 0.0,
+      "false_refusal_rate": 0.3076923076923077,
+      "total_ms_p50": 24058.209799997712,
+      "total_ms_p95": 28251.75339999987,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "graph_target": {
+      "answer_point_coverage": 0.4444444444444444,
+      "citation_id_validity": 0.6666666666666666,
+      "false_refusal_rate": 0.3333333333333333,
+      "total_ms_p50": 23981.234399998357,
+      "total_ms_p95": 27627.387600001384,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "all_answerable": {
+      "answer_point_coverage": 0.37179487179487175,
+      "citation_id_validity": 0.6153846153846154,
+      "false_refusal_rate": 0.3076923076923077,
+      "total_ms_p50": 24058.209799997712,
+      "total_ms_p95": 28251.75339999987,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "no_answer": {
+      "answer_point_coverage": 0.0,
+      "citation_id_validity": 0.0,
+      "false_answer_rate": 0.0,
+      "total_ms_p50": 25066.228199997568,
+      "total_ms_p95": 25170.890499997768,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "multi_turn": {
+      "answer_point_coverage": 0.125,
+      "citation_id_validity": 0.5,
+      "false_refusal_rate": 0.5,
+      "total_ms_p50": 24170.5323999995,
+      "total_ms_p95": 25567.226399998617,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "hard": {
+      "answer_point_coverage": 0.16666666666666666,
+      "citation_id_validity": 0.5,
+      "false_refusal_rate": 0.5,
+      "total_ms_p50": 22966.208599998936,
+      "total_ms_p95": 23981.234399998357,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "lang_zh": {
+      "answer_point_coverage": 0.5833333333333334,
+      "citation_id_validity": 0.625,
+      "false_answer_rate": 0.0,
+      "false_refusal_rate": 0.16666666666666666,
+      "total_ms_p50": 24173.289000002114,
+      "total_ms_p95": 28251.75339999987,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "lang_en": {
+      "answer_point_coverage": 0.0,
+      "citation_id_validity": 0.2,
+      "false_answer_rate": 0.0,
+      "false_refusal_rate": 0.5,
+      "total_ms_p50": 23015.230699998938,
+      "total_ms_p95": 25567.226399998617,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "lang_mixed": {
+      "answer_point_coverage": 0.4444444444444444,
+      "citation_id_validity": 0.6666666666666666,
+      "false_refusal_rate": 0.3333333333333333,
+      "total_ms_p50": 23981.234399998357,
+      "total_ms_p95": 27627.387600001384,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    }
+  },
+  "graph_rerank": {
+    "overall": {
+      "answer_point_coverage": 0.37179487179487175,
+      "citation_id_validity": 0.625,
+      "false_answer_rate": 0.33333333333333337,
+      "false_refusal_rate": 0.3076923076923077,
+      "total_ms_p50": 2990.0402999992366,
+      "total_ms_p95": 25040.600400003314,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "graph_target": {
+      "answer_point_coverage": 0.4444444444444444,
+      "citation_id_validity": 1.0,
+      "false_refusal_rate": 0.3333333333333333,
+      "total_ms_p50": 3680.017399998178,
+      "total_ms_p95": 3743.455499999982,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "all_answerable": {
+      "answer_point_coverage": 0.37179487179487175,
+      "citation_id_validity": 0.7692307692307693,
+      "false_refusal_rate": 0.3076923076923077,
+      "total_ms_p50": 3680.017399998178,
+      "total_ms_p95": 25040.600400003314,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "no_answer": {
+      "answer_point_coverage": 0.0,
+      "citation_id_validity": 0.0,
+      "false_answer_rate": 0.33333333333333337,
+      "total_ms_p50": 2295.8918000003905,
+      "total_ms_p95": 2428.656799998862,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "multi_turn": {
+      "answer_point_coverage": 0.125,
+      "citation_id_validity": 0.75,
+      "false_refusal_rate": 0.5,
+      "total_ms_p50": 4189.521699998295,
+      "total_ms_p95": 4724.933699999383,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "hard": {
+      "answer_point_coverage": 0.16666666666666666,
+      "citation_id_validity": 1.0,
+      "false_refusal_rate": 0.5,
+      "total_ms_p50": 2959.0140000000247,
+      "total_ms_p95": 3680.017399998178,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "lang_zh": {
+      "answer_point_coverage": 0.5833333333333334,
+      "citation_id_validity": 0.625,
+      "false_answer_rate": 0.5,
+      "false_refusal_rate": 0.16666666666666666,
+      "total_ms_p50": 2720.654299999296,
+      "total_ms_p95": 25040.600400003314,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "lang_en": {
+      "answer_point_coverage": 0.0,
+      "citation_id_validity": 0.4,
+      "false_answer_rate": 0.0,
+      "false_refusal_rate": 0.5,
+      "total_ms_p50": 3734.1632999996364,
+      "total_ms_p95": 4724.933699999383,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    },
+    "lang_mixed": {
+      "answer_point_coverage": 0.4444444444444444,
+      "citation_id_validity": 1.0,
+      "false_refusal_rate": 0.3333333333333333,
+      "total_ms_p50": 3680.017399998178,
+      "total_ms_p95": 3743.455499999982,
+      "total_tokens_avg": 0.0,
+      "error_rate": 0.0
+    }
+  },
+  "mcnemar": {
+    "n_pairs": 16,
+    "n_discordant": 1,
+    "b_only": 0,
+    "c_only": 1,
+    "p_value": 1.0,
+    "test": "mcnemar_exact_two_sided"
+  }
+}

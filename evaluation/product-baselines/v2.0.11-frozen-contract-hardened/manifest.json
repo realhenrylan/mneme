@@ -1,0 +1,474 @@
+{
+ "code": {
+  "dirty": true,
+  "head": "8e3be0c6e58bfa4c03ec15a96f9a3913f0d9285b"
+ },
+ "contract": {
+  "chunk_manifest_sha256": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks_sha256": "3724ce4e32526c5d7ee0a3c98f2576f0c11fa73dc01442e1acd06f66719e12df",
+  "contract_version": "chunk-snapshot-contract-1",
+  "corpus_manifest_sha256": "84f04699c07ff1a7a8d13caabba3e377569b217816bb39db73f65df842037943",
+  "fingerprint": "4a78d5f357d7b7e6381da9a78fa15b9d2773b818a29ab52223b03b06ed20687e",
+  "validation_checks": 54
+ },
+ "dependencies": {
+  "chromadb": "1.5.9",
+  "langchain-text-splitters": "1.1.2",
+  "python": "3.12.10",
+  "rank-bm25": "0.2.2",
+  "sentence-transformers": "5.6.0"
+ },
+ "determinism": {
+  "cases_compared": 136,
+  "difference_count": 78,
+  "differences": [
+   {
+    "case_id": "multi-013",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-013",
+    "field": "scores"
+   },
+   {
+    "case_id": "multi-016",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-016",
+    "field": "scores"
+   },
+   {
+    "case_id": "multi-020",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-020",
+    "field": "scores"
+   },
+   {
+    "case_id": "multi-021",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-021",
+    "field": "scores"
+   },
+   {
+    "case_id": "multi-025",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "multi-025",
+    "field": "retrieved_source_ids"
+   },
+   {
+    "case_id": "multi-025",
+    "field": "scores"
+   },
+   {
+    "case_id": "zh-024",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "zh-024",
+    "field": "scores"
+   },
+   {
+    "case_id": "zh-030",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "zh-030",
+    "field": "scores"
+   },
+   {
+    "case_id": "en-021",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "en-021",
+    "field": "retrieved_source_ids"
+   },
+   {
+    "case_id": "en-021",
+    "field": "scores"
+   },
+   {
+    "case_id": "en-022",
+    "field": "retrieved_chunk_ids"
+   },
+   {
+    "case_id": "en-022",
+    "field": "scores"
+   }
+  ],
+  "metric_difference_count": 10,
+  "metric_differences": [
+   {
+    "build1": 1.0,
+    "build2": 0.5,
+    "case_id": "zh-048",
+    "key": "mrr"
+   },
+   {
+    "build1": 0.9197207891481876,
+    "build2": 0.6934264036172708,
+    "case_id": "zh-048",
+    "key": "ndcg@10"
+   },
+   {
+    "build1": 0.9197207891481876,
+    "build2": 0.6934264036172708,
+    "case_id": "zh-048",
+    "key": "ndcg@20"
+   },
+   {
+    "build1": 0.9197207891481876,
+    "build2": 0.6934264036172708,
+    "case_id": "zh-048",
+    "key": "ndcg@5"
+   },
+   {
+    "build1": 0.1111111111111111,
+    "build2": 0.125,
+    "case_id": "zh-051",
+    "key": "mrr"
+   },
+   {
+    "build1": 0.18457569677956817,
+    "build2": 0.19342640361727081,
+    "case_id": "zh-051",
+    "key": "ndcg@10"
+   },
+   {
+    "build1": 0.18457569677956817,
+    "build2": 0.19342640361727081,
+    "case_id": "zh-051",
+    "key": "ndcg@20"
+   },
+   {
+    "build1": 0.1111111111111111,
+    "build2": 0.1,
+    "case_id": "mixed-032",
+    "key": "mrr"
+   },
+   {
+    "build1": 0.14126697285982898,
+    "build2": 0.13565197343244778,
+    "case_id": "mixed-032",
+    "key": "ndcg@10"
+   },
+   {
+    "build1": 0.27216896302802623,
+    "build2": 0.26246899026484133,
+    "case_id": "mixed-032",
+    "key": "ndcg@20"
+   }
+  ],
+  "note": "第二次构建使用独立临时目录与独立 collection；比较除 retrieval_ms 外全部字段。raw ranking 差异源于 Chroma/HNSW 索引构建的非确定性（同索引重复查询逐位一致，跨构建在深 rank 处有近邻扰动）；metric_difference_count 是 per-case 指标受影响的 case 数，聚合指标应稳定",
+  "verified": false
+ },
+ "frozen_outputs": {
+  "FROZEN_EVALUATION_BASELINE.md": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\evaluation-freeze\\FROZEN_EVALUATION_BASELINE.md",
+   "sha256": "458cfe70fa0708cb76dbdafc5aa0ca11193d917154d3fa9bdd77a33b5689c99c"
+  },
+  "deferred-owner-decisions.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\evaluation-freeze\\deferred-owner-decisions.jsonl",
+   "sha256": "ce521f18cfb56148c2146a18101208d675c7b7888af689dd5016362dfa5a9e66"
+  },
+  "freeze-summary.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\evaluation-freeze\\freeze-summary.json",
+   "sha256": "17c8ba4f2c5d18a3ff9aa0ca0a6a7a53f32229ffcb5992852aaa4844c627dade"
+  }
+ },
+ "frozen_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "frozen_revision_status": "CANDIDATE",
+ "hardening": {
+  "b0_lineage_sha256": "b3fc4b6ea575530f69e09a801a56dc4470769620e62834dbdde4c48fb601fe26",
+  "b0_manifest_verified": true,
+  "defects_fixed": [
+   "build_index 不再先创建 collection 再校验 source 集合——验证前置到任何写入之前",
+   "复用已有 collection 前校验 file_paths 与 manifest sources 均与snapshot 精确一致——缺失/额外 source 拒绝，陈旧 manifest 强制安全重建",
+   "snapshot 保留输入身份，使用时重新验证——伪造 fingerprint、dataclasses.replace 篡改、载入后输入漂移一律 fail-closed"
+  ],
+  "entry_revalidation": true,
+  "mechanism": "src.rag.prepare_index / build_index 在使用时重跑 src.index_contract.load_chunk_snapshot 验证并比对重建契约指纹 / chunk 内容 / source 集合；验证先于任何 PersistentClient / 模型 / collection / manifest / BM25 sidecar 写入（fail-closed，绝不降级 parser）"
+ },
+ "inputs": {
+  "candidate-draft-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\draft-after.jsonl",
+   "sha256": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720"
+  },
+  "candidate-evidence-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\evidence-after.jsonl",
+   "sha256": "6df8e175ee0a028062c806a910c70890820576d62857cee41551ad777b829d17"
+  },
+  "candidate-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\manifest.json",
+   "sha256": "6cab6786a47f077ced789066d42f9c1c3739d9f24a3af2e44eefbf386c60707e"
+  },
+  "chunk-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunk-manifest.json",
+   "sha256": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a"
+  },
+  "chunks.jsonl": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "corpus-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\corpus-manifest.json",
+   "sha256": "84f04699c07ff1a7a8d13caabba3e377569b217816bb39db73f65df842037943"
+  },
+  "current-v2-draft.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\annotations\\v2-cases-draft.jsonl",
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc"
+  },
+  "diagnostic-issues.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\contract-error-diagnostic-issues.jsonl",
+   "sha256": "575c5c0d440b4b31b2e1f8660def921d457f93d7d60c94a0366fcfb54f23499e"
+  },
+  "diagnostic-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\manifest.json",
+   "sha256": "b9016a13d88382858f9451769e1a7ce9f1c0853979fe83098f723efb6eacf9d1"
+  },
+  "diagnostic-raw-model-attempts.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\raw-model-attempts.jsonl",
+   "sha256": "725d71d2344241df30eebb3c84ea7955aea694ca7a221411854479bfc71cd5ca"
+  },
+  "diagnostic-results.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\contract-error-diagnostic-results.jsonl",
+   "sha256": "575c5c0d440b4b31b2e1f8660def921d457f93d7d60c94a0366fcfb54f23499e"
+  },
+  "diagnostic-summary.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\contract-error-diagnostic\\contract-error-diagnostic-summary.json",
+   "sha256": "ecdbb0d61433b6691eef0a646d76f6de470fac8aa973997f588f4aa63e77d753"
+  },
+  "owner-decision-template.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\owner-decision-template.jsonl",
+   "sha256": "c57f97726e5c025fc3479b87bbb6bc752605f1eb8f3ca06db7ae9e06c4c2ac36"
+  },
+  "pack-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\owner-decision-pack\\manifest.json",
+   "sha256": "ed2b8fccfd08fb79886a95fcc89de4c9ff70e8a06b6fcacda2e92a60de041aa9"
+  },
+  "pack-owner-decision-template.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\owner-decision-pack\\owner-decision-template.jsonl",
+   "sha256": "bf056ab25e58399635016ba21002c1222eb31f43811ec8079ae63b35c4001044"
+  },
+  "pack-persistent-contract-errors.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\owner-decision-pack\\persistent-contract-errors.jsonl",
+   "sha256": "4b69d2533af56ea78a7fd66c0c30786292aa481de6f3f8bf0a3776f376728cc0"
+  },
+  "pack-stable-reject-root-cause-triage.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\owner-decision-pack\\stable-reject-root-cause-triage.jsonl",
+   "sha256": "6f0873b47d3414bec5c1f2a303b824c521493ec662ff9730692850a43ccbf240"
+  },
+  "phase6a-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\product-baselines\\v2.0.11-frozen-current\\manifest.json",
+   "sha256": "a05b5bf592b5f5d504a3f3652fe12bd163c81dec9963e3d7e82386c782811c5a"
+  },
+  "reject-root-cause-triage.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\reject-root-cause-triage.jsonl",
+   "sha256": "5cbffc6dd59979115c235a520e9bb7e592aca54b9d354eb506c3825850a34e19"
+  },
+  "review-coherence-errors.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\review-coherence-errors.jsonl",
+   "sha256": "10b4e07e7328be1506ebf24894ad72d84aeed4e5256f9dcaef171ba776401fc6"
+  },
+  "review-issues.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\automated-review-issues.jsonl",
+   "sha256": "dc005d12a4e68a49a9018be2ea7f25da32fb69e083cb919725e1601287f7b478"
+  },
+  "review-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\manifest.json",
+   "sha256": "220ed9c23c7d55550bdc25ac78c84d74de454a1ab7f31a56dccf4e5aa84f4320"
+  },
+  "source:art-of-war.txt": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\art-of-war.txt",
+   "sha256": "0aa964ddb252df7f02e84174ff1a65c6fd971c067303c1da320f5734a3b05c37"
+  },
+  "source:nodejs-fs.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\nodejs-fs.md",
+   "sha256": "16358b59eaddb5a85dd33bf15eae4e14ede315be058a409124e029deaa0eea68"
+  },
+  "source:postgresql-tutorial.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\postgresql-tutorial.md",
+   "sha256": "3b10f283915cd41ec725b8414312e7c3a6759f62ba22a680a14a9b69f2f485d1"
+  },
+  "source:python-datetime-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-datetime-zh.md",
+   "sha256": "b66276d873861e9c7c6e0ccbb18b956829e767004764424d9375554d64955033"
+  },
+  "source:python-glossary-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-glossary-zh.md",
+   "sha256": "3de198d4ce12fb8f621f39612fcae6ef2b735427adf736bb482e5857356a0756"
+  },
+  "source:python-tutorial-en.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-tutorial-en.md",
+   "sha256": "7a9bb4e0a0cc3a69fd13fea955f876586680694aab0ab0be4b6e05c50c4baf9e"
+  },
+  "source:python-tutorial-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-tutorial-zh.md",
+   "sha256": "086d7591f1b2eddb54bcbd3382473e1f751450528eb23a1b8f7f329f17de2a8b"
+  },
+  "source:python-whatsnew313-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\python-whatsnew313-zh.md",
+   "sha256": "cfefeb2950496c198dc0c7c198578e34612e7f485638317c23411b31f2554af1"
+  },
+  "source:react-learn-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\react-learn-zh.md",
+   "sha256": "4c9708e90662a62b11d3a2a29b95d249593257ed7e263064c87f2aba50a9efc3"
+  },
+  "source:rfc3986.txt": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\rfc3986.txt",
+   "sha256": "338de951ebeb1dfb55c0016cc0d904939cda2bd15e0bb1e3ccb5f9ff0754958a"
+  },
+  "source:rust-book-core.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\rust-book-core.md",
+   "sha256": "3259dbd90a3fe522716384799857b930ea80446aaf9b8cd0d1d12a0808f421cf"
+  },
+  "source:sqlite-lang.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\sqlite-lang.md",
+   "sha256": "d6141a33adc3cd842a662f7c248f711dbbc2d623271696f1c6532d156dc1c8bb"
+  },
+  "source:vue-guide-zh.md": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed\\vue-guide-zh.md",
+   "sha256": "e52a60ed06601a0f2d6f71d7aa5e080aefb453834c1a54834fb1e7b2edab28fe"
+  },
+  "targeted-review-issues.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\targeted-review-issues.jsonl",
+   "sha256": "355100248eac64b8611ab32e3ea9af76ea2214754ccc981e96257e9152d39661"
+  },
+  "targeted-review-results.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.11-owner-authorized-en048-same-source-repair\\targeted-re-review\\targeted-review-results.jsonl",
+   "sha256": "ec441bfa98d5b834eba14b7431d19a90cd4b0ce19ba2cfeba9b2f36e889e69f2"
+  },
+  "translation-equivalence-policy-ledger.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.8-owner-authorized-semantic-quality-remediation\\translation-equivalence-policy-ledger.jsonl",
+   "sha256": "43e9840fb44a3979ba3392bc1320e1422e179e0b56ecb4b03afc83d28abc7fb9"
+  },
+  "translation-equivalence-policy.md": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.8-owner-authorized-semantic-quality-remediation\\translation-equivalence-policy.md",
+   "sha256": "5990645b488dce68f581b34b267b53839f6bf2c0cae184453d2afe4dc56c2678"
+  },
+  "triage-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\manifest.json",
+   "sha256": "0a6e2f85aa861b3747ae6ad8ba748e0f500abcaddb4aabab794bdd27ffccd453"
+  },
+  "triage-owner-decision-template.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\owner-decision-template.jsonl",
+   "sha256": "c57f97726e5c025fc3479b87bbb6bc752605f1eb8f3ca06db7ae9e06c4c2ac36"
+  },
+  "triage-reject-root-cause-triage.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\reject-root-cause-triage.jsonl",
+   "sha256": "5cbffc6dd59979115c235a520e9bb7e592aca54b9d354eb506c3825850a34e19"
+  },
+  "triage-review-coherence-errors.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\review-coherence-errors.jsonl",
+   "sha256": "10b4e07e7328be1506ebf24894ad72d84aeed4e5256f9dcaef171ba776401fc6"
+  },
+  "v210-candidate-draft-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\draft-after.jsonl",
+   "sha256": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720"
+  },
+  "v210-candidate-evidence-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\evidence-after.jsonl",
+   "sha256": "0778c7c679bab9e96c944c050d7dcd40047ec0d7a7a04f05e0ac2455239ea977"
+  },
+  "v210-candidate-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\manifest.json",
+   "sha256": "adcf5c608c8164bde8b80cb9c1a58a4d9a6c456a7f0dbbc862af6326683f7f1d"
+  },
+  "v210-draft-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\draft-after.jsonl",
+   "sha256": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720"
+  },
+  "v210-evidence-after.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\evidence-after.jsonl",
+   "sha256": "0778c7c679bab9e96c944c050d7dcd40047ec0d7a7a04f05e0ac2455239ea977"
+  },
+  "v210-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\manifest.json",
+   "sha256": "adcf5c608c8164bde8b80cb9c1a58a4d9a6c456a7f0dbbc862af6326683f7f1d"
+  },
+  "v210-review-issues.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\automated-review-issues.jsonl",
+   "sha256": "dc005d12a4e68a49a9018be2ea7f25da32fb69e083cb919725e1601287f7b478"
+  },
+  "v210-review-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\manifest.json",
+   "sha256": "5d3e17f1c90b2028e9abb5bd048e8e295f0dc90278fb3bf7994ca3a250d8b523"
+  },
+  "v210-triage-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\manifest.json",
+   "sha256": "0a6e2f85aa861b3747ae6ad8ba748e0f500abcaddb4aabab794bdd27ffccd453"
+  },
+  "v210-triage-owner-decision-template.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\owner-decision-template.jsonl",
+   "sha256": "c57f97726e5c025fc3479b87bbb6bc752605f1eb8f3ca06db7ae9e06c4c2ac36"
+  },
+  "v210-triage-reject-root-cause-triage.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\reject-root-cause-triage.jsonl",
+   "sha256": "5cbffc6dd59979115c235a520e9bb7e592aca54b9d354eb506c3825850a34e19"
+  },
+  "v210-triage-review-coherence-errors.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.0.10-owner-authorized-coherence-remediation\\automated-review\\coherence-reject-triage\\review-coherence-errors.jsonl",
+   "sha256": "10b4e07e7328be1506ebf24894ad72d84aeed4e5256f9dcaef171ba776401fc6"
+  }
+ },
+ "isolation": {
+  "chroma_dir": "C:\\Users\\HENRYL~1\\AppData\\Local\\Temp\\mneme-v211-contract-fsdo8f51\\chroma_db",
+  "cleaned": true,
+  "collection_name": "v211_frozen_contract_baseline",
+  "data_dir": "C:\\Users\\HENRYL~1\\AppData\\Local\\Temp\\mneme-v211-contract-fsdo8f51",
+  "entry": "src.rag.prepare_index（完整产品路径，含 collection manifest + BM25 sidecar）",
+  "no_user_index_touched": true
+ },
+ "lineage": {
+  "note": "旧 Phase 6-B0 manifest self-hash + 全部 inputs / frozen_outputs / outputs 字节复算；任一漂移 → 本基线零产物",
+  "phase6b0_checks": 64,
+  "phase6b0_dir": "D:\\GitHub\\mneme\\evaluation\\product-baselines\\v2.0.11-frozen-contract",
+  "phase6b0_manifest_sha256": "b3fc4b6ea575530f69e09a801a56dc4470769620e62834dbdde4c48fb601fe26",
+  "phase6b0_manifest_verified": true
+ },
+ "manifest_sha256": "57e3ede9bbcfa2fca3bc74ed228864748ea3860ac131e29eb79eaff448990095",
+ "model": {
+  "embedding_dimension": 384,
+  "name": "all-MiniLM-L6-v2",
+  "note": "本地缓存离线加载（HF_HUB_OFFLINE=1/TRANSFORMERS_OFFLINE=1）；检索期间无网络调用",
+  "offline": true
+ },
+ "outputs": {
+  "comparison-to-phase6a.md": "b03881013687238babcebcb617abc70bb26dc99c0ec7ab7db3fb0765edb2a5dc",
+  "comparison-to-phase6b0.md": "30fbbfd1a5097e0c7861a6148b7f4daa36648b053eb276e37dade00f0e7b0cc8",
+  "contract-baseline-summary.json": "1fac728b50ee2222a3048f26e4158fd7fa926663d9eabd95c0574f582ede2e4a",
+  "contract-validation-report.md": "3b9d5aa713cdd26c6b3ec152df139e45ccdfb5f3b103c80090d898b4c1cffde0",
+  "data-quality-report.json": "146557b037338a44bfaa820edc2febe9d055018a259aaf5a6d5ff935c5addb1f",
+  "per-case-retrieval-results.jsonl": "0d9dd4568dec0f3d2881515b5d5a7130e7ccd6f35777aad784d86fee56f8dc22"
+ },
+ "parameters": {
+  "collection_name": "v211_frozen_contract_baseline",
+  "entry": "src.rag.prepare_index(snapshot=ChunkSnapshot, chroma_path=临时目录)",
+  "ks": [
+   5,
+   10,
+   20
+  ],
+  "refusal_threshold_observation": true,
+  "rrf_k": 60,
+  "top_k_retrieval": 70,
+  "verify_determinism": true
+ },
+ "phase6a_outputs": {
+  "BASELINE_SCOPE.md": "e8d16567c19ab5a823b80f09d211eaf65648d81a0125695fa3662390c9824333",
+  "baseline-summary.json": "1387e6355fb16cca6e39e23c8a0b31ad89168da194bd440a8ea95084fc6a310b",
+  "data-quality-mechanical-check.json": "05441c4adba34669ca756b1703c4a5c85530e1e73444a86fc0d664d917316140",
+  "failure-analysis.md": "374406459d4ffd3d5aabd9853688517f6db59c838645b16c6ac64faa6a9e4f39",
+  "per-case-retrieval-results.jsonl": "d11031dbbdc434cee54f4531f26a7ba4830e06abd2449ba6a74d2b6a94c0fd0c",
+  "schema-compatibility-report.md": "bd310626d199a540854746299654465776be2a84cb68e4d4c118d0e14c32441e"
+ },
+ "run_at": "2026-08-12T17:53:01+0800",
+ "task": "v2.0.11-frozen-contract-retrieval-baseline"
+}

@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-08-05T08:44:30.959756",
+  "lock_sha256": "7df0531fab9fad138c399da4a11596baba1e52907a4fd102cc918ef77be585f5",
+  "dataset_sha256": "8ce1b46b9eeaa54323c9533663088a222ed5e816d04335da1a23dd2a20ff7bb8",
+  "corpus_sha256": "41fdb8539842bce06545ff2c9cad4b2a0b9e63d09ceda47a6fd09c55d5d31438",
+  "split_fingerprint": "454892e4b9968e9ed85807b605fc6fffe920dd1aa3a665c29f8235eafeaa3690",
+  "index_sha256": "c6b547815007832edbeeb55b819c45eb7385a7a6da622d3ae734612498032118",
+  "env": {
+    "API_KEY": true,
+    "BASE_URL": true
+  },
+  "llm_model": "deepseek-chat",
+  "reranker_mode": "none",
+  "pythonhashseed": "0",
+  "notes": [
+    "locked config verified (dataset/corpus/seed/arms/models/reranker=none/prompt/budgets/arm_selector_policy)",
+    "split fingerprint=454892e4b9968e9ed85807b605fc6fffe920dd1aa3a665c29f8235eafeaa3690 (dev=95, holdout=15), 与 lock 一致",
+    "dev: overlay consumed (21 entries), truth gate PASS, source-only=4",
+    "holdout: overlay consumed (4 entries), truth gate PASS, source-only=4",
+    "index_sha256=c6b547815007832e... (736 chunks, 与 lock 一致)",
+    "env API_KEY: present (value redacted)",
+    "env BASE_URL: present (value redacted)",
+    "RAG_RERANKER=none（生产基线）",
+    "LLM_MODEL='deepseek-chat'",
+    "PYTHONHASHSEED=0 (仅记录；稳定 split 不依赖)"
+  ],
+  "immutability_snapshot": {
+    "results\\graph-gate\\decision-report.md": "f603111d7e3582162d3911febf6c0ba646976058bc4e40171957d9ad084c5e79",
+    "results\\graph-gate\\stable-split-rebuild-20260804T234043\\split-manifest.json": "59e2fb8ee7e859056dbd2b8e1db6bfa57a3c4ad484d583a0e3ea8cdef71f5f05",
+    "results\\graph-gate\\stable-split-rebuild-20260804T234043\\lock-production-stable.json": "7df0531fab9fad138c399da4a11596baba1e52907a4fd102cc918ef77be585f5",
+    "results\\graph-gate\\stable-split-rebuild-20260804T234043\\reviewed-production-dev\\reviewed-truth-overlay.json": "c0fb0f3125ae1d1b140cfc6b0672b488d9a18abf15a24ff3f11c94965dc78f10",
+    "results\\graph-gate\\stable-split-rebuild-20260804T234043\\reviewed-production-holdout\\reviewed-truth-overlay.json": "70d86346320c13a086267d4dd9c0ff6099f342396d0e4063c593abc2ebbb8808",
+    "results\\graph-gate\\stable-split-rebuild-20260804T234043\\ground-truth-map-dev.json": "e5c7bcbf94ff269233335c13dba7d1377b58b14e97e998280ffbd3c877b2e849",
+    "results\\graph-gate\\stable-split-rebuild-20260804T234043\\ground-truth-map-holdout.json": "f950dc58e01c5b49d336145b7407854c8530e1271eea422b8429d02487a0dbe7",
+    "results\\graph-gate\\production-baseline-20260804T2220\\candidate-report.md": "4dc97d0ee53184944298ff871068936143360c46fb7053f5db8e24bfe24a022b",
+    "results\\graph-gate\\production-baseline-20260804T2220\\lock-production.json": "2e6333e5f605b1f8617f157ff61e5afc977ba98b24d445dafb32d93bcb3e0f39",
+    "results\\graph-gate\\production-baseline-20260804T2220\\dev-full\\run-manifest.json": "f6ec4f601826db3ecda6cb551dc54cb18694ed7e0a953c393956d6d0065f81aa",
+    "results\\graph-gate\\production-baseline-20260804T2220\\holdout-full\\run-manifest.json": "b6313ebbe8f7ad183179d812a51bf67c07d136115e95c5ecf1482fb87bffd519",
+    "results\\graph-gate\\production-baseline-20260804T2220\\dev-full\\summary.json": "bc5eaca004655eefe303522ab0ed99dd7de139a44118c78beeabe7ee1f396490",
+    "results\\graph-gate\\production-baseline-20260804T2220\\holdout-full\\summary.json": "a971f794a635f19db3d4a3f67d0e0a83b3f94ddb0cb82dd00c05dde00c22330a"
+  }
+}

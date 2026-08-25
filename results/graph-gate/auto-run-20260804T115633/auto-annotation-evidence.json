@@ -1,0 +1,1009 @@
+{
+  "annotation_version": "auto-1.0",
+  "annotator": "rule_based_heuristic",
+  "confidence_distribution": {
+    "missing": {
+      "low": 5,
+      "medium": 7
+    },
+    "overlap": {
+      "high": 2,
+      "low": 15,
+      "medium": 10
+    }
+  },
+  "coverage": {
+    "missing_chunk": 0,
+    "missing_provisional_count": 5,
+    "missing_source": 12,
+    "missing_total": 12,
+    "overlap_confirmed": 17,
+    "overlap_provisional_count": 25,
+    "overlap_reject": 10,
+    "overlap_total": 27,
+    "supplemental_chunk_cases": 0
+  },
+  "disclaimer": "所有标注由结构化文本匹配规则自动生成，未经过人工审核，不能作为正式 GO/NO-GO 结论的依据。低置信度条目已标 auto_provisional。",
+  "missing_truth_evidence": [
+    {
+      "acceptable_answer_points": [
+        "DSpark: 33 pages",
+        "OneDrive: 5 pages"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "DSpark: 33 pages",
+          "best_chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_218",
+          "bigram_overlap": 0.11290322580645161,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.11,sub=False），判 source",
+          "text_preview": "stable comparison, DSpark accelerates per-user generation speeds by 60% to 85%.\n18"
+        },
+        {
+          "answer_point": "OneDrive: 5 pages",
+          "best_chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_31",
+          "bigram_overlap": 0.14102564102564102,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.14,sub=False），判 source",
+          "text_preview": "times of the drafting and verification passes, respectively. The average latency per generated\ntoken is:\n𝐿=\n𝑇draft + 𝑇ve"
+        }
+      ],
+      "auto_provisional": false,
+      "candidate_chunks_in_sources": 370,
+      "case_id": "cross-008",
+      "confidence": "medium",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "DSpark_paper.pdf",
+        "OneDrive 入门.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "33"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "33",
+          "best_chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_360",
+          "bigram_overlap": 0.05263157894736842,
+          "is_substring": true,
+          "rationale_sub": "answer_point 规范化去空后长度 <5，疑似页码/极短元数据，判 source",
+          "text_preview": "losslessness argument.\n33"
+        }
+      ],
+      "auto_provisional": false,
+      "candidate_chunks_in_sources": 362,
+      "case_id": "en-013",
+      "confidence": "medium",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "DSpark_paper.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "2405.02357v2.pdf",
+        "LLMs_for_Mobility_Analysis_Survey.md",
+        "DSpark_paper.pdf",
+        "prevent-url-data-exfil.pdf"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "2405.02357v2.pdf",
+          "best_chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_129",
+          "bigram_overlap": 0.08653846153846154,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.09,sub=False），判 source",
+          "text_preview": "4.33\n3.10\n2.94\n2.72\nDSpark\n6.21\n5.74\n4.94\n5.26\n5.43\n5.02\n3.70\n3.58\n3.13\nGemma4-12B\nEagle3\n5.87\n5.46\n4.83\n4.72\n5.37\n4.16\n"
+        },
+        {
+          "answer_point": "LLMs_for_Mobility_Analysis_Survey.md",
+          "best_chunk_id": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_102",
+          "bigram_overlap": 0.1794871794871795,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.18,sub=False），判 source",
+          "text_preview": "forecasting, human mobility, demand forecasting, and missing data imputation. We have summa-"
+        },
+        {
+          "answer_point": "DSpark_paper.pdf",
+          "best_chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_218",
+          "bigram_overlap": 0.109375,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.11,sub=False），判 source",
+          "text_preview": "stable comparison, DSpark accelerates per-user generation speeds by 60% to 85%.\n18"
+        },
+        {
+          "answer_point": "prevent-url-data-exfil.pdf",
+          "best_chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_anchor",
+          "bigram_overlap": 0.18823529411764706,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.19,sub=False），判 source",
+          "text_preview": "Preventing URL-Based Data Exfiltration in Language-Model Agents Adrian Spânu Thomas Shadwell 2025-01-20"
+        }
+      ],
+      "auto_provisional": false,
+      "candidate_chunks_in_sources": 717,
+      "case_id": "meta-001",
+      "confidence": "medium",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "2405.02357v2.pdf",
+        "LLMs_for_Mobility_Analysis_Survey.md",
+        "DSpark_paper.pdf",
+        "prevent-url-data-exfil.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "南京城市地理环境.docx",
+        "OneDrive 入门.pdf"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "南京城市地理环境.docx",
+          "best_chunk_id": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+          "bigram_overlap": 0.5833333333333334,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.58,sub=False），判 source",
+          "text_preview": "南京城市地理环境"
+        },
+        {
+          "answer_point": "OneDrive 入门.pdf",
+          "best_chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+          "bigram_overlap": 0.16071428571428573,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.16,sub=False），判 source",
+          "text_preview": "Microsoft \nOneDrive 入门\n将文件保存到 OneDrive，以便从任意位置使用所有设备对其进\n行保护、备份和访问。"
+        }
+      ],
+      "auto_provisional": true,
+      "candidate_chunks_in_sources": 19,
+      "case_id": "meta-002",
+      "confidence": "low",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（0.58, 0.16）；保守判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "南京城市地理环境.docx",
+        "OneDrive 入门.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "33页",
+        "33"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "33页",
+          "best_chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_360",
+          "bigram_overlap": 0.05,
+          "is_substring": false,
+          "rationale_sub": "answer_point 规范化去空后长度 <5，疑似页码/极短元数据，判 source",
+          "text_preview": "losslessness argument.\n33"
+        },
+        {
+          "answer_point": "33",
+          "best_chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_360",
+          "bigram_overlap": 0.05263157894736842,
+          "is_substring": true,
+          "rationale_sub": "answer_point 规范化去空后长度 <5，疑似页码/极短元数据，判 source",
+          "text_preview": "losslessness argument.\n33"
+        }
+      ],
+      "auto_provisional": false,
+      "candidate_chunks_in_sources": 362,
+      "case_id": "meta-003",
+      "confidence": "medium",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "DSpark_paper.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "OneDrive 入门.pdf"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "OneDrive 入门.pdf",
+          "best_chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+          "bigram_overlap": 0.16071428571428573,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.16,sub=False），判 source",
+          "text_preview": "Microsoft \nOneDrive 入门\n将文件保存到 OneDrive，以便从任意位置使用所有设备对其进\n行保护、备份和访问。"
+        }
+      ],
+      "auto_provisional": false,
+      "candidate_chunks_in_sources": 8,
+      "case_id": "meta-004",
+      "confidence": "medium",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "OneDrive 入门.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "prevent-url-data-exfil.pdf"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "prevent-url-data-exfil.pdf",
+          "best_chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_anchor",
+          "bigram_overlap": 0.18823529411764706,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.19,sub=False），判 source",
+          "text_preview": "Preventing URL-Based Data Exfiltration in Language-Model Agents Adrian Spânu Thomas Shadwell 2025-01-20"
+        }
+      ],
+      "auto_provisional": false,
+      "candidate_chunks_in_sources": 54,
+      "case_id": "meta-005",
+      "confidence": "medium",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "prevent-url-data-exfil.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "南京城市地理环境.docx"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "南京城市地理环境.docx",
+          "best_chunk_id": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+          "bigram_overlap": 0.5833333333333334,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.58,sub=False），判 source",
+          "text_preview": "南京城市地理环境"
+        }
+      ],
+      "auto_provisional": true,
+      "candidate_chunks_in_sources": 11,
+      "case_id": "meta-006",
+      "confidence": "low",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（0.58）；保守判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "南京城市地理环境.docx"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "LLMs for Mobility Analysis",
+        "mobility analysis survey"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "LLMs for Mobility Analysis",
+          "best_chunk_id": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_28",
+          "bigram_overlap": 0.21311475409836064,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.21,sub=False），判 source",
+          "text_preview": "LLMs with transportation systems and human mobility planning strategies."
+        },
+        {
+          "answer_point": "mobility analysis survey",
+          "best_chunk_id": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_102",
+          "bigram_overlap": 0.19696969696969696,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.20,sub=False），判 source",
+          "text_preview": "forecasting, human mobility, demand forecasting, and missing data imputation. We have summa-"
+        }
+      ],
+      "auto_provisional": true,
+      "candidate_chunks_in_sources": 301,
+      "case_id": "meta-007",
+      "confidence": "low",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（0.21, 0.20）；保守判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "2405.02357v2.pdf",
+        "LLMs_for_Mobility_Analysis_Survey.md"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "4"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "4",
+          "best_chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_24",
+          "bigram_overlap": 1.0,
+          "is_substring": true,
+          "rationale_sub": "answer_point 规范化去空后长度 <5，疑似页码/极短元数据，判 source",
+          "text_preview": "4"
+        }
+      ],
+      "auto_provisional": true,
+      "candidate_chunks_in_sources": 686,
+      "case_id": "meta-008",
+      "confidence": "low",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（1.00）；保守判 source；含极短 answer_point（页码/文件名）",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "2405.02357v2.pdf",
+        "DSpark_paper.pdf",
+        "OneDrive 入门.pdf",
+        "prevent-url-data-exfil.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "prevent-url-data-exfil.pdf",
+        "URL data exfiltration"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "prevent-url-data-exfil.pdf",
+          "best_chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_anchor",
+          "bigram_overlap": 0.18823529411764706,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.19,sub=False），判 source",
+          "text_preview": "Preventing URL-Based Data Exfiltration in Language-Model Agents Adrian Spânu Thomas Shadwell 2025-01-20"
+        },
+        {
+          "answer_point": "URL data exfiltration",
+          "best_chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_anchor",
+          "bigram_overlap": 0.2077922077922078,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.21,sub=False），判 source",
+          "text_preview": "Preventing URL-Based Data Exfiltration in Language-Model Agents Adrian Spânu Thomas Shadwell 2025-01-20"
+        }
+      ],
+      "auto_provisional": true,
+      "candidate_chunks_in_sources": 54,
+      "case_id": "meta-009",
+      "confidence": "low",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "部分 answer_points 有较弱 chunk 匹配但未达严格 chunk 判据（0.19, 0.21）；保守判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "prevent-url-data-exfil.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    },
+    {
+      "acceptable_answer_points": [
+        "OneDrive 入门.pdf"
+      ],
+      "annotator": "rule_based_answer_point_match",
+      "answer_point_matches": [
+        {
+          "answer_point": "OneDrive 入门.pdf",
+          "best_chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+          "bigram_overlap": 0.16071428571428573,
+          "is_substring": false,
+          "rationale_sub": "chunk 匹配非 substring 或 bigram<0.3（ov=0.16,sub=False），判 source",
+          "text_preview": "Microsoft \nOneDrive 入门\n将文件保存到 OneDrive，以便从任意位置使用所有设备对其进\n行保护、备份和访问。"
+        }
+      ],
+      "auto_provisional": false,
+      "candidate_chunks_in_sources": 8,
+      "case_id": "meta-010",
+      "confidence": "medium",
+      "model": "none (heuristic)",
+      "prompt_hash": null,
+      "rationale": "answer_points 在相关 source 的 chunk 文本中未找到匹配；判 source",
+      "relevance_level": "source",
+      "relevant_source_ids": [
+        "OneDrive 入门.pdf"
+      ],
+      "supplemental_relevant_chunks": []
+    }
+  ],
+  "model_used": "none (structural text matching; no LLM was invoked)",
+  "output_paths": {
+    "auto_pack_dir": "results\\graph-gate\\auto-run-20260804T115633\\auto-reviewed-pack",
+    "derived_dataset": "results\\graph-gate\\auto-run-20260804T115633\\derived-v1.jsonl",
+    "evidence_file": "results\\graph-gate\\auto-run-20260804T115633\\auto-annotation-evidence.json"
+  },
+  "overlap_evidence": [
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.11242603550295859,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "case_id": "cross-002",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.11 < 0.15，候选 chunk 与 snippet 文本不一致（候选 1/1 命中索引）",
+      "review_decision": "reject",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "Office 集成\nOneDrive 可与 Office 网页版无缝协作。\n免费使用 Word、PowerPoint 和 Excel 轻\n松创建、编辑和共享文件。\n了解如何使用 Office 网页版\n共享和协作\n与任何人共享文档、文件夹和照"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.13186813186813187,
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25"
+      ],
+      "case_id": "cross-002",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "implement robust safeguards",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.13 < 0.15，候选 chunk 与 snippet 文本不一致（候选 3/3 命中索引）",
+      "review_decision": "reject",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "text_preview": "Figure 1: Sample attack\nGiven the simplicity and effectiveness of these techniques, it is critical to im-\nplement robust"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.13043478260869565,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "case_id": "cross-004",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "自动备份并同步到 onedrive",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.13 < 0.15，候选 chunk 与 snippet 文本不一致（候选 1/1 命中索引）",
+      "review_decision": "reject",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "随处访问\n借助 OneDrive.com 和 OneDrive 移\n动应用，几乎可以从你所在的任意位置\n使用所有设备创建、访问和编辑文件。\n电脑文件夹备份\n打开电脑文件夹备份，将“桌面”、 \n“文档”和“图片”文件夹自动备份并\n同步到 On"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.11242603550295859,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "case_id": "cross-006",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.11 < 0.15，候选 chunk 与 snippet 文本不一致（候选 1/1 命中索引）",
+      "review_decision": "reject",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "Office 集成\nOneDrive 可与 Office 网页版无缝协作。\n免费使用 Word、PowerPoint 和 Excel 轻\n松创建、编辑和共享文件。\n了解如何使用 Office 网页版\n共享和协作\n与任何人共享文档、文件夹和照"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.13186813186813187,
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25"
+      ],
+      "case_id": "cross-006",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "implement robust safeguards",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.13 < 0.15，候选 chunk 与 snippet 文本不一致（候选 3/3 命中索引）",
+      "review_decision": "reject",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "text_preview": "Figure 1: Sample attack\nGiven the simplicity and effectiveness of these techniques, it is critical to im-\nplement robust"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.2597402597402597,
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_184"
+      ],
+      "case_id": "en-004",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_184",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "a lightweight draft model proposes a block of candidate tokens, and the full-size target model verifies the entire block in a single forward pass via rejection sampling",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.26 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "DSpark_paper.pdf",
+      "text_preview": "5.1. Scalable and Flexible Training\nThe DSpark draft models are co-deployed with the preview versions of DeepSeek-V4-Fla"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.19060773480662985,
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "case_id": "en-005",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.19 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "DSpark_paper.pdf",
+      "text_preview": "4.2. Experimental Results\nTo isolate the raw draft quality from system-level scheduling policies, our offline evaluation"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.07441860465116279,
+      "candidate_chunk_ids": [
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+      ],
+      "case_id": "en-009",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "arxiv: 2405.02357v2",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.07 < 0.15，候选 chunk 与 snippet 文本不一致（候选 1/1 命中索引）",
+      "review_decision": "reject",
+      "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+      "text_preview": "# Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks\n\n**Authors:** Zij"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.14201183431952663,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "case_id": "en-012",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.14 < 0.15，候选 chunk 与 snippet 文本不一致（候选 1/1 命中索引）",
+      "review_decision": "reject",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "Office 集成\nOneDrive 可与 Office 网页版无缝协作。\n免费使用 Word、PowerPoint 和 Excel 轻\n松创建、编辑和共享文件。\n了解如何使用 Office 网页版\n共享和协作\n与任何人共享文档、文件夹和照"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.3333333333333333,
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15"
+      ],
+      "case_id": "en-017",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.33 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "text_preview": "data directly in the query string.\n• WebPilot Cross-Plugin Attack2: Rehberger and collaborators demon-\nstrated that a be"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.19672131147540983,
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21"
+      ],
+      "case_id": "en-019",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "over the parallel dflash by 16.3%, 18.4%, and 18.3%",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.20 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "DSpark_paper.pdf",
+      "text_preview": "across the Qwen3-4B, 8B, and 14B target models (Yang et al., 2025), it improves the macro-average\naccepted length over t"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.13023255813953488,
+      "candidate_chunk_ids": [
+        "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0"
+      ],
+      "case_id": "en-020",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "submission date: february 24, 2025",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.13 < 0.15，候选 chunk 与 snippet 文本不一致（候选 1/1 命中索引）",
+      "review_decision": "reject",
+      "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+      "text_preview": "# Large Language Models for Mobility Analysis in Transportation Systems: A Survey on Forecasting Tasks\n\n**Authors:** Zij"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.19060773480662985,
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "case_id": "mixed-001",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.19 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "DSpark_paper.pdf",
+      "text_preview": "4.2. Experimental Results\nTo isolate the raw draft quality from system-level scheduling policies, our offline evaluation"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": false,
+      "bigram_overlap": 0.723404255319149,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+      ],
+      "case_id": "mixed-002",
+      "confidence": "high",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "最初提供 5 gb 的免费存储空间,也可升级到 microsoft 365,获取 1 tb 的空间",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.72 >= 0.4（chunk 092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2 高度相关）",
+      "review_decision": "confirmed",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "5 GB 的免费存储空间，也可升级到 \nMicrosoft 365，获取 1 TB 的空间。\n了解如何上传文件"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.15384615384615385,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "case_id": "mixed-003",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.15 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "Office 集成\nOneDrive 可与 Office 网页版无缝协作。\n免费使用 Word、PowerPoint 和 Excel 轻\n松创建、编辑和共享文件。\n了解如何使用 Office 网页版\n共享和协作\n与任何人共享文档、文件夹和照"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.2597402597402597,
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_184"
+      ],
+      "case_id": "mixed-005",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_184",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "a lightweight draft model proposes a block of candidate tokens, and the full-size target model verifies the entire block in a single forward pass via rejection sampling",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.26 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "DSpark_paper.pdf",
+      "text_preview": "5.1. Scalable and Flexible Training\nThe DSpark draft models are co-deployed with the preview versions of DeepSeek-V4-Fla"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.15193370165745856,
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "case_id": "mixed-008",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.15 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "DSpark_paper.pdf",
+      "text_preview": "4.2. Experimental Results\nTo isolate the raw draft quality from system-level scheduling policies, our offline evaluation"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.21739130434782608,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "case_id": "mixed-012",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "onedrive 提供了一个安全的位置来存储文件和照片",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.22 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "随处访问\n借助 OneDrive.com 和 OneDrive 移\n动应用，几乎可以从你所在的任意位置\n使用所有设备创建、访问和编辑文件。\n电脑文件夹备份\n打开电脑文件夹备份，将“桌面”、 \n“文档”和“图片”文件夹自动备份并\n同步到 On"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.3333333333333333,
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15"
+      ],
+      "case_id": "mixed-013",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.33 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "text_preview": "data directly in the query string.\n• WebPilot Cross-Plugin Attack2: Rehberger and collaborators demon-\nstrated that a be"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.1850828729281768,
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "case_id": "multi-006",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.19 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "DSpark_paper.pdf",
+      "text_preview": "4.2. Experimental Results\nTo isolate the raw draft quality from system-level scheduling policies, our offline evaluation"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": false,
+      "bigram_overlap": 0.75,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor"
+      ],
+      "case_id": "multi-007",
+      "confidence": "high",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "将文件保存到 onedrive,以便从任意位置使用所有设备对其进行保护、备份和访问",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.75 >= 0.4（chunk 092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0 高度相关）",
+      "review_decision": "confirmed",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "Microsoft \nOneDrive 入门\n将文件保存到 OneDrive，以便从任意位置使用所有设备对其进\n行保护、备份和访问。"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.19148936170212766,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+      ],
+      "case_id": "multi-008",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "最初提供 5 gb 的免费存储空间",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.19 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "5 GB 的免费存储空间，也可升级到 \nMicrosoft 365，获取 1 TB 的空间。\n了解如何上传文件"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.11242603550295859,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "case_id": "multi-010",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.11 < 0.15，候选 chunk 与 snippet 文本不一致（候选 1/1 命中索引）",
+      "review_decision": "reject",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "Office 集成\nOneDrive 可与 Office 网页版无缝协作。\n免费使用 Word、PowerPoint 和 Excel 轻\n松创建、编辑和共享文件。\n了解如何使用 Office 网页版\n共享和协作\n与任何人共享文档、文件夹和照"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.19148936170212766,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2"
+      ],
+      "case_id": "zh-014",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "最初提供 5 gb 的免费存储空间",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.19 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "5 GB 的免费存储空间，也可升级到 \nMicrosoft 365，获取 1 TB 的空间。\n了解如何上传文件"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.15384615384615385,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "case_id": "zh-015",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.15 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "Office 集成\nOneDrive 可与 Office 网页版无缝协作。\n免费使用 Word、PowerPoint 和 Excel 轻\n松创建、编辑和共享文件。\n了解如何使用 Office 网页版\n共享和协作\n与任何人共享文档、文件夹和照"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.16666666666666666,
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "case_id": "zh-017",
+      "confidence": "low",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "将\"桌面\"、\"文档\"和\"图片\"文件夹自动备份并同步到 onedrive",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.17 在中间区间（0.15-0.4），证据不足标记 auto_provisional",
+      "review_decision": "confirmed",
+      "source_id": "OneDrive 入门.pdf",
+      "text_preview": "随处访问\n借助 OneDrive.com 和 OneDrive 移\n动应用，几乎可以从你所在的任意位置\n使用所有设备创建、访问和编辑文件。\n电脑文件夹备份\n打开电脑文件夹备份，将“桌面”、 \n“文档”和“图片”文件夹自动备份并\n同步到 On"
+    },
+    {
+      "annotator": "rule_based_bigram_overlap",
+      "auto_provisional": true,
+      "bigram_overlap": 0.058823529411764705,
+      "candidate_chunk_ids": [
+        "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9"
+      ],
+      "case_id": "zh-018",
+      "confidence": "medium",
+      "is_substring": false,
+      "matched_chunk_in_corpus": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+      "missing_chunk_ids_in_corpus": [],
+      "model": "none (heuristic)",
+      "normalized_snippet": "享有\"六朝古都\"、\"十朝都会\"的盛誉",
+      "prompt_hash": null,
+      "rationale": "bigram 重叠 0.06 < 0.15，候选 chunk 与 snippet 文本不一致（候选 1/1 命中索引）",
+      "review_decision": "reject",
+      "source_id": "南京城市地理环境.docx",
+      "text_preview": "南京是中国历史文化名城，拥有6000余年的文明史、近2600年的建城史以及近500年的建都史。享有“六朝古都”、“十朝都会”的盛誉。境内人文资源极为丰富，拥有江南贡院、夫子庙等历史古迹，雨花台、中山陵等爱国主义教育基地，更坐拥世界文化遗产—"
+    }
+  ],
+  "prompt_hash": null,
+  "thresholds": {
+    "missing_substr_threshold": 0.5,
+    "overlap_confirm_hi": 0.4,
+    "overlap_confirm_lo": 0.15
+  },
+  "timestamp": "20260804T115633"
+}

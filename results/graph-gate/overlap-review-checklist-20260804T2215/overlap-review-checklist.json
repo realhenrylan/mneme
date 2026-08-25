@@ -1,0 +1,433 @@
+[
+  {
+    "case_id": "cross-002",
+    "query": "Compare the security features discussed in the URL exfiltration paper and OneDrive.",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 0.9474,
+        "best_window_overlap": 0.9474,
+        "preview": "cel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了解如何共享文件 安全性 借助个人保管库、勒索软件检测和恢复1 以及文件加密等安全功能，始终保障工作 和个人文件的安全。 1需要 Microsoft 365 个人版或家庭版订阅。"
+      }
+    ]
+  },
+  {
+    "case_id": "cross-002",
+    "query": "Compare the security features discussed in the URL exfiltration paper and OneDrive.",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "implement robust safeguards",
+    "candidate_chunks": [
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": "Figure 1: Sample attack Given the simplicity and effectiveness of these techniques, it is critical to im- plement robust safeguards, especially as there have been multiple attacks docu- mented externally. • Covert Data Exfiltration via LLMs1: Demonstrated in January 2024, this attack showed that URLs queried by the model could leak conversation data directly"
+      },
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": "Figure 1: Sample attack Given the simplicity and effectiveness of these techniques, it is critical to im- plement robust safeguards, especially as there have been multiple attacks docu- mented externally. • Covert Data Exfiltration via LLMs1: Demonstrated in January 2024, this attack showed that URLs queried by the model could leak conversation data directly"
+      },
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.3333,
+        "preview": "ws any link to be redirected to after an initial pass to an original site. Often seen as a security problem, there are a number of sites that explicitly allow this type of redirection. An example of this is shown in Figure 3, where the use of open redirects on google.com allow the original link to be nominally to the google.com domain but to eventually end u"
+      }
+    ]
+  },
+  {
+    "case_id": "cross-004",
+    "query": "南京的自然水系和OneDrive的文件同步有什么相似之处？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "自动备份并同步到 onedrive",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": " OneDrive.com 和 OneDrive 移 动应用，几乎可以从你所在的任意位置 使用所有设备创建、访问和编辑文件。 电脑文件夹备份 打开电脑文件夹备份，将“桌面”、 “文档”和“图片”文件夹自动备份并 同步到 OneDrive。 如何设置电脑文件夹备份 云存储 OneDrive 提供了一个安全的位 置来存储文件和照片。最初提供 "
+      }
+    ]
+  },
+  {
+    "case_id": "cross-006",
+    "query": "URL数据泄露论文和OneDrive安全功能都关注安全问题，它们的安全策略有什么区别？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 0.9474,
+        "best_window_overlap": 0.9474,
+        "preview": "cel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了解如何共享文件 安全性 借助个人保管库、勒索软件检测和恢复1 以及文件加密等安全功能，始终保障工作 和个人文件的安全。 1需要 Microsoft 365 个人版或家庭版订阅。"
+      }
+    ]
+  },
+  {
+    "case_id": "cross-006",
+    "query": "URL数据泄露论文和OneDrive安全功能都关注安全问题，它们的安全策略有什么区别？",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "implement robust safeguards",
+    "candidate_chunks": [
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": "Figure 1: Sample attack Given the simplicity and effectiveness of these techniques, it is critical to im- plement robust safeguards, especially as there have been multiple attacks docu- mented externally. • Covert Data Exfiltration via LLMs1: Demonstrated in January 2024, this attack showed that URLs queried by the model could leak conversation data directly"
+      },
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": "Figure 1: Sample attack Given the simplicity and effectiveness of these techniques, it is critical to im- plement robust safeguards, especially as there have been multiple attacks docu- mented externally. • Covert Data Exfiltration via LLMs1: Demonstrated in January 2024, this attack showed that URLs queried by the model could leak conversation data directly"
+      },
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.3333,
+        "preview": "ws any link to be redirected to after an initial pass to an original site. Often seen as a security problem, there are a number of sites that explicitly allow this type of redirection. An example of this is shown in Figure 3, where the use of open redirects on google.com allow the original link to be nominally to the google.com domain but to eventually end u"
+      }
+    ]
+  },
+  {
+    "case_id": "en-004",
+    "query": "What is speculative decoding?",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "a lightweight draft model proposes a block of candidate tokens, and the full-size target model verifies the entire block in a single forward pass via rejection sampling",
+    "candidate_chunks": [
+      {
+        "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_184",
+        "source": "DSpark_paper.pdf",
+        "bigram_overlap": 0.9619,
+        "best_window_overlap": 0.7143,
+        "preview": "e head is trained end-to-end alongside the draft model and subsequently calibrated via STS to provide reliable scheduling signals. Training the draft model requires the target model’s output distributions for supervision. Evaluating both models over the full document context incurs substantial memory footprints and inter-worker communication overhead. To add"
+      }
+    ]
+  },
+  {
+    "case_id": "en-005",
+    "query": "How much does DSpark improve the macro-average accepted length over Eagle3?",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+    "candidate_chunks": [
+      {
+        "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+        "source": "DSpark_paper.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.8906,
+        "preview": "ark domains. Specifically, across the Qwen3-4B, 8B, and 14B models, DSpark improves the macro-average accepted length over Eagle3 by 30.9%, 26.7%, and 30.0%, respectively. Similarly, compared to DFlash, DSpark yields relative improvements of 16.3%, 18.4%, and 18.3% across the three scales. Crucially, this advantage generalizes across model families, as demon"
+      }
+    ]
+  },
+  {
+    "case_id": "en-009",
+    "query": "What is the arXiv ID of the mobility analysis survey?",
+    "source_id": "LLMs_for_Mobility_Analysis_Survey.md",
+    "normalized_snippet": "arxiv: 2405.02357v2",
+    "candidate_chunks": [
+      {
+        "chunk_id": "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_0",
+        "source": "LLMs_for_Mobility_Analysis_Survey.md",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": "y of South California, Duke Kunshan University **Submission Date:** February 24, 2025 **arXiv:** 2405.02357v2 [cs.LG] 21 Feb 2025 --- "
+      }
+    ]
+  },
+  {
+    "case_id": "en-012",
+    "query": "What are the key features of OneDrive security?",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 0.9583,
+        "best_window_overlap": 0.9583,
+        "preview": "cel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了解如何共享文件 安全性 借助个人保管库、勒索软件检测和恢复1 以及文件加密等安全功能，始终保障工作 和个人文件的安全。 1需要 Microsoft 365 个人版或家庭版订阅。"
+      }
+    ]
+  },
+  {
+    "case_id": "en-017",
+    "query": "What is the WebPilot Cross-Plugin Attack?",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+    "candidate_chunks": [
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.9483,
+        "preview": "ation data directly in the query string. • WebPilot Cross-Plugin Attack2: Rehberger and collaborators demon- strated that a benign-looking page accessed via the WebPilot plugin could trigger another plugin, such as Zapier, to retrieve and exfiltrate user emails. • Writer.com Indirect Prompt Injection3: Adversaries caused the assistant to load hidden images, "
+      },
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.9655,
+        "preview": "• WebPilot Cross-Plugin Attack2: Rehberger and collaborators demon- strated that a benign-looking page accessed via the WebPilot plugin could trigger another plugin, such as Zapier, to retrieve and exfiltrate user emails. • Writer.com Indirect Prompt Injection3: Adversaries caused the assistant to load hidden images, with the source URL encoding private"
+      }
+    ]
+  },
+  {
+    "case_id": "en-019",
+    "query": "How does DSpark improve over DFlash?",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "over the parallel dflash by 16.3%, 18.4%, and 18.3%",
+    "candidate_chunks": [
+      {
+        "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+        "source": "DSpark_paper.pdf",
+        "bigram_overlap": 0.9706,
+        "best_window_overlap": 0.9706,
+        "preview": "he macro-average accepted length over the autoregressive Eagle3 (Li et al., 2026b) by 30.9%, 26.7%, and 30.0%, and over the parallel DFlash (Chen et al., 2026) by 16.3%, 18.4%, and 18.3%, respectively. Beyond top- line metrics, our fine-grained position-wise analysis reveals the distinct generation characteristics of different drafters, empirically demonstra"
+      },
+      {
+        "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21",
+        "source": "DSpark_paper.pdf",
+        "bigram_overlap": 0.9706,
+        "best_window_overlap": 0.9706,
+        "preview": "verage accepted length over the autoregressive Eagle3 (Li et al., 2026b) by 30.9%, 26.7%, and 30.0%, and over the parallel DFlash (Chen et al., 2026) by 16.3%, 18.4%, and 18.3%, respectively. Beyond top- line metrics, our fine-grained position-wise analysis reveals the distinct generation characteristics"
+      }
+    ]
+  },
+  {
+    "case_id": "mixed-001",
+    "query": "DSpark论文中Qwen3-4B模型的macro-average accepted length提升了多少？",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "it improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+    "candidate_chunks": [
+      {
+        "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+        "source": "DSpark_paper.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.8906,
+        "preview": "ark domains. Specifically, across the Qwen3-4B, 8B, and 14B models, DSpark improves the macro-average accepted length over Eagle3 by 30.9%, 26.7%, and 30.0%, respectively. Similarly, compared to DFlash, DSpark yields relative improvements of 16.3%, 18.4%, and 18.3% across the three scales. Crucially, this advantage generalizes across model families, as demon"
+      }
+    ]
+  },
+  {
+    "case_id": "mixed-002",
+    "query": "南京的OneDrive免费存储空间和Microsoft 365存储空间分别是多少？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "最初提供 5 gb 的免费存储空间,也可升级到 microsoft 365,获取 1 tb 的空间",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 0.8889,
+        "best_window_overlap": 0.8889,
+        "preview": "5 GB 的免费存储空间，也可升级到 Microsoft 365，获取 1 TB 的空间。 了解如何上传文件"
+      }
+    ]
+  },
+  {
+    "case_id": "mixed-003",
+    "query": "What are the key security features of OneDrive个人保管库？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 0.9615,
+        "best_window_overlap": 0.9615,
+        "preview": "和 Excel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了解如何共享文件 安全性 借助个人保管库、勒索软件检测和恢复1 以及文件加密等安全功能，始终保障工作 和个人文件的安全。 1需要 Microsoft 365 个人版或家庭版订阅。"
+      }
+    ]
+  },
+  {
+    "case_id": "mixed-005",
+    "query": "DSpark的speculative decoding如何工作？",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "a lightweight draft model proposes a block of candidate tokens, and the full-size target model verifies the entire block in a single forward pass via rejection sampling",
+    "candidate_chunks": [
+      {
+        "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_184",
+        "source": "DSpark_paper.pdf",
+        "bigram_overlap": 0.9619,
+        "best_window_overlap": 0.7143,
+        "preview": "e head is trained end-to-end alongside the draft model and subsequently calibrated via STS to provide reliable scheduling signals. Training the draft model requires the target model’s output distributions for supervision. Evaluating both models over the full document context incurs substantial memory footprints and inter-worker communication overhead. To add"
+      }
+    ]
+  },
+  {
+    "case_id": "mixed-008",
+    "query": "南京的城镇化率87.2%和DSpark对Eagle3的提升30.9%分别来自哪些文档？",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%",
+    "candidate_chunks": [
+      {
+        "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+        "source": "DSpark_paper.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.8491,
+        "preview": "all evaluated target models and benchmark domains. Specifically, across the Qwen3-4B, 8B, and 14B models, DSpark improves the macro-average accepted length over Eagle3 by 30.9%, 26.7%, and 30.0%, respectively. Similarly, compared to DFlash, DSpark yields relative improvements of 16.3%, 18.4%, and 18.3% across the three scales. Crucially, this advantage gener"
+      }
+    ]
+  },
+  {
+    "case_id": "mixed-012",
+    "query": "南京的长江水系和OneDrive的云存储有什么共同点？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "onedrive 提供了一个安全的位置来存储文件和照片",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": "e 移 动应用，几乎可以从你所在的任意位置 使用所有设备创建、访问和编辑文件。 电脑文件夹备份 打开电脑文件夹备份，将“桌面”、 “文档”和“图片”文件夹自动备份并 同步到 OneDrive。 如何设置电脑文件夹备份 云存储 OneDrive 提供了一个安全的位 置来存储文件和照片。最初提供 "
+      }
+    ]
+  },
+  {
+    "case_id": "mixed-013",
+    "query": "WebPilot攻击和prompt injection有什么关系？",
+    "source_id": "prevent-url-data-exfil.pdf",
+    "normalized_snippet": "a benign-looking page accessed via the webpilot plugin could exfiltrate data",
+    "candidate_chunks": [
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.9483,
+        "preview": "ation data directly in the query string. • WebPilot Cross-Plugin Attack2: Rehberger and collaborators demon- strated that a benign-looking page accessed via the WebPilot plugin could trigger another plugin, such as Zapier, to retrieve and exfiltrate user emails. • Writer.com Indirect Prompt Injection3: Adversaries caused the assistant to load hidden images, "
+      },
+      {
+        "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_15",
+        "source": "prevent-url-data-exfil.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.9655,
+        "preview": "• WebPilot Cross-Plugin Attack2: Rehberger and collaborators demon- strated that a benign-looking page accessed via the WebPilot plugin could trigger another plugin, such as Zapier, to retrieve and exfiltrate user emails. • Writer.com Indirect Prompt Injection3: Adversaries caused the assistant to load hidden images, with the source URL encoding private"
+      }
+    ]
+  },
+  {
+    "case_id": "multi-006",
+    "query": "What were the results on Qwen3 models?",
+    "source_id": "DSpark_paper.pdf",
+    "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+    "candidate_chunks": [
+      {
+        "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+        "source": "DSpark_paper.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 0.8871,
+        "preview": "aseline (DFlash) across all evaluated target models and benchmark domains. Specifically, across the Qwen3-4B, 8B, and 14B models, DSpark improves the macro-average accepted length over Eagle3 by 30.9%, 26.7%, and 30.0%, respectively. Similarly, compared to DFlash, DSpark yields relative improvements of 16.3%, 18.4%, and 18.3% across the three scales. Crucial"
+      }
+    ]
+  },
+  {
+    "case_id": "multi-007",
+    "query": "OneDrive是什么？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "将文件保存到 onedrive,以便从任意位置使用所有设备对其进行保护、备份和访问",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_0",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": "Microsoft OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。"
+      },
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_anchor",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": "Microsoft OneDrive 入门 将文件保存到 OneDrive，以便从任意位置使用所有设备对其进 行保护、备份和访问。"
+      }
+    ]
+  },
+  {
+    "case_id": "multi-008",
+    "query": "它提供多少免费空间？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "最初提供 5 gb 的免费存储空间",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 0.6923,
+        "best_window_overlap": 0.6923,
+        "preview": "5 GB 的免费存储空间，也可升级到 Microsoft 365，获取 1 TB 的空间。 了解如何上传文件"
+      }
+    ]
+  },
+  {
+    "case_id": "multi-010",
+    "query": "What security features does it have?",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 0.9474,
+        "best_window_overlap": 0.9474,
+        "preview": "cel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了解如何共享文件 安全性 借助个人保管库、勒索软件检测和恢复1 以及文件加密等安全功能，始终保障工作 和个人文件的安全。 1需要 Microsoft 365 个人版或家庭版订阅。"
+      }
+    ]
+  },
+  {
+    "case_id": "zh-014",
+    "query": "OneDrive的免费存储空间有多大？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "最初提供 5 gb 的免费存储空间",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 0.6923,
+        "best_window_overlap": 0.6923,
+        "preview": "5 GB 的免费存储空间，也可升级到 Microsoft 365，获取 1 TB 的空间。 了解如何上传文件"
+      }
+    ]
+  },
+  {
+    "case_id": "zh-015",
+    "query": "OneDrive如何保护文件安全？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "借助个人保管库、勒索软件检测和恢复以及文件加密等安全功能",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 0.9615,
+        "best_window_overlap": 0.9615,
+        "preview": "和 Excel 轻 松创建、编辑和共享文件。 了解如何使用 Office 网页版 共享和协作 与任何人共享文档、文件夹和照片。他 们不需要帐户即可查看、编辑或实时协 作处理文件。 了解如何共享文件 安全性 借助个人保管库、勒索软件检测和恢复1 以及文件加密等安全功能，始终保障工作 和个人文件的安全。 1需要 Microsoft 365 个人版或家庭版订阅。"
+      }
+    ]
+  },
+  {
+    "case_id": "zh-017",
+    "query": "OneDrive的电脑文件夹备份功能可以备份哪些文件夹？",
+    "source_id": "OneDrive 入门.pdf",
+    "normalized_snippet": "将\"桌面\"、\"文档\"和\"图片\"文件夹自动备份并同步到 onedrive",
+    "candidate_chunks": [
+      {
+        "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+        "source": "OneDrive 入门.pdf",
+        "bigram_overlap": 1.0,
+        "best_window_overlap": 1.0,
+        "preview": "随处访问 借助 OneDrive.com 和 OneDrive 移 动应用，几乎可以从你所在的任意位置 使用所有设备创建、访问和编辑文件。 电脑文件夹备份 打开电脑文件夹备份，将“桌面”、 “文档”和“图片”文件夹自动备份并 同步到 OneDrive。 如何设置电脑文件夹备份 云存储 OneDrive 提供了一个安全的位 置来存储文件和照片。最初提供 "
+      }
+    ]
+  }
+]

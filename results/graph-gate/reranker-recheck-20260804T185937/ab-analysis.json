@@ -1,0 +1,1158 @@
+{
+ "split": {
+  "dev": {
+   "n_cases": 95,
+   "n_chunk_truth": 63,
+   "n_source_valid": 73,
+   "n_answerable_gen": 73,
+   "retrieval": {
+    "candidate_recall": {
+     "A": 0.8436258186258186,
+     "B": 0.8436258186258186
+    },
+    "context_recall": {
+     "A": 0.5441391941391941,
+     "B": 0.5684410496910497
+    },
+    "context_precision": {
+     "A": 0.07777777777777778,
+     "B": 0.08694885361552028
+    },
+    "retention": {
+     "A": 0.5918079096045198,
+     "B": 0.6257062146892655
+    },
+    "squeeze": {
+     "A": 0.4081920903954802,
+     "B": 0.37429378531073443
+    },
+    "source_recall@5": {
+     "A": 0.9828767123287672,
+     "B": 0.9828767123287672
+    },
+    "source_recall@10": {
+     "A": 0.9828767123287672,
+     "B": 0.9828767123287672
+    },
+    "context_source_recall": {
+     "A": 0.9292237442922374,
+     "B": 0.8835616438356164
+    },
+    "context_source_coverage": {
+     "A": 0.58675799086758,
+     "B": 0.6073059360730594
+    }
+   },
+   "generation": {
+    "answer_point_coverage": {
+     "A": 0.6118721461187214,
+     "B": 0.610730593607306
+    },
+    "citation_id_validity": {
+     "A": 0.8493150684931506,
+     "B": 0.8356164383561644
+    },
+    "citation_precision": {
+     "A": 0.0,
+     "B": 0.0
+    },
+    "citation_recall": {
+     "A": 0.0,
+     "B": 0.0
+    },
+    "n_no_citation_A": 11,
+    "n_no_citation_B": 12,
+    "false_refusal_A": 16,
+    "false_refusal_B": 13,
+    "false_answer_A": 9,
+    "false_answer_B": 8,
+    "gen_ms_mean": {
+     "A": 1886.7187068493354,
+     "B": 12077.301164383442
+    },
+    "tokens_mean": {
+     "A": null,
+     "B": null
+    }
+   },
+   "paired_cov": {
+    "n_pairs": 73,
+    "n_blocks": 73,
+    "mean_delta": -0.0011415525114155248,
+    "ci95_low": -0.07077625570776257,
+    "ci95_high": 0.0730593607305936,
+    "bootstrap_iterations": 1000,
+    "bootstrap_seed": 42
+   },
+   "cov_wlt": {
+    "b_win": 5,
+    "b_loss": 6,
+    "tie": 62,
+    "n": 73
+   },
+   "paired_ctx_recall": {
+    "n_pairs": 63,
+    "n_blocks": 63,
+    "mean_delta": 0.02430185555185555,
+    "ci95_low": -0.0781475468975469,
+    "ci95_high": 0.12649202649202648,
+    "bootstrap_iterations": 1000,
+    "bootstrap_seed": 42
+   },
+   "ctx_wlt": {
+    "b_win": 9,
+    "b_loss": 6,
+    "tie": 48,
+    "n": 63
+   },
+   "mcnemar_citation": {
+    "n_pairs": 73,
+    "n_discordant": 11,
+    "a_only": 5,
+    "b_only": 6,
+    "p_value": 1.0
+   },
+   "mcnemar_refusal": {
+    "n_pairs": 95,
+    "n_discordant": 14,
+    "a_only": 9,
+    "b_only": 5,
+    "p_value": 0.4239501953125
+   },
+   "slices": {
+    "by_language": {
+     "zh": {
+      "n": 29,
+      "cov_A": 0.6609195402298851,
+      "cov_B": 0.6695402298850575,
+      "cov_delta": 0.008620689655172414,
+      "b_win": 3,
+      "b_loss": 3,
+      "tie": 23,
+      "ctx_recall_A": 0.76,
+      "ctx_recall_B": 0.8,
+      "ctx_delta": 0.04
+     },
+     "en": {
+      "n": 29,
+      "cov_A": 0.5344827586206896,
+      "cov_B": 0.5172413793103449,
+      "cov_delta": -0.017241379310344827,
+      "b_win": 1,
+      "b_loss": 2,
+      "tie": 26,
+      "ctx_recall_A": 0.41304347826086957,
+      "ctx_recall_B": 0.41506093544137024,
+      "ctx_delta": 0.002017457180500659
+     },
+     "mixed": {
+      "n": 15,
+      "cov_A": 0.6666666666666666,
+      "cov_B": 0.6777777777777777,
+      "cov_delta": 0.011111111111111117,
+      "b_win": 1,
+      "b_loss": 1,
+      "tie": 13,
+      "ctx_recall_A": 0.3853846153846154,
+      "ctx_recall_B": 0.4176923076923077,
+      "ctx_delta": 0.03230769230769231
+     }
+    },
+    "by_query_type": {
+     "cross_document": {
+      "n": 11,
+      "cov_A": 0.42424242424242425,
+      "cov_B": 0.42424242424242425,
+      "cov_delta": 0.0,
+      "b_win": 1,
+      "b_loss": 1,
+      "tie": 9,
+      "ctx_recall_A": 0.3030769230769231,
+      "ctx_recall_B": 0.30617861305361305,
+      "ctx_delta": 0.0031016899766899766
+     },
+     "metadata": {
+      "n": 14,
+      "cov_A": 0.6428571428571429,
+      "cov_B": 0.5714285714285714,
+      "cov_delta": -0.07142857142857142,
+      "b_win": 0,
+      "b_loss": 1,
+      "tie": 13,
+      "ctx_recall_A": 0.9,
+      "ctx_recall_B": 0.9,
+      "ctx_delta": 0.0
+     },
+     "mixed_intent": {
+      "n": 10,
+      "cov_A": 0.5833333333333333,
+      "cov_B": 0.65,
+      "cov_delta": 0.06666666666666668,
+      "b_win": 1,
+      "b_loss": 0,
+      "tie": 9,
+      "ctx_recall_A": 0.425,
+      "ctx_recall_B": 0.375,
+      "ctx_delta": -0.05
+     },
+     "multi_turn": {
+      "n": 7,
+      "cov_A": 0.4523809523809524,
+      "cov_B": 0.4523809523809524,
+      "cov_delta": 0.0,
+      "b_win": 0,
+      "b_loss": 0,
+      "tie": 7,
+      "ctx_recall_A": 0.5714285714285714,
+      "ctx_recall_B": 0.5714285714285714,
+      "ctx_delta": 0.0
+     },
+     "no_answer": {
+      "n": 0
+     },
+     "single_fact": {
+      "n": 31,
+      "cov_A": 0.7096774193548387,
+      "cov_B": 0.717741935483871,
+      "cov_delta": 0.008064516129032256,
+      "b_win": 3,
+      "b_loss": 4,
+      "tie": 24,
+      "ctx_recall_A": 0.5967741935483871,
+      "ctx_recall_B": 0.6612903225806451,
+      "ctx_delta": 0.06451612903225806
+     }
+    },
+    "multi_turn": {
+     "n": 7,
+     "cov_A": 0.4523809523809524,
+     "cov_B": 0.4523809523809524,
+     "cov_delta": 0.0,
+     "b_win": 0,
+     "b_loss": 0,
+     "tie": 7,
+     "ctx_recall_A": 0.5714285714285714,
+     "ctx_recall_B": 0.5714285714285714,
+     "ctx_delta": 0.0
+    },
+    "source_only": {
+     "n": 10,
+     "cov_A": 0.45,
+     "cov_B": 0.35,
+     "cov_delta": -0.1,
+     "b_win": 0,
+     "b_loss": 1,
+     "tie": 9,
+     "ctx_recall_A": null,
+     "ctx_recall_B": null,
+     "ctx_delta": null
+    },
+    "graph_target": {
+     "n": 21,
+     "cov_A": 0.5,
+     "cov_B": 0.5317460317460317,
+     "cov_delta": 0.03174603174603175,
+     "b_win": 2,
+     "b_loss": 1,
+     "tie": 18,
+     "ctx_recall_A": 0.36403846153846153,
+     "ctx_recall_B": 0.3405893065268065,
+     "ctx_delta": -0.023449155011655013
+    },
+    "source_only_retrieval": {
+     "n": 10,
+     "ctx_source_recall_A": 0.65,
+     "ctx_source_recall_B": 0.55,
+     "ctx_source_coverage_A": 0.4666666666666667,
+     "ctx_source_coverage_B": 0.3833333333333333
+    }
+   },
+   "fourth_chunk_same_source": {
+    "summary": {
+     "A": {
+      "cases_4plus": 2,
+      "retained": 0
+     },
+     "B": {
+      "cases_4plus": 2,
+      "retained": 0
+     }
+    },
+    "detail": [
+     {
+      "case_id": "cross-010",
+      "A": [
+       {
+        "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_9",
+        "source": "2405.02357v2.pdf",
+        "retained": false
+       }
+      ],
+      "B": [
+       {
+        "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_9",
+        "source": "2405.02357v2.pdf",
+        "retained": false
+       }
+      ]
+     },
+     {
+      "case_id": "mixed-013",
+      "A": [
+       {
+        "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_6",
+        "source": "prevent-url-data-exfil.pdf",
+        "retained": false
+       }
+      ],
+      "B": [
+       {
+        "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_6",
+        "source": "prevent-url-data-exfil.pdf",
+        "retained": false
+       }
+      ]
+     }
+    ]
+   },
+   "same_source_rank_ge4": {
+    "summary": {
+     "chunks": 45,
+     "cases": [
+      "cross-001",
+      "cross-002",
+      "cross-005",
+      "cross-009",
+      "cross-010",
+      "en-003",
+      "en-006",
+      "en-010",
+      "en-011",
+      "en-014",
+      "en-015",
+      "en-016",
+      "en-019",
+      "mixed-001",
+      "mixed-003",
+      "mixed-004",
+      "mixed-006",
+      "mixed-007",
+      "mixed-008",
+      "mixed-011",
+      "mixed-013",
+      "mixed-014",
+      "multi-001",
+      "multi-002",
+      "multi-008",
+      "multi-009",
+      "multi-010",
+      "zh-002",
+      "zh-003",
+      "zh-008",
+      "zh-011",
+      "zh-014",
+      "zh-016",
+      "zh-020"
+     ],
+     "retained_A": 12,
+     "retained_B": 20
+    },
+    "lt4": {
+     "chunks": 41,
+     "retained_A": 33,
+     "retained_B": 29
+    },
+    "detail": [
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 5,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "cross-001",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 6,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "cross-001",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 5,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "cross-002",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 14,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "cross-002",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_348",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 5,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "cross-005",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_7",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 4,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "cross-009",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_anchor",
+      "source": "2405.02357v2.pdf",
+      "rank_in_source": 9,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "cross-010",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_12",
+      "source": "2405.02357v2.pdf",
+      "rank_in_source": 22,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "cross-010",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_5",
+      "source": "2405.02357v2.pdf",
+      "rank_in_source": 18,
+      "in_context_A": false,
+      "in_context_B": true,
+      "case_id": "cross-010",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_9",
+      "source": "2405.02357v2.pdf",
+      "rank_in_source": 26,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "cross-010",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_anchor",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 54,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "en-003",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_6",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 8,
+      "in_context_A": false,
+      "in_context_B": true,
+      "case_id": "en-006",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_7",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 9,
+      "in_context_A": false,
+      "in_context_B": true,
+      "case_id": "en-006",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_0",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 11,
+      "in_context_A": false,
+      "in_context_B": true,
+      "case_id": "en-010",
+      "query_type": "metadata"
+     },
+     {
+      "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_5",
+      "source": "2405.02357v2.pdf",
+      "rank_in_source": 9,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "en-011",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_7",
+      "source": "2405.02357v2.pdf",
+      "rank_in_source": 45,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "en-011",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 6,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "en-014",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_5",
+      "source": "2405.02357v2.pdf",
+      "rank_in_source": 11,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "en-015",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 26,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "en-016",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 9,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "en-019",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 37,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "en-019",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 4,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "mixed-001",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 4,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "mixed-003",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "9bd16437068c08e95dbb77421368d9444f694623d9ce917c5b5921424e1e43d2_chunk_11",
+      "source": "2405.02357v2.pdf",
+      "rank_in_source": 44,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "mixed-004",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 5,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "mixed-006",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_6",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 13,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "mixed-007",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_7",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 9,
+      "in_context_A": true,
+      "in_context_B": false,
+      "case_id": "mixed-007",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 29,
+      "in_context_A": false,
+      "in_context_B": true,
+      "case_id": "mixed-008",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_8",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 10,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "mixed-011",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_6",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 7,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "mixed-013",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_7",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 6,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "mixed-013",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_20",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 28,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "mixed-014",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_21",
+      "source": "DSpark_paper.pdf",
+      "rank_in_source": 33,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "mixed-014",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 8,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "multi-001",
+      "query_type": "multi_turn"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 5,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "multi-002",
+      "query_type": "multi_turn"
+     },
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 4,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "multi-008",
+      "query_type": "multi_turn"
+     },
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 8,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "multi-009",
+      "query_type": "multi_turn"
+     },
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 8,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "multi-010",
+      "query_type": "multi_turn"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 4,
+      "in_context_A": false,
+      "in_context_B": true,
+      "case_id": "zh-002",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 6,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "zh-003",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_3",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 4,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "zh-008",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_9",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 6,
+      "in_context_A": false,
+      "in_context_B": true,
+      "case_id": "zh-011",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 5,
+      "in_context_A": false,
+      "in_context_B": true,
+      "case_id": "zh-014",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_2",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 5,
+      "in_context_A": false,
+      "in_context_B": true,
+      "case_id": "zh-016",
+      "query_type": "single_fact"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 10,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "zh-020",
+      "query_type": "single_fact"
+     }
+    ]
+   },
+   "fairness_audit": {
+    "shared_query_plan_rewrite_equal": true,
+    "rerank_ms_mean": {
+     "A": 0.0,
+     "B": 507.048092631617
+    },
+    "rerank_ms_nonzero_B": 95,
+    "rerank_ms_zero_A": 95,
+    "context_len_max": {
+     "A": 10,
+     "B": 10
+    },
+    "candidate_len_mean": {
+     "A": 70.0,
+     "B": 70.0
+    },
+    "context_selector": "select_context_candidates(top_k=min(k,20), max_per_source=3) applied identically to both arms"
+   }
+  },
+  "holdout": {
+   "n_cases": 15,
+   "n_chunk_truth": 10,
+   "n_source_valid": 12,
+   "n_answerable_gen": 12,
+   "retrieval": {
+    "candidate_recall": {
+     "A": 0.95,
+     "B": 0.95
+    },
+    "context_recall": {
+     "A": 0.925,
+     "B": 0.775
+    },
+    "context_precision": {
+     "A": 0.11000000000000001,
+     "B": 0.09
+    },
+    "retention": {
+     "A": 0.95,
+     "B": 0.8
+    },
+    "squeeze": {
+     "A": 0.05,
+     "B": 0.2
+    },
+    "source_recall@5": {
+     "A": 0.9583333333333334,
+     "B": 0.9583333333333334
+    },
+    "source_recall@10": {
+     "A": 0.9583333333333334,
+     "B": 0.9583333333333334
+    },
+    "context_source_recall": {
+     "A": 0.9166666666666666,
+     "B": 0.8333333333333334
+    },
+    "context_source_coverage": {
+     "A": 0.5694444444444444,
+     "B": 0.5416666666666666
+    }
+   },
+   "generation": {
+    "answer_point_coverage": {
+     "A": 0.611111111111111,
+     "B": 0.5
+    },
+    "citation_id_validity": {
+     "A": 0.8333333333333334,
+     "B": 0.5833333333333334
+    },
+    "citation_precision": {
+     "A": 0.0,
+     "B": 0.0
+    },
+    "citation_recall": {
+     "A": 0.0,
+     "B": 0.0
+    },
+    "n_no_citation_A": 2,
+    "n_no_citation_B": 5,
+    "false_refusal_A": 2,
+    "false_refusal_B": 4,
+    "false_answer_A": 1,
+    "false_answer_B": 1,
+    "gen_ms_mean": {
+     "A": 1962.4683249988568,
+     "B": 11734.134633333875
+    },
+    "tokens_mean": {
+     "A": null,
+     "B": null
+    }
+   },
+   "paired_cov": {
+    "n_pairs": 12,
+    "n_blocks": 12,
+    "mean_delta": -0.1111111111111111,
+    "ci95_low": -0.2777777777777778,
+    "ci95_high": 0.0,
+    "bootstrap_iterations": 1000,
+    "bootstrap_seed": 42
+   },
+   "cov_wlt": {
+    "b_win": 0,
+    "b_loss": 2,
+    "tie": 10,
+    "n": 12
+   },
+   "paired_ctx_recall": {
+    "n_pairs": 10,
+    "n_blocks": 10,
+    "mean_delta": -0.15,
+    "ci95_low": -0.35,
+    "ci95_high": 0.0,
+    "bootstrap_iterations": 1000,
+    "bootstrap_seed": 42
+   },
+   "ctx_wlt": {
+    "b_win": 0,
+    "b_loss": 2,
+    "tie": 8,
+    "n": 10
+   },
+   "mcnemar_citation": {
+    "n_pairs": 12,
+    "n_discordant": 3,
+    "a_only": 0,
+    "b_only": 3,
+    "p_value": 0.25
+   },
+   "mcnemar_refusal": {
+    "n_pairs": 15,
+    "n_discordant": 4,
+    "a_only": 1,
+    "b_only": 3,
+    "p_value": 0.625
+   },
+   "slices": {
+    "by_language": {
+     "zh": {
+      "n": 7,
+      "cov_A": 0.8095238095238095,
+      "cov_B": 0.6666666666666667,
+      "cov_delta": -0.14285714285714285,
+      "b_win": 0,
+      "b_loss": 1,
+      "tie": 6,
+      "ctx_recall_A": 1.0,
+      "ctx_recall_B": 0.8333333333333334,
+      "ctx_delta": -0.16666666666666666
+     },
+     "en": {
+      "n": 2,
+      "cov_A": 0.0,
+      "cov_B": 0.0,
+      "cov_delta": 0.0,
+      "b_win": 0,
+      "b_loss": 0,
+      "tie": 2,
+      "ctx_recall_A": 1.0,
+      "ctx_recall_B": 1.0,
+      "ctx_delta": 0.0
+     },
+     "mixed": {
+      "n": 3,
+      "cov_A": 0.5555555555555555,
+      "cov_B": 0.4444444444444444,
+      "cov_delta": -0.1111111111111111,
+      "b_win": 0,
+      "b_loss": 1,
+      "tie": 2,
+      "ctx_recall_A": 0.75,
+      "ctx_recall_B": 0.5833333333333334,
+      "ctx_delta": -0.16666666666666666
+     }
+    },
+    "by_query_type": {
+     "cross_document": {
+      "n": 2,
+      "cov_A": 0.3333333333333333,
+      "cov_B": 0.16666666666666666,
+      "cov_delta": -0.16666666666666666,
+      "b_win": 0,
+      "b_loss": 1,
+      "tie": 1,
+      "ctx_recall_A": 0.625,
+      "ctx_recall_B": 0.375,
+      "ctx_delta": -0.25
+     },
+     "metadata": {
+      "n": 2,
+      "cov_A": 0.0,
+      "cov_B": 0.0,
+      "cov_delta": 0.0,
+      "b_win": 0,
+      "b_loss": 0,
+      "tie": 2,
+      "ctx_recall_A": null,
+      "ctx_recall_B": null,
+      "ctx_delta": null
+     },
+     "mixed_intent": {
+      "n": 1,
+      "cov_A": 1.0,
+      "cov_B": 1.0,
+      "cov_delta": 0.0,
+      "b_win": 0,
+      "b_loss": 0,
+      "tie": 1,
+      "ctx_recall_A": 1.0,
+      "ctx_recall_B": 1.0,
+      "ctx_delta": 0.0
+     },
+     "multi_turn": {
+      "n": 3,
+      "cov_A": 0.8888888888888888,
+      "cov_B": 0.8888888888888888,
+      "cov_delta": 0.0,
+      "b_win": 0,
+      "b_loss": 0,
+      "tie": 3,
+      "ctx_recall_A": 1.0,
+      "ctx_recall_B": 1.0,
+      "ctx_delta": 0.0
+     },
+     "no_answer": {
+      "n": 0
+     },
+     "single_fact": {
+      "n": 4,
+      "cov_A": 0.75,
+      "cov_B": 0.5,
+      "cov_delta": -0.25,
+      "b_win": 0,
+      "b_loss": 1,
+      "tie": 3,
+      "ctx_recall_A": 1.0,
+      "ctx_recall_B": 0.75,
+      "ctx_delta": -0.25
+     }
+    },
+    "multi_turn": {
+     "n": 3,
+     "cov_A": 0.8888888888888888,
+     "cov_B": 0.8888888888888888,
+     "cov_delta": 0.0,
+     "b_win": 0,
+     "b_loss": 0,
+     "tie": 3,
+     "ctx_recall_A": 1.0,
+     "ctx_recall_B": 1.0,
+     "ctx_delta": 0.0
+    },
+    "source_only": {
+     "n": 2,
+     "cov_A": 0.0,
+     "cov_B": 0.0,
+     "cov_delta": 0.0,
+     "b_win": 0,
+     "b_loss": 0,
+     "tie": 2,
+     "ctx_recall_A": null,
+     "ctx_recall_B": null,
+     "ctx_delta": null
+    },
+    "graph_target": {
+     "n": 3,
+     "cov_A": 0.5555555555555555,
+     "cov_B": 0.4444444444444444,
+     "cov_delta": -0.1111111111111111,
+     "b_win": 0,
+     "b_loss": 1,
+     "tie": 2,
+     "ctx_recall_A": 0.75,
+     "ctx_recall_B": 0.5833333333333334,
+     "ctx_delta": -0.16666666666666666
+    },
+    "source_only_retrieval": {
+     "n": 2,
+     "ctx_source_recall_A": 0.5,
+     "ctx_source_recall_B": 0.25,
+     "ctx_source_coverage_A": 0.3333333333333333,
+     "ctx_source_coverage_B": 0.25
+    }
+   },
+   "fourth_chunk_same_source": {
+    "summary": {
+     "A": {
+      "cases_4plus": 0,
+      "retained": 0
+     },
+     "B": {
+      "cases_4plus": 0,
+      "retained": 0
+     }
+    },
+    "detail": []
+   },
+   "same_source_rank_ge4": {
+    "summary": {
+     "chunks": 5,
+     "cases": [
+      "cross-006",
+      "mixed-010",
+      "mixed-012",
+      "multi-001",
+      "multi-002"
+     ],
+     "retained_A": 4,
+     "retained_B": 4
+    },
+    "lt4": {
+     "chunks": 7,
+     "retained_A": 7,
+     "retained_B": 5
+    },
+    "detail": [
+     {
+      "chunk": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+      "source": "prevent-url-data-exfil.pdf",
+      "rank_in_source": 20,
+      "in_context_A": false,
+      "in_context_B": false,
+      "case_id": "cross-006",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 7,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "mixed-010",
+      "query_type": "mixed_intent"
+     },
+     {
+      "chunk": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1",
+      "source": "OneDrive 入门.pdf",
+      "rank_in_source": 5,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "mixed-012",
+      "query_type": "cross_document"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 8,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "multi-001",
+      "query_type": "multi_turn"
+     },
+     {
+      "chunk": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_2",
+      "source": "南京城市地理环境.docx",
+      "rank_in_source": 5,
+      "in_context_A": true,
+      "in_context_B": true,
+      "case_id": "multi-002",
+      "query_type": "multi_turn"
+     }
+    ]
+   },
+   "fairness_audit": {
+    "shared_query_plan_rewrite_equal": true,
+    "rerank_ms_mean": {
+     "A": 0.0,
+     "B": 1000.5958400009453
+    },
+    "rerank_ms_nonzero_B": 15,
+    "rerank_ms_zero_A": 15,
+    "context_len_max": {
+     "A": 10,
+     "B": 10
+    },
+    "candidate_len_mean": {
+     "A": 70.0,
+     "B": 70.0
+    },
+    "context_selector": "select_context_candidates(top_k=min(k,20), max_per_source=3) applied identically to both arms"
+   }
+  }
+ }
+}

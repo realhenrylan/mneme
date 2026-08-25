@@ -1,0 +1,16 @@
+case_id,query_type,s0_context_recall,s3_context_recall,outcome,flip,has_chunk_truth,notes
+cross-006,cross_document,0.2500,0.2500,equal,False,True,
+en-001,single_fact,1.0000,1.0000,equal,False,True,
+meta-002,metadata,,,,False,False,source_level_only
+meta-007,metadata,,,,False,False,source_level_only
+mixed-010,mixed_intent,1.0000,1.0000,equal,False,True,
+mixed-012,cross_document,1.0000,1.0000,equal,False,True,
+multi-004,multi_turn,1.0000,1.0000,equal,False,True,
+multi-005,multi_turn,0.5000,0.5000,equal,False,True,
+multi-006,multi_turn,1.0000,1.0000,equal,False,True,
+noanswer-010,no_answer,,,,False,False,refusal_case
+noanswer-015,no_answer,,,,False,False,refusal_case
+noanswer-025,no_answer,,,,False,False,refusal_case
+zh-006,single_fact,1.0000,1.0000,equal,False,True,
+zh-010,single_fact,1.0000,1.0000,equal,False,True,
+zh-013,single_fact,1.0000,1.0000,equal,False,True,

@@ -1,0 +1,42 @@
+{
+  "compare_version": 1,
+  "alpha_grid": [
+    1.0,
+    0.9,
+    0.8,
+    0.7,
+    0.6,
+    0.5
+  ],
+  "arms": [
+    "standard",
+    "standard-rerank",
+    "graph-rerank"
+  ],
+  "alphas": {
+    "0.5": {
+      "path": "alpha-0.5\\summary.json",
+      "summary_file": "summary.json"
+    },
+    "0.6": {
+      "path": "alpha-0.6\\summary.json",
+      "summary_file": "summary.json"
+    },
+    "0.7": {
+      "path": "alpha-0.7\\summary.json",
+      "summary_file": "summary.json"
+    },
+    "0.8": {
+      "path": "alpha-0.8\\summary.json",
+      "summary_file": "summary.json"
+    },
+    "0.9": {
+      "path": "alpha-0.9\\summary.json",
+      "summary_file": "summary.json"
+    },
+    "1": {
+      "path": "alpha-1\\summary.json",
+      "summary_file": "summary.json"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "status": "HYPOTHESIS_GENERATING_ONLY",
+  "inputs": {
+    "dev_retrieval": {
+      "path": "results/graph-gate/refusal-ablation-20260805T133209/dev-full/retrieval-cases.jsonl",
+      "sha256": "3f7ff23c30b92ce6594b2d6eb822a4f55e057746838ee4ce8f0546a74724fda2",
+      "case_count": 95
+    },
+    "holdout_retrieval": {
+      "path": "results/graph-gate/production-baseline-stable-20260805T084256/holdout-full/retrieval-cases.jsonl",
+      "sha256": "d3db8be3f89dd48df08c2eedc1be64516bbf5aaea03993adc5dc9e3573896885",
+      "case_count": 15
+    }
+  },
+  "outputs": [
+    "feature-dictionary.json",
+    "features.jsonl",
+    "rule-enumeration.json",
+    "pr-curves.json",
+    "separability-report.md",
+    "decision-report.md",
+    "manifest.json",
+    "run-commands.md"
+  ],
+  "llm_calls": 0,
+  "immutability": "read-only hypothesis generation; no production logic/config/threshold/dataset/truth modified; holdout used for feature records only (exploratory_only, not confirmatory)"
+}

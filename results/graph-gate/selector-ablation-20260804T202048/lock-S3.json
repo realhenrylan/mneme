@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "locked_alpha": 1.0,
+  "dataset": "v1.jsonl",
+  "dataset_sha256": "57602995ac85b82eabc61fc9867561f38d57c5118c067be33601553699ac7a89",
+  "corpus_sha256": "41fdb8539842bce06545ff2c9cad4b2a0b9e63d09ceda47a6fd09c55d5d31438",
+  "index_sha256": "c6b547815007832edbeeb55b819c45eb7385a7a6da622d3ae734612498032118",
+  "kg_sha256": null,
+  "embedding_model": "all-MiniLM-L6-v2",
+  "llm_model": "deepseek-chat",
+  "reranker_mode": "none",
+  "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+  "prompt_id": "d5b905dc0925a3fb8cbecc469ac3922f4df9f65158193eb3c3335d9eedbc5bf4",
+  "arms": [
+    "selector-cap3"
+  ],
+  "seed": 42,
+  "budgets": {
+    "candidate_top_k": 70,
+    "candidate_min_k": 12,
+    "candidate_max_k": 70,
+    "context_token_budget": 3000,
+    "context_avg_chunk_tokens": 200,
+    "context_min_k": 3,
+    "context_max_k": 10,
+    "context_chunk_size": 500,
+    "context_chunk_overlap": 50,
+    "adjacent_max_expand": 2,
+    "source_diversity_max_per_source": 3,
+    "rerank_top_k": 20,
+    "fusion_rrf_k": 60,
+    "refusal_threshold": 0.03,
+    "generation_temperature": 0.1
+  },
+  "provenance": {
+    "source": "development evaluation (alpha grid scan)",
+    "locked_alpha_selected_from": "development split only; never re-selected from holdout results",
+    "decision_notes": "",
+    "generated_by": "evaluation.locked_config"
+  },
+  "arm_selector_policy": {
+    "selector-cap3": 3
+  }
+}

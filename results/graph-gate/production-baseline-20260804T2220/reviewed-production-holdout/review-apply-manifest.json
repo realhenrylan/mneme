@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "overlay_file": "reviewed-truth-overlay.json",
+  "dataset_sha256": "8ce1b46b9eeaa54323c9533663088a222ed5e816d04335da1a23dd2a20ff7bb8",
+  "ground_truth_sha256": "cfd25a1bda06224d7b3352aeea93e473357f2f9041cd765db8becf1e0571930a",
+  "review_pack_manifest_sha256": "ae535abd951f84230fc26aa4cbbefd502bfc012bc712a9beb7d106f60c531434",
+  "counts": {
+    "overlap_decisions": 6,
+    "confirmed": 6,
+    "rejected": 0,
+    "case_relevance_decisions": 4,
+    "chunk_level": 0,
+    "source_only": 4
+  },
+  "notes": "Human review (holdout split, PYTHONHASHSEED=0): 6/6 confirmed; 4 source-only cases carried over"
+}

@@ -1,0 +1,46 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading dataset: D:\GitHub\mneme\evaluation\datasets\v1.jsonl
+  Loaded 110 cases
+  ✓ Dataset validation passed
+
+  Active cases: 94 (development)
+  ✓ Reviewed-truth overlay loaded (dataset hash verified, case refs valid)
+
+Building index from 6 source files...
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11689.30it/s]
+Error: truth gate failed — refusing formal comparison:
+  - case en-012: no reliable chunk truth and no explicit source-level decision; resolve (chunk annotation or relevance_level=source) before formal comparison
+  - case zh-018: no reliable chunk truth and no explicit source-level decision; resolve (chunk annotation or relevance_level=source) before formal comparison
+  - case en-009: no reliable chunk truth and no explicit source-level decision; resolve (chunk annotation or relevance_level=source) before formal comparison
+  - case en-020: no reliable chunk truth and no explicit source-level decision; resolve (chunk annotation or relevance_level=source) before formal comparison
+  - case cross-002: no reliable chunk truth and no explicit source-level decision; resolve (chunk annotation or relevance_level=source) before formal comparison
+索引重构中...
+加载: test_texts\2405.02357v2.pdf
+ -> pdf, 262 个切片 (sections=36, quality=native_text)
+加载: test_texts\DSpark_paper.pdf
+ -> pdf, 362 个切片 (sections=85, quality=native_text)
+加载: test_texts\LLMs_for_Mobility_Analysis_Survey.md
+ -> text, 39 个切片 (sections=28, quality=native_text)
+加载: test_texts\OneDrive 入门.pdf
+ -> pdf, 8 个切片 (sections=7, quality=native_text)
+加载: test_texts\prevent-url-data-exfil.pdf
+ -> pdf, 54 个切片 (sections=9, quality=native_text)
+加载: test_texts\南京城市地理环境.docx
+ -> docx, 11 个切片 (sections=11, quality=structured)
+已索引 736 个文档块
+Index built: 736 chunks
+
+Building Knowledge Graph...
+正在从736个chunks当中提取实体
+进度736/736
+Graph Stats: 
+Entities (nodes):  1295
+Relations (edges): 4641
+Chunks with Entities: 733
+KG built: 1295 entities, 4641 edges
+
+Building ground truth map...
+  Applied reviewed truth overlay: 12 source-only cases
+  Ground truth entries: 87
+  Exact matches: 60, Source fallbacks: 0
+  Cases with reliable chunk truth: 66/94 (excluded: 15 answerable without chunk truth)

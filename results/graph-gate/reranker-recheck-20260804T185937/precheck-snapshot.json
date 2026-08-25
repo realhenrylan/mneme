@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-08-04T19:01:17.945316",
+  "locked_config_sha256": "9d3dd5f3bb3fc8369854ae9819ee56b01833610fab7a206d8f8f024a053aa8d1",
+  "dataset_sha256": "57602995ac85b82eabc61fc9867561f38d57c5118c067be33601553699ac7a89",
+  "corpus_sha256": "41fdb8539842bce06545ff2c9cad4b2a0b9e63d09ceda47a6fd09c55d5d31438",
+  "index_sha256": "c6b547815007832edbeeb55b819c45eb7385a7a6da622d3ae734612498032118",
+  "env": {
+    "API_KEY": true,
+    "BASE_URL": true
+  },
+  "llm_model": "deepseek-chat",
+  "notes": [
+    "dataset_sha256=57602995ac85b82eabc61fc9867561f38d57c5118c067be33601553699ac7a89",
+    "corpus_sha256=41fdb8539842bce06545ff2c9cad4b2a0b9e63d09ceda47a6fd09c55d5d31438 (6 source files)",
+    "overlay: 27 entries, 12 case levels",
+    "recheck lock matched: lock-A.json (reranker_mode='none')",
+    "env API_KEY: present (value redacted)",
+    "env BASE_URL: present (value redacted)",
+    "LLM_MODEL: default deepseek-chat",
+    "RAG_RERANKER env: '(unset → none)'",
+    "index_sha256=c6b547815007832edbeeb55b819c45eb7385a7a6da622d3ae734612498032118 (736 chunks)",
+    "index_fingerprint=fefbc7349bb79edb0ce99224aa34db6b191eb708e8d2a7d3203adf9b5c1181a3"
+  ],
+  "immutability_snapshot": {
+    "results\\graph-gate\\decision-report.md": "f603111d7e3582162d3911febf6c0ba646976058bc4e40171957d9ad084c5e79",
+    "results\\graph-gate\\auto-run-20260804T121410\\automated-decision-report.md": "8efcee96032d16a4498f85960102ab7c6ec27aeca487ba2ed932c9dba49ac7f8",
+    "results\\graph-gate\\auto-run-20260804T121410\\reranker-fix-implementation-report.md": "cc8821b28427bf7b04b202c44428b544b87c3e5778c827e494811583b89d0baa",
+    "results\\graph-gate\\auto-run-20260804T121410\\reranker-regression-diagnosis.md": "716e1f9efed0685241eeeb75e857f2df768ad9fa0ed9ac872e324dcaa9cfa333",
+    "results\\graph-gate\\auto-run-20260804T121410\\alpha-selection.json": "484be8921356a8519788a4830d79889d12d68367bb22ad8918210cde42e6383f",
+    "results\\graph-gate\\auto-run-20260804T121410\\dev-full\\run-manifest.json": "339004ad873fb9ad30f7193c02b1e796bd00a260a755822cdc00fad9cda3c4af",
+    "results\\graph-gate\\auto-run-20260804T121410\\dev-full\\summary.json": "3b0ee3c9a55f8e85861125c28e31248c2542e67ddb6e0cf8e367c06da5491da3",
+    "results\\graph-gate\\auto-run-20260804T121410\\dev-full\\generation-summary.json": "5175953b5a8936d0851608b73c28945b59d8b618433f819cdc8a9f52d8552333",
+    "results\\graph-gate\\auto-run-20260804T121410\\holdout-full\\run-manifest.json": "8b1f376d2cec02698fe40efb9173a58023dcb5928227e3afb2ffc2b71e0c58fa",
+    "results\\graph-gate\\auto-run-20260804T121410\\lock-generation\\locked-config.json": "df668643d9a2b30ac4be80d5a3c8e77e819c2e760275c3596d993f31bf6b7380",
+    "results\\graph-gate\\auto-run-20260804T121410\\auto-reviewed-truth\\reviewed-truth-overlay.json": "1d817a504c2392bdee504b0b15be86a9d51db0d4cf33d0a4f1cee46ed60bc870"
+  }
+}

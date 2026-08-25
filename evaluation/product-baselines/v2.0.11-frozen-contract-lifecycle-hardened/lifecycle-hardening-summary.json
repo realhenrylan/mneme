@@ -1,0 +1,76 @@
+{
+ "activation_blocked": true,
+ "cleaned": true,
+ "declarations": {
+  "active_generated": false,
+  "c11_touched": false,
+  "chroma_persisted": false,
+  "frozen_inputs_touched": false,
+  "generation_used": false,
+  "llm_called": false,
+  "locked_generated": false,
+  "network_used": false,
+  "original_c1_touched": false,
+  "overlay_generated": false,
+  "phase6a_touched": false,
+  "phase6b01_touched": false,
+  "phase6b0_touched": false,
+  "retrieval_experiment_rerun": false,
+  "split_generated": false,
+  "v2_1_generated": false
+ },
+ "frozen_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "frozen_revision_status": "CANDIDATE",
+ "guarded_apis": [
+  "add_files_to_index",
+  "remove_file_from_index",
+  "sync_sources(dry_run=False)",
+  "add_sources",
+  "prepare_index(snapshot=None) on existing snapshot collection (B0.2.1 parser-rebuild rejection)",
+  "build_index(snapshot=None) on existing snapshot collection (B0.2.1 parser-rebuild rejection)"
+ ],
+ "human_reviewed": false,
+ "immutability": {
+  "checked_count": 53,
+  "marker": {
+   "key": "mneme.snapshot_index",
+   "value": "immutable"
+  },
+  "mechanism": "collection 级 immutable marker（Chroma collection metadata，sqlite 持久化）为权威信号；旧 B0.1 manifest-only 形态经 manifest config.snapshot 阻断，合法 rebuild 自动迁移写入 marker；marker 存在而 sidecar 缺失/损坏/不一致 → 保守拒绝，绝不降级 parser；B0.2.1：manifest-only 判定使用 collection 实际持久化目录（特征检测 persist_directory），错误/None chroma_path 不可绕过，位置不可推导时 fail-closed 拒绝；既有 snapshot collection 拒绝 默认 parser 重建（snapshot=... 显式 rebuild 是唯一 更新路径）；B0.2.2：persist 身份只接受 is_persistent=True 且为稳定绝对路径的真实持久化 client——EphemeralClient / remote / 测试 double / 仅剩相对 persist path 一律不可验证 → fail-closed；Mneme 自建 client 创建时 realpath(abspath(...)) 规范化；外部绝对路径 client 生命周期不受影响",
+  "passed_count": 53
+ },
+ "not_measured": {
+  "note": "本阶段不重跑检索/评测指标；只验证生命周期不可变性与只读路径。answer quality / citation faithfulness / refusal accuracy 沿用既有 not_measured 声明"
+ },
+ "readonly_apis": [
+  "compute_source_diff",
+  "sync_sources(dry_run=True)"
+ ],
+ "rebuild_paths": [
+  "prepare_index(snapshot=...)",
+  "build_index(snapshot=...)"
+ ],
+ "scope": "Phase 6-B0.2 / B0.2.1 / B0.2.2 frozen contract lifecycle hardening (read-only verification)",
+ "verification": {
+  "frozen": {
+   "checks": 61,
+   "drift": 0,
+   "verified": true
+  },
+  "phase6a": {
+   "checks": 50,
+   "drift": 0,
+   "verified": true
+  },
+  "phase6b0": {
+   "checks": 64,
+   "drift": 0,
+   "verified": true
+  },
+  "phase6b01": {
+   "checks": 71,
+   "drift": 0,
+   "verified": true
+  }
+ }
+}

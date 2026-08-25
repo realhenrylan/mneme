@@ -1,0 +1,42 @@
+{
+ "acceptance_subjects_sha256": {
+  "evaluation/product-baselines/v2.0.11-frozen-contract-lifecycle-hardened/manifest.json": "b266064db5cb4c29df85a39dcd8293809759622a6fd1cf7f4adec951bf103c94",
+  "scripts/evaluate_v211_frozen_contract_lifecycle_hardened.py": "1bc14d38a49d7aef82e3e91a32297b7ad0c6da4a7a499d8751f5a516cef8f735",
+  "src/rag.py (B0.2 gate region audited; file concurrently dirty)": "0e1b3c32b4d265c52568f0fa0ff1fbb1abaf459bcaa64fac7acb7a5713e2c7b3",
+  "tests/test_evaluate_v211_frozen_contract_lifecycle_hardened.py": "7ee66dddbc7d9240bad8ccf79cddcf65b0ac9e450e74e1739ddbeae010fb8c6d",
+  "tests/test_index_lifecycle_immutability.py": "2bb9c42c7934151179e6fcae9a1997364299e2a08aa09853a05b384d89368bbf"
+ },
+ "date": "2026-08-25",
+ "decision": "ACCEPT_B02_LIFECYCLE_HARDENING_COMPLETE",
+ "head_at_acceptance": "8e3be0c6e58bfa4c03ec15a96f9a3913f0d9285b",
+ "manifest_sha256": "9f33315ebb4c7220202b401e820851f1d0c04546126e857704d8bc2a6a7f72e9",
+ "protected_assets": {
+  "before_after_drift": {
+   "added": 0,
+   "changed": 0,
+   "removed": 0
+  },
+  "file_count": 365,
+  "groups": [
+   "evaluation/datasets/**",
+   "evaluation/product-baselines/**",
+   "evaluation/datasets/v2/revisions/**",
+   "src/query_plan_capture.py + tests/*g1*s*"
+  ]
+ },
+ "report_path": "results/b02-lifecycle-acceptance/b02-acceptance-report.md",
+ "report_sha256": "bad87f2d6a72db91a7dc27238d804653b6c524a4326b6f0a6f22c541cc1275b5",
+ "schema_version": "b02-lifecycle-acceptance-manifest-v1",
+ "verification_summary": {
+  "gate_10_boundary_self_evidence": "PASS (CANDIDATE / activation_blocked=true; HEAD unchanged; no stage/commit/push)",
+  "gate_1_source_audit": "PASS",
+  "gate_2_probe_no_client_retention": "PASS 6/6",
+  "gate_3_adversarial_matrix_and_real_rebuild": "PASS 23/23 + real 2 passed",
+  "gate_4_read_only_ops_preserved": "PASS",
+  "gate_5_plain_index_unaffected": "PASS",
+  "gate_6_order_independence": "PASS (eval alone 18p; joint x3 43p each; minimal-order both directions 2p each; 0 failed)",
+  "gate_7_artifact_closure": "PASS (self-hash MATCH; 42 inputs mismatch=0; DQ 57/57; mechanical 53/53; same-shape rebuild diff_count=0)",
+  "gate_8_lineage_zero_drift": "PASS (lineage manifests MATCH; protected 365 files zero drift)",
+  "gate_9_full_regression": "PASS (targeted 115p; full 2691 passed / 8 skipped / 0 failed; py_compile exit 0; git diff --check exit 0)"
+ }
+}

@@ -1,0 +1,244 @@
+{
+ "data_quality": {
+  "checks": [
+   {
+    "detail": "rows=136 expected=136",
+    "name": "completeness.baseline_rows",
+    "ok": true
+   },
+   {
+    "detail": "rows=136 expected=136",
+    "name": "completeness.candidate_rows",
+    "ok": true
+   },
+   {
+    "detail": "missing keys=[]",
+    "name": "completeness.baseline_keys",
+    "ok": true
+   },
+   {
+    "detail": "missing keys=[]",
+    "name": "completeness.candidate_keys",
+    "ok": true
+   },
+   {
+    "detail": "duplicates=[]",
+    "name": "uniqueness.case_ids",
+    "ok": true
+   },
+   {
+    "detail": "baseline/candidate 行序不一致",
+    "name": "uniqueness.candidate_case_ids",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "validity.metric_ranges",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "consistency.per_case_recompute",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "consistency.aggregates_vs_mean",
+    "ok": true
+   },
+   {
+    "detail": "orphan=[]",
+    "name": "referential.retrieved_ids_in_corpus",
+    "ok": true
+   },
+   {
+    "detail": "orphan=[]",
+    "name": "referential.relevant_ids_in_corpus",
+    "ok": true
+   },
+   {
+    "detail": "{}",
+    "name": "referential.mapping_failures_zero",
+    "ok": true
+   },
+   {
+    "detail": "{'total_cases': 136, 'chunk_metrics_cases': 105, 'no_chunk_truth_cases': 31, 'mapping_failure_rows': 0}",
+    "name": "conservation.case_counts",
+    "ok": true
+   },
+   {
+    "detail": "{'total_cases': 136, 'chunk_metrics_cases': 105, 'no_chunk_truth_cases': 31, 'mapping_failure_rows': 0}",
+    "name": "conservation.mapping_failures_zero",
+    "ok": true
+   },
+   {
+    "detail": "cd n=26",
+    "name": "conservation.cross_document_n",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "strategy.variants_literal_substrings",
+    "ok": true
+   },
+   {
+    "detail": "见 strategy.variants_literal_substrings",
+    "name": "strategy.candidate_no_duplicate_chunk_ids",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "lineage.frozen_verified",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "lineage.phase6a_verified",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "lineage.phase6b0_verified",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "lineage.hardened_verified",
+    "ok": true
+   }
+  ],
+  "error_count": 0,
+  "errors": [],
+  "note": "data-analytics:analyze-data-quality 实际检查：zcode 运行环境不可用（本次会话可用技能列表、~/.zcode/skills 仅 brainstorming/test-driven-development、~/.agents/skills 仅 browser-skill、插件目录均无 data-analytics）——不能声称所有环境均不可用；实施等价的确定性机械复算；data_quality 只含核心完整性/唯一性/指标复算/引用完整性/谱系与 manifest 闭环检查，不含 promotion gate 条件",
+  "passed": true,
+  "warning_count": 0,
+  "warnings": []
+ },
+ "note": "data-analytics:analyze-data-quality 实际检查：zcode 运行环境不可用（本次会话可用技能列表、~/.zcode/skills 仅 brainstorming/test-driven-development、~/.agents/skills 仅 browser-skill、插件目录均无 data-analytics）——不能声称所有环境均不可用；实施等价的确定性机械复算",
+ "promotion_eligibility": {
+  "checks": [
+   {
+    "detail": "conditions=6",
+    "name": "gate.conditions_complete",
+    "ok": true
+   },
+   {
+    "detail": "NO_PROMOTION",
+    "name": "gate.decision_recorded",
+    "ok": true
+   }
+  ],
+  "conditions": [
+   {
+    "build1": {
+     "baseline": 0.2948717948717949,
+     "candidate": 0.2692307692307692,
+     "delta": -0.025641026,
+     "ok": false,
+     "required": "cd recall@5 提升 ≥ +0.03"
+    },
+    "build2": {
+     "baseline": 0.2948717948717949,
+     "candidate": 0.2692307692307692,
+     "delta": -0.025641026,
+     "ok": false,
+     "required": "cd recall@5 提升 ≥ +0.03"
+    },
+    "id": "cd_recall@5_gain",
+    "ok": false
+   },
+   {
+    "build1": {
+     "baseline": 0.6158730158730159,
+     "candidate": 0.5476190476190477,
+     "delta": -0.068253968,
+     "ok": false,
+     "required": "全量 recall@5 下降 ≤ 0.01"
+    },
+    "build2": {
+     "baseline": 0.6158730158730159,
+     "candidate": 0.5571428571428572,
+     "delta": -0.058730159,
+     "ok": false,
+     "required": "全量 recall@5 下降 ≤ 0.01"
+    },
+    "id": "overall_recall@5_no_drop",
+    "ok": false
+   },
+   {
+    "build1": {
+     "baseline": {
+      "mrr": 0.5397767149910897,
+      "ndcg@10": 0.5448505949761953
+     },
+     "candidate": {
+      "mrr": 0.45646745959441,
+      "ndcg@10": 0.48204563635432773
+     },
+     "deltas": {
+      "mrr": -0.083309255,
+      "ndcg@10": -0.062804959
+     },
+     "ok": false,
+     "required": "全量 nDCG@10 与 MRR 下降均 ≤ 0.01"
+    },
+    "build2": {
+     "baseline": {
+      "mrr": 0.5397608419752167,
+      "ndcg@10": 0.5448505949761953
+     },
+     "candidate": {
+      "mrr": 0.45473817439734154,
+      "ndcg@10": 0.4790305469177859
+     },
+     "deltas": {
+      "mrr": -0.085022668,
+      "ndcg@10": -0.065820048
+     },
+     "ok": false,
+     "required": "全量 nDCG@10 与 MRR 下降均 ≤ 0.01"
+    },
+    "id": "overall_ndcg10_mrr_no_drop",
+    "ok": false
+   },
+   {
+    "build1": {
+     "baseline": 0.9423076923076923,
+     "candidate": 0.9615384615384616,
+     "delta": 0.019230769,
+     "ok": true,
+     "required": "cd source recall@5 不下降（float 容差 1e-9）"
+    },
+    "build2": {
+     "baseline": 0.9423076923076923,
+     "candidate": 0.9615384615384616,
+     "delta": 0.019230769,
+     "ok": true,
+     "required": "cd source recall@5 不下降（float 容差 1e-9）"
+    },
+    "id": "cd_source_recall@5_no_drop",
+    "ok": true
+   },
+   {
+    "formula": "min(build1_gain, build2_gain) ≥ noise_factor × noise",
+    "id": "exceeds_recorded_noise",
+    "min_gain_across_builds": -0.025641026,
+    "noise_cd_recall5": 0.0,
+    "ok": false,
+    "required": "cd recall@5 增益 ≥ 3.0 × 记录的跨构建噪声（0.000000）"
+   },
+   {
+    "id": "all_checks_passed",
+    "ok": true
+   }
+  ],
+  "decision": "NO_PROMOTION",
+  "failures": [
+   "cd_recall@5_gain",
+   "overall_recall@5_no_drop",
+   "overall_ndcg10_mrr_no_drop",
+   "exceeds_recorded_noise"
+  ],
+  "note": "promotion gate（6 项条件，预先锁定，机械判定）是实验决策结果：任一条件失败 → NO_PROMOTION；失败 gate **不是 data-quality 失败**，data_quality.passed 也**不意味着** promotion 通过；失败条件只出现在本段，不混入 data_quality.checks"
+ }
+}

@@ -1,0 +1,32 @@
+{
+  "verifier": "independent-agent",
+  "timestamp": "2026-08-05T08:52:06+08:00",
+  "checks": {
+    "precheck_script_coverage": "PASS — 6 项校验全部实现并顺序执行：1) validate_locked_config 全字段（dataset/corpus/seed/arms/models/reranker=none/prompt/budgets/arm_selector_policy/kg 适用性）；2) group_aware_split(seed=42) 指纹 vs lock.split_fingerprint + split-manifest 计数；3) 双 overlay（dataset_sha256/ground_truth_sha256/未知 case_ids/注解存在于 dataset/GT 消费性 apply_reviewed_truth_overlay/双 split enforce_truth_gate）；4) 索引指纹后验（force_rebuild=False 加载缓存索引对比 lock.index_sha256）；5) env 存在性 + RAG_RERANKER=none；6) immutability 快照（12 文件）落盘。fail-closed：failures 非空 → sys.exit(1)；overlay load/apply 的 ValueError 被捕获转为 failures，其余异常以非零退出方式阻断。",
+    "precheck_logic_gaps": "PASS (2 项非阻断观察) — a) 第 6 项 docstring 声称 immutability '结束时复验'，但代码仅一次性快照并写入 precheck-snapshot.json，run 内无二次比对（本次核验独立复算确认 12 个快照文件当前哈希全部与快照一致，未发生改写）；b) precheck 未校验 overlay case_relevance_levels（source-only）case 是否属于当前 split——holdout overlay 的 source-only 列表引用了 dev 侧 case（见 holdout_source_only 项），功能上无影响但属于数据卫生缺陷。另 smoke.py source-only 层 docstring 声称校验'两个源都出现'，代码实际只查 answer/sources 非空（实现弱于文档描述）。",
+    "dataset_sha256": "PASS — 独立 sha256(evaluation/datasets/v1.jsonl)=8ce1b46b9eeaa54323c9533663088a222ed5e816d04335da1a23dd2a20ff7bb8 == lock.dataset_sha256 == 任务给定值；注：v1.jsonl 相对 git HEAD 有修改，但 lock 与当前工作区内容一致（lock 即基于当前内容生成）。",
+    "corpus_sha256": "PASS — 独立复算 _compute_corpus_hash(test_texts, 全 relevant_source_ids)=41fdb8539842bce06545ff2c9cad4b2a0b9e63d09ceda47a6fd09c55d5d31438 == lock.corpus_sha256。",
+    "split_fingerprint_PYTHONHASHSEED0": "PASS — PYTHONHASHSEED=0 下 group_aware_split(load_dataset(v1.jsonl), seed=42)：dev=95, holdout=15, compute_split_fingerprint=454892e4b9968e9ed85807b605fc6fffe920dd1aa3a665c29f8235eafeaa3690。",
+    "split_fingerprint_PYTHONHASHSEED42": "PASS — PYTHONHASHSEED=42 下结果完全一致：dev=95, holdout=15, 指纹=454892e4b9968e9ed85807b605fc6fffe920dd1aa3a665c29f8235eafeaa3690（两次 dev/holdout case_id 集合逐字节一致，PYTHONHASHSEED 无关性成立）。",
+    "split_vs_manifest": "PASS — 独立算出的 dev/holdout case_id 集合与 split-manifest.json 的 dev_case_ids/holdout_case_ids 完全一致（dev 95 含 cross-008/en-013/meta-003/meta-008；holdout 15）。",
+    "index_sha256": "PASS — 独立连接 Chroma 缓存集合 eval-autorun-lock（736 chunks），按 _index_snapshot_sha256 同口径（sorted (id, metadata) 哈希）复算=c6b547815007832edbeeb55b819c45eb7385a7a6da622d3ae734612498032118 == lock.index_sha256；manifest 记录 736 条 chunk_ids。",
+    "dev_overlay": "PASS — dataset_sha256 与 GT_sha256（e5c7bcbf...）均与当前文件一致；21 条 entries 全部 confirmed、case_id 已知、normalized_snippet 均存在于对应 case 的 relevant chunks；21/21 被 ground-truth-map-dev.json 消费（无异常）；counts 字段自洽；source_only=[cross-008,en-013,meta-003,meta-008] 全部属于 dev split。",
+    "holdout_overlay": "PASS（含 1 项非阻断观察）— dataset_sha256 与 GT_sha256（f950dc58...）一致；4 条 entries（cross-006×2/mixed-012/multi-006）全部 confirmed、全部被 ground-truth-map-holdout.json 消费；counts 自洽。观察：holdout overlay 的 case_relevance_levels 也是 [cross-008,en-013,meta-003,meta-008]，但这 4 个 case 全部属于 dev split（provenance：review-pack 生成阶段把同一批 4 条 missing-chunk-truth 行同时写入 dev/holdout 两套 pack，含未填充版；迁移按 stable key 拷贝 decision）。功能影响为零：holdout truth gate 中 source-only 跳过分支对 15 个 holdout case 无一触发（0 个被跳过），holdout 侧 12 个非拒答 case 全部有可靠 chunk truth 才通过 gate；正式评测分母也不受影响。",
+    "dev_truth_gate": "PASS — apply_reviewed_truth_overlay 无异常、21 entries 全消费；has_truth 构造（exact 或 overlap/parent+confirmed）：95 active 中 69 有可靠 chunk truth、22 拒答跳过、4 source-only（69+22+4=95）；enforce_truth_gate 返回 []。",
+    "holdout_truth_gate": "PASS — apply_reviewed_truth_overlay 无异常、4 entries 全消费；15 active 中 12 有可靠 chunk truth、3 拒答跳过（noanswer-010/015/025）、source-only 0 适用；enforce_truth_gate 返回 []。",
+    "smoke_records": "PASS（规格说明）— smoke-results.json 共 5 条记录而非 6：smoke.py 6 层中 5 层调用 run() 产生记录（zh-014/en-005/multi-006/cross-008/noanswer-010），第 6 层 citation 是对既有 5 条记录复用校验、不新增记录；5 条 answer 全部非空。",
+    "smoke_citations": "PASS — 逐条复算 [S#]：zh-014=S1..S10(10)、en-005=S1..S6(6)、multi-006=S1..S10(10)、cross-008=S1..S10(10)，编号均从 1 连续到 max，无缺失。",
+    "smoke_content_assertions": "PASS — zh-014 answer 含 '1 TB'（类 5GB/1TB 数字命中）；en-005 含 '30.9'；multi-006 含 Qwen3 结果（30.9%/26.7%/30.0%）；noanswer-010 answer 恰为 '未找到足够可靠的文档依据，暂时无法回答该问题。' 且 refused=True。注（非阻断）：zh-014 与 cross-008 的 answer 均为检索未覆盖关键信息的拒答式内容（zh-014 未提及 5GB 免费额度；cross-008 未给出页数），属行为记录，smoke 契约本身满足。",
+    "immutability_snapshot": "PASS — 独立重算 precheck-snapshot.json 中全部 12 个 immutability 文件当前 SHA-256，与快照值逐一相等（含 decision-report.md、lock、双 overlay、双 GT map、双 run-manifest、双 summary）；snapshot.lock_sha256 与当前 lock 文件哈希一致；snapshot.dataset_sha256 与独立复算一致。",
+    "env_checks": "PASS（以 precheck 记录为准）— API_KEY/BASE_URL 为密钥，独立验证进程环境无法复现 precheck 运行时环境（当前 shell 未设置）；precheck 代码对两者做 bool 存在性检查且快照记录为 present，RAG_RERANKER=none 与 LLM_MODEL=deepseek-chat、PYTHONHASHSEED=0 已记录；split 指纹已验证不依赖 PYTHONHASHSEED。"
+  },
+  "overall": "PASS",
+  "blockers": [],
+  "observations": [
+    "holdout overlay 的 case_relevance_levels 引用了 dev split 的 4 个 source-only case（cross-008/en-013/meta-003/meta-008），源于 review-pack 生成阶段两套 pack 都写入同一批 missing-chunk-truth 行；对 holdout gate 与指标无任何功能影响（无 holdout case 被跳过，holdout 12 个非拒答 case 均自带可靠 chunk truth），仅数据卫生层面的冗余/不准确，建议后续修正但非阻断。",
+    "smoke-results.json 为 5 条记录（6 层中的 citation 层不产记录），任务描述'共 6 条记录'不精确。",
+    "precheck 第 6 项 docstring 声称 immutability 结束时复验，代码仅一次性快照；本次核验已独立确认快照与当前文件一致，未发现改写。",
+    "precheck 未校验 overlay case_relevance_levels 与 split 的归属关系（与第 1 条观察同源），建议加 'source-only case 必须属于当前 split' 的断言。",
+    "smoke.py source-only 层实现弱于 docstring（未真正断言两个 source 都出现）；cross-008 的 sources 实际含 OneDrive 与 DSpark 两个源。"
+  ]
+}

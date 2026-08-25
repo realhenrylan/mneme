@@ -1,0 +1,267 @@
+{
+  "experiment": "retrieval-refusal-threshold-calibration",
+  "baseline_threshold": 0.03,
+  "candidate_thresholds": [
+    0.0,
+    0.01,
+    0.02,
+    0.03
+  ],
+  "g1": {
+    "definition": "released sentinel false_refusal (dev+holdout) >= 4 of 5",
+    "released_by_threshold": {
+      "0.00": 5,
+      "0.01": 5,
+      "0.02": 5,
+      "0.03": 0
+    },
+    "pass": true
+  },
+  "g2": {
+    "definition": "per split: newly released should_refuse <= 10% of all should_refuse cases (primary)",
+    "dev": {
+      "should_refuse_total": 22,
+      "sensitivity_bases": {
+        "refused_total": 10,
+        "refused_should_refuse": 6,
+        "all_should_refuse": 22
+      },
+      "per_threshold": [
+        {
+          "threshold": 0.0,
+          "newly_released_should_refuse_count": 6,
+          "sentinel_fr_released_ids": [
+            "cross-010",
+            "en-013",
+            "meta-006",
+            "meta-008"
+          ],
+          "sentinel_fr_released_count": 4,
+          "g2_primary": {
+            "released": 6,
+            "allowed": 2.2,
+            "pass": false
+          },
+          "g2_sensitivity": {
+            "refused_total": {
+              "allowed": 1.0,
+              "pass": false
+            },
+            "refused_should_refuse": {
+              "allowed": 0.6000000000000001,
+              "pass": false
+            },
+            "all_should_refuse": {
+              "allowed": 2.2,
+              "pass": false
+            }
+          }
+        },
+        {
+          "threshold": 0.01,
+          "newly_released_should_refuse_count": 6,
+          "sentinel_fr_released_ids": [
+            "cross-010",
+            "en-013",
+            "meta-006",
+            "meta-008"
+          ],
+          "sentinel_fr_released_count": 4,
+          "g2_primary": {
+            "released": 6,
+            "allowed": 2.2,
+            "pass": false
+          },
+          "g2_sensitivity": {
+            "refused_total": {
+              "allowed": 1.0,
+              "pass": false
+            },
+            "refused_should_refuse": {
+              "allowed": 0.6000000000000001,
+              "pass": false
+            },
+            "all_should_refuse": {
+              "allowed": 2.2,
+              "pass": false
+            }
+          }
+        },
+        {
+          "threshold": 0.02,
+          "newly_released_should_refuse_count": 6,
+          "sentinel_fr_released_ids": [
+            "cross-010",
+            "en-013",
+            "meta-006",
+            "meta-008"
+          ],
+          "sentinel_fr_released_count": 4,
+          "g2_primary": {
+            "released": 6,
+            "allowed": 2.2,
+            "pass": false
+          },
+          "g2_sensitivity": {
+            "refused_total": {
+              "allowed": 1.0,
+              "pass": false
+            },
+            "refused_should_refuse": {
+              "allowed": 0.6000000000000001,
+              "pass": false
+            },
+            "all_should_refuse": {
+              "allowed": 2.2,
+              "pass": false
+            }
+          }
+        },
+        {
+          "threshold": 0.03,
+          "newly_released_should_refuse_count": 0,
+          "sentinel_fr_released_ids": [],
+          "sentinel_fr_released_count": 0,
+          "g2_primary": {
+            "released": 0,
+            "allowed": 2.2,
+            "pass": true
+          },
+          "g2_sensitivity": {
+            "refused_total": {
+              "allowed": 1.0,
+              "pass": true
+            },
+            "refused_should_refuse": {
+              "allowed": 0.6000000000000001,
+              "pass": true
+            },
+            "all_should_refuse": {
+              "allowed": 2.2,
+              "pass": true
+            }
+          }
+        }
+      ]
+    },
+    "holdout": {
+      "should_refuse_total": 3,
+      "sensitivity_bases": {
+        "refused_total": 2,
+        "refused_should_refuse": 1,
+        "all_should_refuse": 3
+      },
+      "per_threshold": [
+        {
+          "threshold": 0.0,
+          "newly_released_should_refuse_count": 1,
+          "sentinel_fr_released_ids": [
+            "meta-002"
+          ],
+          "sentinel_fr_released_count": 1,
+          "g2_primary": {
+            "released": 1,
+            "allowed": 0.30000000000000004,
+            "pass": false
+          },
+          "g2_sensitivity": {
+            "refused_total": {
+              "allowed": 0.2,
+              "pass": false
+            },
+            "refused_should_refuse": {
+              "allowed": 0.1,
+              "pass": false
+            },
+            "all_should_refuse": {
+              "allowed": 0.30000000000000004,
+              "pass": false
+            }
+          }
+        },
+        {
+          "threshold": 0.01,
+          "newly_released_should_refuse_count": 1,
+          "sentinel_fr_released_ids": [
+            "meta-002"
+          ],
+          "sentinel_fr_released_count": 1,
+          "g2_primary": {
+            "released": 1,
+            "allowed": 0.30000000000000004,
+            "pass": false
+          },
+          "g2_sensitivity": {
+            "refused_total": {
+              "allowed": 0.2,
+              "pass": false
+            },
+            "refused_should_refuse": {
+              "allowed": 0.1,
+              "pass": false
+            },
+            "all_should_refuse": {
+              "allowed": 0.30000000000000004,
+              "pass": false
+            }
+          }
+        },
+        {
+          "threshold": 0.02,
+          "newly_released_should_refuse_count": 1,
+          "sentinel_fr_released_ids": [
+            "meta-002"
+          ],
+          "sentinel_fr_released_count": 1,
+          "g2_primary": {
+            "released": 1,
+            "allowed": 0.30000000000000004,
+            "pass": false
+          },
+          "g2_sensitivity": {
+            "refused_total": {
+              "allowed": 0.2,
+              "pass": false
+            },
+            "refused_should_refuse": {
+              "allowed": 0.1,
+              "pass": false
+            },
+            "all_should_refuse": {
+              "allowed": 0.30000000000000004,
+              "pass": false
+            }
+          }
+        },
+        {
+          "threshold": 0.03,
+          "newly_released_should_refuse_count": 0,
+          "sentinel_fr_released_ids": [],
+          "sentinel_fr_released_count": 0,
+          "g2_primary": {
+            "released": 0,
+            "allowed": 0.30000000000000004,
+            "pass": true
+          },
+          "g2_sensitivity": {
+            "refused_total": {
+              "allowed": 0.2,
+              "pass": true
+            },
+            "refused_should_refuse": {
+              "allowed": 0.1,
+              "pass": true
+            },
+            "all_should_refuse": {
+              "allowed": 0.30000000000000004,
+              "pass": true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "admissible_thresholds": [],
+  "verdict": "AUTOMATED_DIAGNOSTIC_NO_GO",
+  "conclusion": "no candidate threshold satisfies both gates; production DEFAULT_REFUSAL_THRESHOLD unchanged"
+}

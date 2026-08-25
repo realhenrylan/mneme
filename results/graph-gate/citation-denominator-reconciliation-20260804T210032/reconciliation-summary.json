@@ -1,0 +1,1309 @@
+{
+  "runs": {
+    "auto-run-20260804T121410": {
+      "analysis_old_values": {},
+      "notes": [],
+      "replayable": false,
+      "run_dir": "D:\\GitHub\\mneme\\results\\graph-gate\\auto-run-20260804T121410",
+      "splits": {
+        "dev-full": {
+          "arms": {
+            "graph-rerank": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 73,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 95,
+                "n_answerable": 73,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 73,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 22,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 95,
+              "notes": [
+                "n_evidence_missing=73: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            },
+            "standard": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 73,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 95,
+                "n_answerable": 73,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 73,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 22,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 95,
+              "notes": [
+                "n_evidence_missing=73: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            },
+            "standard-rerank": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 73,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 95,
+                "n_answerable": 73,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 1,
+                "n_evidence_missing": 73,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 21,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 95,
+              "notes": [
+                "n_evidence_missing=73: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            }
+          },
+          "fidelity_issues": [],
+          "legacy": {
+            "graph-rerank": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.6526315789473685,
+                "replayed_value": 0.6526315789473685
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.24210526315789474
+              }
+            },
+            "standard": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.7263157894736842,
+                "replayed_value": 0.7263157894736842
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.24210526315789474
+              }
+            },
+            "standard-rerank": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.631578947368421,
+                "replayed_value": 0.631578947368421
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.23157894736842105
+              }
+            }
+          },
+          "n_rows": 285
+        },
+        "holdout-full": {
+          "arms": {
+            "graph-rerank": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 16,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 16,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 13,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 16,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 16,
+                "n_answerable": 13,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 13,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 3,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 16,
+              "notes": [
+                "n_evidence_missing=13: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            },
+            "standard": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 16,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 16,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 13,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 16,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 16,
+                "n_answerable": 13,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 13,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 3,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 16,
+              "notes": [
+                "n_evidence_missing=13: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            },
+            "standard-rerank": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 16,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 16,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 13,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 16,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 16,
+                "n_answerable": 13,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 13,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 3,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 16,
+              "notes": [
+                "n_evidence_missing=13: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            }
+          },
+          "fidelity_issues": [],
+          "legacy": {
+            "graph-rerank": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.625,
+                "replayed_value": 0.625
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.1875
+              }
+            },
+            "standard": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.6875,
+                "replayed_value": 0.6875
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.1875
+              }
+            },
+            "standard-rerank": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.5,
+                "replayed_value": 0.5
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.1875
+              }
+            }
+          },
+          "n_rows": 48
+        }
+      }
+    },
+    "reranker-recheck-20260804T185937": {
+      "analysis_old_values": {
+        "dev-full": {
+          "ab-analysis.json": {
+            "standard": 0.8493150684931506,
+            "standard-rerank": 0.8356164383561644
+          }
+        },
+        "holdout-full": {
+          "ab-analysis.json": {
+            "standard": 0.8333333333333334,
+            "standard-rerank": 0.5833333333333334
+          }
+        }
+      },
+      "notes": [],
+      "replayable": false,
+      "run_dir": "D:\\GitHub\\mneme\\results\\graph-gate\\reranker-recheck-20260804T185937",
+      "splits": {
+        "dev-full": {
+          "arms": {
+            "standard": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 73,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 95,
+                "n_answerable": 73,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 73,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 22,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 95,
+              "notes": [
+                "n_evidence_missing=73: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            },
+            "standard-rerank": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 73,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 95,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 95,
+                "n_answerable": 73,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 73,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 22,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 95,
+              "notes": [
+                "n_evidence_missing=73: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            }
+          },
+          "fidelity_issues": [],
+          "legacy": {
+            "standard": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.6947368421052632,
+                "replayed_value": 0.6947368421052632
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.24210526315789474
+              }
+            },
+            "standard-rerank": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.6526315789473685,
+                "replayed_value": 0.6526315789473685
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.24210526315789474
+              }
+            }
+          },
+          "n_rows": 190
+        },
+        "holdout-full": {
+          "arms": {
+            "standard": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 15,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 15,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 12,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 15,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 15,
+                "n_answerable": 12,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 12,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 3,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 15,
+              "notes": [
+                "n_evidence_missing=12: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            },
+            "standard-rerank": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 15,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 15,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 0,
+                    "excluded_count": 12,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 0,
+                    "value": null
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 0,
+                    "excluded_count": 15,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 0,
+                    "value": null
+                  }
+                },
+                "n_all_cases": 15,
+                "n_answerable": 12,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 12,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 0,
+                "n_other_status_ids": 0,
+                "n_refused": 3,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 0,
+                "n_supported_ids": 0,
+                "n_with_any_citation": 0,
+                "total_unique_citation_ids": 0
+              },
+              "n_rows": 15,
+              "notes": [
+                "n_evidence_missing=12: 产物缺 context 证据（v1 schema），context-supported 新口径不可重算"
+              ]
+            }
+          },
+          "fidelity_issues": [],
+          "legacy": {
+            "standard": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.6666666666666666,
+                "replayed_value": 0.6666666666666666
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.2
+              }
+            },
+            "standard-rerank": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.4666666666666667,
+                "replayed_value": 0.4666666666666667
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.0
+              },
+              "context_supported_citation_validity": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": null
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.2
+              }
+            }
+          },
+          "n_rows": 30
+        }
+      }
+    },
+    "selector-ablation-20260804T202048": {
+      "analysis_old_values": {
+        "dev-full": {
+          "s0s3-analysis.json": {
+            "selector-cap3": 0.8472222222222222,
+            "selector-unlimited": 0.875
+          }
+        },
+        "holdout-full": {
+          "s0s3-analysis.json": {
+            "selector-cap3": 0.8333333333333334,
+            "selector-unlimited": 0.8333333333333334
+          }
+        }
+      },
+      "notes": [],
+      "replayable": true,
+      "run_dir": "D:\\GitHub\\mneme\\results\\graph-gate\\selector-ablation-20260804T202048",
+      "splits": {
+        "dev-full": {
+          "arms": {
+            "selector-cap3": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 72,
+                    "excluded_count": 22,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 61,
+                    "value": 0.8472222222222222
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 72,
+                    "excluded_count": 22,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 61,
+                    "value": 0.8472222222222222
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 145,
+                    "excluded_count": 11,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 145,
+                    "value": 1.0
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 72,
+                    "excluded_count": 22,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 11,
+                    "value": 0.1527777777777778
+                  }
+                },
+                "n_all_cases": 94,
+                "n_answerable": 72,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 0,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 11,
+                "n_other_status_ids": 0,
+                "n_refused": 22,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 61,
+                "n_supported_ids": 145,
+                "n_with_any_citation": 61,
+                "total_unique_citation_ids": 145
+              },
+              "n_rows": 94
+            },
+            "selector-unlimited": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 72,
+                    "excluded_count": 22,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 63,
+                    "value": 0.875
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 72,
+                    "excluded_count": 22,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 63,
+                    "value": 0.875
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 150,
+                    "excluded_count": 9,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 150,
+                    "value": 1.0
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 72,
+                    "excluded_count": 22,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 9,
+                    "value": 0.125
+                  }
+                },
+                "n_all_cases": 94,
+                "n_answerable": 72,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 0,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 9,
+                "n_other_status_ids": 0,
+                "n_refused": 22,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 63,
+                "n_supported_ids": 150,
+                "n_with_any_citation": 63,
+                "total_unique_citation_ids": 150
+              },
+              "n_rows": 94
+            }
+          },
+          "fidelity_issues": [],
+          "legacy": {
+            "selector-cap3": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.6914893617021277,
+                "replayed_value": 0.6914893617021277
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.2908814589665653
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.33809328968903435
+              },
+              "context_supported_citation_validity": {
+                "match": true,
+                "old_summary_value": 0.6914893617021277,
+                "replayed_value": 0.6914893617021277
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.7925531914893617
+              }
+            },
+            "selector-unlimited": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.7127659574468085,
+                "replayed_value": 0.7127659574468085
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.3639311043566363
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.40990180032733226
+              },
+              "context_supported_citation_validity": {
+                "match": true,
+                "old_summary_value": 0.7127659574468085,
+                "replayed_value": 0.7127659574468085
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.8297872340425532
+              }
+            }
+          },
+          "n_rows": 188
+        },
+        "holdout-full": {
+          "arms": {
+            "selector-cap3": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 12,
+                    "excluded_count": 3,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 10,
+                    "value": 0.8333333333333334
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 12,
+                    "excluded_count": 3,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 10,
+                    "value": 0.8333333333333334
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 23,
+                    "excluded_count": 2,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 23,
+                    "value": 1.0
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 12,
+                    "excluded_count": 3,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 2,
+                    "value": 0.16666666666666666
+                  }
+                },
+                "n_all_cases": 15,
+                "n_answerable": 12,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 0,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 2,
+                "n_other_status_ids": 0,
+                "n_refused": 3,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 10,
+                "n_supported_ids": 23,
+                "n_with_any_citation": 10,
+                "total_unique_citation_ids": 23
+              },
+              "n_rows": 15
+            },
+            "selector-unlimited": {
+              "citation_v2": {
+                "metrics": {
+                  "citation_mention_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 12,
+                    "excluded_count": 3,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "citation_mention_rate",
+                    "numerator": 10,
+                    "value": 0.8333333333333334
+                  },
+                  "context_supported_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 12,
+                    "excluded_count": 3,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable, not counted as unsupported)",
+                    "name": "context_supported_answer_rate",
+                    "numerator": 10,
+                    "value": 0.8333333333333334
+                  },
+                  "context_supported_citation_validity_micro": {
+                    "denominator": "total_unique_citation_ids",
+                    "denominator_count": 25,
+                    "excluded_count": 2,
+                    "excluded_reason": "answers with no citation IDs or missing context evidence contribute 0 IDs to the total_unique_citation_ids denominator",
+                    "name": "context_supported_citation_validity_micro",
+                    "numerator": 25,
+                    "value": 1.0
+                  },
+                  "no_citation_answer_rate": {
+                    "denominator": "answerable_generation_cases",
+                    "denominator_count": 12,
+                    "excluded_count": 3,
+                    "excluded_reason": "rows outside answerable_generation_cases (refused or error) or missing citation evidence (uncomputable)",
+                    "name": "no_citation_answer_rate",
+                    "numerator": 2,
+                    "value": 0.16666666666666666
+                  }
+                },
+                "n_all_cases": 15,
+                "n_answerable": 12,
+                "n_cited_but_unsupported_answers": 0,
+                "n_error": 0,
+                "n_evidence_missing": 0,
+                "n_fabricated_ids": 0,
+                "n_no_citation": 2,
+                "n_other_status_ids": 0,
+                "n_refused": 3,
+                "n_retrieved_not_in_context_ids": 0,
+                "n_supported_answers": 10,
+                "n_supported_ids": 25,
+                "n_with_any_citation": 10,
+                "total_unique_citation_ids": 25
+              },
+              "n_rows": 15
+            }
+          },
+          "fidelity_issues": [],
+          "legacy": {
+            "selector-cap3": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.6666666666666666,
+                "replayed_value": 0.6666666666666666
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.2966666666666667
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.38333333333333336
+              },
+              "context_supported_citation_validity": {
+                "match": true,
+                "old_summary_value": 0.6666666666666666,
+                "replayed_value": 0.6666666666666666
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.7222222222222222
+              }
+            },
+            "selector-unlimited": {
+              "citation_id_validity": {
+                "match": true,
+                "old_summary_value": 0.7333333333333333,
+                "replayed_value": 0.7333333333333333
+              },
+              "citation_precision": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.28555555555555556
+              },
+              "citation_recall": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.35
+              },
+              "context_supported_citation_validity": {
+                "match": true,
+                "old_summary_value": 0.7333333333333333,
+                "replayed_value": 0.7333333333333333
+              },
+              "faithfulness": {
+                "match": false,
+                "old_summary_value": null,
+                "replayed_value": 0.7222222222222222
+              }
+            }
+          },
+          "n_rows": 30
+        }
+      }
+    }
+  },
+  "schema_version": 1
+}

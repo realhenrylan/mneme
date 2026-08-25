@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "dataset_sha256": "8ce1b46b9eeaa54323c9533663088a222ed5e816d04335da1a23dd2a20ff7bb8",
+  "ground_truth_sha256": "f950dc58e01c5b49d336145b7407854c8530e1271eea422b8429d02487a0dbe7",
+  "entries": [
+    {
+      "case_id": "cross-006",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "个人保管库、勒索软件检测和恢复以及文件加密",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_3"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_3 explicitly lists the three security features."
+    },
+    {
+      "case_id": "cross-006",
+      "source_id": "prevent-url-data-exfil.pdf",
+      "normalized_snippet": "implement robust safeguards",
+      "candidate_chunk_ids": [
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_13",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_14",
+        "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_25"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunks_13 and _14 explicitly say 'implement robust safeguards'."
+    },
+    {
+      "case_id": "mixed-012",
+      "source_id": "OneDrive 入门.pdf",
+      "normalized_snippet": "onedrive 提供了一个安全的位置来存储文件和照片",
+      "candidate_chunk_ids": [
+        "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_1"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_1 says OneDrive provides a secure place for files and photos."
+    },
+    {
+      "case_id": "multi-006",
+      "source_id": "DSpark_paper.pdf",
+      "normalized_snippet": "improves the macro-average accepted length over the autoregressive eagle3 by 30.9%, 26.7%, and 30.0%",
+      "candidate_chunk_ids": [
+        "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_130"
+      ],
+      "review_decision": "confirmed",
+      "reviewer_notes": "chunk_130 gives the Qwen3 4B, 8B, and 14B Eagle3 results."
+    }
+  ],
+  "case_relevance_levels": [
+    {
+      "case_id": "cross-008",
+      "relevance_level": "source",
+      "reviewer_notes": "source-only: page counts are PDF metadata, not answer-bearing body text."
+    },
+    {
+      "case_id": "en-013",
+      "relevance_level": "source",
+      "reviewer_notes": "source-only: page count is PDF metadata, not answer-bearing body text."
+    },
+    {
+      "case_id": "meta-003",
+      "relevance_level": "source",
+      "reviewer_notes": "source-only: page count is PDF metadata, not answer-bearing body text."
+    },
+    {
+      "case_id": "meta-008",
+      "relevance_level": "source",
+      "reviewer_notes": "source-only: corpus-wide PDF count is derived from inventory, not answer-bearing document text."
+    }
+  ],
+  "counts": {
+    "overlap_decisions": 4,
+    "confirmed": 4,
+    "rejected": 0,
+    "case_relevance_decisions": 4,
+    "chunk_level": 0,
+    "source_only": 4
+  },
+  "notes": "review_decision=confirmed -> reviewer_status=confirmed; reject -> reviewer_status=rejected (never treated as confirmed); relevance_level=source -> source-only, excluded from chunk/context/citation denominators."
+}

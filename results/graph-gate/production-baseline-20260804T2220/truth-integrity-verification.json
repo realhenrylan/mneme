@@ -1,0 +1,43 @@
+{
+  "dataset_sha256": "7c131cd7b4bab13be6d52223db9440a0d3cd139c3fa44681f219020621f0a26c",
+  "ground_truth_sha256": "e5c60903b78388d6938ff90c1437f1c23fedba97f66d4f6851bae02232f1bf8d",
+  "overlay_dataset_sha256": "7c131cd7b4bab13be6d52223db9440a0d3cd139c3fa44681f219020621f0a26c",
+  "overlay_ground_truth_sha256": "e5c60903b78388d6938ff90c1437f1c23fedba97f66d4f6851bae02232f1bf8d",
+  "counts": {
+    "overlap_decisions": 27,
+    "confirmed": 25,
+    "rejected": 2,
+    "case_relevance_decisions": 4,
+    "chunk_level": 0,
+    "source_only": 4
+  },
+  "source_only_cases": [
+    "cross-008",
+    "en-013",
+    "meta-003",
+    "meta-008"
+  ],
+  "rejected_overlap_cases": [
+    "en-004",
+    "mixed-005"
+  ],
+  "reannotated_meta_cases": [
+    "meta-001",
+    "meta-002",
+    "meta-004",
+    "meta-005",
+    "meta-006",
+    "meta-007",
+    "meta-009",
+    "meta-010"
+  ],
+  "notes": [
+    "dataset_sha256=7c131cd7b4bab13be6d52223db9440a0d3cd139c3fa44681f219020621f0a26c",
+    "ground_truth_sha256=e5c60903b78388d6938ff90c1437f1c23fedba97f66d4f6851bae02232f1bf8d",
+    "overlap: 27 decisions (confirmed=25, rejected=2)",
+    "source-only cases: ['cross-008', 'en-013', 'meta-003', 'meta-008']",
+    "rejected overlap cases: ['en-004', 'mixed-005']",
+    "answerable cases without chunk truth == source-only (4): ['cross-008', 'en-013', 'meta-003', 'meta-008']",
+    "re-annotated meta-* cases: ['meta-001', 'meta-002', 'meta-004', 'meta-005', 'meta-006', 'meta-007', 'meta-009', 'meta-010'] (all with chunk truth)"
+  ]
+}

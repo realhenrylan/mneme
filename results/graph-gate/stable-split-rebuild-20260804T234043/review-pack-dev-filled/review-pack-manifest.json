@@ -1,0 +1,12 @@
+{
+  "review_pack_version": 1,
+  "dataset_path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v1.jsonl",
+  "dataset_sha256": "8ce1b46b9eeaa54323c9533663088a222ed5e816d04335da1a23dd2a20ff7bb8",
+  "ground_truth_path": "D:\\GitHub\\mneme\\results\\graph-gate\\stable-split-rebuild-20260804T234043\\ground-truth-map-dev.json",
+  "ground_truth_sha256": "e5c7bcbf94ff269233335c13dba7d1377b58b14e97e998280ffbd3c877b2e849",
+  "corpus_json": null,
+  "corpus_json_sha256": null,
+  "overlap_needs_review_count": 21,
+  "missing_chunk_truth_count": 4,
+  "notes": "review_decision / relevance_level / reviewer_notes 均为空字段，由人工填写，工具不替人判定。"
+}

@@ -1,0 +1,64 @@
+{
+  "verdict": "AUTOMATED_DIAGNOSTIC_NO_GO",
+  "gates": {
+    "G1_false_refusal_reduction": {
+      "pass": false,
+      "detail": "A=16 B=18 (需 B ≤ 12)"
+    },
+    "G2_false_answer_not_worse": {
+      "pass": true,
+      "detail": "A=0.4091 B=0.1364"
+    },
+    "G3_citation_v2": {
+      "pass": true,
+      "detail": "micro=1.0 fabricated=0 not_in_context=0"
+    },
+    "G4_answer_rate_not_lower": {
+      "pass": false,
+      "detail": "A=0.8767 B=0.8219"
+    },
+    "G5_coverage_not_significantly_down": {
+      "pass": true,
+      "detail": "coverage delta 95% CI=[-0.012280701754385965, 0.021052631578947368] (上界 < -0.05 视为显著下降)"
+    }
+  },
+  "a": {
+    "n_all": 95,
+    "n_answerable": 73,
+    "n_refused": 22,
+    "false_refusal": 16,
+    "false_refusal_rate": 0.2191780821917808,
+    "false_answer": 9,
+    "false_answer_rate": 0.4090909090909091,
+    "citation_v2": {
+      "micro": 1.0,
+      "total_ids": 142,
+      "supported_ids": 142,
+      "fabricated": 0,
+      "retrieved_not_in_context": 0,
+      "answer_rate": 0.8767123287671232,
+      "no_citation": 9
+    },
+    "answer_point_coverage": 0.6073059360730594
+  },
+  "b": {
+    "n_all": 95,
+    "n_answerable": 73,
+    "n_refused": 22,
+    "false_refusal": 18,
+    "false_refusal_rate": 0.2465753424657534,
+    "false_answer": 3,
+    "false_answer_rate": 0.13636363636363635,
+    "citation_v2": {
+      "micro": 1.0,
+      "total_ids": 134,
+      "supported_ids": 134,
+      "fabricated": 0,
+      "retrieved_not_in_context": 0,
+      "answer_rate": 0.821917808219178,
+      "no_citation": 13
+    },
+    "answer_point_coverage": 0.6118721461187214
+  },
+  "note": "dev 未全部达标 → 不运行 holdout full（预注册门槛，fail-closed）"
+}

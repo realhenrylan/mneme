@@ -1,0 +1,35 @@
+{
+  "experiment": "retrieval-refusal-threshold-calibration",
+  "inputs": {
+    "dev_retrieval": {
+      "path": "results/graph-gate/refusal-ablation-20260805T133209/dev-full/retrieval-cases.jsonl",
+      "sha256": "3f7ff23c30b92ce6594b2d6eb822a4f55e057746838ee4ce8f0546a74724fda2",
+      "case_count": 95
+    },
+    "dev_retrieval_cross": {
+      "path": "results/graph-gate/production-baseline-stable-20260805T084256/dev-full/retrieval-cases.jsonl",
+      "sha256": "cc552c461a25af31ae8642d9b516200777abe5f2d5a64122f86fc0e53b2dc9d3",
+      "case_count": 95
+    },
+    "dev_generation": {
+      "path": "results/graph-gate/refusal-ablation-20260805T133209/dev-full/generation-cases.jsonl",
+      "sha256": "7f43e4e4ab55efa24df329935b0c627fb119724a84b6646b5dd4870ccbbc4711",
+      "case_count": 95
+    },
+    "holdout_retrieval": {
+      "path": "results/graph-gate/production-baseline-stable-20260805T084256/holdout-full/retrieval-cases.jsonl",
+      "sha256": "d3db8be3f89dd48df08c2eedc1be64516bbf5aaea03993adc5dc9e3573896885",
+      "case_count": 15
+    }
+  },
+  "outputs": [
+    "threshold-scan.json",
+    "threshold-scan.md",
+    "gate-pre-registration.json",
+    "decision-report.md",
+    "manifest.json",
+    "run-commands.md"
+  ],
+  "immutability": "read-only scan; no production config, threshold, or historical artifacts modified",
+  "llm_calls": 0
+}
