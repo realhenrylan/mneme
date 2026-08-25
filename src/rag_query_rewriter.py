@@ -8,14 +8,14 @@
 2. 漂移防护：原 query 始终保留一路召回，与 rewrite 结果合并去重
 3. 简单查询跳过：无历史或原查询已独立时不调 LLM
 4. 记录 rewrite 文本与原查询的结果覆盖差异（通过 rewrite_log）
+5. 统一配置契约：不自行加载 `.env`（`.env` 仅由 `src.config` 统一加载）；
+   model/temperature 未显式传入时在调用期从 Settings 解析。API_KEY/
+   BASE_URL 属于 gateway 边界，本模块只做读取预检。
 """
 
 import os
 import re
-from dotenv import load_dotenv
 from src.security import endpoint_validation_error, validate_endpoint
-
-load_dotenv()
 
 # ── 改写 prompt ──
 REWRITE_PROMPT = """You are a query rewriter for a RAG retrieval system.
@@ -80,19 +80,32 @@ def should_rewrite(query: str, history: list[tuple[str, str]] | None) -> bool:
     return False
 
 
-def rewrite_query_llm(
+def _rewrite_query_provenanced(
     query: str,
-    history: list[tuple[str, str]] | None = None,
-    model: str = "deepseek-chat",
-    temperature: float = 0.0,
+    history: list[tuple[str, str]] | None,
+    model: str | None = None,
+    temperature: float | None = None,
     max_retries: int = 2,
-) -> tuple[str, dict]:
-    """History-aware standalone query rewrite。
+) -> tuple[str, dict, "StageProvenance"]:
+    """改写单一实现：返回 (rewritten_query, rewrite_log, stage provenance)。
 
-    返回 (rewritten_query, rewrite_log)：
-    - rewritten_query: 改写后的独立查询；不需要改写时返回原 query
-    - rewrite_log: 改写日志，含 original、rewritten、changed 等字段
+    ``rewrite_query_llm`` 是其薄包装（保持公开 API 与既有测试兼容）；
+    G1-S 共享 planning helper 通过薄包装 + ``_provenance_sink`` 取得
+    stage，避免重复实现改写逻辑。outcome 枚举与 rewrite_log["reason"]
+    逐路径对齐；禁止捕获原始 LLM response 或其 SHA。
+
+    统一配置契约：model/temperature 未显式传入时在调用期从 Settings 解析
+    （不再冻结 "deepseek-chat"/0.0 静态默认）；provenance 记录解析后的
+    生效值。
     """
+    from src.config import get_settings
+    from src.domain import StageProvenance
+
+    if model is None:
+        model = get_settings().llm_model
+    if temperature is None:
+        temperature = get_settings().llm_temperature
+
     rewrite_log: dict = {
         "original": query,
         "rewritten": query,
@@ -100,17 +113,31 @@ def rewrite_query_llm(
         "reason": "no_rewrite_needed",
     }
 
-    if not should_rewrite(query, history):
-        return query, rewrite_log
+    def _stage(outcome: str, guard_result: bool,
+               retries_used: int = 0) -> StageProvenance:
+        return StageProvenance(
+            guard_result=guard_result,
+            outcome=outcome,
+            requested_model=model,
+            temperature=temperature,
+            max_tokens=200,
+            timeout=15,
+            max_retries=max_retries,
+            retries_used=retries_used,
+        )
+
+    guard_result = should_rewrite(query, history)
+    if not guard_result:
+        return query, rewrite_log, _stage("no_rewrite_needed", False)
 
     api_key = os.getenv("API_KEY")
     base_url = os.getenv("BASE_URL")
     if not api_key or not base_url:
         rewrite_log["reason"] = "no_api_key"
-        return query, rewrite_log
+        return query, rewrite_log, _stage("no_api_key", True)
     if endpoint_validation_error(base_url):
         rewrite_log["reason"] = "invalid_endpoint"
-        return query, rewrite_log
+        return query, rewrite_log, _stage("invalid_endpoint", True)
 
     # 构建历史上下文（最近 5 轮）
     history_text = ""
@@ -133,10 +160,11 @@ def rewrite_query_llm(
         timeout=15,
         max_retries=max_retries,
     )
+    retries_used = int(getattr(record, "retries_used", 0) or 0)
 
     if content is None:
         rewrite_log["reason"] = "llm_failed"
-        return query, rewrite_log
+        return query, rewrite_log, _stage("llm_failed", True, retries_used)
 
     # 清理 markdown 包裹
     content = re.sub(r'^["\']', '', content)
@@ -148,11 +176,35 @@ def rewrite_query_llm(
         rewrite_log["rewritten"] = content
         rewrite_log["changed"] = True
         rewrite_log["reason"] = "llm_rewrite"
-        return content, rewrite_log
+        return content, rewrite_log, _stage("llm_rewrite", True, retries_used)
 
     # LLM 返回原 query 或空 → 不改写
     rewrite_log["reason"] = "llm_returned_unchanged"
-    return query, rewrite_log
+    return query, rewrite_log, _stage("llm_returned_unchanged", True, retries_used)
+
+
+def rewrite_query_llm(
+    query: str,
+    history: list[tuple[str, str]] | None = None,
+    model: str | None = None,
+    temperature: float | None = None,
+    max_retries: int = 2,
+    *,
+    _provenance_sink: list | None = None,
+) -> tuple[str, dict]:
+    """History-aware standalone query rewrite（公开 API，薄包装）。
+
+    返回 (rewritten_query, rewrite_log)。model/temperature 未显式传入时
+    从统一配置 Settings 调用期解析（显式参数优先）。``_provenance_sink``
+    为 G1-S 内部侧信道：传入列表时追加本次调用的 StageProvenance（供共享
+    planning helper 收集），对公开调用方不可见、不影响既有行为。
+    """
+    rewritten_query, rewrite_log, stage = _rewrite_query_provenanced(
+        query, history, model, temperature, max_retries,
+    )
+    if _provenance_sink is not None:
+        _provenance_sink.append(stage)
+    return rewritten_query, rewrite_log
 
 
 def merge_rewrite_results(

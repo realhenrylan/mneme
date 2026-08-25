@@ -1,0 +1,95 @@
+{
+  "decision": "ACCEPT_C32_COMPLETE",
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256": "fa5b962fa908e80797724ccd7ad912859535f4bd3623f0e4895cda4a40fb0806",
+      "size": 4473
+    },
+    {
+      "path": "README.md",
+      "sha256": "e0789f7e0aaccc2555a127d5c468cb8c3324258c88772778827eea31163357dc",
+      "size": 13029
+    },
+    {
+      "path": "README.zh.md",
+      "sha256": "095d3e66dd4c11afa50803401d89afecdac6a1f982626951a43a6b31b9ae11ea",
+      "size": 12028
+    },
+    {
+      "path": "src/cli_loop.py",
+      "sha256": "eb27bdb67f554aab4e300460e0d36f1aaa75057a77a8ed39d29b79284dfad0ec",
+      "size": 10520
+    },
+    {
+      "path": "src/config.py",
+      "sha256": "0d98107cdcb0130940c8155b5d0f08285a4c98406ed6ee9959e5f3eb726bc4b1",
+      "size": 24686
+    },
+    {
+      "path": "src/graph_rag.py",
+      "sha256": "0c17f2f89383354156db0b32356728037f0e758536c3514407266b074c7b80d9",
+      "size": 37064
+    },
+    {
+      "path": "src/security.py",
+      "sha256": "b85ce5c833901c4696ff0dc49ff5a80ae6ade7db9daef2005fdd018fafb541af",
+      "size": 5946
+    },
+    {
+      "path": "tui/app.py",
+      "sha256": "9e0a8b4e3ae4b7b8a33300c3e4a361aad1ed64aafd14f8bc94a8706910853cf0",
+      "size": 3095
+    },
+    {
+      "path": "tui/screens/chat.py",
+      "sha256": "2f329c8d8aea48323192f9d3db56dc72c19410518bffc3b3e416c9c7736bb2f0",
+      "size": 20203
+    },
+    {
+      "path": "tui/service.py",
+      "sha256": "1e71e2946c0830842b4cbfdc3be9711bae03ade4c5dac3a127806ef0a905d272",
+      "size": 15137
+    },
+    {
+      "path": "src/rag.py",
+      "sha256": "6309857f4b5e7e6da58c820f1bd4eb7a38a1e6492dc976649228e8ec74ef81a4",
+      "size": 135610
+    },
+    {
+      "path": "tui/env_check.py",
+      "sha256": "23215762a8782fb86ad65f233d803261c2f1546911acb422950d301a5d22575a",
+      "size": 1179
+    },
+    {
+      "path": "tui/screens/onboarding.py",
+      "sha256": "f8cb17448e80edf1eb1687bacb91192aaa16b431d2dc1cf93ecbf0e737917584",
+      "size": 11357
+    },
+    {
+      "path": "src/llm_gateway.py",
+      "sha256": "8c81153239fa82eee446eb923302f7909ab356f386d9a1df740ca6ad95bcd232",
+      "size": 15052
+    },
+    {
+      "path": "src/rag_query_rewriter.py",
+      "sha256": "8215afdf2b45bfdb60319afdb1d2a2a96bd51cac8e91fb53ca1601003181faf0",
+      "size": 9217
+    },
+    {
+      "path": "src/rag_query_decomposer.py",
+      "sha256": "10b6531e6342dd3c9ba0f09694e8984d37ba0e312e9a302dd131077b371f69d1",
+      "size": 7084
+    },
+    {
+      "path": "src/retrieval.py",
+      "sha256": "d2ce5c393decf31de7814801f72f3e2e7c3d322f5b13acfe1407d4b589fe9874",
+      "size": 9571
+    }
+  ],
+  "frozen_at": "2026-08-17",
+  "manifest_sha256": "bf60033327cca012b57b8edfd9028c3cdcd917b7e291496c880b9181728caa69",
+  "report_path": "results/config-contract-acceptance/c32-acceptance-report.md",
+  "report_sha256": "429adb0f486f140b6477232e844841c6796861e5feb42d1ceb8c6b595c255a7d",
+  "schema_version": "c32-acceptance-manifest-v5"
+}

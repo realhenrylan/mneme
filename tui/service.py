@@ -7,6 +7,7 @@ import threading
 from tui.file_watcher import FileWatcher
 from src.index_queue import IndexQueue, make_snapshot
 from src.metrics import GLOBAL_METRICS
+from src.config import get_settings
 
 from src.rag import (
     prepare_index, build_bm25_index,
@@ -16,8 +17,6 @@ from src.rag import (
     answer_query, answer_query_stream,
     answer_with_llm_history, answer_with_llm_history_stream,
     remove_file_from_index,
-    CHROMA_DB_PATH,
-    EMBEDDING_MODEL_NAME, DEFAULT_LLM_MODEL,
     _collection_exists,
     _load_sentence_transformer,
     index_fingerprint,
@@ -52,7 +51,15 @@ class LocalRagService:
     def _ensure_model(self):
         if self._model is None:
             from src.llm_gateway import get_or_load_model
-            self._model = get_or_load_model(EMBEDDING_MODEL_NAME, _load_sentence_transformer)
+            # 统一配置契约：embedding 模型名从已解析 Settings 读取
+            self._model = get_or_load_model(
+                get_settings().embedding_model_name, _load_sentence_transformer,
+            )
+
+    def _chroma_db_path(self) -> str:
+        # 统一配置契约：Chroma 落点调用期从 Settings 解析，不持有导入期
+        # 冻结副本（reset_settings() 后新数据目录立即生效）。
+        return str(get_settings().chroma_db_path)
 
     def prepare_index(
         self,
@@ -97,14 +104,15 @@ class LocalRagService:
         return self.get_stats()
 
     def _llm_model(self) -> str:
-        return os.environ.get("LLM_MODEL", DEFAULT_LLM_MODEL)
+        # 统一配置契约：LLM 模型从已解析 Settings 读取（不再原始 os.getenv）
+        return get_settings().llm_model
 
     def query(
         self,
         query: str,
         history: list[tuple[str, str]],
-        temperature: float = 0.1,
-        top_k_range: tuple = (3, 20),
+        temperature: float | None = None,
+        top_k_range=None,
     ) -> tuple:
         return self._index_queue.run(
             self._query_from_snapshot,
@@ -132,9 +140,9 @@ class LocalRagService:
         self,
         query: str,
         history: list[tuple[str, str]],
-        alpha: float = 0.7,
-        temperature: float = 0.1,
-        top_k_range: tuple = (3, 50),
+        alpha: float | None = None,
+        temperature: float | None = None,
+        top_k_range=None,
     ) -> tuple:
         return self._index_queue.run(
             self._graph_query_from_snapshot,
@@ -178,7 +186,9 @@ class LocalRagService:
                 for index, metadata in enumerate(metadatas)
             ]
             self._kg.build_from_chunks(docs, chunk_ids=ids, verbose=False)
-            kg_file = os.path.join(CHROMA_DB_PATH, f"{self._collection_name}_kg.json")
+            kg_file = os.path.join(
+                self._chroma_db_path(), f"{self._collection_name}_kg.json",
+            )
             manifest = load_index_manifest(self._collection_name)
             self._kg.save(
                 kg_file,
@@ -206,7 +216,9 @@ class LocalRagService:
                 manifest.get("manifest_version") if manifest else None,
             )
             if self._mode == "graph":
-                kg_file = os.path.join(CHROMA_DB_PATH, f"{self._collection_name}_kg.json")
+                kg_file = os.path.join(
+                    self._chroma_db_path(), f"{self._collection_name}_kg.json",
+                )
                 if self._docs:
                     self._kg = KnowledgeGraph()
                     ids = all_data.get("ids", [])
@@ -277,7 +289,7 @@ class LocalRagService:
         self._mode = mode
 
     def build_kg_from_chromadb(self, collection_name: str, progress_callback=None):
-        client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+        client = chromadb.PersistentClient(path=self._chroma_db_path())
         if not _collection_exists(client, collection_name):
             raise RuntimeError(f"Collection '{collection_name}' not found.")
 
@@ -303,7 +315,9 @@ class LocalRagService:
         )
         self._refresh_snapshot()
 
-        kg_file = os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.json")
+        kg_file = os.path.join(
+            self._chroma_db_path(), f"{collection_name}_kg.json",
+        )
         current_fingerprint = index_fingerprint(all_data["ids"], metadatas)
         manifest = load_index_manifest(collection_name)
         current_manifest_version = manifest.get("manifest_version") if manifest else None

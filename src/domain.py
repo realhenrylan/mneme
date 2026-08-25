@@ -139,6 +139,7 @@ class RetrievalCandidate:
     chunk_id: str
     source_id: str
     source_name: str
+    text: str = ""  # chunk 实际文本；供 reranker 按内容打分（空串时 reranker fallback source_name）
 
     # 各通道原始分数
     dense_similarity: float | None = None
@@ -193,6 +194,136 @@ class CitationValidation:
     repaired: bool = False  # 是否经过修复
     repair_success: bool = False  # 修复是否成功
     unverified: bool = False  # 是否标记为不可验证
+
+
+# ── Product P0.1：引用终态（stream completion side-channel）──
+
+CITATION_VERIFIED = "verified"
+CITATION_UNVERIFIED = "unverified"
+CITATION_NOT_REQUIRED = "not_required"
+
+
+@dataclass(frozen=True)
+class CitationStatus:
+    """流结束后可读取的引用终态（side-channel，无全局可变状态）。
+
+    - state: verified / unverified / not_required；
+    - valid_ids: 合法 citation ID（与实际进入 prompt 的 context 同口径）；
+    - invalid_ids: 回答中出现但不在合法集的 ID（原回答文本不改写）；
+    - missing: 有文档证据但回答中没有任何引用；
+    - reason: not_required 的原因（refused / api_error / no_evidence）。
+
+    只验证"编号是否对应实际 evidence"，不声称语义蕴含或事实真实性。
+    """
+    state: str
+    valid_ids: tuple[str, ...] = ()
+    invalid_ids: tuple[str, ...] = ()
+    missing: bool = False
+    reason: str | None = None
+
+
+@dataclass(frozen=True)
+class PreparedAnswerEvidence:
+    """一次检索规划产出的、可复用于多次生成的完整证据（生产与评测共用）。
+
+    构建一次（``prepare_answer_evidence``），供 baseline /
+    evidence_calibrated 等生成策略分别只调用生成步骤
+    （``generate_answer``），避免每个臂重复 rewrite/decompose/retrieve/
+    select context。``answer_query`` 默认生产路径同样经过本对象
+    （prepare + generate 拆分），保证生产与评测走同一证据构建路径。
+
+    指纹字段（context_sha256 / plan_fingerprint / retrieval_fingerprint /
+    citation_map）用于：评测逐 case 写入 generation JSONL、paired 分析
+    对 A/B 两臂做 fail-closed 一致性校验。
+    """
+
+    query: str
+    context: str                 # 实际进入 prompt 的 context 文本
+    context_sha256: str          # sha256(context)
+    context_k: int               # 实际进入 prompt 的候选数
+    top_indices: tuple[int, ...]  # 有序 chunk 索引（扩展后最终 context；repair/format 输入）
+    select_indices: tuple[int, ...]  # select 后、parent-child/adjacent 扩展前的索引
+                                   # （generate 重建 enriched_docs 用，保证与 prepare 一致）
+    citation_map: tuple[tuple[str, str], ...]  # (S#, chunk_id) 有序 —— 来源映射
+    context_chunk_ids: tuple[str, ...]   # 有序去重（实际进入 context 的 chunk）
+    context_source_ids: tuple[str, ...]  # 有序去重（source_name 域）
+    candidate_chunk_ids: tuple[str, ...]  # 有序去重（select/截断前的候选集）
+    top_scores: tuple[float, ...]         # 检索分数（生产指标记录用）
+    plan_fingerprint: str        # QueryPlan 确定性标识：sha256(rewrite+decompose 产物)
+    retrieval_fingerprint: str   # 检索证据标识：sha256(候选集 + context 集)
+    refused: bool = False        # 检索前哨拒答（与生成策略无关，两臂一致）
+    refusal_reason: str | None = None
+
+
+# ═══════════════════════════════════════════════════════════════
+# G1-S：synthetic query-plan capture 的可序列化领域对象
+# ═══════════════════════════════════════════════════════════════
+# 边界：CapturedQueryPlan 只含稳定可序列化字段（chunk_id 而非运行期
+# chunk_index）；evaluation.compare.QueryPlan 是评测专用对象，不得持久化。
+# 运行时私有对象（_RuntimeQueryPlan/_ReplayQueryPlan）定义在消费方模块。
+
+STAGE_SERVED_VERSION_UNKNOWN = "unknown"
+
+
+@dataclass(frozen=True)
+class StageProvenance:
+    """单阶段 planner（rewrite/decompose）的调用来源记录。
+
+    不捕获原始 LLM response 或其 SHA。served version 当前无可靠来源，
+    固定为 "unknown"（不得伪造）。retries_used 仅在真实调用 LLM 时
+    从 gateway 记录取得；guard 跳过 / 无 key 等路径为 0。
+    """
+    guard_result: bool          # should_rewrite / should_decompose 的布尔结果
+    outcome: str                # 枚举字符串（rewrite/decompose 各自枚举）
+    requested_model: str
+    temperature: float
+    max_tokens: int
+    timeout: float
+    max_retries: int
+    retries_used: int
+    served_version: str = STAGE_SERVED_VERSION_UNKNOWN
+
+
+@dataclass(frozen=True)
+class CapturedCandidateHit:
+    """稳定候选：观察顺序 rank + 稳定 chunk_id + 规范化 score 字符串。
+
+    禁止 chunk_index（运行期依赖索引构建顺序，不稳定）；
+    score 为有限 float 的规范化可往返字符串（repr 最短表示）。
+    """
+    rank: int
+    chunk_id: str
+    score: str
+
+
+@dataclass(frozen=True)
+class CapturedQueryPlan:
+    """synthetic 捕获的稳定 plan（由共享 planning helper 直接产生）。
+
+    不得从 PreparedAnswerEvidence 反推：capture 发生在 planner 层，
+    evidence 只用于 receipt（见 CapturedEvidenceReceipt）。
+    """
+    query: str
+    rewritten_query: str
+    rewrite_log: dict
+    sub_queries: list[str]
+    base_candidates: tuple[CapturedCandidateHit, ...]  # 有序（观察顺序）
+    base_candidates_fingerprint: str  # 对有序 [rank, chunk_id, score] 计算
+    rewrite_stage: StageProvenance
+    decompose_stage: StageProvenance
+
+
+@dataclass(frozen=True)
+class CapturedEvidenceReceipt:
+    """capture 行内保存的 evidence 收据（replay 逐项复算比对）。"""
+    plan_fingerprint: str
+    base_candidates_fingerprint: str
+    retrieval_fingerprint: str
+    context_sha256: str
+    candidate_chunk_ids: tuple[str, ...]   # 有序
+    context_chunk_ids: tuple[str, ...]     # 有序
+    refused: bool = False
+    refusal_reason: str | None = None
 
 
 def compute_context_k(

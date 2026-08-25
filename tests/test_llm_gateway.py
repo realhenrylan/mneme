@@ -238,3 +238,72 @@ class TestShouldDecomposeEnhanced:
     def test_chinese_simple_question_mark(self):
         """简单中文疑问句不需要拆解。"""
         assert should_decompose("这个方法怎么用？") is False
+
+
+# ═══════════════════════════════════════════════════════════════
+# llm_call extra_body 透传（用于关闭推理模型的 thinking）
+# ═══════════════════════════════════════════════════════════════
+
+class TestLLMCallExtraBody:
+    def test_extra_body_forwarded_to_create(self, monkeypatch):
+        """llm_call 必须把 extra_body 原样传给 client.chat.completions.create。"""
+        from src.llm_gateway import llm_call
+
+        # 测试隔离：显式使用安全 fake gateway 边界变量，不依赖真实
+        # .env/凭据泄漏到进程环境。
+        monkeypatch.setenv("API_KEY", "sk-fake-test")
+        monkeypatch.setenv("BASE_URL", "https://fake.test/v1")
+
+        captured = {}
+
+        class FakeCompletions:
+            def create(self, **kwargs):
+                captured.update(kwargs)
+                fake_message = type("M", (), {"content": "{}", "reasoning_content": ""})
+                fake_choice = type("C", (), {"message": fake_message, "finish_reason": "stop"})
+                fake_response = type("R", (), {"model": "deepseek-v4-flash", "choices": [fake_choice], "usage": None})
+                return fake_response()
+
+        class FakeChat:
+            completions = FakeCompletions()
+
+        class FakeClient:
+            chat = FakeChat()
+
+        monkeypatch.setattr("src.llm_gateway._get_client", lambda *a, **k: FakeClient())
+        response, _ = llm_call(
+            "coordinate_resolution_proposal",
+            [{"role": "user", "content": "x"}],
+            model="deepseek-v4-flash",
+            extra_body={"thinking": {"type": "disabled"}},
+        )
+        assert captured.get("extra_body") == {"thinking": {"type": "disabled"}}
+        assert response.model == "deepseek-v4-flash"
+
+    def test_extra_body_default_none(self, monkeypatch):
+        """不传 extra_body 时 create 不应包含该参数。"""
+        from src.llm_gateway import llm_call
+
+        # 测试隔离：显式使用安全 fake gateway 边界变量。
+        monkeypatch.setenv("API_KEY", "sk-fake-test")
+        monkeypatch.setenv("BASE_URL", "https://fake.test/v1")
+
+        captured = {}
+
+        class FakeCompletions:
+            def create(self, **kwargs):
+                captured.update(kwargs)
+                fake_message = type("M", (), {"content": "{}", "reasoning_content": ""})
+                fake_choice = type("C", (), {"message": fake_message, "finish_reason": "stop"})
+                fake_response = type("R", (), {"model": "m", "choices": [fake_choice], "usage": None})
+                return fake_response()
+
+        class FakeChat:
+            completions = FakeCompletions()
+
+        class FakeClient:
+            chat = FakeChat()
+
+        monkeypatch.setattr("src.llm_gateway._get_client", lambda *a, **k: FakeClient())
+        llm_call("t", [{"role": "user", "content": "x"}], model="m")
+        assert "extra_body" not in captured

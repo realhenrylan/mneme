@@ -7,8 +7,10 @@ from tui.screens.chat import _read_env, _write_env
 
 
 @pytest.fixture
-def temp_env(tmp_path):
+def temp_env(tmp_path, monkeypatch):
     """创建临时 .env 文件，测试后自动清理。"""
+    for key in ("API_KEY", "BASE_URL", "LLM_MODEL", "KEY", "OTHER", "EMPTY_KEY"):
+        monkeypatch.delenv(key, raising=False)
     env_file = tmp_path / ".env"
     env_file.write_text("")  # 初始为空
     # 切到临时目录

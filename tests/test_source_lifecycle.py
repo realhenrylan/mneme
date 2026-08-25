@@ -89,10 +89,14 @@ class TestSyncSources:
         assert result["added"] == 0
         assert result["removed"] == 0
 
-    def test_sync_removes_and_adds(self):
+    def test_sync_removes_and_adds(self, tmp_path):
         """sync 删除多余来源并添加新来源。"""
         collection = MagicMock()
         collection.name = "test"
+        # B0.2.1：guard 从 collection 推导真实持久化目录——测试 double 显式提供
+        collection._client._system.settings.persist_directory = str(tmp_path)
+        # B0.2.2：persist 身份需双重验证（真实持久化 client + 绝对路径）
+        collection._client._system.settings.is_persistent = True
         model = MagicMock()
         manifest = {
             "sources": [
@@ -106,15 +110,21 @@ class TestSyncSources:
             result = sync_sources(["/path/new.pdf"], model, collection)
         assert result["removed"] == 1
         assert result["added"] == 1
-        mock_remove.assert_called_once_with("/path/old.pdf", collection)
+        # chroma_path 为新增可选参数（默认 None → 产品默认目录，行为不变）
+        mock_remove.assert_called_once_with(
+            "/path/old.pdf", collection, chroma_path=None)
         mock_add.assert_called_once()
 
 
 class TestAddSources:
-    def test_add_only_no_removal(self):
+    def test_add_only_no_removal(self, tmp_path):
         """add_sources 只增不删。"""
         collection = MagicMock()
         collection.name = "test"
+        # B0.2.1：guard 从 collection 推导真实持久化目录——测试 double 显式提供
+        collection._client._system.settings.persist_directory = str(tmp_path)
+        # B0.2.2：persist 身份需双重验证（真实持久化 client + 绝对路径）
+        collection._client._system.settings.is_persistent = True
         model = MagicMock()
         manifest = {
             "sources": [
@@ -129,10 +139,14 @@ class TestAddSources:
         # 不应调用 remove_file_from_index
         assert result.get("removed", 0) == 0
 
-    def test_add_updates_changed(self):
+    def test_add_updates_changed(self, tmp_path):
         """add_sources 更新变更的文件。"""
         collection = MagicMock()
         collection.name = "test"
+        # B0.2.1：guard 从 collection 推导真实持久化目录——测试 double 显式提供
+        collection._client._system.settings.persist_directory = str(tmp_path)
+        # B0.2.2：persist 身份需双重验证（真实持久化 client + 绝对路径）
+        collection._client._system.settings.is_persistent = True
         model = MagicMock()
         manifest = {
             "sources": [

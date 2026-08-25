@@ -5,6 +5,9 @@ import shutil
 from pathlib import Path
 
 import pytest
+import os as _os
+_os.environ.setdefault("HF_HUB_OFFLINE", "1")
+_os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 
 
 def release_chroma_systems() -> None:

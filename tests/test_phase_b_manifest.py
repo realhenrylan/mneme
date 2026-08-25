@@ -8,11 +8,34 @@ import src.rag as rag
 from src.graph_rag import KnowledgeGraph
 
 
+class _FakePersistSettings:
+    """B0.2.1 / B0.2.2：guard 从 collection 推导真实持久化目录——fake 显式
+    指向产品默认目录（测试中由 monkeypatch 指向 tmp_path），并声明为真实
+    持久化 client（is_persistent=True，B0.2.2 起 persist 身份需双重验证）。"""
+
+    @property
+    def persist_directory(self) -> str:
+        return str(rag.CHROMA_DB_PATH)
+
+    @property
+    def is_persistent(self) -> bool:
+        return True
+
+
+class _FakePersistSystem:
+    settings = _FakePersistSettings()
+
+
+class _FakeClientHandle:
+    _system = _FakePersistSystem()
+
+
 class _FakeCollection:
     def __init__(self, name: str):
         self.name = name
         self.rows = {}
         self.fail_next_upsert = False
+        self._client = _FakeClientHandle()
 
     def get(self, include=None):
         rows = [self.rows[key] for key in sorted(self.rows)]

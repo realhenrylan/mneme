@@ -11,13 +11,49 @@ import os
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from src.config import (
+    get_settings,
+    register_settings_refresh_callback,
+    DEFAULT_MAX_DOCUMENT_BYTES,
+    DEFAULT_MAX_PDF_PAGES,
+    DEFAULT_MAX_REMOTE_CONTEXT_CHARS,
+)
 
-DEFAULT_MAX_DOCUMENT_BYTES = 50 * 1024 * 1024
-DEFAULT_MAX_PDF_PAGES = 2_000
-DEFAULT_MAX_REMOTE_CONTEXT_CHARS = 60_000
+# 统一配置契约：资源上限模块常量由 src.config.Settings 派生（唯一默认值
+# 来源）。非法环境变量值在 Settings 构造（进程启动）时 fail-fast，发生在
+# 任何索引、模型加载、网络或目录写入之前。`.env` 由 src.config 在模块
+# 导入时（本行之前）加载，因此这里的导入期 get_settings() 已包含 .env 值。
+_SETTINGS = get_settings()
+
+MAX_DOCUMENT_BYTES = _SETTINGS.max_document_bytes
+MAX_PDF_PAGES = _SETTINGS.max_pdf_pages
+MAX_REMOTE_CONTEXT_CHARS = _SETTINGS.max_remote_context_chars
+
+
+def _refresh_security_globals() -> None:
+    """reset_settings() 回调：资源上限常量重新从当前 Settings 解析。
+
+    公开名称（MAX_DOCUMENT_BYTES/MAX_PDF_PAGES/MAX_REMOTE_CONTEXT_CHARS）
+    保留；回调保证 reset 后实际消费者（validate_document_path /
+    validate_pdf_page_count 等使用这些常量的路径）不再使用旧值。
+    """
+    global MAX_DOCUMENT_BYTES, MAX_PDF_PAGES, MAX_REMOTE_CONTEXT_CHARS
+    settings = get_settings()
+    MAX_DOCUMENT_BYTES = settings.max_document_bytes
+    MAX_PDF_PAGES = settings.max_pdf_pages
+    MAX_REMOTE_CONTEXT_CHARS = settings.max_remote_context_chars
+
+
+register_settings_refresh_callback(_refresh_security_globals)
 
 
 def _positive_int_env(name: str, default: int) -> int:
+    """按调用时刻读取 env 的容错解析（remote_context_limit 用）。
+
+    模块常量已由 Settings 派生并在进程启动时 fail-fast；本函数仅服务于
+    remote_context_limit() 的既有“每次调用可重载”语义（P1.0 capture 合同
+    记录其调用时刻值），不改其行为。
+    """
     raw = os.getenv(name, "").strip()
     if not raw:
         return default
@@ -26,17 +62,6 @@ def _positive_int_env(name: str, default: int) -> int:
     except ValueError:
         return default
     return value if value > 0 else default
-
-
-MAX_DOCUMENT_BYTES = _positive_int_env(
-    "MNEME_MAX_DOCUMENT_BYTES", DEFAULT_MAX_DOCUMENT_BYTES,
-)
-MAX_PDF_PAGES = _positive_int_env(
-    "MNEME_MAX_PDF_PAGES", DEFAULT_MAX_PDF_PAGES,
-)
-MAX_REMOTE_CONTEXT_CHARS = _positive_int_env(
-    "MNEME_MAX_REMOTE_CONTEXT_CHARS", DEFAULT_MAX_REMOTE_CONTEXT_CHARS,
-)
 
 
 def _is_loopback(hostname: str | None) -> bool:
@@ -89,9 +114,15 @@ def validate_document_path(filepath: str | os.PathLike[str]) -> str:
     if path.name == ".env":
         raise ValueError("禁止对 .env 建立索引")
 
-    allowed_root = os.getenv("MNEME_DOCUMENT_ROOT", "").strip()
-    if allowed_root:
-        root = Path(os.path.realpath(os.path.abspath(allowed_root)))
+    # 统一配置契约：显式设置 MNEME_DOCUMENT_ROOT 时使用 Settings 已解析
+    # （启动时绝对化）的 document_root——不在调用期按当前 CWD 重新解释
+    # 原始环境变量，CWD 改变后根目录不会漂移。未显式设置时沿用历史
+    # 行为（不施加根目录限制）。
+    settings = get_settings()
+    if settings.document_root_explicit:
+        root = Path(os.path.realpath(os.path.abspath(
+            os.fspath(settings.document_root)
+        )))
         try:
             path.relative_to(root)
         except ValueError as exc:

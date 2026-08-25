@@ -4,6 +4,10 @@
 1. 进程级模型缓存：embedding model 只加载一次，线程安全
 2. 统一 LLM gateway：连接复用、timeout、有限重试、退避、取消、错误分类、token 统计
 3. 所有 LLM 调用通过 gateway，不再各自创建 OpenAI client
+4. 统一配置契约：受管默认值（LLM model/temperature）委托
+   `src.config.Settings` 在调用期解析，gateway 不自行 `load_dotenv()`、
+   不以硬编码默认绕过 Settings。`API_KEY`/`BASE_URL` 是 gateway 边界专属
+   变量（仅读取进程环境，不加载 .env——`.env` 由 src.config 统一加载）。
 """
 
 import os
@@ -13,12 +17,10 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 
-from dotenv import load_dotenv
 from openai import OpenAI
 
+from src.config import get_settings, validate_llm_temperature
 from src.security import endpoint_validation_error, validate_endpoint
-
-load_dotenv()
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -239,11 +241,12 @@ def llm_call(
     call_type: str,
     messages: list[dict],
     model: str | None = None,
-    temperature: float = 0.0,
+    temperature: float | None = None,
     max_tokens: int = 1000,
     timeout: float | None = None,
     max_retries: int = DEFAULT_MAX_RETRIES,
     stream: bool = False,
+    extra_body: dict | None = None,
 ) -> tuple[Any, LLMCallRecord]:
     """统一 LLM 调用网关。
 
@@ -259,16 +262,31 @@ def llm_call(
     Args:
         call_type: 调用类型标识（"answer"/"decompose"/"rewrite"/"graph_extract"）
         messages: OpenAI 格式的消息列表
-        model: 模型名称，默认从环境变量读取
-        temperature: 采样温度
+        model: 模型名称；None 时从统一配置 Settings 解析（调用期）
+        temperature: 采样温度；None 时从统一配置 Settings 解析（调用期）
         max_tokens: 最大生成 token 数
         timeout: 超时秒数
         max_retries: 最大重试次数
         stream: 是否流式
+        extra_body: 附加请求体字段（如关闭推理模型的 thinking）
 
     Returns:
         (response, call_record) 元组
     """
+    # 统一配置契约：受管默认值（model/temperature）在调用期从 Settings 解析，
+    # 不在 gateway 内维护第二套 .env 加载或硬编码默认。
+    if model is None:
+        model = get_settings().llm_model
+    if temperature is None:
+        temperature = get_settings().llm_temperature
+    # fail-fast：最终 temperature（显式覆盖或 Settings 解析）在创建 client/
+    # 发起请求之前必须通过统一校验（与 Settings 同一规则；错误信息含
+    # LLM_TEMPERATURE；拒绝 bool/NaN/inf/非数字/越界——直接 gateway 调用
+    # temperature=2.5 曾到达 client.chat.completions.create）。llm_call_safe
+    # 经本校验保证非法温度零 client/零网络。
+    temperature = validate_llm_temperature(temperature)
+
+    # gateway 边界变量：仅读取进程环境（.env 由 src.config 统一加载）
     api_key = os.getenv("API_KEY")
     base_url = os.getenv("BASE_URL")
 
@@ -289,8 +307,6 @@ def llm_call(
         raise ValueError(f"Invalid BASE_URL: {base_url}")
 
     base_url = validate_endpoint(base_url)
-    if model is None:
-        model = os.getenv("LLM_MODEL", "deepseek-chat")
 
     effective_timeout = timeout or DEFAULT_TIMEOUT
     client = _get_client(api_key, base_url)
@@ -301,23 +317,14 @@ def llm_call(
     for attempt in range(max_retries + 1):
         try:
             with _concurrent_semaphore:
+                kwargs: dict = {"model": model, "messages": messages,
+                                "temperature": temperature, "max_tokens": max_tokens,
+                                "timeout": effective_timeout}
+                if extra_body:
+                    kwargs["extra_body"] = extra_body
                 if stream:
-                    response = client.chat.completions.create(
-                        model=model,
-                        messages=messages,
-                        temperature=temperature,
-                        max_tokens=max_tokens,
-                        timeout=effective_timeout,
-                        stream=True,
-                    )
-                else:
-                    response = client.chat.completions.create(
-                        model=model,
-                        messages=messages,
-                        temperature=temperature,
-                        max_tokens=max_tokens,
-                        timeout=effective_timeout,
-                    )
+                    kwargs["stream"] = True
+                response = client.chat.completions.create(**kwargs)
 
             latency_ms = (time.perf_counter() - start) * 1000
             record.latency_ms = latency_ms
@@ -366,7 +373,7 @@ def llm_call_safe(
     call_type: str,
     messages: list[dict],
     model: str | None = None,
-    temperature: float = 0.0,
+    temperature: float | None = None,
     max_tokens: int = 1000,
     timeout: float | None = None,
     max_retries: int = DEFAULT_MAX_RETRIES,

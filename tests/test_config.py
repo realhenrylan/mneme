@@ -20,10 +20,10 @@ class TestSettings:
         assert s.data_dir == Path.home() / ".mneme"
 
     def test_custom_data_dir(self, monkeypatch):
-        """MNEME_DATA_DIR 环境变量覆盖默认路径。"""
+        """MNEME_DATA_DIR 环境变量覆盖默认路径（绝对化）。"""
         monkeypatch.setenv("MNEME_DATA_DIR", "/tmp/mneme_test")
         s = Settings()
-        assert s.data_dir == Path("/tmp/mneme_test")
+        assert s.data_dir == Path(os.path.abspath("/tmp/mneme_test"))
 
     def test_chroma_db_path_derived(self, monkeypatch):
         """chroma_db_path 从 data_dir 派生。"""
@@ -120,7 +120,7 @@ class TestGlobalSettings:
 class TestResolveDataDir:
     def test_env_override(self, monkeypatch):
         monkeypatch.setenv("MNEME_DATA_DIR", "/custom/path")
-        assert _resolve_data_dir() == Path("/custom/path")
+        assert _resolve_data_dir() == Path(os.path.abspath("/custom/path"))
 
     def test_default(self, monkeypatch):
         monkeypatch.delenv("MNEME_DATA_DIR", raising=False)
@@ -130,7 +130,7 @@ class TestResolveDataDir:
 class TestResolveDocumentRoot:
     def test_env_override(self, monkeypatch):
         monkeypatch.setenv("MNEME_DOCUMENT_ROOT", "/custom/docs")
-        assert _resolve_document_root() == Path("/custom/docs")
+        assert _resolve_document_root() == Path(os.path.abspath("/custom/docs"))
 
     def test_default(self, monkeypatch):
         monkeypatch.delenv("MNEME_DOCUMENT_ROOT", raising=False)

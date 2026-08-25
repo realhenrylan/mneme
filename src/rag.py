@@ -23,16 +23,26 @@ import argparse
 import hashlib
 import json
 import tempfile
+from dataclasses import dataclass
 from time import perf_counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Optional
 
-from dotenv import load_dotenv
-
 from src.citations import citation_map, make_citation_records, validate_citations
-from src.domain import RetrievalCandidate, CitationValidation, compute_context_k
+from src.domain import (
+    RetrievalCandidate,
+    CitationValidation,
+    CitationStatus,
+    StageProvenance,
+    compute_context_k,
+)
 from src.lexical import cjk_ngram_tokenize, build_bm25_index as _build_bm25_index_lexical
-from src.retrieval import CrossEncoderReranker, NoOpReranker, apply_source_diversity
+from src.retrieval import (
+    CrossEncoderReranker,
+    NoOpReranker,
+    apply_source_diversity,
+    select_context_candidates,
+)
 from src.chunking import expand_with_parent, expand_with_adjacent
 from src.metrics import GLOBAL_METRICS, QueryMetric, elapsed_ms
 from src.security import (
@@ -42,13 +52,24 @@ from src.security import (
     validate_pdf_page_count,
 )
 
-load_dotenv()
+# 注意：`.env` 的唯一启动加载入口在 src.config（模块导入时，先于任何
+# Settings 构造）。这里不再调用 load_dotenv()——否则会晚于
+# src.security 导入期的 get_settings()，导致真实 .env 值进不了已缓存的
+# Settings 单例（独立验收发现的返工根因）。
 
 _CHROMA_CLIENTS: list[object] = []
 
 
-def _new_persistent_client():
-    client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+def _new_persistent_client(chroma_path: str | None = None):
+    """创建 PersistentClient；chroma_path 为 None 时使用产品默认目录。
+
+    B0.2.2：目标目录统一规范化为稳定绝对路径（realpath(abspath(...))），
+    使 Mneme 自建 client 的 settings.persist_directory 永远是创建时的真实
+    绝对位置——collection 身份推导不依赖创建/调用时的 CWD（Chroma 1.5.9
+    会原样保留传入路径，相对串在 CWD 切换后即失去意义）。
+    """
+    target = os.path.realpath(os.path.abspath(chroma_path or CHROMA_DB_PATH))
+    client = chromadb.PersistentClient(path=target)
     _CHROMA_CLIENTS.append(client)
     return client
 
@@ -65,17 +86,65 @@ def close_chroma_clients() -> None:
 # 默认从 ModelScope 下载模型（国内网络友好，无需登录）
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 
-# ── 模型加载配置 ──
-# 支持从环境变量 EMBEDDING_MODEL_PATH 指定本地模型路径
-# 默认从 ModelScope 自动下载（无需登录，国内网络友好）
-DEFAULT_EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-EMBEDDING_MODEL_NAME = (
-    os.getenv("EMBEDDING_MODEL_PATH", "").strip()
-    or os.getenv("EMBEDDING_MODEL_NAME", "").strip()
-    or DEFAULT_EMBEDDING_MODEL
+# ── 统一配置契约：Settings 是受管配置的唯一默认值来源 ──
+# 覆盖优先级：真实环境变量 > .env > 契约默认值；非法数值/范围在进程启动
+# （本模块导入）时 fail-fast，先于任何索引/模型加载/网络/目录写入。
+# `.env` 的唯一启动加载入口在 src.config（模块导入时，先于任何 Settings
+# 构造），本模块不再自行 load_dotenv()。
+from src.config import (
+    get_settings,
+    validate_llm_temperature,
+    validate_user_top_k_container,
+    DEFAULT_EMBEDDING_MODEL,
 )
+
+_SETTINGS = get_settings()
+
+# ── 模块级配置常量（由统一配置契约派生，公开名称/签名保留）──
+# 进程启动时从 Settings 取值（`.env` 已由 src.config 在模块导入时加载，
+# 早于任何 Settings 构造）；reset_settings() 通过注册的刷新回调同步更新
+# 这些模块级常量，避免真实 .env/环境变量变更后常量仍是旧默认值。
+# 内部检索宽度（DEFAULT_TOP_K/MIN_K/MAX_K）固定常量、无 env，不在此列。
+EMBEDDING_MODEL_NAME = _SETTINGS.embedding_model_name
 # 保留原始模型标识（用于日志和显示）
-EMBEDDING_MODEL_DISPLAY = EMBEDDING_MODEL_NAME
+EMBEDDING_MODEL_DISPLAY = _SETTINGS.embedding_model_name
+DEFAULT_LLM_MODEL = _SETTINGS.llm_model
+DEFAULT_TEMPERATURE = _SETTINGS.llm_temperature
+DEFAULT_REFUSAL_THRESHOLD = _SETTINGS.refusal_threshold
+RAG_RERANKER_MODE = _SETTINGS.reranker_mode
+RERANKER_MODEL_NAME = _SETTINGS.reranker_model_name
+
+
+def _refresh_config_globals() -> None:
+    """reset_settings() 回调：模块级配置常量重新从当前 Settings 解析。
+
+    注意：evaluation.compare 的消融臂会临时 setattr 覆盖 RAG_RERANKER_MODE
+    并在 finally 恢复（直接改模块属性，不经过本函数）；回调只在
+    reset_settings()（onboarding 保存 / 测试重建）时刷新这些常量。
+    """
+    global EMBEDDING_MODEL_NAME, EMBEDDING_MODEL_DISPLAY, DEFAULT_LLM_MODEL
+    global DEFAULT_TEMPERATURE, DEFAULT_REFUSAL_THRESHOLD
+    global RAG_RERANKER_MODE, RERANKER_MODEL_NAME, CHROMA_DB_PATH
+    settings = get_settings()
+    EMBEDDING_MODEL_NAME = settings.embedding_model_name
+    EMBEDDING_MODEL_DISPLAY = settings.embedding_model_name
+    DEFAULT_LLM_MODEL = settings.llm_model
+    DEFAULT_TEMPERATURE = settings.llm_temperature
+    DEFAULT_REFUSAL_THRESHOLD = settings.refusal_threshold
+    RAG_RERANKER_MODE = settings.reranker_mode
+    RERANKER_MODEL_NAME = settings.reranker_model_name
+    CHROMA_DB_PATH = str(settings.chroma_db_path)
+
+
+from src.config import register_settings_refresh_callback
+register_settings_refresh_callback(_refresh_config_globals)
+
+
+# ── 模型加载配置 ──
+# 支持从环境变量 EMBEDDING_MODEL_PATH 指定本地模型路径；默认从 ModelScope
+# 自动下载（无需登录，国内网络友好），自动下载缓存到 Settings.model_cache_dir
+# （= MNEME_DATA_DIR/models，稳定数据目录）。EMBEDDING_MODEL_NAME /
+# EMBEDDING_MODEL_DISPLAY 为模块级常量，随 reset_settings() 刷新。
 
 
 def _load_sentence_transformer(model_name: str) -> SentenceTransformer:
@@ -84,8 +153,12 @@ def _load_sentence_transformer(model_name: str) -> SentenceTransformer:
     加载优先级：
         1. 如果 model_name 是本地路径且存在，直接加载
         2. 如果 model_name 是模型 ID，尝试从本地缓存加载
-        3. 本地没有时，自动从 ModelScope 下载（无需登录，国内网络友好）
+        3. 本地没有时，自动从 ModelScope 下载（无需登录，国内网络友好），
+           下载缓存位于 Settings.model_cache_dir（MNEME_DATA_DIR/models）
         4. 下载失败时给出清晰的错误提示
+
+    离线模式（MNEME_OFFLINE=1，精确承诺：仅禁止隐式远程 ModelScope 下载）：
+    步骤 1 失败后立即给出明确本地错误，绝不调用 ModelScope。
 
     Args:
         model_name: 模型路径或模型 ID
@@ -104,6 +177,18 @@ def _load_sentence_transformer(model_name: str) -> SentenceTransformer:
     except Exception:
         pass  # 继续尝试其他方式
 
+    # 离线模式：绝不隐式触发远程 ModelScope 下载
+    if get_settings().offline_mode:
+        raise RuntimeError(
+            f"离线模式（MNEME_OFFLINE=1）下无法加载本地 embedding 模型: "
+            f"{model_name}\n\n"
+            "解决方式（任选其一，均不触网）：\n"
+            "1. 设置 EMBEDDING_MODEL_PATH 指向已下载的本地模型目录\n"
+            "2. 先关闭离线模式完成一次模型下载（自动缓存到 "
+            f"{get_settings().model_cache_dir}）\n"
+            "3. 手动下载模型后设置 EMBEDDING_MODEL_PATH 指向其本地路径"
+        )
+
     # 2. 从 ModelScope 下载（默认方式，国内网络友好，无需登录）
     try:
         from modelscope import snapshot_download
@@ -115,7 +200,7 @@ def _load_sentence_transformer(model_name: str) -> SentenceTransformer:
         print(f"正在从 ModelScope 下载 {model_name}...")
         local_path = snapshot_download(
             modelscope_id,
-            cache_dir="models",
+            cache_dir=str(get_settings().model_cache_dir),
         )
         return SentenceTransformer(local_path)
     except ImportError:
@@ -140,22 +225,25 @@ def _load_sentence_transformer(model_name: str) -> SentenceTransformer:
 
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-# Chroma DB 路径：优先使用 Settings（MNEME_DATA_DIR），降级到旧路径
+# Chroma DB 路径：由 Settings（MNEME_DATA_DIR）派生；CHROMA_DB_PATH 为模块级
+# 常量，随 reset_settings() 的刷新回调同步更新。
 def _default_chroma_db_path():
     from src.config import get_settings
     return str(get_settings().chroma_db_path)
 
 CHROMA_DB_PATH = _default_chroma_db_path()
 
-# ── 配置常量 ──
+
+# ── 配置常量（由统一配置契约 src.config.Settings 派生，数值与契约默认一致）──
 DEFAULT_COLLECTION_NAME = "rag_demo"
 DEFAULT_CHUNK_SIZE = 500
 DEFAULT_CHUNK_OVERLAP = 50
-DEFAULT_TOP_K = 70
-DEFAULT_MIN_K = 12
-DEFAULT_MAX_K = 70
-DEFAULT_LLM_MODEL = "deepseek-chat"
-DEFAULT_TEMPERATURE = 0.1  # 统一为 0.1（与 TUI/CLI 一致）
+# 内部检索宽度：与用户 Top-K（LLM_TOP_K_MIN/MAX，TUI/流式路径）是不同概念；
+# 固定常量、无环境变量覆盖（DEFAULT_LLM_MODEL/DEFAULT_TEMPERATURE 等
+# 环境驱动名在本模块顶部定义，随 reset_settings() 刷新回调同步更新）。
+DEFAULT_TOP_K = _SETTINGS.retrieval_candidate_k
+DEFAULT_MIN_K = _SETTINGS.retrieval_dynamic_min_k
+DEFAULT_MAX_K = _SETTINGS.retrieval_dynamic_max_k
 
 # This is part of the on-disk manifest. Changing a splitter parameter must
 # invalidate the collection instead of silently mixing chunking strategies.
@@ -188,17 +276,78 @@ SYSTEM_PROMPT = (
 )
 PROMPT_TEMPLATE = "文档：\n{context}\n\n问题：{question}\n答案："
 
+# ── 生成阶段拒答策略（RAG_REFUSAL_POLICY） ──────────────────────────
+# baseline（默认）：SYSTEM_PROMPT 原样（历史行为不变）。
+# evidence_calibrated（candidate）：在 system prompt 追加静态指令段——
+# 当 context 已有可直接支持回答的证据时（即使问题复杂/跨文档/需综合）
+# 必须作答并引用；仅当 context 无法支持时才拒答。
+# 评测框架（evaluation.compare）在拒答策略消融运行时按臂临时覆盖模块
+# 属性 RAG_REFUSAL_POLICY 并在 finally 恢复（与 RAG_RERANKER_MODE 同模式）。
+# 注意：指令为静态通用文本，不含任何真值/评测专属信息。
+REFUSAL_POLICY_BASELINE = "baseline"
+REFUSAL_POLICY_EVIDENCE_CALIBRATED = "evidence_calibrated"
+REFUSAL_POLICIES = (REFUSAL_POLICY_BASELINE, REFUSAL_POLICY_EVIDENCE_CALIBRATED)
+
+EVIDENCE_CALIBRATED_SYSTEM_PROMPT_ADDENDUM = (
+    "当提供的文档证据足以支持回答时（包括需要跨文档综合、比较或多步骤推理的问题），"
+    "必须基于证据作答并引用 [S1]、[S2]…；不得因问题复杂、需要综合或跨文档而拒答。"
+    "仅当没有任何文档片段包含回答问题所需的信息时才拒答，并明确说明缺失的信息。\n\n"
+    "(English) When the provided document evidence is sufficient to answer "
+    "(including questions requiring cross-document synthesis or multi-step "
+    "reasoning), you MUST answer based on the evidence and cite [S1], [S2]…; "
+    "never refuse because the question is complex, requires synthesis, or "
+    "spans multiple documents. Refuse only when no document passage contains "
+    "the information needed to answer, and state what is missing."
+)
+
+
+def validate_refusal_policy(value: str) -> str:
+    """校验拒答策略名；非法值抛 ValueError（导入期 fail-fast 与锁定共用）。"""
+    if value not in REFUSAL_POLICIES:
+        raise ValueError(
+            f"invalid RAG_REFUSAL_POLICY {value!r}; must be one of "
+            f"{REFUSAL_POLICIES}",
+        )
+    return value
+
+
+def system_prompt_for_policy(policy: str) -> str:
+    """策略 → 实际 system prompt（`_build_llm_messages` 与 locked-config
+    effective_prompt_ids 共用的单一事实来源）。"""
+    if policy == REFUSAL_POLICY_EVIDENCE_CALIBRATED:
+        return SYSTEM_PROMPT + "\n\n" + EVIDENCE_CALIBRATED_SYSTEM_PROMPT_ADDENDUM
+    return SYSTEM_PROMPT
+
+
+RAG_REFUSAL_POLICY = validate_refusal_policy(
+    os.getenv("RAG_REFUSAL_POLICY", REFUSAL_POLICY_BASELINE).lower().strip(),
+)
+
 # Retrieval scores are intentionally configurable because score calibration
 # depends on the embedding model and collection size.  The default rejects
 # only very weak/no-evidence retrievals and can be tightened in production.
-DEFAULT_REFUSAL_THRESHOLD = 0.03
+# DEFAULT_REFUSAL_THRESHOLD 为模块级常量（随 reset_settings() 刷新）；
+# retrieval_refused() 的逐调用 env 覆盖与非法值回退语义保留（G1-S 锁定）。
 REFUSAL_MESSAGE = "未找到足够可靠的文档依据，暂时无法回答该问题。"
 
 # Reranker 配置：通过环境变量 RAG_RERANKER 控制是否启用
 # "cross-encoder" → 使用 CrossEncoderReranker
 # "none" 或未设置 → 不使用 reranker
-RAG_RERANKER_MODE = os.getenv("RAG_RERANKER", "none").lower()
-RERANKER_MODEL_NAME = os.getenv("RAG_RERANKER_MODEL", "cross-encoder/ms-marco-MiniLM-L-6-v2")
+# RAG_RERANKER_MODE / RERANKER_MODEL_NAME 为模块级常量（随
+# reset_settings() 刷新；评测消融臂可直接 setattr 临时覆盖）。
+
+# Context selector 同源上限（max_per_source）：None/0 = 不限同源（仅 top_k
+# 截断）；正数 = 每源最多 N chunk。生产默认 3（source diversity 行为不变）。
+# 评测框架（evaluation.compare）在 selector 消融（S0/S3）运行时按臂临时
+# 覆盖此模块变量并在 finally 恢复；RAG_SELECTOR_MAX_PER_SOURCE 环境变量
+# （none|unlimited|0 → None；正整数 → 上限）可外部控制全局默认。
+_raw_selector = os.getenv("RAG_SELECTOR_MAX_PER_SOURCE")
+if _raw_selector is None or _raw_selector.strip() == "":
+    SELECTOR_MAX_PER_SOURCE: int | None = 3
+elif _raw_selector.strip().lower() in ("none", "unlimited", "0"):
+    SELECTOR_MAX_PER_SOURCE = None
+else:
+    SELECTOR_MAX_PER_SOURCE = int(_raw_selector)  # 非法值在导入期 fail-fast
 
 # 进程级 reranker 缓存，避免重复加载模型
 _RERANKER_INSTANCE: CrossEncoderReranker | None = None
@@ -422,26 +571,27 @@ def _source_metadata(filepath: str, file_type: str) -> dict:
     }
 
 
-def _invalidate_graph_cache(collection_or_name) -> None:
+def _invalidate_graph_cache(collection_or_name, chroma_path: str | None = None) -> None:
     """Invalidate the collection's Graph RAG cache after an index mutation."""
     collection_name = collection_or_name
     if not isinstance(collection_or_name, str):
         collection_name = getattr(collection_or_name, "name", "")
     if not isinstance(collection_name, str) or not collection_name:
         return
+    base = chroma_path or CHROMA_DB_PATH
     for suffix in (".json", ".pkl"):
         try:
-            os.remove(os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg{suffix}"))
+            os.remove(os.path.join(base, f"{collection_name}_kg{suffix}"))
         except FileNotFoundError:
             pass
 
 
-def _manifest_path(collection_name: str) -> str:
-    return os.path.join(CHROMA_DB_PATH, f"{collection_name}.manifest.json")
+def _manifest_path(collection_name: str, chroma_path: str | None = None) -> str:
+    return os.path.join(chroma_path or CHROMA_DB_PATH, f"{collection_name}.manifest.json")
 
 
-def _bm25_snapshot_path(collection_name: str) -> str:
-    return os.path.join(CHROMA_DB_PATH, f"{collection_name}.bm25.json")
+def _bm25_snapshot_path(collection_name: str, chroma_path: str | None = None) -> str:
+    return os.path.join(chroma_path or CHROMA_DB_PATH, f"{collection_name}.bm25.json")
 
 
 def _atomic_write_json(filepath: str, payload: dict) -> None:
@@ -466,19 +616,19 @@ def _atomic_write_json(filepath: str, payload: dict) -> None:
             os.remove(temporary_path)
 
 
-def load_index_manifest(collection_name: str) -> dict | None:
+def load_index_manifest(collection_name: str, chroma_path: str | None = None) -> dict | None:
     """Load the collection manifest, returning None for a legacy collection."""
     try:
-        with open(_manifest_path(collection_name), "r", encoding="utf-8") as stream:
+        with open(_manifest_path(collection_name, chroma_path), "r", encoding="utf-8") as stream:
             manifest = json.load(stream)
         return manifest if isinstance(manifest, dict) else None
     except (OSError, ValueError, TypeError):
         return None
 
 
-def load_bm25_snapshot(collection_name: str) -> dict | None:
+def load_bm25_snapshot(collection_name: str, chroma_path: str | None = None) -> dict | None:
     try:
-        with open(_bm25_snapshot_path(collection_name), "r", encoding="utf-8") as stream:
+        with open(_bm25_snapshot_path(collection_name, chroma_path), "r", encoding="utf-8") as stream:
             snapshot = json.load(stream)
         return snapshot if isinstance(snapshot, dict) else None
     except (OSError, ValueError, TypeError):
@@ -505,7 +655,14 @@ def _embedding_dimension(model=None, embeddings=None) -> int | None:
     return None
 
 
-def _index_config(model=None, embedding_dimension: int | None = None) -> dict:
+def _index_config(model=None, embedding_dimension: int | None = None,
+                  snapshot_config: dict | None = None) -> dict:
+    """索引配置 + 指纹。
+
+    ``snapshot_config`` 非 None 时（chunk snapshot contract 建索引）在配置中
+    加入 ``snapshot`` 段并计入指纹——配置或指纹变化 → 安全重建；默认路径
+    （None）产出的 payload 与既有实现逐字节一致。
+    """
     dimension = embedding_dimension or _embedding_dimension(model)
     payload = {
         "embedding_model": EMBEDDING_MODEL_NAME,
@@ -513,6 +670,8 @@ def _index_config(model=None, embedding_dimension: int | None = None) -> dict:
         "normalize": False,
         "chunking": CHUNKING_CONFIG,
     }
+    if snapshot_config:
+        payload["snapshot"] = snapshot_config
     fingerprint_payload = json.dumps(payload, ensure_ascii=False, sort_keys=True)
     return {
         **payload,
@@ -526,6 +685,7 @@ def _manifest_config_matches(
     manifest: dict | None,
     model=None,
     embedding_dimension: int | None = None,
+    snapshot_config: dict | None = None,
 ) -> bool:
     if not manifest or not isinstance(manifest.get("config"), dict):
         return False
@@ -537,12 +697,20 @@ def _manifest_config_matches(
     known_dimension = embedding_dimension or _embedding_dimension(model)
     if known_dimension is not None and current.get("embedding_dimension") != known_dimension:
         return False
+    # snapshot 段：请求了 snapshot 契约则必须完全一致；未请求则不得残留
+    if snapshot_config is not None:
+        if current.get("snapshot") != snapshot_config:
+            return False
+    elif "snapshot" in current:
+        return False
     fingerprint_payload = {
         "embedding_model": current.get("embedding_model"),
         "embedding_dimension": current.get("embedding_dimension"),
         "normalize": current.get("normalize"),
         "chunking": current.get("chunking"),
     }
+    if current.get("snapshot") is not None:
+        fingerprint_payload["snapshot"] = current["snapshot"]
     expected_fingerprint = hashlib.sha256(
         json.dumps(
             fingerprint_payload, ensure_ascii=False, sort_keys=True,
@@ -635,6 +803,7 @@ def _write_bm25_snapshot(
     data: dict,
     manifest_version: int,
     previous_snapshot: dict | None = None,
+    chroma_path: str | None = None,
 ) -> None:
     previous_snapshot = previous_snapshot or {}
     previous_hashes = previous_snapshot.get("document_hashes", {})
@@ -656,7 +825,7 @@ def _write_bm25_snapshot(
         tokenized[chunk_id] = tokens
         document_hashes[chunk_id] = document_hash
     _atomic_write_json(
-        _bm25_snapshot_path(collection_name),
+        _bm25_snapshot_path(collection_name, chroma_path),
         {
             "schema_version": 1,
             "manifest_version": manifest_version,
@@ -665,6 +834,164 @@ def _write_bm25_snapshot(
             "tokenized": tokenized,
         },
     )
+
+
+# ═══════════════════════════════════════════════════════════════
+# Phase 6-B0.2：snapshot 索引生命周期不可变
+# ═══════════════════════════════════════════════════════════════
+
+SNAPSHOT_INDEX_MARKER_KEY = "mneme.snapshot_index"
+SNAPSHOT_INDEX_MARKER_VALUE = "immutable"
+
+
+class SnapshotIndexImmutableError(RuntimeError):
+    """snapshot 索引是只读的——拒绝生命周期 mutation。
+
+    由受验证 snapshot 建出的索引只能通过**完整、重新验证通过的
+    snapshot 显式 rebuild**（prepare_index / build_index 的 snapshot 路径）
+    更新；add_files_to_index / remove_file_from_index / sync_sources /
+    add_sources 一律 fail-closed 拒绝（任何解析 / encode / 读取 / 写入
+    之前）。
+    """
+
+
+def _collection_snapshot_marker(collection) -> str | None:
+    """读取 collection 级 immutable marker（B0.2）。
+
+    Chroma 的 collection metadata 持久化于 sqlite，重开 client 后仍在；
+    非 dict metadata（含测试 double）视为无 marker。
+    """
+    metadata = getattr(collection, "metadata", None)
+    if not isinstance(metadata, dict):
+        return None
+    return metadata.get(SNAPSHOT_INDEX_MARKER_KEY)
+
+
+def _collection_persist_dir(collection) -> str | None:
+    """从真实本地 Chroma collection 推导其实际持久化目录（B0.2.1 / B0.2.2）。
+
+    特征检测链 ``collection._client._system.settings``（Chroma 1.5.9
+    实测）。B0.2.2 收紧：只接受 ``is_persistent is True`` 的真实持久化
+    client，且 persist_directory 必须是**稳定绝对路径**（Mneme 自建
+    client 在 _new_persistent_client 统一 realpath(abspath(...)) 规范化）。
+    以下情形一律返回 None（不可验证）：非持久化 client（EphemeralClient
+    的 is_persistent=False，其 persist_directory './chroma' 只是残留串，
+    绝不能当作真实位置）、remote client、测试 double、缺失链路、以及只有
+    未经记录的相对 persist path（创建时 CWD 已不可知，mutation 时 abspath
+    会指向错误目录）。调用方不得把 None 解释为「没有 snapshot 证据」（见
+    _assert_mutable_collection 的 fail-closed 处理）。
+    """
+    try:
+        client = getattr(collection, "_client", None)
+        system = getattr(client, "_system", None)
+        settings = getattr(system, "settings", None)
+        is_persistent = getattr(settings, "is_persistent", None)
+        persist_dir = getattr(settings, "persist_directory", None)
+    except Exception:
+        return None
+    if is_persistent is not True:
+        return None
+    if isinstance(persist_dir, str) and persist_dir and os.path.isabs(persist_dir):
+        return persist_dir
+    return None
+
+
+def _assert_mutable_collection(collection, *, op: str,
+                               chroma_path: str | None = None) -> None:
+    """mutation 入口守卫（Phase 6-B0.2 / B0.2.1 / B0.2.2，fail-closed）。
+
+    「snapshot 索引」的识别不依赖调用方传参（任一路径命中即拒绝），且
+    全部发生在任何文件解析 / model.encode / collection 读取写入 /
+    _commit_index_mutation / BM25、manifest、graph sidecar 写入之前：
+    1. collection metadata 存在 immutable marker —— marker 是集合级权威
+       （错误 chroma_path 无法绕过）；marker 存在而 manifest/BM25 sidecar
+       缺失、损坏或与 marker 不一致时**同样拒绝**，绝不降级当作普通
+       parser collection；
+    2. 无 marker 但 collection 自身实际持久化目录下 manifest 的
+       config.snapshot 存在（旧 Phase 6-B0.1 snapshot collection，尚无
+       marker）——同样拒绝（B0.2.1：**绝不信任调用方传入的 chroma_path**，
+       错误路径 / None 均无法绕过；由合法 snapshot rebuild 自动迁移/写入
+       marker，见 _ensure_snapshot_marker）；
+    3. 无法**可验证地**推导 collection 真实持久化位置（B0.2.2：非持久化
+       client / remote / 测试 double / 缺失链路 / 仅剩未经记录的相对
+       persist path）——fail-closed 保守拒绝，绝不把「不确定」降级为
+       「可修改」，也绝不用调用方 chroma_path 顶替真实位置。
+    """
+    collection_name = getattr(collection, "name", DEFAULT_COLLECTION_NAME)
+    marker = _collection_snapshot_marker(collection)
+    if marker is not None:
+        raise SnapshotIndexImmutableError(
+            f"{op}: snapshot index 是只读的（collection marker "
+            f"{SNAPSHOT_INDEX_MARKER_KEY}={marker!r}）——拒绝。"
+            f"若需更新索引内容，只能以完整、重新验证通过的 "
+            f"snapshot 走显式 rebuild（prepare_index / build_index 的 "
+            f"snapshot 路径）。"
+        )
+    persist_dir = _collection_persist_dir(collection)
+    if persist_dir is None:
+        raise SnapshotIndexImmutableError(
+            f"{op}: 无法确认 collection {collection_name!r} 的真实持久化"
+            f"目录（非本地持久化 client 或 persist_directory 不是稳定"
+            f"绝对路径）——fail-closed 保守拒绝生命周期 mutation，绝不"
+            f"把「不确定」降级为「可修改」，也绝不用调用方 chroma_path "
+            f"顶替真实位置。若需更新索引内容，只能以完整、重新验证通过的 "
+            f"snapshot 走显式 rebuild（prepare_index / build_index 的 "
+            f"snapshot 路径）。"
+        )
+    manifest = load_index_manifest(collection_name, persist_dir)
+    if (manifest is not None
+            and manifest.get("config", {}).get("snapshot") is not None):
+        raise SnapshotIndexImmutableError(
+            f"{op}: snapshot index 是只读的（collection manifest "
+            f"config.snapshot 存在，旧 B0.1 形态、尚未写入 collection "
+            f"marker；manifest 位于 collection 实际持久化目录 "
+            f"{persist_dir!r}）——拒绝。若需更新索引内容，只能以"
+            f"完整、重新验证通过的 snapshot 走显式 rebuild（prepare_index "
+            f"/ build_index 的 snapshot 路径）。"
+        )
+
+
+def _assert_parser_rebuild_allowed(client, collection_name: str,
+                                   chroma_path: str | None = None) -> None:
+    """B0.2.1 / B0.2.2：默认 parser 重建（snapshot=None）不得作用于既有
+    snapshot collection。
+
+    在 model 加载 / get_or_create / parser 解析 / collection mutation 之前
+    fail-closed 拒绝（复用 _assert_mutable_collection 的判定：marker 权威、
+    实际持久化目录 manifest、无法可验证地确认位置时保守拒绝——B0.2.2 起
+    persist_directory 必须来自 is_persistent=True 的真实持久化 client 且为
+    稳定绝对路径）。新建 collection（client 中尚不存在）是普通 parser
+    路径，不受影响。
+    """
+    if not _collection_exists(client, collection_name):
+        return
+    collection = client.get_collection(collection_name)
+    _assert_mutable_collection(collection, op="parser rebuild (snapshot=None)",
+                               chroma_path=chroma_path)
+
+
+def _ensure_snapshot_marker(collection, collection_name: str,
+                            chroma_path: str | None = None) -> None:
+    """B0.2：snapshot build 持久化 collection 级 immutable marker。
+
+    - 新建 collection：创建时 metadata 已含 marker（见 build_index 的
+      get_or_create_collection，保留 hnsw:space）；
+    - 已存在 collection 且无 marker（旧 B0.1 迁移）：Chroma 1.5.9 的
+      collection.modify **整体替换** metadata，且 metadata 携带
+      hnsw:space 键即抛 ValueError（不支持修改距离函数，实测确认）——
+      因此写入时显式排除 hnsw:space 键；实测抹除 metadata dict 中的
+      hnsw:space 不影响检索（HNSW 空间配置存于 collection 配置而非
+      metadata dict）。
+    """
+    if _collection_snapshot_marker(collection) is not None:
+        return
+    existing = getattr(collection, "metadata", None)
+    if not isinstance(existing, dict):
+        existing = {}
+    payload = {key: value for key, value in existing.items()
+               if key != "hnsw:space"}
+    payload[SNAPSHOT_INDEX_MARKER_KEY] = SNAPSHOT_INDEX_MARKER_VALUE
+    collection.modify(metadata=payload)
 
 
 def _restore_collection(collection, snapshot: dict) -> None:
@@ -696,13 +1023,15 @@ def _commit_index_mutation(
     force_rebuild: bool = False,
     remove_source_ids: set[str] | None = None,
     remove_source_paths: set[str] | None = None,
+    snapshot_config: dict | None = None,
+    chroma_path: str | None = None,
 ) -> dict:
     """Commit one source-set mutation and its sidecars as one recoverable unit."""
     old_collection = _collection_data(collection, include_embeddings=True)
-    manifest_file = _manifest_path(collection_name)
-    bm25_file = _bm25_snapshot_path(collection_name)
-    old_manifest = load_index_manifest(collection_name)
-    old_bm25 = load_bm25_snapshot(collection_name)
+    manifest_file = _manifest_path(collection_name, chroma_path)
+    bm25_file = _bm25_snapshot_path(collection_name, chroma_path)
+    old_manifest = load_index_manifest(collection_name, chroma_path)
+    old_bm25 = load_bm25_snapshot(collection_name, chroma_path)
     old_manifest_exists = os.path.exists(manifest_file)
     old_bm25_exists = os.path.exists(bm25_file)
 
@@ -741,9 +1070,11 @@ def _commit_index_mutation(
         current = _collection_data(collection)
         current_version = old_manifest.get("manifest_version", 0) if old_manifest else 0
         config = (
-            _index_config(model, _embedding_dimension(model, embeddings))
+            _index_config(model, _embedding_dimension(model, embeddings),
+                          snapshot_config)
             if model is not None or has_embeddings
-            else (old_manifest or {}).get("config") or _index_config()
+            else (old_manifest or {}).get("config") or _index_config(
+                snapshot_config=snapshot_config)
         )
         manifest = _build_manifest(
             collection_name,
@@ -755,8 +1086,9 @@ def _commit_index_mutation(
         _atomic_write_json(manifest_file, manifest)
         _write_bm25_snapshot(
             collection_name, current, manifest["manifest_version"], old_bm25,
+            chroma_path=chroma_path,
         )
-        _invalidate_graph_cache(collection)
+        _invalidate_graph_cache(collection, chroma_path)
         return manifest
     except Exception:
         try:
@@ -818,7 +1150,7 @@ def _delete_source_chunks(collection, source_id: str, source_path: str) -> int:
     return len(ids_to_delete)
 
 
-def _source_needs_sync(collection, filepath: str) -> bool:
+def _source_needs_sync(collection, filepath: str, chroma_path: str | None = None) -> bool:
     """Compare a file with its indexed source metadata."""
     if not os.path.isfile(filepath):
         return False
@@ -831,7 +1163,7 @@ def _source_needs_sync(collection, filepath: str) -> bool:
     ]
     if not matches:
         collection_name = getattr(collection, "name", "")
-        manifest = load_index_manifest(collection_name) if collection_name else None
+        manifest = load_index_manifest(collection_name, chroma_path) if collection_name else None
         manifest_matches = [
             record for record in (manifest or {}).get("sources", [])
             if record.get("source_id") == source["source_id"]
@@ -851,31 +1183,77 @@ def _source_needs_sync(collection, filepath: str) -> bool:
     )
 
 
+def _snapshot_entry_check(snapshot):
+    """产品入口复核（prepare_index / build_index 共用，Phase 6-B0.1）。
+
+    - 在创建任何 PersistentClient / 加载模型 / 写任何 collection、
+      collection manifest、BM25 sidecar **之前**，从 snapshot 保留的
+      输入路径重新执行 ``src.index_contract.load_chunk_snapshot`` 的全量
+      验证，并比对重建契约指纹 / chunk 内容 / source 集合与原 snapshot
+      （伪造、dataclasses.replace 篡改、载入后输入漂移 → 拒绝）；
+    - 返回重建后的新 snapshot：索引内容永远来自受验证输入的重建，
+      绝不来自内存对象；
+    - 失败抛 ``SnapshotContractError``（fail-closed），绝不降级 parser。
+    """
+    from src.index_contract import verify_snapshot_current
+    return verify_snapshot_current(snapshot)
+
+
+def _manifest_sources_match(manifest: dict | None, snapshot) -> bool:
+    """collection manifest 声明的 source 集合与 snapshot **精确一致**。
+
+    身份主键：全 64 位 ``source_id``（= sha256(normcase(realpath))）与
+    canonical ``source_path``；basename 只作展示字段，不参与比对。
+    """
+    if not manifest or not isinstance(manifest.get("sources"), list):
+        return False
+    declared = manifest["sources"]
+    declared_ids = {
+        r.get("source_id") for r in declared
+        if isinstance(r, dict) and r.get("source_id")
+    }
+    declared_paths = {
+        canonical_source_path(r["source_path"]) for r in declared
+        if isinstance(r, dict) and r.get("source_path")
+    }
+    expected_ids = {s.id for s in snapshot.sources}
+    expected_paths = {canonical_source_path(s.path) for s in snapshot.sources}
+    return declared_ids == expected_ids and declared_paths == expected_paths
+
+
 def _ensure_client_and_check_rebuild(
     collection_name: str,
     force_rebuild: bool,
     file_paths: list[str] | None = None,
+    snapshot_config: dict | None = None,
+    chroma_path: str | None = None,
 ) -> tuple[chromadb.Client, bool]:
     """创建 PersistentClient 并判断是否需要重建索引。
 
     Args:
         collection_name: ChromaDB collection 名称
         force_rebuild: 是否强制重建索引
+        file_paths: 期望的来源文件（存在时做内容同步检查）
+        snapshot_config: chunk snapshot contract 配置段；非 None 时要求
+                         collection manifest 的 config.snapshot 完全一致，
+                         不一致 → 重建（绝不误复用旧索引）
 
     Returns:
         (client, need_build): client 为 PersistentClient 实例，
                               need_build 为是否需要重建索引的布尔值
     """
-    client = _new_persistent_client()
+    client = _new_persistent_client(chroma_path)
     need_build = force_rebuild or not _collection_exists(client, collection_name)
     if not need_build and file_paths:
         try:
             collection = client.get_collection(collection_name)
-            manifest = load_index_manifest(collection_name)
+            manifest = load_index_manifest(collection_name, chroma_path)
             need_build = (
                 manifest is None
-                or not _manifest_config_matches(manifest)
-                or any(_source_needs_sync(collection, filepath) for filepath in file_paths)
+                or not _manifest_config_matches(
+                    manifest, snapshot_config=snapshot_config)
+                or any(_source_needs_sync(collection, filepath, chroma_path)
+                       for filepath in file_paths)
             )
         except (OSError, ValueError):
             need_build = True
@@ -887,18 +1265,71 @@ def prepare_index(
         collection_name: str,
         force_rebuild: bool = False,
         progress_callback=None,
+        snapshot=None,
+        chroma_path: str | None = None,
 ) -> tuple:
+    """准备索引（创建/复用）并返回 (model, collection, bm25, docs, metadatas)。
+
+    ``snapshot``（chunk snapshot contract 对象，见 src.index_contract）非 None
+    时，索引内容来自**已验证的 snapshot**（跳过 parser），collection manifest
+    的 config.snapshot 记录契约版本/指纹/输入 SHA；配置或指纹变化触发安全
+    重建。``snapshot=None``（默认）走既有 parser 路径，行为不变。
+    ``chroma_path`` 为 None 时使用产品默认数据目录。
+
+    Phase 6-B0.1 硬化（snapshot 非 None 时，全部发生在任何 client / 模型 /
+    collection / manifest / BM25 sidecar 写入之前，失败零写入）：
+    1. ``_snapshot_entry_check``：重新执行 load_chunk_snapshot 验证并比对
+       重建指纹 / chunk 内容 / source 集合（伪造、篡改、载入后漂移 → 拒绝）；
+    2. 调用方 file_paths 必须与 snapshot 声明的源文件集合**精确一致**；
+    3. 复用已有 collection 前，collection manifest 声明的 sources 必须与
+       snapshot 精确一致；不一致 → 禁止复用，强制安全重建为 snapshot
+       精确内容（绝不复用陈旧索引）。
+    """
+    if snapshot is not None:
+        # 1. 入口复核：任何 client / model / sidecar 写入之前（fail-closed）
+        snapshot = _snapshot_entry_check(snapshot)
+        # 2. 调用方 file_paths 与 snapshot 源集合精确一致（新建与复用都执行）
+        expected = {canonical_source_path(p) for p in snapshot.source_paths()}
+        provided = {canonical_source_path(p) for p in file_paths}
+        if expected != provided:
+            missing = sorted(expected - provided)
+            extra = sorted(provided - expected)
+            raise ValueError(
+                "snapshot source set mismatch (fail-closed, zero writes): "
+                f"missing={missing[:5]} extra={extra[:5]}"
+            )
+    snapshot_config = snapshot.config() if snapshot is not None else None
+
+    stale_manifest = False
+    if snapshot is not None and not force_rebuild:
+        # 3. 复用候选预检（无 client，零写入）：已有 manifest 且配置一致时，
+        #    manifest 的 sources 必须与 snapshot 精确一致。不一致（如删除某
+        #    source 后待恢复、或混入非 snapshot 内容）→ 禁止复用，强制安全
+        #    重建为 snapshot 的精确内容——绝不复用陈旧索引，也不悄悄丢弃。
+        existing = load_index_manifest(collection_name, chroma_path)
+        if existing is not None and _manifest_config_matches(
+                existing, snapshot_config=snapshot_config):
+            stale_manifest = not _manifest_sources_match(existing, snapshot)
+
     client, need_build = _ensure_client_and_check_rebuild(
         collection_name, force_rebuild, file_paths=file_paths,
+        snapshot_config=snapshot_config, chroma_path=chroma_path,
     )
+
+    if snapshot is None:
+        # B0.2.1：默认 parser 路径不得复用/重建既有 snapshot collection
+        # （marker 或旧 B0.1 manifest config.snapshot）——在 model 加载 /
+        # build_index / collection mutation 之前 fail-closed 拒绝。
+        _assert_parser_rebuild_allowed(client, collection_name, chroma_path)
 
     from src.llm_gateway import get_or_load_model
     model = get_or_load_model(EMBEDDING_MODEL_NAME, _load_sentence_transformer)
-    manifest = load_index_manifest(collection_name)
+    manifest = load_index_manifest(collection_name, chroma_path)
     config_mismatch = bool(file_paths) and (
-        manifest is None or not _manifest_config_matches(manifest, model=model)
+        manifest is None or not _manifest_config_matches(
+            manifest, model=model, snapshot_config=snapshot_config)
     )
-    need_build = need_build or config_mismatch
+    need_build = need_build or config_mismatch or stale_manifest
 
     if need_build:
         print("索引重构中...")
@@ -907,6 +1338,8 @@ def prepare_index(
             force_rebuild=force_rebuild or config_mismatch,
             progress_callback=progress_callback,
             model=model,
+            snapshot=snapshot,
+            chroma_path=chroma_path,
         )
     else:
         print("检测到已有索引，正在加载...")
@@ -916,12 +1349,12 @@ def prepare_index(
     all_docs = all_data["documents"]
     all_metadatas = all_data["metadatas"]
 
-    manifest = load_index_manifest(collection_name)
+    manifest = load_index_manifest(collection_name, chroma_path)
     bm25 = set_manifest_version(
         build_bm25_index(
             all_docs,
             ids=all_data["ids"],
-            previous_snapshot=load_bm25_snapshot(collection_name),
+            previous_snapshot=load_bm25_snapshot(collection_name, chroma_path),
             metadatas=all_metadatas,
         ),
         manifest.get("manifest_version") if manifest else None,
@@ -1058,39 +1491,102 @@ def build_index(
     force_rebuild: bool = False,
     progress_callback=None,
     model: SentenceTransformer | None = None,
+    snapshot=None,
+    chroma_path: str | None = None,
 ) -> tuple[SentenceTransformer, chromadb.Collection]:
-    model = model or _load_sentence_transformer(EMBEDDING_MODEL_NAME)
+    """构建/重建索引。
+
+    ``snapshot`` 非 None 时：file_paths 必须与 snapshot 声明的源文件集合
+    **精确一致**（任一不匹配即 ValueError，零写入），索引内容直接来自
+    已验证的 snapshot（不解析、不分块），其余流程（embedding → upsert →
+    collection manifest + BM25 sidecar）与默认路径完全一致，manifest 的
+    config.snapshot 记录契约指纹。``snapshot=None``（默认）走既有
+    parser（src/loaders + src/chunking）路径——但 B0.2.1 起，既有
+    snapshot collection（marker 或 manifest config.snapshot）拒绝默认
+    parser 重建（fail-closed，先于 model 加载 / get_or_create / parser /
+    mutation），snapshot=... 显式 rebuild 是唯一合法更新路径；新
+    collection 的普通 parser 路径不受影响。
+
+    Phase 6-B0.1 硬化（snapshot 非 None 时）：入口验证（重新执行
+    load_chunk_snapshot + 比对重建指纹/内容/来源集合 + file_paths 精确
+    一致 + 源文件存在性）全部发生在**任何 client / 模型 / collection /
+    manifest / BM25 sidecar 写入之前**——直接调用 build_index 同样安全，
+    不依赖 prepare_index 的先验验证。
+    """
+    if snapshot is not None:
+        # ── 入口验证：先于任何 client / 模型 / collection / sidecar 写入 ──
+        snapshot = _snapshot_entry_check(snapshot)
+        expected = {canonical_source_path(p) for p in snapshot.source_paths()}
+        provided = {canonical_source_path(p) for p in file_paths}
+        if expected != provided:
+            missing = sorted(expected - provided)
+            extra = sorted(provided - expected)
+            raise ValueError(
+                "snapshot source set mismatch (fail-closed, zero writes): "
+                f"missing={missing[:5]} extra={extra[:5]}"
+            )
+        for filepath in file_paths:
+            if not os.path.isfile(canonical_source_path(filepath)):
+                raise ValueError(f"snapshot source file missing: {filepath}")
 
     if client is None:
-        client = _new_persistent_client()
+        client = _new_persistent_client(chroma_path)
 
+    if snapshot is None:
+        # B0.2.1：默认 parser 重建不得覆盖既有 snapshot collection（marker
+        # 或旧 B0.1 manifest config.snapshot）——在 model 加载 /
+        # get_or_create / parser 解析 / collection mutation 之前 fail-closed
+        # 拒绝；新 collection 的普通 parser 路径不受影响。
+        _assert_parser_rebuild_allowed(client, collection_name, chroma_path)
+
+    model = model or _load_sentence_transformer(EMBEDDING_MODEL_NAME)
+
+    # snapshot build：创建时即持久化 collection 级 immutable marker
+    # （保留 hnsw:space 与既有 metadata）；已存在 collection 无 marker
+    # （旧 B0.1 迁移）由 _ensure_snapshot_marker 写入（B0.2）
     collection = client.get_or_create_collection(
         name=collection_name,
-        metadata={"hnsw:space": "cosine"},
+        metadata={"hnsw:space": "cosine",
+                  SNAPSHOT_INDEX_MARKER_KEY: SNAPSHOT_INDEX_MARKER_VALUE}
+        if snapshot is not None else {"hnsw:space": "cosine"},
     )
+    if snapshot is not None:
+        _ensure_snapshot_marker(collection, collection_name, chroma_path)
 
-    all_chunks: list[str] = []
-    all_metadatas: list[dict] = []
-    all_ids: list[str] = []
-    source_records: dict[str, dict] = {}
-
-    for index, filepath in enumerate(file_paths):
-        if not _valid_index_path(filepath):
-            continue
-        if source_id_for_path(filepath) in source_records:
-            continue
-        print(f"加载: {filepath}")
-        try:
-            chunks, metadatas, ids, _, source_id, source = _load_index_chunks(filepath)
-        except (OSError, ValueError) as exc:
-            print(f"  [跳过] {exc}")
-            continue
-        source_records[source_id] = source
-        all_chunks.extend(chunks)
-        all_metadatas.extend(metadatas)
-        all_ids.extend(ids)
+    if snapshot is not None:
+        # ── snapshot contract 路径：身份与内容全部来自重新验证的 snapshot ──
+        all_chunks, all_metadatas, all_ids, source_record_list = snapshot.to_index_data()
+        source_records = {
+            record["source_id"]: record for record in source_record_list
+        }
+        print(f"加载: {len(all_ids)} 个 snapshot chunks "
+              f"({len(source_records)} 个来源, contract={snapshot.config().get('contract_version')})")
         if progress_callback:
-            progress_callback(index + 1, len(file_paths))
+            progress_callback(len(file_paths), len(file_paths))
+    else:
+        # ── 默认 parser 路径（行为不变）──
+        all_chunks: list[str] = []
+        all_metadatas: list[dict] = []
+        all_ids: list[str] = []
+        source_records: dict[str, dict] = {}
+
+        for index, filepath in enumerate(file_paths):
+            if not _valid_index_path(filepath):
+                continue
+            if source_id_for_path(filepath) in source_records:
+                continue
+            print(f"加载: {filepath}")
+            try:
+                chunks, metadatas, ids, _, source_id, source = _load_index_chunks(filepath)
+            except (OSError, ValueError) as exc:
+                print(f"  [跳过] {exc}")
+                continue
+            source_records[source_id] = source
+            all_chunks.extend(chunks)
+            all_metadatas.extend(metadatas)
+            all_ids.extend(ids)
+            if progress_callback:
+                progress_callback(index + 1, len(file_paths))
 
     if not source_records and not force_rebuild:
         print("没有需要索引的内容")
@@ -1108,6 +1604,8 @@ def build_index(
         model=model,
         embeddings=embeddings,
         force_rebuild=force_rebuild,
+        snapshot_config=snapshot.config() if snapshot is not None else None,
+        chroma_path=chroma_path,
     )
 
     print(f"已索引 {collection.count()} 个文档块")
@@ -1118,7 +1616,12 @@ def add_files_to_index(
     file_paths: list[str],
     model: SentenceTransformer,
     collection: chromadb.Collection,
+    chroma_path: str | None = None,
 ) -> tuple[BM25Okapi, list[str], list[dict]]:
+    # Phase 6-B0.2：snapshot 索引只读（fail-closed，先于任何解析/encode/
+    # commit/sidecar 写入）
+    _assert_mutable_collection(collection, op="add_files_to_index",
+                               chroma_path=chroma_path)
     collection_name = getattr(collection, "name", DEFAULT_COLLECTION_NAME)
     all_chunks: list[str] = []
     all_metadatas: list[dict] = []
@@ -1153,19 +1656,20 @@ def add_files_to_index(
             source_records=list(source_records.values()),
             model=model,
             embeddings=embeddings,
+            chroma_path=chroma_path,
         )
     else:
-        manifest = load_index_manifest(collection_name)
+        manifest = load_index_manifest(collection_name, chroma_path)
 
     all_data = _collection_data(collection)
     all_docs = all_data["documents"]
     all_metadatas_full = all_data["metadatas"]
-    manifest = load_index_manifest(collection_name)
+    manifest = load_index_manifest(collection_name, chroma_path)
     bm25 = set_manifest_version(
         build_bm25_index(
             all_docs,
             ids=all_data["ids"],
-            previous_snapshot=load_bm25_snapshot(collection_name),
+            previous_snapshot=load_bm25_snapshot(collection_name, chroma_path),
             metadatas=all_metadatas_full,
         ),
         manifest.get("manifest_version") if manifest else None,
@@ -1384,6 +1888,8 @@ def retrieve_hybrid_with_sources(
     documents: list[str],
     metadatas: list[dict] | None = None,
     k: int = DEFAULT_TOP_K,
+    *,
+    _channel_sink: dict | None = None,
     ) -> tuple[list[int], list[str], list[float]]:
     query_embedding = model.encode([query]).tolist()
     results = collection.query(
@@ -1428,6 +1934,18 @@ def retrieve_hybrid_with_sources(
     fused = rrf_merge(
         semantic_results, bm25_for_rrf, documents, metadatas, keys=all_ids,
     )
+
+    # P1.1-M 观测侧信道：dense/BM25 分通道候选（仅稳定 chunk_id/rank/score，
+    # 无文本）；默认 None 时零开销，返回契约不变。
+    if _channel_sink is not None:
+        _channel_sink["dense"] = [
+            {"chunk_id": chunk_id, "rank": rank, "score": float(distance)}
+            for rank, (chunk_id, distance) in enumerate(semantic_results)
+        ]
+        _channel_sink["bm25"] = [
+            {"chunk_id": chunk_id, "rank": rank, "score": float(score)}
+            for rank, (chunk_id, score) in enumerate(bm25_for_rrf)
+        ]
 
     # Stable chunk ids, rather than text, identify the original row.
     id_to_idx = {chunk_id: index for index, chunk_id in enumerate(all_ids)}
@@ -1494,12 +2012,18 @@ def retrieval_refused(scores: list[float], threshold: float | None = None) -> bo
     Uses the simple score-based check for backward compatibility.
     The feature-based refusal (should_refuse_with_features) is available
     in src.retrieval for more nuanced decisions.
+
+    threshold 未显式传入时：默认值来自当前 Settings（单一默认值来源）；
+    逐调用读取 RAG_REFUSAL_THRESHOLD 环境变量作为覆盖通道、非法值回退
+    默认值的语义保留——这是 G1-S capture 合同锁定的行为（记录调用时刻
+    解析后生效值，进程内 env 变化需要可见）。
     """
     if threshold is None:
+        default = get_settings().refusal_threshold
         try:
-            threshold = float(os.getenv("RAG_REFUSAL_THRESHOLD", DEFAULT_REFUSAL_THRESHOLD))
+            threshold = float(os.getenv("RAG_REFUSAL_THRESHOLD", default))
         except (TypeError, ValueError):
-            threshold = DEFAULT_REFUSAL_THRESHOLD
+            threshold = default
     return not scores or max(scores) < threshold
 
 
@@ -1543,22 +2067,20 @@ def _validate_and_repair_citations(
     metadatas: list[dict],
     context_k: int | None = None,
 ) -> tuple[str, CitationValidation]:
-    """校验回答中的引用 ID 合法性，必要时触发一次修复。
+    """校验回答中的引用 ID 合法性（Product P0.1 起：不再"修复"改写）。
+
+    非法引用保留原回答文本并标记 unverified——把 `[S99]` 换成最接近的
+    合法 `[S#]` 不能证明事实真的由该来源支持，是静默伪造归属。
+    纯格式规范化（如大小写）仅在能无歧义证明指向同一合法 ID 时才允许；
+    当前不实施任何改写。
 
     流程：
-    1. 调用 validate_citations() 检查非法引用
-    2. 有非法引用 → 一次修复请求
-    3. 修复失败 → 标记"不可验证"
-
-    Args:
-        answer: LLM 生成的回答
-        top_indices: 排序后的 chunk 索引
-        docs: 全量文档文本
-        metadatas: 全量元数据
-        context_k: 实际进入 prompt 的候选数
+    1. 计算实际进入 context 的候选与合法 ID 集
+    2. validate_citations() 检查非法引用
+    3. 非法 → (原回答, CitationValidation(unverified=True))
 
     Returns:
-        (可能修复后的回答, CitationValidation)
+        (原回答文本, CitationValidation)
     """
     from src.domain import CitationValidation
 
@@ -1574,7 +2096,7 @@ def _validate_and_repair_citations(
     citations = citation_map(selected_indices, docs, metadatas)
     valid_ids = {record.citation_id for record in citations.values()}
 
-    # 校验
+    # 校验（不修复：非法 ID 保留原文，标记不可验证）
     invalid_ids = validate_citations(answer, valid_ids)
 
     if not invalid_ids:
@@ -1582,58 +2104,12 @@ def _validate_and_repair_citations(
             valid_ids=valid_ids, invalid_ids=set(),
         )
 
-    # 有非法引用：触发一次修复
-    repaired_answer = _repair_citations(answer, invalid_ids, valid_ids)
-
-    if repaired_answer != answer:
-        # 修复成功，再次校验
-        remaining_invalid = validate_citations(repaired_answer, valid_ids)
-        return repaired_answer, CitationValidation(
-            valid_ids=valid_ids,
-            invalid_ids=remaining_invalid,
-            repaired=True,
-            repair_success=len(remaining_invalid) < len(invalid_ids),
-        )
-
-    # 修复失败，标记不可验证
     return answer, CitationValidation(
         valid_ids=valid_ids,
         invalid_ids=invalid_ids,
-        repaired=True,
-        repair_success=False,
+        repaired=False,
         unverified=True,
     )
-
-
-def _repair_citations(
-    answer: str,
-    invalid_ids: set[str],
-    valid_ids: set[str],
-) -> str:
-    """尝试一次受限修复非法引用。
-
-    策略：简单替换。将非法引用 ID 替换为最接近的合法 ID，
-    如果无法确定对应关系则不修复。
-
-    不使用 LLM 修复以避免额外延迟和成本。
-    """
-    repaired = answer
-    # 按引用 ID 的数字部分排序，将非法 ID 映射到最接近的合法 ID
-    valid_list = sorted(valid_ids, key=lambda x: int(x[1:]) if x[1:].isdigit() else 0)
-    for invalid_id in invalid_ids:
-        # 尝试找到数字部分最接近的合法 ID
-        invalid_num = int(invalid_id[1:]) if invalid_id[1:].isdigit() else 0
-        best_match = None
-        best_dist = float("inf")
-        for vid in valid_list:
-            vnum = int(vid[1:]) if vid[1:].isdigit() else 0
-            dist = abs(vnum - invalid_num)
-            if dist < best_dist:
-                best_dist = dist
-                best_match = vid
-        if best_match is not None:
-            repaired = repaired.replace(invalid_id, best_match)
-    return repaired
 
 # ═══════════════════════════════════════════════
 # 第六步：LLM 生成回答
@@ -1648,7 +2124,9 @@ def _build_llm_messages(
     history: list[tuple[str, str]],
 ) -> list[dict[str, str]]:
     """Build messages with an explicit untrusted-document boundary."""
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    # 拒答策略决定实际 system prompt（baseline = 原 SYSTEM_PROMPT）
+    messages = [{"role": "system",
+                 "content": system_prompt_for_policy(RAG_REFUSAL_POLICY)}]
     for q, a in history[-5:]:
         messages.append({"role": "user", "content": q})
         messages.append({"role": "assistant", "content": a})
@@ -1661,10 +2139,19 @@ def answer_with_llm_history(
     question: str,
     context: str,
     history: list[tuple[str, str]],
-    model: str = DEFAULT_LLM_MODEL,
-    temperature: float = DEFAULT_TEMPERATURE,
+    model: str | None = None,
+    temperature: float | None = None,
 ) -> str:
     from src.llm_gateway import llm_call, LLMErrorCategory, classify_error
+
+    # 统一配置契约：未显式传入时从当前 Settings 解析（调用期，不冻结导入期值）
+    if model is None:
+        model = get_settings().llm_model
+    if temperature is None:
+        temperature = get_settings().llm_temperature
+    # fail-fast：显式 temperature 覆盖值在进入 LLM gateway 之前必须通过
+    # 统一校验（与 Settings 同一规则；错误信息含 LLM_TEMPERATURE）。
+    temperature = validate_llm_temperature(temperature)
 
     messages = _build_llm_messages(question, context, history)
     try:
@@ -1686,40 +2173,265 @@ def answer_with_llm_history(
             return "API 请求超时，请稍后重试。"
         return f"API 请求失败: {exc}"
 
-def answer_query(
+@dataclass
+class _RuntimeQueryPlan:
+    """运行时 plan（私有）：含 chunk_index 分数映射、实际 merged 顺序与 planner 中间态。
+
+    G1-S 对象边界：本对象仅进程内使用、不可序列化；稳定可序列化形态是
+    src.domain.CapturedQueryPlan（由 capture 层转换，chunk_id 而非
+    chunk_index）。base_candidates 属性满足 prepare_answer_evidence
+    (query_plan=...) 的 duck-typing 需求。planner 被测试桩拦截时 stage
+    为 None（capture 会对 None fail-closed）。planning_profile 显式记录
+    产生本 plan 的路径（"sync"=prepare 普通分支可 capture；"stream"=
+    answer_query_stream 禁 capture）；retrieval_k 记录实际检索宽度
+    （None=沿用 retrieve 默认 k=70）。
+    """
+    query: str
+    rewritten_query: str
+    rewrite_log: dict
+    sub_queries: list[str]
+    best_score: dict[int, float]  # chunk_index -> score（插入顺序 = as_completed 观察顺序）
+    merged: list[int]             # 排序后候选索引（实际观察顺序；同分保持插入顺序）
+    scores_flat: list[float]
+    planning_profile: str = "sync"
+    retrieval_k: int | None = None
+    rewrite_stage: StageProvenance | None = None
+    decompose_stage: StageProvenance | None = None
+
+    @property
+    def base_candidates(self) -> dict[int, float]:
+        """prepare_answer_evidence(query_plan=...) 的 duck-typing 属性。"""
+        return self.best_score
+
+
+# ── Minimal 生产观测接线（P1.1-M）─────────────────────────────
+# 设计约束：观测绝不改变回答路径。Off（默认，未显式 consent）时
+# begin_trace 返回空 id，后续 emit/finish/discard 全部零开销直返；
+# On 时任何发射失败只丢弃事件、不向回答路径抛出（fail-open，与
+# metrics 持久化同一静默语义）。原始 query/answer 一律仅以长度/
+# 脚本/盐化 SHA 形式落盘。
+
+def _resolve_trace_store(trace_store):
+    """keyword-only 显式传入优先；未传时从环境解析一次（Off 零副作用）。"""
+    if trace_store is not None:
+        return trace_store
+    try:
+        from src.production_observability import TraceStore
+        return TraceStore.from_environment()
+    except Exception:
+        return None
+
+
+def _trace_begin(trace_store, planning_profile: str, retrieval_k: int | None) -> str:
+    if trace_store is None:
+        return ""
+    try:
+        return trace_store.begin_trace(planning_profile, retrieval_k) or ""
+    except Exception:
+        return ""
+
+
+def _trace_emit(trace_store, trace_id: str, event_type: str, payload: dict) -> None:
+    if trace_store is None or not trace_id:
+        return
+    try:
+        trace_store.emit(event_type, payload, trace_id=trace_id)
+    except Exception:
+        pass
+
+
+def _trace_emit_sensitive(trace_store, trace_id: str, event_type: str, text: str) -> None:
+    """经 TraceStore 盐化哈希后记录文本的长度/脚本/SHA（原文不落盘）。"""
+    if trace_store is None or not trace_id:
+        return
+    try:
+        trace_store.emit_sensitive(event_type, text, trace_id=trace_id)
+    except Exception:
+        pass
+
+
+def _trace_finish(trace_store, trace_id: str) -> None:
+    if trace_store is None or not trace_id:
+        return
+    try:
+        trace_store.finish_trace(trace_id)
+    except Exception:
+        pass
+
+
+def _trace_discard(trace_store, trace_id: str) -> None:
+    if trace_store is None or not trace_id:
+        return
+    try:
+        trace_store.discard_trace(trace_id)
+    except Exception:
+        pass
+
+
+def _trace_generation_completed(
+        trace_store, trace_id: str, text: str,
+        citation_state: str, latency_ms: int) -> None:
+    """generation.completed 终态：盐化 SHA + 长度 + token 数 + 延迟。"""
+    if trace_store is None or not trace_id:
+        return
+    try:
+        from src.production_observability import salted_digest
+        digest, length, _script = salted_digest(text, trace_store.consent.salt)
+        _trace_emit(trace_store, trace_id, "generation.completed", {
+            "result_sha256": digest,
+            "result_length": length,
+            "token_count": len(text.split()),
+            "latency_ms": latency_ms,
+            "citation_state": citation_state,
+        })
+    except Exception:
+        pass
+
+
+def _stream_trace_callbacks(store, trace_id: str, started_at: float):
+    """流式终态封存与中断清理回调对。
+
+    finalize 在流被完整消费（StopIteration）后触发：发射 generation.completed
+    并封存 trace——封存发生在终态之后，不阻塞 TTFT；discard 在 GeneratorExit
+    （消费方提前关闭）时清理未封存的 active trace，不写任何文件。
+    """
+    def finalize(text: str, citation_state: str) -> None:
+        latency_ms = int((perf_counter() - started_at) * 1000)
+        _trace_generation_completed(store, trace_id, text,
+                                    citation_state, latency_ms)
+        _trace_finish(store, trace_id)
+
+    def discard() -> None:
+        _trace_discard(store, trace_id)
+
+    return finalize, discard
+
+
+def _plan_query_runtime(
         query: str,
         model: SentenceTransformer,
         collection: chromadb.Collection,
         bm25: BM25Okapi,
         documents: list[str],
         metadatas: list[dict],
-        history = None,
-        temperature: float = DEFAULT_TEMPERATURE,
-):
-    from src.rag_query_decomposer import decompose_query_llm
+        history=None,
+        retrieval_k: int | None = None,
+        llm_model: str | None = None,
+        llm_temperature: float | None = None,
+        planning_profile: str = "sync",
+        *,
+        trace_store=None,
+        trace_id: str = "",
+) -> _RuntimeQueryPlan:
+    """共享 planning helper：同步（prepare 普通分支）与流式路径共用。
+
+    与既有两条路径逐行等价：rewrite → decompose → 并发检索（as_completed
+    观察顺序）→ 去重 → 漂移防护 → 实际排序。参数差异保持两条路径现状：
+    - prepare 路径：retrieval_k=None（沿用 retrieve 默认 k=70）、
+      planning_profile="sync"；
+    - stream 路径：retrieval_k=max(top_k_range)（现状 20）、
+      planning_profile="stream"。
+    ``retrieval_k=None`` 时不传 k 关键字（兼容既有测试 fake 的签名）。
+    不改变生产 equal-score tie 行为（稳定排序 + 插入顺序，无 chunk_id
+    次级排序）。planning_profile 仅显式记录产生路径（capture 侧按此
+    fail-closed 拒绝 stream plan），不改变任何行为。provenance 经薄包装
+    侧信道收集。llm_model/llm_temperature 未显式传入时在调用期从
+    Settings 解析（统一配置契约；显式温度由顶层入口传入并贯穿
+    rewrite/decompose，不冻结静态默认）。
+    P1.1-M：``trace_store``/``trace_id``（keyword-only）非空时发射规划
+    阶段事件——rewrite 盐化哈希、decompose 数量、dense/BM25 分通道候选
+    （chunk_id/rank/score，经 ``_channel_sink`` 侧信道从混合检索带出）、
+    RRF 融合结果；Off 或空 id 时全部 no-op，不改变任何返回值。
+    """
     from src.rag_query_rewriter import rewrite_query_llm, merge_rewrite_results
+    from src.rag_query_decomposer import decompose_query_llm
 
-    retrieval_start = perf_counter()
+    # 统一配置契约：未显式传入时从当前 Settings 解析（调用期）。
+    # llm_temperature 显式传入时优先（调用者已解析的显式温度贯穿
+    # rewrite/decompose），None 时回退 Settings.llm_temperature。
+    if llm_model is None:
+        llm_model = get_settings().llm_model
+    if llm_temperature is None:
+        llm_temperature = get_settings().llm_temperature
+    # fail-fast：显式 llm_temperature 覆盖值在进入 rewrite/decompose/检索
+    # 之前必须通过统一校验（与 Settings 同一规则；错误信息含
+    # LLM_TEMPERATURE）。
+    llm_temperature = validate_llm_temperature(llm_temperature)
 
-    # ── 多轮改写：将省略主语的追问改写为独立可检索问题 ──
-    rewritten_query, rewrite_log = rewrite_query_llm(query, history=history)
-
-    # ── LLM 查询拆解（基于改写后的查询） ──
-    sub_queries = decompose_query_llm(rewritten_query)
+    # ── 多轮改写 + 查询拆解（经薄包装，带 provenance 侧信道）──
+    rewrite_sink: list = []
+    rewritten_query, rewrite_log = rewrite_query_llm(
+        query, history=history, model=llm_model, temperature=llm_temperature,
+        _provenance_sink=rewrite_sink,
+    )
+    decompose_sink: list = []
+    sub_queries = decompose_query_llm(
+        rewritten_query, model=llm_model, temperature=llm_temperature,
+        _provenance_sink=decompose_sink,
+    )
     if not sub_queries:
         sub_queries = [rewritten_query]
-
+    # P1.1-M：rewrite/decompose 规划事件（原文只以盐化哈希/数量形式出现）
+    _trace_emit_sensitive(trace_store, trace_id, "rewrite.decided",
+                          rewritten_query)
+    _trace_emit(trace_store, trace_id, "decompose.decided",
+                {"sub_query_count": len(sub_queries)})
     # ── 子查询并发检索 ──
+    # 分通道候选侧信道：Off 或空 id 时 sink 为 None，检索路径零额外开销。
+    channel_sinks: dict[int, dict] = {}
+    tracing_active = bool(trace_store is not None and trace_id)
+
+    def _retrieve(sq: str, sq_index: int = 0):
+        sink: dict | None = {} if tracing_active else None
+        # 仅观测激活时才向检索器附加侧信道关键字（Off 调用面与未接线一致，
+        # 兼容既有测试 fake 的旧签名）。
+        sink_kwargs = {} if sink is None else {"_channel_sink": sink}
+        if retrieval_k is None:
+            result = retrieve_hybrid_with_sources(
+                sq, model, collection, bm25, documents, metadatas,
+                **sink_kwargs,
+            )
+        else:
+            result = retrieve_hybrid_with_sources(
+                sq, model, collection, bm25, documents, metadatas,
+                k=retrieval_k, **sink_kwargs,
+            )
+        if sink is not None:
+            channel_sinks[sq_index] = sink
+        return result
+
     all_entries = []
     with ThreadPoolExecutor(max_workers=min(4, len(sub_queries))) as executor:
         futures = {
-            executor.submit(
-                retrieve_hybrid_with_sources,
-                sq, model, collection, bm25, documents, metadatas,
-            ): sq for sq in sub_queries
+            executor.submit(_retrieve, sq, sq_index): sq_index
+            for sq_index, sq in enumerate(sub_queries)
         }
         for future in as_completed(futures):
             indices, _, scores = future.result()
+            sq_index = futures[future]
+            # P1.1-M：分通道候选 + RRF 融合事件（主线程按完成顺序发射）
+            if tracing_active:
+                channels = channel_sinks.get(sq_index, {})
+                _trace_emit(trace_store, trace_id, "retrieve.dense", {
+                    "sub_query_index": sq_index,
+                    "candidates": channels.get("dense", []),
+                })
+                _trace_emit(trace_store, trace_id, "retrieve.bm25", {
+                    "sub_query_index": sq_index,
+                    "candidates": channels.get("bm25", []),
+                })
+                fused_candidates = [
+                    {"chunk_id": (metadatas[i] or {}).get(
+                        "chunk_id", f"chunk_{i}") if 0 <= i < len(metadatas)
+                        else f"chunk_{i}",
+                     "rank": rank, "score": score}
+                    for rank, (i, score) in enumerate(zip(indices, scores))
+                ]
+                _trace_emit(trace_store, trace_id, "fusion.rrf", {
+                    "sub_query_index": sq_index,
+                    "merged_count": len(fused_candidates),
+                    "candidates": fused_candidates,
+                })
             for idx, score in zip(indices, scores):
                 all_entries.append((idx, score))
 
@@ -1729,34 +2441,144 @@ def answer_query(
         if idx not in best_score or score > best_score[idx]:
             best_score[idx] = score
 
-    # ── 漂移防护：原 query 保底召回 ──
-    # 改写成功时，额外用原 query 检索一路，合并去重
+    # ── 漂移防护：原 query 保底召回（改写成功时）──
     if rewrite_log.get("changed"):
-        orig_indices, _, orig_scores = retrieve_hybrid_with_sources(
-            query, model, collection, bm25, documents, metadatas,
-        )
+        orig_indices, _, orig_scores = _retrieve(query)
         orig_score_map: dict[int, float] = {}
         for idx, score in zip(orig_indices, orig_scores):
             orig_score_map[idx] = score
-        merged_indices, best_score, merge_log = merge_rewrite_results(
+        merged_indices, best_score, _merge_log = merge_rewrite_results(
             list(best_score.keys()), best_score,
             orig_indices, orig_score_map,
         )
         merged = merged_indices
         scores_flat = sorted(best_score.values(), reverse=True)
     else:
-        merged = sorted(best_score.keys(), key=lambda i: best_score[i], reverse=True)
+        merged = sorted(
+            best_score.keys(), key=lambda i: best_score[i], reverse=True,
+        )
         scores_flat = sorted(best_score.values(), reverse=True)
+    return _RuntimeQueryPlan(
+        query=query,
+        rewritten_query=rewritten_query,
+        rewrite_log=rewrite_log,
+        sub_queries=sub_queries,
+        best_score=best_score,
+        merged=merged,
+        scores_flat=scores_flat,
+        planning_profile=planning_profile,
+        retrieval_k=retrieval_k,
+        rewrite_stage=rewrite_sink[0] if rewrite_sink else None,
+        decompose_stage=decompose_sink[0] if decompose_sink else None,
+    )
+
+
+def prepare_answer_evidence(
+        query: str,
+        model: SentenceTransformer,
+        collection: chromadb.Collection,
+        bm25: BM25Okapi,
+        documents: list[str],
+        metadatas: list[dict],
+        history=None,
+        query_plan=None,
+        llm_temperature: float | None = None,
+        *,
+        trace_store=None,
+        trace_id: str = "",
+):
+    """构建可复用的生成证据（生产与评测共用，无副作用）。
+
+    - 无 ``query_plan``（生产 ``answer_query`` 路径）：内部全量执行
+      rewrite → decompose → 子查询检索 → 去重 → 漂移防护 → dynamic_top_k
+      → 检索拒答判定 → select context → parent-child → adjacent → 构建
+      context；``llm_temperature`` 转发给共享规划器（None 时规划器回退
+      Settings，显式温度贯穿 rewrite/decompose）；
+    - 有 ``query_plan``（评测路径）：复用 plan 的 rewritten_query /
+      sub_queries / base_candidates（零 LLM 规划调用、零检索重跑），
+      仅继续 select/扩展/context 构建。
+
+    两路径产出同一 ``PreparedAnswerEvidence``（指纹可比）。本函数不记录
+    指标；指标记录由 ``answer_query`` 在调用后依据 evidence 完成。
+    P1.1-M：``trace_store``/``trace_id`` 非空时转发给共享规划器并在本层
+    发射 cutoff/refusal/context 事件；Off 或空 id 时全部 no-op。
+    """
+    from src.domain import PreparedAnswerEvidence, RetrievalCandidate, compute_context_k
+
+    # fail-fast：显式 llm_temperature 覆盖值在进入规划器之前必须通过统一
+    # 校验（与 Settings 同一规则；None 时规划器回退 Settings，无需校验）。
+    if llm_temperature is not None:
+        llm_temperature = validate_llm_temperature(llm_temperature)
+
+    if query_plan is not None:
+        rewritten_query = query_plan.rewritten_query
+        rewrite_log = query_plan.rewrite_log
+        sub_queries = query_plan.sub_queries
+        best_score: dict[int, float] = dict(query_plan.base_candidates)
+    else:
+        # ── 共享 planning helper（G1-S）：与 answer_query_stream 同一规划 ──
+        plan_kwargs = {
+            "history": history,
+            "llm_temperature": llm_temperature,
+        }
+        # P1.1-M：仅观测激活时才向规划器附加 trace 关键字——Off 时调用面
+        # 与未接线逐字节一致（含既有测试 fake 的旧签名兼容）。
+        if trace_store is not None and trace_id:
+            plan_kwargs["trace_store"] = trace_store
+            plan_kwargs["trace_id"] = trace_id
+        runtime_plan = _plan_query_runtime(
+            query, model, collection, bm25, documents, metadatas,
+            **plan_kwargs,
+        )
+        rewritten_query = runtime_plan.rewritten_query
+        rewrite_log = runtime_plan.rewrite_log
+        sub_queries = runtime_plan.sub_queries
+        best_score = runtime_plan.best_score
+
+    # ── 排序与 Dynamic Top-K ──
+    if query_plan is not None:
+        merged = sorted(best_score.keys(), key=lambda i: best_score[i], reverse=True)
+    else:
+        merged = runtime_plan.merged
+    if query_plan is not None:
+        scores_flat = sorted(best_score.values(), reverse=True)
+    else:
+        scores_flat = runtime_plan.scores_flat
     k = dynamic_top_k(scores_flat)
     top_indices = merged[:k]
-    if retrieval_refused(scores_flat):
-        _record_query_metric(
-            retrieval_start, [], scores_flat, metadatas, bm25, refused=True,
-        )
-        return REFUSAL_MESSAGE, ""
+    candidate_chunk_ids = _ordered_chunk_ids(top_indices, metadatas)
+    # P1.1-M：dynamic top-k 截断事件（如实记录 k、候选总数、产生路径与
+    # 实际检索宽度；评测重放路径无 runtime plan，按 replayed/None 记录）
+    _trace_emit(trace_store, trace_id, "cutoff.dynamic_top_k", {
+        "k": k,
+        "candidate_count": len(scores_flat),
+        "planning_profile": (
+            runtime_plan.planning_profile if query_plan is None else "replayed"),
+        "retrieval_k": (
+            runtime_plan.retrieval_k if query_plan is None else None),
+    })
 
-    # ── Reranker：对 top_k 候选重排 ──
-    # 将 top_indices 转为 RetrievalCandidate，经过 reranker 后再转回
+    # ── 检索前哨拒答（与生成策略无关，A/B 一致） ──
+    if retrieval_refused(scores_flat):
+        _trace_emit(trace_store, trace_id, "refusal.decided", {
+            "refused": True, "reason": "retrieval",
+        })
+        return PreparedAnswerEvidence(
+            query=query, context="", context_sha256="",
+            context_k=0, top_indices=(), select_indices=(), citation_map=(),
+            context_chunk_ids=(), context_source_ids=(),
+            candidate_chunk_ids=candidate_chunk_ids,
+            top_scores=tuple(scores_flat),
+            plan_fingerprint=_plan_fingerprint(rewritten_query, sub_queries),
+            retrieval_fingerprint=_retrieval_fingerprint(
+                candidate_chunk_ids, ()),
+            refused=True, refusal_reason="retrieval",
+        )
+
+    # ── Reranker（chunk-aware）+ 统一 context selector ──
+    # 候选带 chunk 文本供 reranker 按内容打分；随后无论是否重排都走
+    # 同一 select_context_candidates（source diversity + top-k），
+    # 保证 reranker 开启/关闭时 context 选择规则一致。
     reranker = _get_reranker()
     if reranker is not None:
         candidates = [
@@ -1766,15 +2588,33 @@ def answer_query(
                 source_id=(metadatas[i] or {}).get("source_id", ""),
                 source_name=(metadatas[i] or {}).get("source_name", "")
                     or (metadatas[i] or {}).get("source", ""),
+                text=documents[i] if i < len(documents) else "",
                 rrf_score=best_score.get(i),
             )
             for i in top_indices
         ]
         reranked = reranker.rerank(query, candidates, top_k=min(k, 20))
-        # 应用来源多样性约束
-        reranked = apply_source_diversity(reranked, max_per_source=3, top_k=min(k, 20))
-        top_indices = [c.index for c in reranked]
+        selected = select_context_candidates(
+            reranked, top_k=min(k, 20), max_per_source=SELECTOR_MAX_PER_SOURCE)
+        top_indices = [c.index for c in selected]
+    else:
+        candidates = [
+            RetrievalCandidate(
+                index=i,
+                chunk_id=(metadatas[i] or {}).get("chunk_id", f"chunk_{i}"),
+                source_id=(metadatas[i] or {}).get("source_id", ""),
+                source_name=(metadatas[i] or {}).get("source_name", "")
+                    or (metadatas[i] or {}).get("source", ""),
+                text=documents[i] if i < len(documents) else "",
+                rrf_score=best_score.get(i),
+            )
+            for i in top_indices
+        ]
+        selected = select_context_candidates(
+            candidates, top_k=min(k, 20), max_per_source=SELECTOR_MAX_PER_SOURCE)
+        top_indices = [c.index for c in selected]
 
+    select_indices = tuple(top_indices)  # select 后、扩展前（generate 重建 enriched 用）
     enriched_docs = enrich_context(top_indices, documents, metadatas)
     # ── Parent-Child 扩展：child chunk → 用 parent chunk 替换 ──
     context_k = compute_context_k(
@@ -1793,22 +2633,205 @@ def answer_query(
     )
     context = _build_context(top_indices, enriched_docs, metadatas, context_k=context_k)
 
-    _record_query_metric(
-        retrieval_start, top_indices, scores_flat, metadatas, bm25,
+    # ── 组装证据（含指纹） ──
+    from src.citations import citation_map
+    context_indices = top_indices[:context_k]
+    records = citation_map(context_indices, documents, metadatas)
+    citation_map_ordered = tuple(
+        (records[i].citation_id, records[i].chunk_id)
+        for i in context_indices
+        if i in records
+    )
+    context_chunk_ids = _ordered_chunk_ids(context_indices, metadatas)
+    context_source_ids = _ordered_source_labels(context_indices, metadatas)
+    # P1.1-M：context 构建事件（仅 chunk_id/source_id 标签与预算，无正文）
+    _trace_emit(trace_store, trace_id, "context.built", {
+        "context_k": context_k,
+        "chunk_ids": list(context_chunk_ids),
+        "source_ids": list(context_source_ids),
+    })
+    return PreparedAnswerEvidence(
+        query=query,
+        context=context,
+        context_sha256=hashlib.sha256(context.encode("utf-8")).hexdigest(),
         context_k=context_k,
+        top_indices=tuple(context_indices),
+        select_indices=select_indices,
+        citation_map=citation_map_ordered,
+        context_chunk_ids=context_chunk_ids,
+        context_source_ids=context_source_ids,
+        candidate_chunk_ids=candidate_chunk_ids,
+        top_scores=tuple(scores_flat),
+        plan_fingerprint=_plan_fingerprint(rewritten_query, sub_queries),
+        retrieval_fingerprint=_retrieval_fingerprint(
+            candidate_chunk_ids, context_chunk_ids),
     )
 
+
+def _ordered_chunk_ids(indices: list[int], metadatas: list[dict]) -> tuple[str, ...]:
+    """按序去重的 chunk_id 列表。"""
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for i in indices:
+        cid = (metadatas[i] or {}).get("chunk_id", f"chunk_{i}")
+        if cid not in seen:
+            seen.add(cid)
+            ordered.append(cid)
+    return tuple(ordered)
+
+
+def _ordered_source_labels(indices: list[int], metadatas: list[dict]) -> tuple[str, ...]:
+    """按序去重的来源标签（source_name 优先，与 format_sources 同口径）。"""
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for i in indices:
+        meta = metadatas[i] or {}
+        label = meta.get("source_name") or meta.get("source") or meta.get("source_id", "")
+        if label and label not in seen:
+            seen.add(label)
+            ordered.append(label)
+    return tuple(ordered)
+
+
+def _plan_fingerprint(rewritten_query: str, sub_queries: list[str]) -> str:
+    """QueryPlan 确定性标识：rewrite/decompose 产物的 SHA-256。"""
+    payload = json.dumps(
+        {"rewritten_query": rewritten_query, "sub_queries": sub_queries},
+        ensure_ascii=False, sort_keys=True, separators=(",", ":"),
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _retrieval_fingerprint(
+    candidate_chunk_ids: tuple[str, ...],
+    context_chunk_ids: tuple[str, ...],
+) -> str:
+    """检索证据标识：候选集 + context 集的 SHA-256。"""
+    payload = json.dumps(
+        {"candidates": sorted(candidate_chunk_ids),
+         "context": list(context_chunk_ids)},
+        ensure_ascii=False, sort_keys=True, separators=(",", ":"),
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def generate_answer(
+        evidence,
+        documents: list[str],
+        metadatas: list[dict],
+        temperature: float | None = None,
+        history=None,
+):
+    """从 PreparedAnswerEvidence 生成回答（仅生成步骤，不检索不规划）。
+
+    检索前哨拒答（evidence.refused）直接返回拒答消息——与生成策略无关，
+    baseline / evidence_calibrated 两臂结果一致。
+    """
+    # 统一配置契约：未显式传入时从当前 Settings 解析（调用期）
+    if temperature is None:
+        temperature = get_settings().llm_temperature
+    # fail-fast：显式 temperature 覆盖值在进入 LLM gateway 之前必须通过
+    # 统一校验（与 Settings 同一规则；错误信息含 LLM_TEMPERATURE）。
+    temperature = validate_llm_temperature(temperature)
+
+    if evidence.refused:
+        return REFUSAL_MESSAGE, ""
+
     answer = answer_with_llm_history(
-        query, context, history or [], temperature=temperature,
+        evidence.query, evidence.context, history or [], temperature=temperature,
     )
 
     # ── 引用闭环：校验引用 ID 合法性 ──
-    answer, citation_validation = _validate_and_repair_citations(
-        answer, top_indices, enriched_docs, metadatas, context_k,
+    # enriched_docs 用 select_indices（扩展前）重建——与 prepare 时
+    # enrich_context 的输入一致（确定性），保证与重构前行为等价。
+    top_indices = list(evidence.top_indices)
+    enriched_docs = enrich_context(
+        list(evidence.select_indices), documents, metadatas,
+    )
+    answer, _ = _validate_and_repair_citations(
+        answer, top_indices, enriched_docs, metadatas, evidence.context_k,
     )
 
-    sources = format_sources(top_indices, enriched_docs, metadatas, context_k=context_k)
+    sources = format_sources(
+        top_indices, enriched_docs, metadatas, context_k=evidence.context_k,
+    )
+    return answer, sources
 
+
+def answer_query(
+        query: str,
+        model: SentenceTransformer,
+        collection: chromadb.Collection,
+        bm25: BM25Okapi,
+        documents: list[str],
+        metadatas: list[dict],
+        history = None,
+        temperature: float | None = None,
+        *,
+        _citation_status_sink: list | None = None,
+        trace_store=None,
+):
+    """生产问答入口：prepare（检索规划）→ generate（生成），同一证据路径。
+
+    引用终态（Product P0.1）：非流式与流式共用同一校验规则。传
+    ``_citation_status_sink``（keyword-only 列表）时，回答的
+    ``CitationStatus`` 被追加（与 streaming 的 StreamResult 同口径，
+    便于 TUI/评测在流结束后比较）；不传时行为与旧调用方一致。
+    不发起任何额外 LLM/API 调用。
+    P1.1-M：``trace_store``（keyword-only，None 时从环境解析一次）非 Off
+    时记录 Minimal 观测 trace——begin 在进入规划前、异常路径 discard 后
+    原样重抛、正常路径在 citation 终态确定后发射 generation.completed 并
+    finish 封存；Off 时全程 no-op，回答字节不变。
+    """
+    # 统一配置契约：未显式传入时从当前 Settings 解析（调用期）。
+    # 已解析温度同时传入规划路径（rewrite/decompose 使用同一温度）。
+    if temperature is None:
+        temperature = get_settings().llm_temperature
+    # fail-fast：显式 temperature 覆盖值在进入规划器/检索/LLM 之前必须
+    # 通过统一校验（与 Settings 同一规则；错误信息含 LLM_TEMPERATURE）。
+    temperature = validate_llm_temperature(temperature)
+
+    store = _resolve_trace_store(trace_store)
+    trace_id = _trace_begin(store, "sync", None)
+    retrieval_start = perf_counter()
+    try:
+        evidence = prepare_answer_evidence(
+            query, model, collection, bm25, documents, metadatas,
+            history=history, llm_temperature=temperature,
+            trace_store=store, trace_id=trace_id,
+        )
+        if evidence.refused:
+            _record_query_metric(
+                retrieval_start, [], list(evidence.top_scores), metadatas, bm25,
+                refused=True,
+            )
+        else:
+            _record_query_metric(
+                retrieval_start, list(evidence.top_indices),
+                list(evidence.top_scores), metadatas, bm25,
+                context_k=evidence.context_k,
+            )
+        answer, sources = generate_answer(
+            evidence, documents, metadatas, temperature=temperature, history=history,
+        )
+    except Exception:
+        # 异常路径：丢弃未封存 trace 后原样重抛（观测不吞错也不改错）。
+        _trace_discard(store, trace_id)
+        raise
+    citation_state = "not_required" if evidence.refused else "unknown"
+    if _citation_status_sink is not None:
+        from src.citations import valid_citation_ids_for_context
+        valid_ids = valid_citation_ids_for_context(
+            list(evidence.top_indices), documents, metadatas,
+            evidence.context_k,
+        )
+        status = evaluate_answer_status(answer, valid_ids)
+        citation_state = status.state
+        _citation_status_sink.append(status)
+    latency_ms = int((perf_counter() - retrieval_start) * 1000)
+    _trace_generation_completed(store, trace_id, answer, citation_state,
+                                latency_ms)
+    _trace_finish(store, trace_id)
     return answer, sources
 
 
@@ -1845,12 +2868,26 @@ def rag_pipeline(
     print(f"文档库就绪（用时{_minutes}分{_seconds}秒）")
 
     _tq0 = time.time()
-    answer, _ = answer_query(query, model, collection, bm25, all_docs, all_metadatas)
+    status_sink: list = []
+    answer, sources = answer_query(
+        query, model, collection, bm25, all_docs, all_metadatas,
+        _citation_status_sink=status_sink,
+    )
     _tq1 = time.time()
     _qelapsed = _tq1 - _tq0
     _qminutes = int(_qelapsed // 60)
     _qseconds = int(_qelapsed % 60)
     print(f"{answer}（用时{_qminutes}分{_qseconds}秒）")
+    # ── 来源展示闭环（Product P0.2.1）：与 citation status 同源的
+    #    sources 在回答后展示；拒答等空 sources 不打印来源块 ──
+    if sources:
+        print(f"\n参考来源：\n{sources}\n")
+    # ── 引用终态（Product P0.2）：独立于回答显示，不混入返回文本 ──
+    if status_sink:
+        from src.citations import format_citation_status_line
+        status_line = format_citation_status_line(status_sink[0])
+        if status_line:
+            print(status_line)
     return answer
 
 
@@ -1891,10 +2928,19 @@ def answer_with_llm_history_stream(
     question: str,
     context: str,
     history: list[tuple[str, str]],
-    model: str = DEFAULT_LLM_MODEL,
-    temperature: float = DEFAULT_TEMPERATURE,
+    model: str | None = None,
+    temperature: float | None = None,
 ) -> Generator[str, None, None]:
     from src.llm_gateway import llm_call, LLMErrorCategory, classify_error
+
+    # 统一配置契约：未显式传入时从当前 Settings 解析（调用期，不冻结导入期值）
+    if model is None:
+        model = get_settings().llm_model
+    if temperature is None:
+        temperature = get_settings().llm_temperature
+    # fail-fast：显式 temperature 覆盖值在进入 LLM gateway 之前必须通过
+    # 统一校验（与 Settings 同一规则；错误信息含 LLM_TEMPERATURE）。
+    temperature = validate_llm_temperature(temperature)
 
     messages = _build_llm_messages(question, context, history)
     try:
@@ -1922,6 +2968,114 @@ def answer_with_llm_history_stream(
             yield f"\n[API 请求失败: {exc}]"
 
 
+# ═══════════════════════════════════════════════════════════════
+# 流式回答结果（Product P0.1：引用终态 side-channel）
+# ═══════════════════════════════════════════════════════════════
+
+# 生成阶段的固定错误消息核心（answer_with_llm_history(_stream) 输出；
+# 流式带 [] 包裹、非流式不带）。这些消息不是回答：不要求引用，终态为
+# not_required(api_error)。
+_API_ERROR_PREFIXES = (
+    "API 请求失败",
+    "无法连接到 API 服务",
+    "API 请求超时",
+    "API 请求频率超限",
+)
+
+
+def _is_api_error_text(text: str) -> bool:
+    """完整文本是否为产品固定的 API/transport 错误消息。"""
+    stripped = text.strip()
+    if not stripped:
+        return False
+    core = (
+        stripped[1:-1]
+        if stripped.startswith("[") and stripped.endswith("]")
+        else stripped
+    )
+    return core.startswith(_API_ERROR_PREFIXES)
+
+
+def evaluate_answer_status(
+        answer: str, valid_ids: tuple[str, ...]) -> CitationStatus:
+    """非流式回答的引用终态（Product P0.1/P0.2 共享规则）。
+
+    拒答 → not_required(refused)；API/transport 错误消息 →
+    not_required(api_error)；否则按 evidence 校验（非法 ID / 零引用 →
+    unverified，全合法 → verified）。不改写回答文本、不发任何 LLM/API
+    调用、只验证编号是否对应实际 evidence。
+    """
+    from src.citations import evaluate_citation_status
+    if answer == REFUSAL_MESSAGE:
+        return evaluate_citation_status(
+            answer, valid_ids, answer_requires_citation=False,
+            not_required_reason="refused",
+        )
+    if _is_api_error_text(answer):
+        return evaluate_citation_status(
+            answer, valid_ids, answer_requires_citation=False,
+            not_required_reason="api_error",
+        )
+    return evaluate_citation_status(
+        answer, valid_ids, answer_requires_citation=True,
+    )
+
+
+@dataclass
+class StreamResult:
+    """流式回答结果：可迭代（旧调用方 ``for chunk in stream`` 不变），
+    完整消费后 ``citation_status`` 终态可读（TUI 在渲染前读取）。
+
+    - refused: 检索前哨拒答（无引用要求）；
+    - API/transport 错误（生成阶段 yield 固定错误消息）同样不要求引用。
+    终态在迭代完成（StopIteration）时对完整文本计算；不依赖全局可变
+    状态、不发任何额外 LLM/API 调用、绝不改写产出文本。
+    P1.1-M：可选 ``capture_callback``（完整消费后以 (完整文本, citation
+    终态) 调用一次，用于观测终态封存）；``capture_discard``（GeneratorExit
+    提前关闭时调用一次，清理未封存 trace）。两者失败均不外抛。
+    """
+    chunks: Generator[str, None, None]
+    valid_ids: tuple[str, ...] = ()
+    refused: bool = False
+    citation_status: CitationStatus | None = None
+    _text: str = ""
+    capture_callback: object | None = None
+    capture_discard: object | None = None
+
+    def __iter__(self):
+        from src.citations import evaluate_citation_status
+        try:
+            for chunk in self.chunks:
+                self._text += chunk
+                yield chunk
+            self.citation_status = evaluate_citation_status(
+                self._text, self.valid_ids,
+                answer_requires_citation=self._requires_citation(),
+                not_required_reason="refused" if self.refused else "api_error",
+            )
+            if self.capture_callback is not None:
+                try:
+                    self.capture_callback(
+                        self._text, self.citation_status.state)
+                except Exception:
+                    pass
+        except GeneratorExit:
+            if self.capture_discard is not None:
+                try:
+                    self.capture_discard()
+                except Exception:
+                    pass
+            raise
+
+    def _requires_citation(self) -> bool:
+        """非拒答、非 API/transport 错误时要求引用。"""
+        if self.refused or self._text == REFUSAL_MESSAGE:
+            return False
+        if _is_api_error_text(self._text):
+            return False
+        return True
+
+
 def answer_query_stream(
     query: str,
     model: SentenceTransformer,
@@ -1930,77 +3084,91 @@ def answer_query_stream(
     documents: list[str],
     metadatas: list[dict],
     history=None,
-    top_k_range=(3, 20),
-    temperature=0.1,
-    llm_model: str = DEFAULT_LLM_MODEL,
+    top_k_range=None,
+    temperature: float | None = None,
+    llm_model: str | None = None,
+    *,
+    trace_store=None,
 ) -> tuple[Generator[str, None, None], str]:
-    from src.rag_query_decomposer import decompose_query_llm
-    from src.rag_query_rewriter import rewrite_query_llm, merge_rewrite_results
+    # 统一配置契约：未显式传入时从当前 Settings 解析（调用期，不冻结导入期值）
+    settings = get_settings()
+    if top_k_range is None:
+        top_k_range = (settings.llm_top_k_min, settings.llm_top_k_max)
+    if temperature is None:
+        temperature = settings.llm_temperature
+    if llm_model is None:
+        llm_model = settings.llm_model
+
+    # fail-fast：显式覆盖值在进入规划器/检索/LLM/写路径之前必须通过统一
+    # 校验（与 Settings 同一规则）——必须在任何下标使用、计算
+    # max(top_k_range) 与 _plan_query_runtime 之前完成；错误信息关联
+    # LLM_TEMPERATURE / LLM_TOP_K_MIN / LLM_TOP_K_MAX。范围容器校验
+    # 拒绝 (3,20,999) / (3,) / 非序列 / 布尔 / 浮点（曾分别进入规划器或
+    # 抛 IndexError）。
+    top_k_range = validate_user_top_k_container(top_k_range)
+    temperature = validate_llm_temperature(temperature)
+
+    # P1.1-M：流式 trace 生命周期——retrieval_k 如实记录 max(top_k_range)
+    # （现状 20，不改检索宽度）；终态封存经 StreamResult 回调在流完整
+    # 消费后触发，GeneratorExit 经 capture_discard 清理。
+    store = _resolve_trace_store(trace_store)
+    trace_id = _trace_begin(store, "stream", max(top_k_range))
 
     retrieval_start = perf_counter()
 
-    # ── 多轮改写：将省略主语的追问改写为独立可检索问题 ──
-    rewritten_query, rewrite_log = rewrite_query_llm(
-        query, history=history, model=llm_model,
+    # ── 共享 planning helper（G1-S）：与 prepare 普通分支同一规划 ──
+    # 参数保持流式路径现状：retrieval_k=max(top_k_range)（现状 20）、
+    # planning_profile="stream"（显式标记，capture 侧 fail-closed 拒绝）。
+    # 已解析温度传入规划路径（rewrite/decompose 使用同一温度）。
+    # P1.1-M：仅观测激活时才附加 trace 关键字（Off 调用面不变）。
+    stream_plan_kwargs = {
+        "history": history,
+        "retrieval_k": max(top_k_range),
+        "llm_model": llm_model,
+        "llm_temperature": temperature,
+        "planning_profile": "stream",
+    }
+    if store is not None and trace_id:
+        stream_plan_kwargs["trace_store"] = store
+        stream_plan_kwargs["trace_id"] = trace_id
+    runtime_plan = _plan_query_runtime(
+        query, model, collection, bm25, documents, metadatas,
+        **stream_plan_kwargs,
     )
-
-    # ── LLM 查询拆解（基于改写后的查询） ──
-    sub_queries = decompose_query_llm(rewritten_query, model=llm_model)
-    if not sub_queries:
-        sub_queries = [rewritten_query]
-
-    # ── 子查询并发检索 ──
-    all_entries = []  # [(idx, score), ...]
-    with ThreadPoolExecutor(max_workers=min(4, len(sub_queries))) as executor:
-        futures = {
-            executor.submit(
-                retrieve_hybrid_with_sources,
-                sq, model, collection, bm25, documents, metadatas,
-                k=max(top_k_range),
-            ): sq for sq in sub_queries
-        }
-        for future in as_completed(futures):
-            indices, _, scores = future.result()
-            for idx, score in zip(indices, scores):
-                all_entries.append((idx, score))
-
-    # ── 按 chunk 去重：仅保留每个 chunk 的最高分 ──
-    best_score: dict[int, float] = {}
-    for idx, score in all_entries:
-        if idx not in best_score or score > best_score[idx]:
-            best_score[idx] = score
-
-    # ── 漂移防护：原 query 保底召回 ──
-    if rewrite_log.get("changed"):
-        orig_indices, _, orig_scores = retrieve_hybrid_with_sources(
-            query, model, collection, bm25, documents, metadatas,
-            k=max(top_k_range),
-        )
-        orig_score_map: dict[int, float] = {}
-        for idx, score in zip(orig_indices, orig_scores):
-            orig_score_map[idx] = score
-        merged_indices, best_score, merge_log = merge_rewrite_results(
-            list(best_score.keys()), best_score,
-            orig_indices, orig_score_map,
-        )
-        merged = merged_indices
-        scores_flat = sorted(best_score.values(), reverse=True)
-    else:
-        # ── 降序排列 ──
-        merged = sorted(best_score.keys(), key=lambda i: best_score[i], reverse=True)
-        scores_flat = sorted(best_score.values(), reverse=True)
+    best_score = runtime_plan.best_score
+    merged = runtime_plan.merged
+    scores_flat = runtime_plan.scores_flat
     k = dynamic_top_k(scores_flat, min_k=top_k_range[0], max_k=top_k_range[1])
     top_indices = merged[:k]
+    _trace_emit(store, trace_id, "cutoff.dynamic_top_k", {
+        "k": k,
+        "candidate_count": len(scores_flat),
+        "planning_profile": "stream",
+        "retrieval_k": max(top_k_range),
+    })
+
+    finalize_stream_trace, discard_stream_trace = _stream_trace_callbacks(
+        store, trace_id, retrieval_start,
+    )
 
     if retrieval_refused(scores_flat):
         _record_query_metric(
             retrieval_start, [], scores_flat, metadatas, bm25, refused=True,
         )
+        _trace_emit(store, trace_id, "refusal.decided", {
+            "refused": True, "reason": "retrieval",
+        })
         def refusal_stream():
             yield REFUSAL_MESSAGE
-        return refusal_stream(), ""
+        # 拒答无引用要求：终态 not_required(refused)；trace 终态在拒答
+        # 文本被完整消费后封存（回调触发），提前关闭则 discard 清理。
+        return StreamResult(
+            chunks=refusal_stream(), refused=True,
+            capture_callback=finalize_stream_trace,
+            capture_discard=discard_stream_trace,
+        ), ""
 
-    # ── Reranker：对 top_k 候选重排 ──
+    # ── Reranker（chunk-aware）+ 统一 context selector（与 answer_query 一致）──
     reranker = _get_reranker()
     if reranker is not None:
         candidates = [
@@ -2010,13 +3178,29 @@ def answer_query_stream(
                 source_id=(metadatas[i] or {}).get("source_id", ""),
                 source_name=(metadatas[i] or {}).get("source_name", "")
                     or (metadatas[i] or {}).get("source", ""),
+                text=documents[i] if i < len(documents) else "",
                 rrf_score=best_score.get(i),
             )
             for i in top_indices
         ]
         reranked = reranker.rerank(query, candidates, top_k=min(k, 20))
-        reranked = apply_source_diversity(reranked, max_per_source=3, top_k=min(k, 20))
-        top_indices = [c.index for c in reranked]
+        selected = select_context_candidates(reranked, top_k=min(k, 20), max_per_source=SELECTOR_MAX_PER_SOURCE)
+        top_indices = [c.index for c in selected]
+    else:
+        candidates = [
+            RetrievalCandidate(
+                index=i,
+                chunk_id=(metadatas[i] or {}).get("chunk_id", f"chunk_{i}"),
+                source_id=(metadatas[i] or {}).get("source_id", ""),
+                source_name=(metadatas[i] or {}).get("source_name", "")
+                    or (metadatas[i] or {}).get("source", ""),
+                text=documents[i] if i < len(documents) else "",
+                rrf_score=best_score.get(i),
+            )
+            for i in top_indices
+        ]
+        selected = select_context_candidates(candidates, top_k=min(k, 20), max_per_source=SELECTOR_MAX_PER_SOURCE)
+        top_indices = [c.index for c in selected]
 
     enriched_docs = enrich_context(top_indices, documents, metadatas)
     # ── Parent-Child 扩展：child chunk → 用 parent chunk 替换 ──
@@ -2040,15 +3224,35 @@ def answer_query_stream(
         retrieval_start, top_indices, scores_flat, metadatas, bm25,
         context_k=context_k,
     )
+    # P1.1-M：context 构建事件（仅 chunk_id 标签与预算，无正文）
+    _trace_emit(store, trace_id, "context.built", {
+        "context_k": context_k,
+        "chunk_ids": [
+            (metadatas[i] or {}).get("chunk_id", f"chunk_{i}")
+            for i in top_indices[:context_k]
+        ],
+    })
+    from src.citations import valid_citation_ids_for_context
+    valid_ids = valid_citation_ids_for_context(
+        top_indices, enriched_docs, metadatas, context_k,
+    )
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,
     )
-    return stream, sources
+    # StreamResult：合法 ID 集与上方 format_sources 严格同口径；
+    # 流结束后 TUI 读取 citation_status 决定提示。观测终态封存与中断
+    # 清理经回调挂接，不改变任何产出字节。
+    return StreamResult(
+        chunks=stream, valid_ids=valid_ids,
+        capture_callback=finalize_stream_trace,
+        capture_discard=discard_stream_trace,
+    ), sources
 
 
 def remove_file_from_index(
     source: str,
     collection: chromadb.Collection,
+    chroma_path: str | None = None,
 ) -> int:
     """Remove one exact source by canonical path or source_id.
 
@@ -2056,6 +3260,10 @@ def remove_file_from_index(
     unique across directories.  The path may already be gone (watcher delete),
     so canonicalization does not require the file to exist.
     """
+    # Phase 6-B0.2：snapshot 索引只读（fail-closed，先于任何 collection
+    # 读取/删除/commit/sidecar 写入）
+    _assert_mutable_collection(collection, op="remove_file_from_index",
+                               chroma_path=chroma_path)
     target_path = canonical_source_path(source)
     target_source_id = source if len(source) == 64 else source_id_for_path(target_path)
     collection_name = getattr(collection, "name", DEFAULT_COLLECTION_NAME)
@@ -2082,6 +3290,7 @@ def remove_file_from_index(
             source_records=[],
             remove_source_ids={source_id for source_id in target_source_ids if source_id},
             remove_source_paths={target_path},
+            chroma_path=chroma_path,
         )
     return len(ids_to_delete)
 
@@ -2094,6 +3303,7 @@ def remove_file_from_index(
 def compute_source_diff(
     desired_paths: list[str],
     collection: chromadb.Collection,
+    chroma_path: str | None = None,
 ) -> dict:
     """计算 desired_paths 与当前索引的差异。
 
@@ -2106,7 +3316,7 @@ def compute_source_diff(
         }
     """
     manifest = load_index_manifest(
-        getattr(collection, "name", DEFAULT_COLLECTION_NAME)
+        getattr(collection, "name", DEFAULT_COLLECTION_NAME), chroma_path,
     )
     # 当前索引中的来源路径集合
     indexed_sources: dict[str, dict] = {}  # source_path → source_record
@@ -2133,7 +3343,7 @@ def compute_source_diff(
             to_add.append(orig)
         else:
             # 检查内容是否变更
-            if _source_needs_sync(collection, orig):
+            if _source_needs_sync(collection, orig, chroma_path):
                 to_update.append(orig)
             else:
                 unchanged.append(orig)
@@ -2156,6 +3366,7 @@ def sync_sources(
     model: SentenceTransformer,
     collection: chromadb.Collection,
     dry_run: bool = False,
+    chroma_path: str | None = None,
 ) -> dict:
     """同步索引来源到 desired_paths 集合。
 
@@ -2178,7 +3389,12 @@ def sync_sources(
             "removed": int,
         }
     """
-    diff = compute_source_diff(desired_paths, collection)
+    # Phase 6-B0.2：真实 mutation 在计算 diff / 加载编码文件 / 写入之前
+    # 拒绝（fail-closed）；dry_run=True 是只读预览，放行（不写任何东西）
+    if not dry_run:
+        _assert_mutable_collection(collection, op="sync_sources",
+                                   chroma_path=chroma_path)
+    diff = compute_source_diff(desired_paths, collection, chroma_path)
 
     if dry_run:
         return {
@@ -2194,22 +3410,22 @@ def sync_sources(
 
     # 1. 删除多余来源
     for path in diff["to_remove"]:
-        count = remove_file_from_index(path, collection)
+        count = remove_file_from_index(path, collection, chroma_path=chroma_path)
         removed += 1
 
     # 2. 添加新文件
     if diff["to_add"]:
         bm25, docs, metas = add_files_to_index(
-            diff["to_add"], model, collection,
+            diff["to_add"], model, collection, chroma_path=chroma_path,
         )
         added = len(diff["to_add"])
 
     # 3. 更新变更文件（先删后加）
     if diff["to_update"]:
         for path in diff["to_update"]:
-            remove_file_from_index(path, collection)
+            remove_file_from_index(path, collection, chroma_path=chroma_path)
         bm25, docs, metas = add_files_to_index(
-            diff["to_update"], model, collection,
+            diff["to_update"], model, collection, chroma_path=chroma_path,
         )
         updated = len(diff["to_update"])
 
@@ -2225,6 +3441,7 @@ def add_sources(
     delta_paths: list[str],
     model: SentenceTransformer,
     collection: chromadb.Collection,
+    chroma_path: str | None = None,
 ) -> dict:
     """只增不删：添加新文件/更新变更文件，不删除多余来源。
 
@@ -2239,7 +3456,11 @@ def add_sources(
             "updated": int,
         }
     """
-    diff = compute_source_diff(delta_paths, collection)
+    # Phase 6-B0.2：snapshot 索引只读（fail-closed，先于 diff/解析/写入；
+    # add_sources 不能成为绕过 add_files_to_index 的旁路）
+    _assert_mutable_collection(collection, op="add_sources",
+                               chroma_path=chroma_path)
+    diff = compute_source_diff(delta_paths, collection, chroma_path)
 
     added = 0
     updated = 0
@@ -2247,15 +3468,15 @@ def add_sources(
     # 只处理 to_add 和 to_update，不处理 to_remove
     if diff["to_add"]:
         bm25, docs, metas = add_files_to_index(
-            diff["to_add"], model, collection,
+            diff["to_add"], model, collection, chroma_path=chroma_path,
         )
         added = len(diff["to_add"])
 
     if diff["to_update"]:
         for path in diff["to_update"]:
-            remove_file_from_index(path, collection)
+            remove_file_from_index(path, collection, chroma_path=chroma_path)
         bm25, docs, metas = add_files_to_index(
-            diff["to_update"], model, collection,
+            diff["to_update"], model, collection, chroma_path=chroma_path,
         )
         updated = len(diff["to_update"])
 

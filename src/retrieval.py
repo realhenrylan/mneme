@@ -60,16 +60,22 @@ class CrossEncoderReranker:
         candidates: list[RetrievalCandidate],
         top_k: int = 10,
     ) -> list[RetrievalCandidate]:
-        """对候选列表重排，返回 top_k 候选（带 rerank_score）。"""
+        """对候选列表重排，返回 top_k 候选（带 rerank_score）。
+
+        以 chunk 文本（``candidate.text``）作为文档侧与 query 配对打分；
+        候选无文本（空串）时 fallback 到 source_name，避免空输入崩溃，
+        但正常评测路径必须提供 text（见 compare.py / rag.py 构造点）。
+
+        排序：rerank_score 降序；同分时按 index 降序（确定性 tie-break，
+        保证相同输入永远产生相同顺序）。
+        """
         if not candidates:
             return []
 
         self._ensure_model()
 
-        # 构建 (query, snippet) 对
-        # 使用 source_name 作为 snippet 的替代（候选中没有 snippet 字段）
-        # 实际使用时，调用方应确保候选有足够信息
-        pairs = [(query, c.source_name) for c in candidates]
+        # 文档侧优先用 chunk 文本；空文本 fallback source_name（兼容无文本候选）
+        pairs = [(query, (c.text or "").strip() or c.source_name) for c in candidates]
         scores = self._model.predict(pairs)
 
         # 更新 rerank_score
@@ -77,7 +83,7 @@ class CrossEncoderReranker:
             dataclasses.replace(c, rerank_score=float(scores[i]))
             for i, c in enumerate(candidates)
         ]
-        scored.sort(key=lambda c: c.rerank_score or 0.0, reverse=True)
+        scored.sort(key=lambda c: (c.rerank_score or 0.0, c.index), reverse=True)
         return scored[:top_k]
 
     @property
@@ -115,12 +121,17 @@ def apply_source_diversity(
 
     Args:
         candidates: 已排序的候选列表
-        max_per_source: 每个来源的最大候选数
+        max_per_source: 每个来源的最大候选数；None 或 0 表示不限制
+            （仅按 top_k 截断，保留全部同源候选——selector 消融 S0 臂）
         top_k: 最终返回的候选数
 
     Returns:
         应用约束后的候选列表
     """
+    # 不限同源：跳过 diversity 只做 top_k 截断（保序；S0 消融臂契约）
+    if max_per_source is None or max_per_source <= 0:
+        return candidates[:top_k]
+
     result: list[RetrievalCandidate] = []
     source_count: dict[str, int] = {}
 
@@ -134,6 +145,38 @@ def apply_source_diversity(
                 break
 
     return result
+
+
+def select_context_candidates(
+    candidates: list[RetrievalCandidate],
+    top_k: int = 10,
+    max_per_source: int = 3,
+) -> list[RetrievalCandidate]:
+    """从「已排序候选」统一选择进入 context 的候选（A/B/C 共用）。
+
+    这是三臂对称化的关键：A（无 reranker）、B/C（reranker 后）的候选
+    排序来源不同，但 context 选择规则必须完全一致——先做 source
+    diversity（每源最多 max_per_source），再按 top_k 截断。
+    max_per_source=None/0 表示不限同源（selector 消融 S0 臂）。
+
+    设计说明：
+    - 排序方向与 tie-break 由调用方保证（RRF 降序或 rerank_score 降序）；
+      本函数保持输入顺序，只做「去重 + 截断」，不重新排序。
+    - diversity 后不足 top_k 时返回实际数量（不补位），与既有
+      apply_source_diversity 行为一致。
+    - 邻接/父块扩展在后续步骤进行（expand_with_parent/adjacent），
+      不受本 selector 预算约束——它们不改变「已入选 chunk」集合，
+      只向 context 追加相邻 chunk；预算由 compute_context_k 兜底。
+
+    Args:
+        candidates: 已排序候选（RRF 序或 rerank 序）
+        top_k: context 候选数上限（默认 10，与 compute_context_k max_k 一致）
+        max_per_source: 每源最多保留候选数（默认 3；None/0 = 不限同源）
+
+    Returns:
+        选中进入 context 的候选列表（保序、每源 ≤ max_per_source、总长 ≤ top_k）
+    """
+    return apply_source_diversity(candidates, max_per_source=max_per_source, top_k=top_k)
 
 
 # ── 拒答特征提取与判断 ──

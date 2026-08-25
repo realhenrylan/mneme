@@ -98,6 +98,7 @@ def test_remote_context_is_bounded(monkeypatch):
 
 
 def test_embedding_model_fallback_uses_requested_identifier():
+    from src.config import get_settings
     calls = []
 
     def fake_transformer(value):
@@ -110,6 +111,9 @@ def test_embedding_model_fallback_uses_requested_identifier():
          patch("modelscope.snapshot_download", return_value="models/custom-model") as download:
         assert rag._load_sentence_transformer("custom-model") == "loaded"
 
+    # 3.2 契约：自动下载缓存落在稳定数据目录（MNEME_DATA_DIR/models），
+    # 而不是 CWD 相对路径
     download.assert_called_once_with(
-        "sentence-transformers/custom-model", cache_dir="models",
+        "sentence-transformers/custom-model",
+        cache_dir=str(get_settings().model_cache_dir),
     )

@@ -31,6 +31,10 @@ def test_remove_matches_exact_source_path_not_basename(tmp_path):
     right.parent.mkdir()
     collection = MagicMock()
     collection.name = "source_identity_test"
+    # B0.2.1：guard 从 collection 推导真实持久化目录——测试 double 显式提供
+    collection._client._system.settings.persist_directory = str(tmp_path)
+    # B0.2.2：persist 身份需双重验证（真实持久化 client + 绝对路径）
+    collection._client._system.settings.is_persistent = True
     collection.get.return_value = {
         "ids": ["left-chunk", "right-chunk"],
         "metadatas": [
@@ -126,6 +130,10 @@ def test_source_removal_invalidates_graph_cache(tmp_path, monkeypatch):
     cache.write_bytes(b"cached")
     collection = MagicMock()
     collection.name = "cache_test"
+    # B0.2.1：guard 从 collection 推导真实持久化目录——测试 double 显式提供
+    collection._client._system.settings.persist_directory = str(tmp_path)
+    # B0.2.2：persist 身份需双重验证（真实持久化 client + 绝对路径）
+    collection._client._system.settings.is_persistent = True
     collection.get.return_value = {
         "ids": ["chunk-0"],
         "metadatas": [{

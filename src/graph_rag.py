@@ -21,14 +21,25 @@ from src.rag import (
     enrich_context,
     RetrievalCandidate, compute_context_k,
     SentenceTransformer, chromadb,
-    EMBEDDING_MODEL_NAME, DEFAULT_COLLECTION_NAME,
-    DEFAULT_TOP_K, DEFAULT_MIN_K, DEFAULT_MAX_K,
-    CHROMA_DB_PATH, DEFAULT_LLM_MODEL,
+    DEFAULT_COLLECTION_NAME,
     _load_sentence_transformer,
     index_fingerprint,
     load_index_manifest,
     set_manifest_version,
     retrieval_refused, REFUSAL_MESSAGE, _record_query_metric,
+)
+# 统一配置契约：Graph 不再 by-value 导入 rag 的 CHROMA_DB_PATH /
+# EMBEDDING_MODEL_NAME（导入期冻结副本在 reset 后过期）。数据目录与
+# embedding 模型在调用期经 _graph_chroma_db_path/_graph_embedding_model_name
+# 从当前 Settings 解析；Graph 内部动态 Top-K 使用固定 GRAPH_DYNAMIC_MIN_K/
+# MAX_K（3/50），与用户 Top-K 区间（LLM_TOP_K_MIN/MAX，3–20）严格区分。
+from src.config import (
+    get_settings,
+    validate_llm_temperature,
+    validate_user_top_k_container,
+    validate_alpha,
+    GRAPH_DYNAMIC_MIN_K,
+    GRAPH_DYNAMIC_MAX_K,
 )
 from src.security import validate_endpoint
 
@@ -36,6 +47,23 @@ from openai import OpenAI
 _entity_cache: dict[str, list[str]] = {}
 _llm_client: OpenAI | None = None
 _llm_client_config: tuple[str, str] | None = None
+
+
+def _graph_chroma_db_path() -> str:
+    """调用期解析：Graph KG sidecar 落点（= Settings.chroma_db_path）。
+
+    不在导入期冻结 rag.CHROMA_DB_PATH 的值：reset_settings() 后新数据目录
+    立即生效（契约测试锁定）。
+    """
+    return str(get_settings().chroma_db_path)
+
+
+def _graph_embedding_model_name() -> str:
+    """调用期解析：Graph 使用的 embedding 模型（与 rag 同源 Settings）。
+
+    EMBEDDING_MODEL_PATH 已由 Settings 构造时绝对化，CWD 改变后不漂移。
+    """
+    return get_settings().embedding_model_name
 
 def _get_llm_client() -> OpenAI:
     global _llm_client, _llm_client_config
@@ -78,6 +106,11 @@ def extract_entities_llm_batch(texts: list[str],
     if not texts:
         return []
 
+    # 统一配置契约：KG 实体提取的 LLM 模型从已解析 Settings 读取
+    # （不再原始 os.getenv + 冻结默认；temperature 属提取策略内部参数不变）
+    from src.config import get_settings
+    llm_model = get_settings().llm_model
+
     client = _get_llm_client()
 
     for i in range(0, len(texts), batch_size):
@@ -98,7 +131,7 @@ def extract_entities_llm_batch(texts: list[str],
             )
             try:
                 response = client.chat.completions.create(
-                    model=os.getenv("LLM_MODEL", DEFAULT_LLM_MODEL),
+                    model=llm_model,
                     messages=[
                         {"role": "user", "content": EXTRACT_PROMPT_BATCH.format(batched_texts=batched_text)}
                     ],
@@ -559,14 +592,14 @@ def prepare_graph_index(
     client, need_build = _ensure_client_and_check_rebuild(
         collection_name, force_rebuild, file_paths=file_paths,
     )
-    model_for_config = _load_sentence_transformer(EMBEDDING_MODEL_NAME)
+    model_for_config = _load_sentence_transformer(_graph_embedding_model_name())
     manifest = load_index_manifest(collection_name)
     config_mismatch = bool(file_paths) and (
         manifest is None
         or not _manifest_config_matches(manifest, model=model_for_config)
     )
     need_build = need_build or config_mismatch
-    kg_file = os.path.join(CHROMA_DB_PATH, f"{collection_name}_kg.json")
+    kg_file = os.path.join(_graph_chroma_db_path(), f"{collection_name}_kg.json")
 
     if need_build:
         print("索引重构中...")
@@ -639,10 +672,24 @@ def graph_rag_pipeline(
         query: str,
         collection_name: Optional[str] = None,
         force_rebuild: bool = False,
-        alpha: float = 0.7,
+        alpha: float | None = None,
         history: list[tuple[str, str]] | None = None,
-        temperature: float = 0.1,
+        temperature: float | None = None,
 ):
+    # 统一配置契约：未显式传入时从当前 Settings 解析（调用期，不冻结导入期值）
+    from src.config import get_settings
+    _pipeline_settings = get_settings()
+    if alpha is None:
+        alpha = _pipeline_settings.alpha
+    if temperature is None:
+        temperature = _pipeline_settings.llm_temperature
+    # fail-fast：显式 temperature/alpha 覆盖值在进入索引构建（写路径）/
+    # 检索/LLM 之前必须通过统一校验（与 Settings 同一规则；错误信息含
+    # LLM_TEMPERATURE / ALPHA；alpha=2.0 曾进入 prepare_graph_index 写
+    # 路径）。
+    temperature = validate_llm_temperature(temperature)
+    alpha = validate_alpha(alpha)
+
     if collection_name is None:
         name_input = "|".join(sorted(file_paths))
         collection_name = "graph_rag_" + hashlib.md5(name_input.encode()).hexdigest()[:8]
@@ -669,7 +716,14 @@ def graph_rag_pipeline(
         all_metadatas=all_metadatas,
     )
 
-    k = dynamic_top_k(fused_scores, min_k = 3, max_k = 50)
+    # Graph 内部动态 Top-K：既有固定 3/50（GRAPH_DYNAMIC_MIN_K/MAX_K）。
+    # 与用户 Top-K 区间（LLM_TOP_K_MIN/MAX，默认 3–20，TUI/流式路径）
+    # 是两个独立概念，不绑定用户配置。
+    k = dynamic_top_k(
+        fused_scores,
+        min_k=GRAPH_DYNAMIC_MIN_K,
+        max_k=GRAPH_DYNAMIC_MAX_K,
+    )
     top_docs = fused_docs[:k]
     top_indices = indices[:k]
 
@@ -708,6 +762,22 @@ def graph_rag_pipeline(
     sources = format_sources(top_indices, enriched_docs, all_metadatas, context_k=context_k)
     print(f"\n参考来源：\n{sources}")
 
+    # ── 引用终态（Product P0.2）：与 graph streaming 同口径，
+    #    独立于回答/来源显示；拒答已在前面短路（无提示）──
+    from src.citations import (
+        format_citation_status_line,
+        valid_citation_ids_for_context,
+    )
+    from src.rag import evaluate_answer_status
+    valid_ids = valid_citation_ids_for_context(
+        top_indices, enriched_docs, all_metadatas, context_k,
+    )
+    status_line = format_citation_status_line(
+        evaluate_answer_status(answer, valid_ids),
+    )
+    if status_line:
+        print(status_line)
+
     return answer
 
 def main():
@@ -719,7 +789,8 @@ def main():
     parser.add_argument("--collection", default=None)
     parser.add_argument("--rebuild", action="store_true")
     parser.add_argument("--query", default=None)
-    parser.add_argument("--alpha", type=float, default=0.7, help="语义检索 vs 图谱检索融合权重")
+    parser.add_argument("--alpha", type=float, default=None,
+                        help="语义检索 vs 图谱检索融合权重（默认取统一配置契约 ALPHA，默认值 0.7）")
     args = parser.parse_args()
 
     file_paths = args.files or ask_for_files()
@@ -736,14 +807,22 @@ def main():
         model, collection, bm25, all_docs, all_metadatas, kg = prepare_graph_index(
             file_paths, collection_name, args.rebuild,
         )
+        status_sink: list = []
         answer, sources = run_single_query(
             args.query,
             model=model, collection=collection, bm25=bm25,
             all_docs=all_docs, all_metadatas=all_metadatas,
             is_graph_rag=True, alpha=args.alpha, kg=kg,
+            _citation_status_sink=status_sink,
         )
         print(f"\n{answer}")
         print(f"\n参考来源：\n{sources}")
+        # ── 引用终态（Product P0.2）：独立于回答/来源显示 ──
+        if status_sink:
+            from src.citations import format_citation_status_line
+            status_line = format_citation_status_line(status_sink[0])
+            if status_line:
+                print(status_line)
         exit(0)
 
     # 交互式循环
@@ -768,11 +847,39 @@ def graph_query_stream(
     all_metadatas: list[dict],
     kg: KnowledgeGraph,
     history=None,
-    alpha: float = 0.7,
-    temperature: float = 0.1,
-    top_k_range=(3, 50),
-    llm_model: str = DEFAULT_LLM_MODEL,
+    alpha: float | None = None,
+    temperature: float | None = None,
+    top_k_range=None,
+    llm_model: str | None = None,
 ) -> tuple[Generator[str, None, None], str]:
+    from src.rag import StreamResult
+    # 统一配置契约：未显式传入时从当前 Settings 解析（调用期）。
+    # top_k_range 是“用户 Top-K 区间”（默认 3–20，TUI 可调），与 Graph
+    # 内部动态 Top-K（固定 3/50，graph_rag_pipeline 使用）是两个概念。
+    from src.config import get_settings
+    _stream_settings = get_settings()
+    if alpha is None:
+        alpha = _stream_settings.alpha
+    if temperature is None:
+        temperature = _stream_settings.llm_temperature
+    if top_k_range is None:
+        top_k_range = (
+            _stream_settings.llm_top_k_min,
+            _stream_settings.llm_top_k_max,
+        )
+    if llm_model is None:
+        llm_model = _stream_settings.llm_model
+
+    # fail-fast：显式覆盖值在进入检索/LLM/写路径之前必须通过统一校验
+    # （与 Settings 同一规则；错误信息关联 LLM_TEMPERATURE / ALPHA /
+    # LLM_TOP_K_MIN / LLM_TOP_K_MAX）。范围容器校验在任何下标使用、
+    # max(top_k_range) 与 graph_augmented_retrieve 之前完成——拒绝
+    # (3,20,999) / (3,) / 非序列 / 布尔 / 浮点（曾分别进入 retrieval 或
+    # 抛 IndexError）；alpha=nan 曾进入 retrieval。
+    alpha = validate_alpha(alpha)
+    top_k_range = validate_user_top_k_container(top_k_range)
+    temperature = validate_llm_temperature(temperature)
+
     retrieval_start = time.perf_counter()
     indices, docs, scores = graph_augmented_retrieve(
         query, model, collection, bm25, all_docs, kg,
@@ -786,7 +893,8 @@ def graph_query_stream(
         )
         def refusal_stream():
             yield REFUSAL_MESSAGE
-        return refusal_stream(), ""
+        # 拒答无引用要求：终态 not_required(refused)
+        return StreamResult(chunks=refusal_stream(), refused=True), ""
     enriched_docs = enrich_context(top_indices, all_docs, all_metadatas)
     # 计算 context_k：实际进入 prompt 的证据数
     context_k = compute_context_k(
@@ -799,7 +907,12 @@ def graph_query_stream(
         retrieval_start, top_indices, scores, all_metadatas, bm25,
         context_k=context_k,
     )
+    from src.citations import valid_citation_ids_for_context
+    valid_ids = valid_citation_ids_for_context(
+        top_indices, enriched_docs, all_metadatas, context_k,
+    )
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,
     )
-    return stream, sources
+    # StreamResult：合法 ID 集与上方 format_sources 严格同口径
+    return StreamResult(chunks=stream, valid_ids=valid_ids), sources

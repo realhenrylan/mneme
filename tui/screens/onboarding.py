@@ -15,6 +15,7 @@ from questionary import Style as QStyle
 from tui.theme import THEME
 from tui.logo import LOGO
 from tui.components.message import error_panel
+from src.config import reset_settings
 from src.security import (
     DEFAULT_MAX_DOCUMENT_BYTES,
     DEFAULT_MAX_PDF_PAGES,
@@ -317,10 +318,8 @@ def _save_config(console: Console, config: dict) -> bool:
         set_key(".env", "BASE_URL", config["base_url"])
         set_key(".env", "LLM_MODEL", config["llm_model"])
 
-        # 同步到环境变量（当前进程生效）
-        os.environ["API_KEY"] = config["api_key"]
-        os.environ["BASE_URL"] = config["base_url"]
-        os.environ["LLM_MODEL"] = config["llm_model"]
+        # 统一配置层负责把新写入的 .env 值注入环境并重建 Settings。
+        reset_settings()
 
         console.print(
             f"\n[bold {THEME['success']}]✓ 配置已保存到 .env[/]\n"

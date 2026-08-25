@@ -21,6 +21,10 @@ Mneme 为本地文档建立索引，并通过 OpenAI 兼容 API 回答问题。�
 - **TUI 与文件监控** — 支持流式聊天、斜杠命令、设置、文件管理、目录监控，以及串行化索引更新。
 - **端点与资源保护** — 远程端点默认要求 HTTPS，并限制发送的上下文、文档大小、PDF 页数和可选路径根目录。
 
+## P1.1 Minimal 诊断观测
+
+生产观测默认**关闭**。Minimal 诊断观测必须由用户显式选择，仅在 `${MNEME_DATA_DIR}/traces/`（默认 `~/.mneme/traces/`）写入匿名化哈希字段与检索漏斗元数据。原始问题、历史、改写查询、子查询、模型响应和生成回答正文永不持久化。Exact replay 暂不提供。trace 默认保留 30 天，可使用 `delete-trace <id>`（或 TUI `/delete-trace`）删除；撤回同意会关闭观测并删除当前会话 trace。
+
 ## 支持的文件类型
 
 | 类型 | 扩展名 |
@@ -187,22 +191,31 @@ python -m src.graph_rag \
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
 | `API_KEY` | — | OpenAI 兼容 API Key |
-| `BASE_URL` | `https://api.openai.com/v1` | LLM 端点；远程端点必须使用 HTTPS |
+| `BASE_URL` | —（必填） | LLM 端点；**必填** gateway 配置，无内置默认值——仅设置 `API_KEY` 会在首次调用时以 `API_KEY or BASE_URL not configured` fail-fast；远程端点必须使用 HTTPS |
 | `LLM_MODEL` | `deepseek-chat` | 回答和查询拆解使用的模型 |
-| `LLM_TEMPERATURE` | `0.2` | 生成温度 |
-| `LLM_TOP_K_MIN` | `12` | Standard RAG 最少检索 chunk 数 |
-| `LLM_TOP_K_MAX` | `70` | Standard RAG 最多检索 chunk 数 |
-| `ALPHA` | `0.7` | Graph RAG 语义/图谱融合权重 |
-| `RAG_WATCH_DIR` | — | TUI 监控目录 |
-| `EMBEDDING_MODEL_PATH` | — | 本地 embedding 模型路径，优先使用 |
+| `LLM_TEMPERATURE` | `0.1` | 生成温度；允许范围 0.0–2.0 |
+| `LLM_TOP_K_MIN` | `3` | TUI/流式路径使用的用户 Top-K 区间下界 |
+| `LLM_TOP_K_MAX` | `20` | TUI/流式路径使用的用户 Top-K 区间上界 |
+| `ALPHA` | `0.7` | Graph RAG 语义/图谱融合权重；允许范围 0.0–1.0 |
+| `EMBEDDING_MODEL_PATH` | — | 本地 embedding 模型路径，优先于 `EMBEDDING_MODEL_NAME`；与其他受管路径一致，在进程启动时解析一次（`~` 展开、相对路径按启动目录绝对化），启动后 CWD 改变不会使 loader 参数漂移 |
 | `EMBEDDING_MODEL_NAME` | `all-MiniLM-L6-v2` | 本地/ModelScope 加载使用的模型 ID |
-| `MNEME_DOCUMENT_ROOT` | — | 允许建立索引的可选根目录 |
-| `MNEME_MAX_DOCUMENT_BYTES` | `52428800` | 单个文档大小上限，50 MiB |
-| `MNEME_MAX_PDF_PAGES` | `2000` | 单个 PDF 页数上限 |
+| `MNEME_DATA_DIR` | `~/.mneme` | 数据目录：Chroma DB、BM25 快照、manifest 与模型自动下载缓存（`<目录>/models`）；`~` 在 Windows 下展开为 `%USERPROFILE%` |
+| `MNEME_DOCUMENT_ROOT` | `./documents` | 允许建立索引的可选根目录；相对路径在进程启动时按启动目录解释（启动后不再随 CWD 漂移） |
+| `MNEME_MAX_DOCUMENT_BYTES` | `52428800` | 单个文档大小上限，50 MiB；必须为正整数 |
+| `MNEME_MAX_PDF_PAGES` | `2000` | 单个 PDF 页数上限；必须为正整数 |
 | `MNEME_MAX_REMOTE_CONTEXT_CHARS` | `60000` | 发送到 LLM 端点的检索上下文上限 |
 | `MNEME_ALLOW_INSECURE_HTTP` | 未设置 | 显式允许非本机 HTTP，仅建议受控开发环境使用 |
+| `RAG_REFUSAL_THRESHOLD` | `0.03` | 检索拒答阈值；必须 ≥ 0 |
+| `RAG_RERANKER` | `none` | Reranker 模式：`none` 或 `cross-encoder` |
+| `RAG_RERANKER_MODEL` | `cross-encoder/ms-marco-MiniLM-L-6-v2` | `RAG_RERANKER=cross-encoder` 时使用的 reranker 模型 |
+| `MNEME_OFFLINE` | 未设置 | 离线模式。精确承诺：**仅禁止隐式远程 ModelScope 下载**；本地模型照常加载、LLM API 调用不受影响。本地模型缺失时给出明确的纯本地错误。 |
+| `RAG_WATCH_DIR` | — | TUI 监控目录 |
 
-Embedding 模型会优先从配置的本地路径或缓存加载；不可用时，ModelScope 回退使用用户配置的模型标识，默认是 `all-MiniLM-L6-v2`。
+配置优先级：**真实环境变量 > `.env` > 内置默认值**。`.env` 在进程启动时从启动目录（当前工作目录，即命令所在目录）读取，且早于任何 Settings 构造——CLI、TUI、RAG 一致生效；真实环境变量始终优先。若进程环境中已存在 `API_KEY` 与 `BASE_URL`，TUI 不会进入首次引导，即使没有 `.env`。TUI/onboarding 保存配置后经 `reset_settings()` 刷新：设置界面只持久化到 `.env`，绝不覆盖进程环境变量；进程值继续生效，`.env` 修改须在没有该进程覆盖的重启后生效。所有数值与范围在启动时校验：非法数值或矛盾范围会带配置名直接失败（fail-fast），发生在任何索引构建、模型加载、网络访问或目录写入之前。路径支持 `~` 展开（Windows 下展开为 `%USERPROFILE%`），相对路径按进程启动目录解释。
+
+用户 Top-K 区间（`LLM_TOP_K_MIN`/`LLM_TOP_K_MAX`，默认 3–20，TUI/流式路径使用）与同步路径使用的内部检索宽度（`retrieve` 宽度 70、动态 Top-K 边界 12–70）是两个独立概念；内部检索宽度不提供环境变量覆盖。Graph RAG 的内部动态 Top-K 截断同样固定为 3–50（`GRAPH_DYNAMIC_MIN_K`/`GRAPH_DYNAMIC_MAX_K`），不与用户 Top-K 3–20 区间绑定。
+
+Embedding 模型会优先从配置的本地路径或缓存加载；不可用时，ModelScope 回退使用用户配置的模型标识，默认是 `all-MiniLM-L6-v2`（`MNEME_OFFLINE=1` 时禁用该回退），自动下载缓存到 `<MNEME_DATA_DIR>/models`。
 
 ## 数据与端点安全
 

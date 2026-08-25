@@ -21,6 +21,10 @@ Mneme indexes local documents and answers questions through an OpenAI-compatible
 - **TUI and file watcher** — Streaming chat, slash commands, settings, file management, and debounced directory watching with serialized index mutations.
 - **Endpoint and resource safeguards** — Remote endpoints default to HTTPS, retrieved snippets are bounded, and document size, PDF page count, and optional path-root limits are enforced.
 
+## P1.1 Minimal diagnostic observability
+
+Production observability is **Off by default**. Minimal diagnostic mode is an explicit local opt-in and writes only anonymized, hashed query/history fields and retrieval funnel metadata under `${MNEME_DATA_DIR}/traces/` (default `~/.mneme/traces/`). Raw queries, history, rewritten queries, sub-queries, model responses, and generated answer text are never persisted. Exact replay is not available. Traces are retained for 30 days, can be deleted with `delete-trace <id>` (or TUI `/delete-trace`), and revoking consent disables capture and removes the current session traces.
+
 ## Supported file types
 
 | Type | Extensions |
@@ -187,22 +191,31 @@ Copy `.env.example` as the starting point. The main settings are:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `API_KEY` | — | OpenAI-compatible API key |
-| `BASE_URL` | `https://api.openai.com/v1` | LLM endpoint; remote endpoints must use HTTPS |
+| `BASE_URL` | — (required) | LLM endpoint; **required** gateway setting — there is no built-in default. Setting `API_KEY` alone fails fast with `API_KEY or BASE_URL not configured`; remote endpoints must use HTTPS |
 | `LLM_MODEL` | `deepseek-chat` | Chat and query-decomposition model |
-| `LLM_TEMPERATURE` | `0.2` | Generation temperature |
-| `LLM_TOP_K_MIN` | `12` | Minimum retrieved chunks for standard retrieval |
-| `LLM_TOP_K_MAX` | `70` | Maximum retrieved chunks for standard retrieval |
-| `ALPHA` | `0.7` | Graph RAG semantic/graph fusion weight |
-| `RAG_WATCH_DIR` | — | Directory watched by the TUI |
-| `EMBEDDING_MODEL_PATH` | — | Local embedding model path; takes precedence |
+| `LLM_TEMPERATURE` | `0.1` | Generation temperature; allowed range 0.0–2.0 |
+| `LLM_TOP_K_MIN` | `3` | Lower bound of the user-facing Top-K range used by the TUI/streaming path |
+| `LLM_TOP_K_MAX` | `20` | Upper bound of the user-facing Top-K range used by the TUI/streaming path |
+| `ALPHA` | `0.7` | Graph RAG semantic/graph fusion weight; allowed range 0.0–1.0 |
+| `EMBEDDING_MODEL_PATH` | — | Local embedding model path; takes precedence over `EMBEDDING_MODEL_NAME`. Like other managed paths it is resolved once at startup (`~` expansion, relative paths made absolute against the working directory), so the loader argument does not drift if the working directory changes later |
 | `EMBEDDING_MODEL_NAME` | `all-MiniLM-L6-v2` | Embedding model ID used for local/ModelScope loading |
-| `MNEME_DOCUMENT_ROOT` | — | Optional root directory allowed for indexed files |
-| `MNEME_MAX_DOCUMENT_BYTES` | `52428800` | Maximum document size, 50 MiB |
-| `MNEME_MAX_PDF_PAGES` | `2000` | Maximum pages accepted from one PDF |
+| `MNEME_DATA_DIR` | `~/.mneme` | Data directory for Chroma DB, BM25 snapshots, manifests, and the automatic model cache (`<dir>/models`); `~` expands to `%USERPROFILE%` on Windows |
+| `MNEME_DOCUMENT_ROOT` | `./documents` | Optional root directory allowed for indexed files; resolved against the process working directory at startup |
+| `MNEME_MAX_DOCUMENT_BYTES` | `52428800` | Maximum document size, 50 MiB; positive integer |
+| `MNEME_MAX_PDF_PAGES` | `2000` | Maximum pages accepted from one PDF; positive integer |
 | `MNEME_MAX_REMOTE_CONTEXT_CHARS` | `60000` | Maximum retrieved context sent to an LLM endpoint |
 | `MNEME_ALLOW_INSECURE_HTTP` | unset | Explicitly allow non-local HTTP endpoints; use only for controlled development |
+| `RAG_REFUSAL_THRESHOLD` | `0.03` | Retrieval refusal threshold; must be ≥ 0 |
+| `RAG_RERANKER` | `none` | Reranker mode: `none` or `cross-encoder` |
+| `RAG_RERANKER_MODEL` | `cross-encoder/ms-marco-MiniLM-L-6-v2` | Reranker model used when `RAG_RERANKER=cross-encoder` |
+| `MNEME_OFFLINE` | unset | Offline mode. Its exact promise: it **only blocks implicit remote ModelScope downloads**; local models still load and LLM API calls are unaffected. A missing local model produces a clear local-only error. |
+| `RAG_WATCH_DIR` | — | Directory watched by the TUI |
 
-Embedding models are first loaded from the configured local path or cache. If unavailable, Mneme uses the configured model identifier for ModelScope fallback; the default is `all-MiniLM-L6-v2`.
+Configuration precedence is **real environment variables > `.env` > built-in defaults**. The `.env` file is read at startup from the process working directory (the directory the command is started from), before any `Settings` construction, so its values apply to the CLI, TUI, and RAG alike; real environment variables always win. The TUI onboarding wizard does not start when both `API_KEY` and `BASE_URL` already exist in the process environment, even if no `.env` file exists. TUI settings persist edits to `.env` and refresh through `reset_settings()`; they never overwrite process environment variables, so a process value remains effective and a `.env` edit takes effect only after restart without that process override. Values are validated at startup: an invalid number or an inconsistent range fails fast with the variable name, before any indexing, model loading, network access, or directory write. Path values expand `~` (to `%USERPROFILE%` on Windows), and relative paths resolve against the process working directory at startup.
+
+The user-facing Top-K range (`LLM_TOP_K_MIN`/`LLM_TOP_K_MAX`, default 3–20, used by the TUI/streaming path) and the internal retrieval width used by the synchronous path (`retrieve` width 70, dynamic Top-K bounds 12–70) are two separate concepts; the internal width is not configurable via environment variables. Graph RAG's internal dynamic Top-K cutoff is likewise fixed at 3–50 (`GRAPH_DYNAMIC_MIN_K`/`GRAPH_DYNAMIC_MAX_K`) and is not bound to the user-facing 3–20 range.
+
+Embedding models are first loaded from the configured local path or cache. If unavailable, Mneme uses the configured model identifier for the ModelScope fallback (disabled by `MNEME_OFFLINE=1`); the default is `all-MiniLM-L6-v2`, and automatic downloads are cached under `<MNEME_DATA_DIR>/models`.
 
 ## Data and endpoint safety
 
