@@ -1,0 +1,167 @@
+{
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（不在已安装 skills 列表内），无法加载；已按任务约束实施等价的确定性质量检查（完整性 / 唯一性 / snippet 连续性 / source 一致性 / 答案点证据覆盖），全部为机械复算，无 LLM 参与。",
+ "completeness": {
+  "canonical_rows": 150,
+  "issues_rows": 37,
+  "evidence_rows": 161,
+  "draft_rows": 150,
+  "chunk_rows": 1006,
+  "issues_set_matches_non_confirmed": true,
+  "canonical_issues_evidence_summary_mismatch": 0,
+  "refusal_cases_without_evidence": 11,
+  "refusal_cases_without_evidence_ids": [
+   "noanswer-026",
+   "noanswer-029",
+   "noanswer-030",
+   "noanswer-031",
+   "noanswer-032",
+   "noanswer-037",
+   "noanswer-040",
+   "noanswer-044",
+   "noanswer-045",
+   "noanswer-052",
+   "noanswer-054"
+  ]
+ },
+ "uniqueness": {
+  "canonical_case_ids_unique": true,
+  "issues_case_ids_unique": true,
+  "draft_ids_unique": true,
+  "chunk_ids_unique": true,
+  "evidence_rows_unique": true
+ },
+ "snippet_continuity": {
+  "snippet_sha256_self_consistent": 161,
+  "chunk_text_sha256_self_consistent": 161,
+  "char_range_within_chunk_bounds": 161,
+  "char_range_slice_matches_snippet": 12,
+  "finding": "evidence snippet 文本 SHA 全部自洽（161/161），chunk 文本 SHA 全部自洽（161/161）；但 char_range 切片与 snippet 文本完全一致仅 12/161 行（其余为空白折叠/对齐差异），故本任务按 snippet 文本（而非 char_range 切片）判定 exact span 是否已在 evidence 内"
+ },
+ "source_consistency": {
+  "evidence_source_matches_chunk": true,
+  "evidence_source_in_relevant_sources": true,
+  "evidence_chunk_in_relevant_chunks": true,
+  "relevant_chunk_ids_resolve": true,
+  "relevant_source_ids_resolve": true
+ },
+ "answer_point_evidence_coverage": {
+  "points_total": 46,
+  "by_status": {
+   "exact": 7,
+   "language_mismatch": 8,
+   "none": 5,
+   "partial": 26
+  },
+  "per_case_max_coverage": {
+   "en-029": {
+    "0": 0.0,
+    "1": 0.0
+   },
+   "en-031": {
+    "0": 1.0
+   },
+   "en-034": {
+    "0": 1.0,
+    "1": 1.0
+   },
+   "en-041": {
+    "0": 0.3333,
+    "1": 0.2419
+   },
+   "en-042": {
+    "0": 0.5143,
+    "1": 0.4242
+   },
+   "en-044": {
+    "0": 0.3571,
+    "1": 0.25
+   },
+   "en-048": {
+    "0": 0.4706,
+    "1": 0.3235
+   },
+   "en-049": {
+    "0": 0.3235,
+    "1": 0.225
+   },
+   "en-051": {
+    "0": 0.3235,
+    "1": 0.431
+   },
+   "en-052": {
+    "0": 0.2157
+   },
+   "mixed-016": {
+    "0": 0.6154,
+    "1": 0.6429
+   },
+   "mixed-027": {
+    "0": 0.0,
+    "1": 0.2857
+   },
+   "mixed-029": {
+    "0": 0.3824
+   },
+   "multi-018": {
+    "0": 0.0,
+    "1": 0.0
+   },
+   "multi-019": {
+    "0": 0.0
+   },
+   "multi-020": {
+    "0": 1.0
+   },
+   "multi-028": {
+    "0": 0.2963
+   },
+   "noanswer-026": {},
+   "noanswer-029": {},
+   "noanswer-030": {},
+   "noanswer-031": {},
+   "noanswer-032": {},
+   "noanswer-037": {},
+   "noanswer-040": {},
+   "noanswer-044": {},
+   "noanswer-045": {},
+   "noanswer-052": {},
+   "noanswer-054": {},
+   "zh-040": {
+    "0": 1.0,
+    "1": 1.0,
+    "2": 1.0
+   },
+   "zh-042": {
+    "0": 0.3636
+   },
+   "zh-045": {
+    "0": 0.0,
+    "1": 0.0
+   },
+   "zh-046": {
+    "0": 0.2353,
+    "1": 0.2105
+   },
+   "zh-048": {
+    "0": 0.3636,
+    "1": 0.3103
+   },
+   "zh-050": {
+    "0": 0.3642,
+    "1": 0.2361
+   },
+   "zh-052": {
+    "0": 0.3226,
+    "1": 0.4138
+   },
+   "zh-053": {
+    "0": 0.3438,
+    "1": 0.2391
+   },
+   "zh-056": {
+    "0": 0.0,
+    "1": 0.0
+   }
+  }
+ }
+}

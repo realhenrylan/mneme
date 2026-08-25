@@ -1,0 +1,142 @@
+{
+ "task": "v2.0.1-remediation-triage",
+ "description": "v2.0.1 自动审阅 37 条阻断项的确定性根因分流与修复计划（只读、离线、无 LLM/API）",
+ "rule_version": "v2.0.1-remediation-triage-1",
+ "llm": null,
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（不在已安装 skills 列表内），无法加载；已按任务约束实施等价的确定性质量检查（完整性 / 唯一性 / snippet 连续性 / source 一致性 / 答案点证据覆盖），全部为机械复算，无 LLM 参与。",
+ "constants": {
+  "min_span_len": 8,
+  "coverage_exact": 0.75,
+  "cjk_threshold": 0.3,
+  "cjk_source_threshold": 0.1,
+  "expected_counts": [
+   113,
+   20,
+   17
+  ]
+ },
+ "inputs": {
+  "automated-review.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\automated-review\\automated-review.jsonl",
+   "rows": 150,
+   "sha256": "ea2af431d7391bb8335086c673a7d4a4fea10b25601e9331a490f58a17af8224"
+  },
+  "automated-review-evidence.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\automated-review\\automated-review-evidence.jsonl",
+   "rows": 161,
+   "sha256": "af54ff88bd9384832593fd46301ef02bfd3408ed708508eec68dd5c7d8d1cbb9"
+  },
+  "automated-review-issues.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\automated-review\\automated-review-issues.jsonl",
+   "rows": 37,
+   "sha256": "f23a422effe8b53e57f2e0cd638c9ae76298efac0479f701fa4502ceb5cf55a7"
+  },
+  "manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\automated-review\\manifest.json",
+   "sha256": "4e5d4079fff5c33a6819a70a191226e42781a559eaaee10a8743a2b38cfba123"
+  },
+  "v2-cases-draft.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\annotations\\v2-cases-draft.jsonl",
+   "rows": 150,
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc"
+  },
+  "chunks.jsonl": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
+   "rows": 1006,
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  }
+ },
+ "validation": {
+  "canonical_counts_exact": true,
+  "issues_match_non_confirmed": true,
+  "sha_chain": true,
+  "evidence_consistent_with_canonical": true,
+  "snippet_chunk_sha_self_consistent": true
+ },
+ "outputs": {
+  "blocking-case-triage.jsonl": {
+   "path": "blocking-case-triage.jsonl",
+   "sha256": "44b2572f20ad78e761815692ef9038551f2995a6fcec70eca9893ccc51f65762"
+  },
+  "candidate-evidence-spans.jsonl": {
+   "path": "candidate-evidence-spans.jsonl",
+   "sha256": "4d0ba07461462a52455fa850ca8e0d614527f9aac516c12d38b0ec14ca93c23f"
+  },
+  "remediation-summary.json": {
+   "path": "remediation-summary.json",
+   "sha256": "dd4a1cee458c2f8b1d2f1d10456379a7e85121668b3b299766f6c31477c4797f"
+  },
+  "remediation-triage-report.md": {
+   "path": "remediation-triage-report.md",
+   "sha256": "f0395082796223e87060ead2f01b949661972be5de984fb9acf61e4b0b3d28b6"
+  },
+  "data-quality-report.json": {
+   "path": "data-quality-report.json",
+   "sha256": "e55537bcb48b8d46f984377e966a9753d0c7f5ee3915639e9ebd8de8f3dd577c"
+  }
+ },
+ "manifest_sha256": "2335b9502b8554e393c6752a5b49d1e64b65022fc03e5cca7123c8a926bba414",
+ "summary_ref": {
+  "n_blocking": 37,
+  "mechanically_repairable": {
+   "n": 3,
+   "case_ids": [
+    "en-031",
+    "multi-020",
+    "zh-040"
+   ]
+  },
+  "requires_owner_policy": {
+   "n": 34,
+   "case_ids": [
+    "en-029",
+    "en-034",
+    "en-041",
+    "en-042",
+    "en-044",
+    "en-048",
+    "en-049",
+    "en-051",
+    "en-052",
+    "mixed-016",
+    "mixed-027",
+    "mixed-029",
+    "multi-018",
+    "multi-019",
+    "multi-028",
+    "noanswer-026",
+    "noanswer-029",
+    "noanswer-030",
+    "noanswer-031",
+    "noanswer-032",
+    "noanswer-037",
+    "noanswer-040",
+    "noanswer-044",
+    "noanswer-045",
+    "noanswer-052",
+    "noanswer-054",
+    "zh-042",
+    "zh-045",
+    "zh-046",
+    "zh-048",
+    "zh-050",
+    "zh-052",
+    "zh-053",
+    "zh-056"
+   ]
+  },
+  "triage_rows": 37,
+  "candidate_span_rows": 2791
+ },
+ "declarations": {
+  "llm_called": false,
+  "network_used": false,
+  "overlay_generated": false,
+  "data_modified": false,
+  "v2_1_entered": false,
+  "historical_verdicts_read": false
+ },
+ "deterministic": true,
+ "run_at": "2026-08-07T00:00:00+00:00",
+ "created_by": "corpus_v2_remediation_triage.py"
+}

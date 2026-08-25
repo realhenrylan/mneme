@@ -1,0 +1,32 @@
+{
+ "equivalent_deterministic_checks": {
+  "completeness": {
+   "answerable_cases_without_evidence": 0,
+   "draft_rows": 148,
+   "remaining_blockers": 0
+  },
+  "consistency": {
+   "input_shas_unchanged": true,
+   "non_target_rows_byte_identical": true
+  },
+  "continuity": {
+   "raw_rows": 161,
+   "snippet_matches": 161,
+   "snippet_sha_matches": 161,
+   "spans_proved": 161
+  },
+  "referential_integrity": {
+   "target_legacy_rows": 0,
+   "zh032_dependencies": 0
+  },
+  "uniqueness": {
+   "unique_case_ids": 148,
+   "unique_evidence_rows": 162
+  }
+ },
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "counts": {
+  "active_evidence_count": 162,
+  "arithmetic": "159 - 5 + 8 = 162",
+  "arithmetic_holds": true,
+  "evidence_after": 162,
+  "evidence_before": 159,
+  "legacy_count": 1,
+  "newly_added_raw_evidence": 8,
+  "raw_codepoint_v1_count": 161,
+  "retired_evidence": 1,
+  "target_old_evidence_removed": 5
+ },
+ "manifest_checks": {
+  "chunk_manifest_sha": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunk_manifest_unchanged": true,
+  "chunks_sha": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "chunks_unchanged": true,
+  "draft_sha": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "draft_unchanged": true,
+  "v205_manifest_sha": "34a7eaa87b31aee121b88c4e6016a60a39c5938e23e1f58eea6562e6dc866d7a",
+  "v205_manifest_unchanged": true,
+  "v206_manifest_self_hash_ok": true,
+  "v206_manifest_status": "CANDIDATE",
+  "v206_outputs_sha_match_disk": true
+ },
+ "non_strictly_legal_rows": [
+  {
+   "case_id": "zh-037",
+   "category": "legacy_coordinate",
+   "evidence_identity": "zh-037::32c427fb50e2_chunk_33::legacy",
+   "identity": {
+    "chunk_id": "32c427fb50e2_chunk_33",
+    "snippet": "内置函数 dir() 用于查找模块定义的名称。返回结果是经过排序的字符串列表",
+    "source_id": "python-tutorial-zh.md"
+   },
+   "reason": "no coordinate_contract; retained historical legacy coordinate evidence outside raw-codepoint-v1 (not strict-validatable by contract)"
+  }
+ ],
+ "partition": {
+  "legacy_coordinate": 1,
+  "malformed_missing_coordinate": 0,
+  "partition_exact": true,
+  "raw_codepoint_v1_active": 161,
+  "total": 162,
+  "unresolved_non_active": 0
+ },
+ "pass_conditions": {
+  "active_evidence_count == 162": true,
+  "all_pass": false,
+  "evidence_after_count == 162": true,
+  "invalid_count == 0": false,
+  "strict_validator_covered_count == 162": false,
+  "strict_validator_passed_count == 162": false,
+  "uncovered_count == 0": false
+ },
+ "raw_span_checks": {
+  "chunk_missing": 0,
+  "legacy_skipped": 1,
+  "range_out_of_bounds": 0,
+  "rows_checked": 161,
+  "sha_mismatch": 0,
+  "snippet_mismatch": 0,
+  "source_mismatch": 0,
+  "span_proof_passed": 161
+ },
+ "set_check": {
+  "added_count": 8,
+  "after_equals_before_minus_removed_plus_added": true,
+  "removed_and_added_disjoint": true,
+  "removed_count": 5
+ },
+ "status": "RECONCILIATION_BLOCKED",
+ "strict_validation": {
+  "covered_count": 161,
+  "failed_count": 0,
+  "input_set_count": 161,
+  "invalid_count": 1,
+  "passed_count": 161,
+  "uncovered_count": 1
+ },
+ "target_rows": {
+  "mixed-022": {
+   "covered": 1,
+   "passed": 1,
+   "rows": 1
+  },
+  "mixed-028": {
+   "covered": 1,
+   "passed": 1,
+   "rows": 1
+  },
+  "zh-035": {
+   "covered": 6,
+   "passed": 6,
+   "rows": 6
+  }
+ },
+ "verdict_reason": "failing conditions: strict_validator_covered_count == 162, strict_validator_passed_count == 162, uncovered_count == 0, invalid_count == 0; blocker: 1 row(s) not strictly legal (zh-037 legacy_coordinate)"
+}

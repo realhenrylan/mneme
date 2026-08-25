@@ -1,0 +1,163 @@
+{
+ "constants": {
+  "cjk_source_threshold": 0.1,
+  "cjk_threshold": 0.3,
+  "coverage_exact": 0.75,
+  "expected_distribution": {
+   "evidence_scope_insufficient_but_same_source_candidate_exists": 6,
+   "exact_evidence_present_but_review_semantic_disagrees": 8,
+   "no_direct_support_in_declared_source": 2,
+   "partial_or_paraphrase_only": 5,
+   "review_contract_or_model_semantics_inconsistency": 1
+  },
+  "max_candidates_per_ap": 24,
+  "max_candidates_per_chunk": 8,
+  "min_span_len": 8
+ },
+ "created_by": "corpus_v2_v207_reject_semantic_quality_decision_pack.py",
+ "declarations": {
+  "data_modified": false,
+  "historical_verdicts_read": false,
+  "llm_called": false,
+  "network_used": false,
+  "overlay_generated": false,
+  "split_created": false,
+  "v2_1_entered": false
+ },
+ "description": "v2.0.7 automated-review 22 条 reject 的语义质量闭环决策包（只读、离线、无 LLM/API；推荐动作不自动应用）",
+ "deterministic": true,
+ "forbidden_outputs": [
+  "overlay",
+  "active metadata",
+  "v2.1 pointer",
+  "split reuse",
+  "locked config",
+  "evaluation results",
+  "draft-after",
+  "evidence-after"
+ ],
+ "gate_verdict": "DECISION_PACK_OK",
+ "inputs": {
+  "automated-review-evidence.jsonl": "4a9a81712802cb56d11c7f6b65ccc9572f405958a1dd3fb5b9b883d1444e1f40",
+  "automated-review-issues.jsonl": "ea2e6d02231f1005786f55eaae094f0f65818dcdb3dbdc0f108fe9a07ec4058f",
+  "automated-review-pack.jsonl": "1909b730c20770e41f1627297a0ab43afcd6fb07cc4943b6606f64b173ec2cd9",
+  "automated-review.jsonl": "cb95b7a67725e8175a4734044b41668d943998c799773e1b71a5a53bc00ed42b",
+  "candidate-manifest.json": "33a95a30e463296125627e03d66c33818670969c268c582c3e6e593763b7d3da",
+  "chunk-manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "draft-after.jsonl": "9d56d339f47bb2aff1591973e7bcb162ff4b1a562f210e446875bfaa08a78c28",
+  "evidence-after.jsonl": "6f0546ba64ae9398394d97e3e58cd2fca3f56ad64164688b74345d2d41fd7b00",
+  "review-manifest.json": "c0e75274dcd83969b3505ae7095030aa46f873e5177a17cd8656f9aff99dc672",
+  "triage-candidate-evidence-spans.jsonl": "10351a0401347d8a49a3c33744013a64fd35e13b7c01fc941574de11ee213079",
+  "triage-data-quality-report.json": "17c89f8e5fdb6f7af12c7e94215dcc486578db1e43fe88efbac0e9ebab97ba24",
+  "triage-manifest.json": "ee7862e8e6556b393d22454a19f213ceaf9b2a47fa7f35b89674887d3eb54034",
+  "triage-owner-template.jsonl": "35e0214aca66cc1faf738cc30ddaaf645ae60a01c2cc6adf18951490e315b752",
+  "triage-report.md": "3cfd005ed1a0be71c5c212d0332e46647112c4288de96b3cba0b9e3db270798b",
+  "triage-review-reject-triage.jsonl": "62e9005f9ef7ee7f2e2ba24a3831d636e3cda590bfdeef9d7f9b80ec8b810cad",
+  "triage-summary.json": "178cd373cf7e01249e01dc69843671226b61cc5f32bfe545051f7f3cf82e1225"
+ },
+ "llm": null,
+ "manifest_sha256": "280595db5ef901c9d69f5fe937dd8c9c5e318c10b841f099f571820d851e2627",
+ "n_rejects": 22,
+ "outputs": {
+  "OWNER_SEMANTIC_QUALITY_DECISION_GUIDE.md": "d8cda08360983eb713a9853ebc51ca98155d556f2c9c897dd0068456c655d175",
+  "data-quality-report.json": "68e22c24a392bd77dc51ddeced8c8aea420df70d015d3ccb0613e5a6911ed3d6",
+  "decision-pack-report.md": "8c39b2bebbf947522116ff3a8d1e684b4cc74916b62c1ad6bf9f4b0a2c16da76",
+  "decision-pack-summary.json": "6393569c467a31506fe66abf6449045ba18b07a4f8b18e787289b5f7443258b0",
+  "owner-batch-decision-template.jsonl": "907bb425499af333e8bce816533ebfc538554a3b8409643aedc88df11c2a3c31",
+  "self-contained-raw-candidates.jsonl": "0e89548e3399316536a231f72dae725957104e7c947101554af9252dc3daf019",
+  "semantic-quality-decision-pack.jsonl": "572ef2fdbe3426d148068013b99c962b0f49db6d940726375b0fd6de5dc2d165"
+ },
+ "rule_version": "v2.0.7-reject-semantic-quality-decision-pack-1",
+ "run_at": "2026-08-10T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已尝试加载，返回 Skill not found）；已按任务约束实施等价的确定性质量检查（完整性 / 唯一性 / 引用完整性 / 连续性 / 一致性），全部为机械复算，无 LLM 参与。",
+ "summary_ref": {
+  "by_batch": {
+   "batch_a_replace_with_self_contained_exact_text": {
+    "case_ids": [
+     "mixed-028",
+     "mixed-029",
+     "zh-023",
+     "zh-026",
+     "zh-029",
+     "zh-036",
+     "zh-054"
+    ],
+    "n": 7
+   },
+   "batch_b_expand_same_source_scope": {
+    "case_ids": [
+     "zh-040"
+    ],
+    "n": 1
+   },
+   "batch_c_translation_policy_required": {
+    "case_ids": [
+     "en-029",
+     "multi-019",
+     "zh-052"
+    ],
+    "n": 3
+   },
+   "batch_d_retire_or_remove": {
+    "case_ids": [
+     "en-042",
+     "en-044",
+     "en-049",
+     "en-050",
+     "en-051",
+     "mixed-026",
+     "mixed-033",
+     "multi-030",
+     "zh-042",
+     "zh-045"
+    ],
+    "n": 10
+   },
+   "batch_e_targeted_re_review": {
+    "case_ids": [
+     "mixed-027"
+    ],
+    "n": 1
+   }
+  },
+  "n_candidate_rows": 124,
+  "n_self_contained_candidates": 39,
+  "removal_zero_risk_cases": [
+   "en-044",
+   "en-050",
+   "mixed-026",
+   "multi-030",
+   "zh-042",
+   "zh-045"
+  ],
+  "semantic_quality_insufficient_cases": [
+   "en-029",
+   "en-042",
+   "en-044",
+   "en-049",
+   "en-050",
+   "en-051",
+   "mixed-026",
+   "mixed-027",
+   "mixed-033",
+   "multi-019",
+   "multi-030",
+   "zh-040",
+   "zh-042",
+   "zh-045",
+   "zh-052"
+  ]
+ },
+ "task": "v2.0.7-reject-semantic-quality-decision-pack",
+ "validation": {
+  "distribution_exact": true,
+  "overlay_absent": true,
+  "reject_set_exact": true,
+  "sha_chain": true,
+  "strict_validator_161_161": true,
+  "triage_manifest_ok": true,
+  "triage_set_matches_rejects": true
+ }
+}

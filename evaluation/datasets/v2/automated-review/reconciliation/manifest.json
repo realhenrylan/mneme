@@ -1,0 +1,10 @@
+{
+ "created_by": "corpus_v2_automated_review_reconcile.py",
+ "canonical_sha256": "ea2af431d7391bb8335086c673a7d4a4fea10b25601e9331a490f58a17af8224",
+ "pack_sha256": "2b88881775ba2fe138ea334ac4d75eb66d1cc27ef93e4ac456e7e59fe112382f",
+ "evidence_sha256": "af54ff88bd9384832593fd46301ef02bfd3408ed708508eec68dd5c7d8d1cbb9",
+ "reconciliation_json_sha256": "ac930744fc775be4b9962bbb7a11558b79d52116087e74db4a77a5f24b66f639",
+ "reconciliation_report_sha256": "b3b4e1f49542e9a73441b1096dd589509afa9d58fa60ec59dffc9037bca53478",
+ "deterministic": true,
+ "run_at": "2026-08-07T00:00:00+00:00"
+}

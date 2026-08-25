@@ -1,0 +1,46 @@
+{
+ "activation_blocked": true,
+ "coordinate_contract": "raw-codepoint-v1",
+ "counts": {
+  "is_refusal_case": 0,
+  "needs_scope_expansion_candidates": 751,
+  "targets": 13,
+  "zero_answer_point_risk": 10
+ },
+ "decision_pack": true,
+ "deterministic_rebuild": true,
+ "forbidden_outputs": [
+  "draft-after.jsonl",
+  "evidence-after.jsonl",
+  "overlay",
+  "active metadata",
+  "v2.1"
+ ],
+ "human_reviewed": false,
+ "inputs": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "migration": "9432ec318656a1a3dc3db47c3677b6303a7530a6383e1990d414213afbf6c16b",
+  "unresolved": "1b1d29aa0f3d407017ee68a2f7eef0fc3f76573bd3c62fd6f74f29ffeadb9f36",
+  "v204_blockers": "96e812a77bd718787bf772bc7c7b9027f273950473e8543a4777b2c4145bbbc7",
+  "v204_blockers_out": "aefe1ae42f6f0d83ce1873d05e8b397d99ca6504fcf215dea3bd7bd846c33f90",
+  "v204_manifest": "955abb5b588f92ef199ebaa195b87b5da34ddaa63addee28e41a1c80d9a33f75",
+  "v204_manifest_out": "769936811d5b1a0e580a9e8565873bbafcdc9e7ccf4fb1f8dbb15dc9a670070a"
+ },
+ "manifest_sha256": "83a5fe78d64a83c3ec9cc8c5a060b29718ee72876466f92e861eeafb3d3013d7",
+ "max_tokens": null,
+ "model": null,
+ "outputs": {
+  "OWNER_DECISION_GUIDE.md": "fbf20bb3cf21e73fc096cab0e0be4fa666c0d8affcaef365e9ada2328e99f4a4",
+  "candidate-patch-template.jsonl": "7c6e159ce82ed85ff8f50105ab85bc2c82e1c23e609bbf5f8b62a696d4840d68",
+  "decision-pack-report.md": "4ffa5c8689e4060e0cf17eb9254bb289db97922af3946ce09be42ac07254f72a",
+  "decision-pack-summary.json": "21a9eedd933487b4f1999c2a1a2bd5573e297dee3bba7042e8ec9ee542f81091",
+  "owner-decision-pack.jsonl": "5ef6ce0762231249155f5ef1f20d10e72d2a86a86954a84d257f1c7f19d87a64",
+  "raw-source-contexts.jsonl": "b89155822a622826e25e50cf5675decd5ba4f821858450b7569c2f342613bb86"
+ },
+ "revision_status": "CANDIDATE",
+ "status": "DECISION_PACK",
+ "temperature": null,
+ "timestamp": "2026-08-10T00:00:00+00:00"
+}

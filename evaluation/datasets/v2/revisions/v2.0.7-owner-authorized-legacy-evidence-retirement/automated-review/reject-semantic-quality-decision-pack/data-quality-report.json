@@ -1,0 +1,40 @@
+{
+ "equivalent_deterministic_checks": {
+  "completeness": {
+   "candidate_rows": 124,
+   "draft_rows": 148,
+   "evidence_rows": 161,
+   "pack_rows": 22,
+   "refusal_cases": 31,
+   "triage_rows": 22
+  },
+  "consistency": {
+   "batch_mapping_consistent": true,
+   "distribution_exact": true,
+   "input_shas_unchanged": true,
+   "template_owner_fields_empty": true
+  },
+  "continuity": {
+   "candidates_raw_proved": 124,
+   "coverage_ge_075_all_candidates": true,
+   "self_contained_candidates": 39,
+   "triage_inputs_unchanged": true
+  },
+  "referential_integrity": {
+   "candidate_chunks_in_corpus": true,
+   "candidate_sources_in_declared": true,
+   "evidence_chunks_in_corpus": true
+  },
+  "uniqueness": {
+   "candidate_keys_unique": true,
+   "pack_case_ids_unique": true,
+   "triage_case_ids_unique": true
+  }
+ },
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ },
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已尝试加载，返回 Skill not found）；已按任务约束实施等价的确定性质量检查（完整性 / 唯一性 / 引用完整性 / 连续性 / 一致性），全部为机械复算，无 LLM 参与。"
+}

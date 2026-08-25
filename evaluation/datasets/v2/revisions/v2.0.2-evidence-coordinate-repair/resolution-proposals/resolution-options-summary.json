@@ -1,0 +1,30 @@
+{
+ "action_counts": {
+  "keep_unresolved": 13
+ },
+ "automatic_processing_blocked": true,
+ "candidate_auto_resolution_count": 0,
+ "category_counts": {
+  "format_transform_requires_policy": 2,
+  "legacy_range_disambiguable_duplicate": 0,
+  "semantic_or_content_drift": 11,
+  "source_or_chunk_integrity_problem": 0,
+  "whitespace_or_line_ending_only": 0
+ },
+ "no_local_raw_evidence_case_ids": [
+  "mixed-022",
+  "mixed-028",
+  "mixed-029",
+  "zh-023",
+  "zh-026",
+  "zh-029",
+  "zh-032",
+  "zh-033",
+  "zh-035",
+  "zh-036",
+  "zh-037",
+  "zh-054",
+  "zh-055"
+ ],
+ "proposal_count": 13
+}

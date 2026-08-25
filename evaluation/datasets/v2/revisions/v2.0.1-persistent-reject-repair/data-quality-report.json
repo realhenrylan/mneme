@@ -1,0 +1,47 @@
+{
+ "targets_with_evidence": [
+  "en-052",
+  "en-055",
+  "mixed-016",
+  "mixed-026",
+  "multi-014"
+ ],
+ "targets_without_evidence": [],
+ "answer_points_without_evidence": [],
+ "all_answer_points_have_evidence": true,
+ "all_chunks_exist": true,
+ "all_snippets_contiguous": true,
+ "all_sources_match": true,
+ "chunk_id_lists_consistent": true,
+ "duplicate_chunk_ids": [],
+ "duplicate_answer_points": [],
+ "per_case": {
+  "en-052": {},
+  "en-055": {
+   "answer_point_0": {
+    "core_has_ampersand": true,
+    "core_has_reference": true,
+    "core_has_create": true,
+    "answer_point_has_ampersand": true,
+    "answer_point_has_reference": true
+   }
+  },
+  "mixed-016": {
+   "answer_point_0": {
+    "glossary_form": true,
+    "evidence_text": "argument 参数 参数会被赋值给函数体中对应的局部变量。有关赋值规则参见 调用 一节。根据语法，任何表达式都可用来表示一个参数；最终算出的值会被赋给对应的局部变量。\n 另参见 parameter 术语表条目"
+   },
+   "answer_point_1": {
+    "glossary_form": true,
+    "evidence_text": "parameter 形参 parameter -- 形参"
+   }
+  },
+  "mixed-026": {},
+  "multi-014": {
+   "answer_point_1": {
+    "core_in_answer_point": true,
+    "coverage": 0.8974
+   }
+  }
+ }
+}

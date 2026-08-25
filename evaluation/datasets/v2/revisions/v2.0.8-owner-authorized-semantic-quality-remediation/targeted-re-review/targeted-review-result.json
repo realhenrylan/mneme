@@ -1,0 +1,27 @@
+{
+ "case_id": "mixed-027",
+ "model": "deepseek-v4-pro",
+ "payload_sha256": "5956c63eb795a438ac35ebbd137520059e11797e3dd96373db7d9e0cf533dd72",
+ "result": {
+  "answer_point_assessments": [
+   {
+    "answer_point_index": 0,
+    "assessment": "directly_supported",
+    "evidence_refs": [
+     1
+    ]
+   },
+   {
+    "answer_point_index": 1,
+    "assessment": "unsupported",
+    "evidence_refs": [
+     0
+    ]
+   }
+  ],
+  "decision": "reject",
+  "rationale": "should_refuse=false 合理，因为 query 可基于证据部分回答。但 acceptable_answer_points 存在问题：答案点 0 被 evidence[1] 直接支持，但未回答 query 关于 SQLite 事务原子性体现的问题；答案点 1 声称 SQLite 语法页仅列出 begin-stmt 且未展开事务原子性说明，但 evidence[0] 仅显示语法列表，未直接说明“未展开事务原子性说明”，属于无证据支持的推断。因此整体标注不可接受。",
+  "refusal_assessment": "not_applicable"
+ },
+ "status": "DIAGNOSTIC_ONLY"
+}

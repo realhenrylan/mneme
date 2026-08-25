@@ -1,0 +1,107 @@
+{
+ "counts": {
+  "case_count": 4,
+  "contract_error": 4,
+  "expected_decision_none_presumed": true,
+  "identity_blocked": 0,
+  "issues_rows": 4,
+  "resolved": 0,
+  "total_attempts": 16,
+  "transport_blocked": 0
+ },
+ "created_by": "corpus_v2_v211_contract_error_diagnostic.py",
+ "declarations": {
+  "active_created": false,
+  "blind_payload": true,
+  "is_review_acceptance": false,
+  "llm_called": true,
+  "locked_created": false,
+  "model_identity_verified": true,
+  "network_used": true,
+  "no_fallback": true,
+  "not_human_approval": true,
+  "nothing_auto_converted": true,
+  "old_contract_errors_not_presumed": true,
+  "overlay_generated": false,
+  "raw_responses_preserved": true,
+  "split_created": false,
+  "targeted_review_blocked_unchanged": true,
+  "v2_1_entered": false
+ },
+ "gate_verdict": "CONTRACT_ERROR_DIAGNOSTIC_COMPLETE",
+ "inputs": {
+  "candidate-draft-after.jsonl": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720",
+  "candidate-evidence-after.jsonl": "6df8e175ee0a028062c806a910c70890820576d62857cee41551ad777b829d17",
+  "candidate-manifest.json": "6cab6786a47f077ced789066d42f9c1c3739d9f24a3af2e44eefbf386c60707e",
+  "chunk-manifest.json": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks.jsonl": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "current-v2-draft.jsonl": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "pack-manifest.json": "ed2b8fccfd08fb79886a95fcc89de4c9ff70e8a06b6fcacda2e92a60de041aa9",
+  "pack-owner-decision-template.jsonl": "bf056ab25e58399635016ba21002c1222eb31f43811ec8079ae63b35c4001044",
+  "pack-persistent-contract-errors.jsonl": "4b69d2533af56ea78a7fd66c0c30786292aa481de6f3f8bf0a3776f376728cc0",
+  "pack-stable-reject-root-cause-triage.jsonl": "6f0873b47d3414bec5c1f2a303b824c521493ec662ff9730692850a43ccbf240",
+  "review-manifest.json": "220ed9c23c7d55550bdc25ac78c84d74de454a1ab7f31a56dccf4e5aa84f4320",
+  "targeted-review-issues.jsonl": "355100248eac64b8611ab32e3ea9af76ea2214754ccc981e96257e9152d39661",
+  "targeted-review-results.jsonl": "ec441bfa98d5b834eba14b7431d19a90cd4b0ce19ba2cfeba9b2f36e889e69f2",
+  "triage-manifest.json": "0a6e2f85aa861b3747ae6ad8ba748e0f500abcaddb4aabab794bdd27ffccd453",
+  "triage-owner-decision-template.jsonl": "c57f97726e5c025fc3479b87bbb6bc752605f1eb8f3ca06db7ae9e06c4c2ac36",
+  "triage-reject-root-cause-triage.jsonl": "5cbffc6dd59979115c235a520e9bb7e592aca54b9d354eb506c3825850a34e19",
+  "triage-review-coherence-errors.jsonl": "10b4e07e7328be1506ebf24894ad72d84aeed4e5256f9dcaef171ba776401fc6",
+  "v210-draft-after.jsonl": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720",
+  "v210-evidence-after.jsonl": "0778c7c679bab9e96c944c050d7dcd40047ec0d7a7a04f05e0ac2455239ea977"
+ },
+ "manifest_sha256": "356faea2d1ecd110e6588c8e0641e2947702c516e73b695151d2b3f87dff4331",
+ "metadata": {
+  "activation_blocked": true,
+  "human_reviewed": false,
+  "overlay_generated": false,
+  "revision_status": "CANDIDATE",
+  "split_reseal_required": true,
+  "v2_1_entered": false
+ },
+ "model": "deepseek-v4-pro",
+ "outputs": {
+  "contract-error-diagnostic-gate-report.md": "8587cdce894edf17f5d655105ac1adfa29a6b5871cd62f4198e58ecbfd019833",
+  "contract-error-diagnostic-issues.jsonl": "575c5c0d440b4b31b2e1f8660def921d457f93d7d60c94a0366fcfb54f23499e",
+  "contract-error-diagnostic-report.md": "81251171964e090e36c63cb8c74aa39c6d5ccd1ba4b2ccce37c569c045e90ca8",
+  "contract-error-diagnostic-results.jsonl": "575c5c0d440b4b31b2e1f8660def921d457f93d7d60c94a0366fcfb54f23499e",
+  "contract-error-diagnostic-summary.json": "ecdbb0d61433b6691eef0a646d76f6de470fac8aa973997f588f4aa63e77d753",
+  "data-quality-report.json": "9f795fb5ce90cdc8dc74be7e75e8c82c38403da96d9aba2150fbfe6d33b713d1",
+  "raw-model-attempts.jsonl": "725d71d2344241df30eebb3c84ea7955aea694ca7a221411854479bfc71cd5ca"
+ },
+ "parameters": {
+  "fallback": "none",
+  "max_retries": 3,
+  "max_tokens": 8000,
+  "temperature": 0.0,
+  "thinking": "disabled"
+ },
+ "probe": {
+  "content_sha256": "845a48c2589332e97e8362465c36901469543508a4d3b65f2a97bcffac3af18c",
+  "expected_model": "deepseek-v4-pro",
+  "model": "deepseek-v4-pro",
+  "ok": true
+ },
+ "reviewed_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "reviewed_revision_manifest_sha256": "6cab6786a47f077ced789066d42f9c1c3739d9f24a3af2e44eefbf386c60707e",
+ "rule_version": "v2.0.11-contract-error-diagnostic-1",
+ "run_at": "2026-08-12T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载——可用技能列表中没有该技能）；已实施等价的确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+ "target_set": [
+  "en-052",
+  "mixed-030",
+  "mixed-033",
+  "zh-040"
+ ],
+ "task": "v2.0.11-contract-error-diagnostic",
+ "validation": {
+  "candidate_manifest_verified": true,
+  "no_forbidden_artifacts": true,
+  "owner_template_pristine": true,
+  "pack_manifest_verified": true,
+  "strict_validation_covered_equals_passed": true,
+  "target_set_exact": true,
+  "targeted_review_counts_conserved": true,
+  "targeted_review_manifest_verified": true
+ }
+}

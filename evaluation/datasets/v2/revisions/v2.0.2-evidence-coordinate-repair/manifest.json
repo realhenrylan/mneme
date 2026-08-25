@@ -1,0 +1,33 @@
+{
+ "activation_blocked": true,
+ "coordinate_contract": "raw-codepoint-v1",
+ "counts": {
+  "evidence": 161,
+  "migrated": 148,
+  "unresolved": 13
+ },
+ "inputs": {
+  "chunks": {
+   "path": "chunks.jsonl",
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "draft": {
+   "path": "v2-cases-draft.jsonl",
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc"
+  },
+  "evidence": {
+   "path": "automated-review-evidence.jsonl",
+   "sha256": "af54ff88bd9384832593fd46301ef02bfd3408ed708508eec68dd5c7d8d1cbb9"
+  }
+ },
+ "manifest_sha256": "313972ae2e690d2d579ba6ea0a637612b69a7618c25494b919c35710474a8e19",
+ "mapping_algorithm_version": "raw-span-map-1",
+ "outputs": {
+  "coordinate-audit-before.json": "7d6fd27d1e95b13ecc0d69e2ed44b1a8283d0789dc77764d99bec50c5a00cba1",
+  "coordinate-migration.jsonl": "9432ec318656a1a3dc3db47c3677b6303a7530a6383e1990d414213afbf6c16b",
+  "coordinate-quality-report.json": "afd2980eddbdaf4cd0251393c67e07d7706772a5121f4cb19f0bb977a5ebab68",
+  "coordinate-repair-report.md": "e12f19ec131ce0c15a14a71e0e2d8cdfd814ba6907073d87ad4ecdaa2e93911f",
+  "coordinate-unresolved.jsonl": "1b1d29aa0f3d407017ee68a2f7eef0fc3f76573bd3c62fd6f74f29ffeadb9f36"
+ },
+ "version": "v2.0.2"
+}

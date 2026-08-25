@@ -1,0 +1,46 @@
+{
+ "tool": "corpus_v2_llm_third_pass_audit",
+ "version": 1,
+ "inputs": {
+  "blank_pack": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\human-review\\human-review-pack.jsonl",
+   "sha256": "ceab00700da16526f6c2a68b8a8e2776ba42379fcfb41095b1378f58a0be267a",
+   "rows": 150
+  },
+  "llm_filled_pack": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\human-review\\human-review-pack.llm-filled.jsonl",
+   "sha256": "97ccaef8e2b9baa0448bffe96783d7101cfb844be9390592f2185a8eb11d76f1",
+   "rows": 150
+  },
+  "llm_third_pass_manifest": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\human-review\\llm-third-pass-manifest.json",
+   "sha256": "0b6023374b1d9a00823241564d3900f88372dddf4c805a39e959293a392014e8"
+  },
+  "llm_third_pass_report": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\human-review\\llm-third-pass-report.md",
+   "sha256": "199cd165a24fade7bbb0b7c3b6775064084bb59fc6bbe671e276b44737336fb2"
+  },
+  "chunks": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  }
+ },
+ "outputs": {
+  "disagreement-cases.jsonl": {
+   "sha256": "407681aef6c673378d52b0f956fd8e4ebd10f611b06fcdbbd3ebe7aa9beb33d4"
+  },
+  "summary.json": {
+   "sha256": "7364c55e95187b43953dfa67dd31b1154ebb9cd1fd9c9a1334b33adcc39aa034"
+  },
+  "disagreement-audit.md": {
+   "sha256": "ea9f2d39c9c3c0c9bf951acc91a8c6d401904ef9d32c9e17c72ca106a6a222c2"
+  }
+ },
+ "decision_counts": {
+  "confirmed": 68,
+  "reject": 82,
+  "needs_followup": 0
+ },
+ "n_reject_cases": 82,
+ "created_by": "corpus_v2_llm_third_pass_audit"
+}

@@ -1,0 +1,24 @@
+{
+ "tool": "corpus_v2_repair.report",
+ "target_case_ids": [
+  "en-038",
+  "en-040",
+  "en-043",
+  "en-046",
+  "en-047",
+  "mixed-025",
+  "mixed-030",
+  "mixed-032",
+  "zh-050",
+  "zh-059"
+ ],
+ "inputs": {
+  "new_draft_sha256": "e289d1f0cff5daa2bed54b23a31cd72c7e40a0c46fb7f2638e5b05bfbeb2382f",
+  "chunks_sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "ledger_sha256": "c13235dfa65d78d9c98a8937ce0ad99532d31dddc50fd5303df16fa190f8c9f0",
+  "old_draft_sha256": "f6e2c9098031c017b99dc71573ed5bec2abb5de27a9333c7847ebd176f608055"
+ },
+ "outputs": {
+  "repair-evidence-report.md": "4fb0e761e0fccbb198b10c57727b9cccd934a0d130b94ddd4123d1ea614d97d1"
+ }
+}

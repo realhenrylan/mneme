@@ -1,0 +1,75 @@
+{
+ "counts": {
+  "answerable_cases": 105,
+  "case_count": 136,
+  "confirmed": 113,
+  "errors": 4,
+  "evidence_count": 148,
+  "needs_followup": 0,
+  "refusal_cases": 31,
+  "reject": 19
+ },
+ "created_by": "corpus_v2_v210_fresh_blind_automated_review.py",
+ "declarations": {
+  "active_created": false,
+  "candidate_draft_evidence_unchanged": true,
+  "historical_verdicts_read": false,
+  "human_approved": false,
+  "human_reviewed": false,
+  "llm_called": true,
+  "model_identity_verified": true,
+  "network_used": true,
+  "no_fallback": true,
+  "overlay_generated": false,
+  "review_results_reused": false,
+  "split_created": false,
+  "v2_1_entered": false
+ },
+ "gate_verdict": "AUTOMATED_REVIEW_GATE_BLOCKED",
+ "inputs": {
+  "candidate-draft-after.jsonl": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720",
+  "candidate-evidence-after.jsonl": "0778c7c679bab9e96c944c050d7dcd40047ec0d7a7a04f05e0ac2455239ea977",
+  "candidate-manifest.json": "adcf5c608c8164bde8b80cb9c1a58a4d9a6c456a7f0dbbc862af6326683f7f1d",
+  "chunk-manifest.json": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks.jsonl": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "current-v2-draft.jsonl": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "translation-equivalence-policy-ledger.jsonl": "43e9840fb44a3979ba3392bc1320e1422e179e0b56ecb4b03afc83d28abc7fb9",
+  "translation-equivalence-policy.md": "5990645b488dce68f581b34b267b53839f6bf2c0cae184453d2afe4dc56c2678"
+ },
+ "manifest_sha256": "71410122bee601142515820c4f93af408a2f42735031236b53fb000b77c857e9",
+ "metadata": {
+  "activation_blocked": true,
+  "human_reviewed": false,
+  "overlay_generated": false,
+  "revision_status": "CANDIDATE",
+  "split_reseal_required": true,
+  "v2_1_entered": false
+ },
+ "model": "deepseek-v4-pro",
+ "outputs": {
+  "automated-review-gate-report.md": "4e23ea04a039e3a987bec991df5355f76e2a5df76f7687ffb36c1b42c6c46bd7",
+  "automated-review-issues.jsonl": "dc005d12a4e68a49a9018be2ea7f25da32fb69e083cb919725e1601287f7b478"
+ },
+ "parameters": {
+  "fallback": "none",
+  "max_retries": 3,
+  "max_tokens": 8000,
+  "temperature": 0.0,
+  "thinking": "disabled"
+ },
+ "reviewed_revision": "v2.0.10-owner-authorized-coherence-remediation",
+ "reviewed_revision_manifest_sha256": "adcf5c608c8164bde8b80cb9c1a58a4d9a6c456a7f0dbbc862af6326683f7f1d",
+ "rule_version": "v2.0.10-fresh-blind-automated-review-1",
+ "run_at": "2026-08-11T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality workflow was applied to the candidate's deterministic five-dimension validation.",
+ "task": "v2.0.10-fresh-full-blind-automated-review",
+ "validation": {
+  "all_cases_confirmed": false,
+  "case_count_exact": true,
+  "evidence_count_exact": true,
+  "identity_errors": 0,
+  "schema_errors": 4,
+  "strict_validation_covered_equals_passed": true,
+  "transport_errors": 0
+ }
+}

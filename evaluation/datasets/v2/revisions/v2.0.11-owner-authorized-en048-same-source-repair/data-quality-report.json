@@ -1,0 +1,42 @@
+{
+ "dataset": "v2.0.11 owner-authorized en-048 same-source repair candidate",
+ "deterministic_data_quality_checks": {
+  "completeness": {
+   "all_answerable_cases_have_evidence": true,
+   "all_refusal_cases_have_no_evidence": true,
+   "case_count_conserved": true,
+   "evidence_count_conserved": true
+  },
+  "consistency": {
+   "candidate_remains_blocked": true,
+   "expected_action_conservation": true,
+   "no_review_results_reused": true,
+   "strict_covered_equals_passed": true
+  },
+  "continuity": {
+   "all_raw_spans_rebuildable": true,
+   "candidate_origin_recorded": true,
+   "draft_unchanged_byte_identical": true,
+   "non_target_rows_byte_identical": true
+  },
+  "referential_integrity": {
+   "added_evidence_source_declared": true,
+   "no_dangling_case_references": true,
+   "same_source_addition_declared": true
+  },
+  "uniqueness": {
+   "draft_case_ids_unique": true,
+   "evidence_anchors_unique": true,
+   "evidence_rows_unique": true,
+   "single_repair_action_unique": true
+  }
+ },
+ "findings": [],
+ "grain": "one draft case and one raw-codepoint evidence row",
+ "risk": "CANDIDATE only; strict-coordinate validity is not review approval",
+ "skill": {
+  "applied": "workflow adapted to deterministic candidate validation",
+  "available": true,
+  "name": "data-analytics:analyze-data-quality"
+ }
+}

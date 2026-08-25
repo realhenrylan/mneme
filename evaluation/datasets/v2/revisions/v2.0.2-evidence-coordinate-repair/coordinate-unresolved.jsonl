@@ -1,0 +1,13 @@
+{"case_id": "mixed-022", "chunk_id": "c9fd20815ea8_chunk_5", "legacy_char_range": {"end": 126, "start": 0}, "reason": "snippet not found", "source_id": "python-glossary-zh.md", "status": "unresolved"}
+{"case_id": "mixed-028", "chunk_id": "5927c70d0f8e_chunk_9", "legacy_char_range": {"end": 123, "start": 59}, "reason": "snippet not found", "source_id": "vue-guide-zh.md", "status": "unresolved"}
+{"case_id": "mixed-029", "chunk_id": "c9fd20815ea8_chunk_7", "legacy_char_range": {"end": 92, "start": 63}, "reason": "snippet not found", "source_id": "python-glossary-zh.md", "status": "unresolved"}
+{"case_id": "zh-023", "chunk_id": "32c427fb50e2_chunk_10", "legacy_char_range": {"end": 260, "start": 223}, "reason": "snippet not found", "source_id": "python-tutorial-zh.md", "status": "unresolved"}
+{"case_id": "zh-026", "chunk_id": "32c427fb50e2_chunk_25", "legacy_char_range": {"end": 225, "start": 200}, "reason": "snippet not found", "source_id": "python-tutorial-zh.md", "status": "unresolved"}
+{"case_id": "zh-029", "chunk_id": "32c427fb50e2_chunk_45", "legacy_char_range": {"end": 301, "start": 255}, "reason": "snippet not found", "source_id": "python-tutorial-zh.md", "status": "unresolved"}
+{"case_id": "zh-032", "chunk_id": "32c427fb50e2_chunk_52", "legacy_char_range": {"end": 146, "start": 102}, "reason": "snippet not found", "source_id": "python-tutorial-zh.md", "status": "unresolved"}
+{"case_id": "zh-033", "chunk_id": "32c427fb50e2_chunk_50", "legacy_char_range": {"end": 48, "start": 12}, "reason": "snippet not found", "source_id": "python-tutorial-zh.md", "status": "unresolved"}
+{"case_id": "zh-035", "chunk_id": "32c427fb50e2_chunk_30", "legacy_char_range": {"end": 471, "start": 436}, "reason": "snippet not found", "source_id": "python-tutorial-zh.md", "status": "unresolved"}
+{"case_id": "zh-036", "chunk_id": "32c427fb50e2_chunk_32", "legacy_char_range": {"end": 352, "start": 318}, "reason": "snippet not found", "source_id": "python-tutorial-zh.md", "status": "unresolved"}
+{"case_id": "zh-037", "chunk_id": "32c427fb50e2_chunk_33", "legacy_char_range": {"end": 112, "start": 74}, "reason": "snippet not found", "source_id": "python-tutorial-zh.md", "status": "unresolved"}
+{"case_id": "zh-054", "chunk_id": "c9fd20815ea8_chunk_7", "legacy_char_range": {"end": 92, "start": 0}, "reason": "snippet not found", "source_id": "python-glossary-zh.md", "status": "unresolved"}
+{"case_id": "zh-055", "chunk_id": "32c427fb50e2_chunk_39", "legacy_char_range": {"end": 353, "start": 316}, "reason": "snippet not found", "source_id": "python-tutorial-zh.md", "status": "unresolved"}

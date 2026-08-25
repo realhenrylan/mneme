@@ -1,0 +1,29 @@
+{
+ "reviewer_identity": "LLM_ASSISTED_SECOND_PASS",
+ "model": "deepseek-chat",
+ "n_cases": 150,
+ "decision_counts": {
+  "confirmed": 150,
+  "reject": 0,
+  "needs_followup": 0
+ },
+ "inputs": {
+  "draft": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\annotations\\v2-cases-draft.jsonl",
+   "sha256": "e289d1f0cff5daa2bed54b23a31cd72c7e40a0c46fb7f2638e5b05bfbeb2382f",
+   "rows": 150
+  },
+  "chunks": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "chunk_manifest": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunk-manifest.json",
+   "sha256": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a"
+  }
+ },
+ "pack_sha256": "745a20de4a3ceb547c2859012399d224866b147e5b18ac9484678197fcc594e2",
+ "evidence_sha256_aggregate": "f24064e188db0588996b49d06416647e285ccb56ca4261b233165494cd4e6aa7",
+ "run_at": "2026-08-05T15:41:45+00:00",
+ "created_by": "corpus_v2_review.py review"
+}

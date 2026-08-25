@@ -11,6 +11,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **v2 机器审阅副本严格导入（LLM_REVIEWED_DIAGNOSTIC_ONLY 诊断路径，TDD：41 个新测试）** — 新增 `scripts/corpus_v2_llm_review_apply.py`（apply / verify 两个子命令），处理其他会话产生的机器填写副本（`human-review-pack.llm-filled.jsonl`，reviewer=`LLM_ASSISTED_THIRD_PASS`）；**不调用任何 LLM/API**、不联网、不运行检索、生成评测、特征/阈值扫描：
+  - **复用而非复制**：将 `corpus_v2_human_review_apply.py` 的校验逻辑抽取为共享函数（`_manifest_input_errors` / `_rebuild_original_pack` / `_evidence_errors`），LLM 路径直接复用（manifest 五类输入 SHA 复算、确定性重建 SHA 链、chunk/snippet/source 证据映射）；**绝不调用或改写其 HUMAN_REVIEWED 分支**（行为不变，原 28 测试保持绿）
+  - **机器填写副本额外契约**：reviewer 必须非空且以 `LLM_ASSISTED_` 开头；reject / needs_followup 必须附 notes；空白 pack 文件 SHA 必须等于 manifest pack_sha256 且三个人工字段仍全空；third-pass manifest（total_cases / confirmed / reject / needs_followup / non_confirmed 集合与逐条 decision）与 report（头部统计 + 逐 case 清单统计）必须与填写副本复算一致；manifest 声明 `{path, sha256}` 条目则复算（当前 third-pass manifest 未声明 SHA 字段，工具自身产物 manifest 记录完整输入/输出 SHA-256 链）
+  - **fail-closed 三分支**：① 任何非法状态（行数/键集/篡改/证据/统计漂移/空白包被填写）→ 整体失败且零输出；② 存在 reject / needs_followup → 只输出 `llm-review-issues.jsonl` + `llm-review-issues-report.md`，零 overlay；③ 仅 150/150 confirmed → 生成 `evaluation/datasets/v2/llm-reviewed-truth/llm-reviewed-truth-overlay.json`（status=`LLM_REVIEWED_DIAGNOSTIC_ONLY`、reviewer_type=`LLM`）+ manifest；产物与输出中**不得出现** `HUMAN_REVIEWED` / `HUMAN_APPROVED` / 上线批准 / 已完成人工审核 / 人工批准字样（fail-closed 扫描）
+  - **真实运行**：机器填写副本核验通过（150 行、case_id 集合与空白包一致、非人工字段逐行规范化一致、68 confirmed / 82 reject / 0 needs_followup、82 条 reject 全部附 notes）→ 真实 apply 输出 issues 清单（82 条 blocked，零 overlay），两次运行逐字节一致；空白包 SHA 前后不变（`ceab00700da1…`）、人工字段全空；`llm-reviewed-truth/` 目录未创建
+  - **结论**：该结果**不是人工终审，不能单独解除 v2.1 人工门槛**；不得自动进入 v2.1；待真人逐条填写空白包后另行人工导入；其他会话的 3 个 LLM 文件未暂存、未触碰
+
+- **v2 人工终审结果严格导入（HUMAN_REVIEWED overlay，TDD：28 个新测试）** — 新增 `scripts/corpus_v2_human_review_apply.py`（apply / verify 两个子命令），导入人工填写后的审阅 pack（`human_review_decision` ∈ confirmed/reject/needs_followup、`human_reviewer` 非空）；**不调用任何 LLM/API**，不运行检索、生成评测、特征/阈值扫描：
+  - **严格校验**：恰好 150 行（= pack manifest n_cases）、case_id 集合与原始 pack 一致、键集不增不减（行键 / evidence 键白名单）、除三个人工字段外每行与原始 pack 规范化 JSON 逐字段一致（任何篡改 → 失败）；证据引用重新映射到 chunks.jsonl（chunk 存在、snippet 连续、source 一致）
+  - **fail-closed 三分支**：① 任一空/非法 decision、空 reviewer、重复/缺失/未知 case、篡改字段或证据、输入 SHA 漂移、原始 pack 重建不一致 → **整体失败且零输出**；② 任一 reject / needs_followup → 只输出 `human-review-issues.jsonl` + `human-review-issues-report.md`（问题清单），**绝不生成可用于评测的正式 overlay**；③ 仅 150/150 confirmed → 生成独立、确定性 `human-reviewed-truth-overlay.json`（status=`HUMAN_REVIEWED`，每 case 真值 + reviewer，按 case_id 排序）+ `human-reviewed-truth-overlay-manifest.json`（decision_counts / reviewers / 输入 SHA 链 / overlay_sha256）
+  - **SHA 链与输入不可变性**：apply 前复算 pack manifest 记录的五类输入（draft / chunks / chunk_manifest / corpus_manifest / repair_ledger）SHA-256；用这些输入**确定性重建原始 pack**，重建 SHA 必须等于 manifest 的 pack_sha256；`verify` 子命令对既有 overlay 复检（overlay sha、全部文件类输入 sha、结构、decision_counts 与已填写 pack 复算一致）
+  - **不伪称批准**：产物如实记录 `HUMAN_REVIEWED`，绝不自动宣称上线批准、不自动进入 v2.1；overlay 是独立产物，不改写 v2 草稿 / chunks / corpus manifest / case-freeze / split-lock / 生产配置；产物无时间戳，两次 apply 逐字节一致
+  - **真实状态**：当前 `human-review-pack.jsonl` 人工字段仍全部为空（尚未人工填写）→ 真实目录 apply 正确拒绝（exit 2、零输出、未生成 overlay）；confirmed / issues / 非法三路径由合成 fixture 覆盖，真实语料 150 条全 confirmed 演练（tmp 目录）生成 overlay 且 verify 通过；`human-review/` 目录内另有其他会话产生的 3 个文件（`human-review-pack.llm-filled.jsonl` / `llm-third-pass-manifest.json` / `llm-third-pass-report.md`），非本任务产物，未暂存、未触碰
+  - 验证：定向 28 测试 + 完整 pytest **1064 passed / 7 skipped**；py_compile OK；git diff --check exit 0；未修改任何既有输入；未 commit / push
+
+- **v2 人工终审包准备（盲态、离线、fail-closed，TDD：28 个新测试）** — 生成可由真人逐条填写的人工终审包；**不调用任何 LLM/API**，不运行检索、生成评测、特征/阈值扫描；不修改任何 v2 草稿 / chunks / 语料 / manifest / case-freeze / split-lock 或生产配置：
+  - 新增 `scripts/corpus_v2_human_review_pack.py`（build / verify 两个子命令），产物目录固定 `evaluation/datasets/v2/human-review/`：
+    - `human-review-pack.jsonl`：必须恰好 150 行、按 case_id 稳定排序；每行只含 case_id / query / language / query_type / previous_turns（多轮链回溯，单轮为空）/ should_refuse / relevance_level / acceptable_answer_points / relevant_source_ids / evidence（每条 = source_id / chunk_id / 完整连续 snippet / section）/ 空白人工字段 human_review_decision / human_reviewer / human_review_notes
+    - **盲态**：行键与证据键为严格白名单（多出任何键即失败）；包内绝不含自动二审 decision / confidence / rationale / 审阅模型名 / 修复 action / 任何 split/dev/holdout 身份 / 检索分数 / 候选集 / 历史评测结果——正则扫描禁止这些结构键（JSON 键形态，排除转义引号）+ 禁止字样（`HUMAN_APPROVED` / `reviewed-truth` / "已完成人工审核"）
+    - `human-review-pack-manifest.json`：记录草稿、chunks、chunk-manifest、corpus-manifest、repair-ledger 五类输入 SHA-256 + pack_sha256（无时间戳，确定性）
+    - `HUMAN_REVIEW_INSTRUCTIONS.md`：中文填写说明——confirmed（问题、答案点、拒答判定和所有证据都正确）/ reject（存在事实、证据、来源或拒答错误）/ needs_followup（人工无法确定，需补充来源或证据）；只填三个人工字段、答案点须有连续 snippet 支持、拒答行核对本地语料不可回答性、跨文档断言须各有证据、不得为凑 150 条 confirmed 放宽标准
+    - `human-review-pack-report.md`：仅全量计数（条数 / relevance_level / should_refuse / language / query_type / 多轮行数 / 证据条目数）+ 字段说明 + 输入 SHA-256，不含任何 split 或评测指标
+  - fail-closed：行数 150、case_id 唯一且与草稿集合完全一致；answerable 的 chunk 证据必须存在于 chunks.jsonl（source 与 chunk 归属一致）、snippet 连续（`snippet_is_evidence`）；人工字段初始必须全部为空（任何已填值 → 失败）；manifest 输入 SHA 漂移、缺失 chunk、重复/遗漏 case、非法字段、split 结构字段、禁止字样 → 一律失败；两次生成逐字节一致（真实语料验证）
+  - `verify`：对既有产物重跑全部 fail-closed 校验（输入 SHA 复算、pack sha、行数/唯一/排序、键白名单、人工字段空、previous_turns 与草稿链一致、证据存在性与连续性、禁止字样/结构键）
+  - 产物 SHA：draft `e289d1f0cff5…`、chunks `a23d739aa987…`、chunk_manifest `de5a580bac32…`、corpus_manifest `84f04699c07f…`、repair_ledger `c13235dfa65d…`、pack `ceab00700da1…`；150 行全量核验通过、与真实语料两次构建逐字节一致
+  - 状态：人工终审包已准备，**尚未进行人工终审**（不伪称人工审核）；仅当 150 条均由真人填写后，才可另行讨论导入人工审阅结果，**仍不得进入 v2.1**；未修改草稿 / chunks / split；未 commit / push
+
+- **v2 标注修复闭环（证据优先最小修复，TDD：19 个新测试）** — 对二审（LLM_ASSISTED_SECOND_PASS）flag 出的 10 条异常草稿（en-038 / en-040 / en-043 / en-046 / en-047 / mixed-025 / mixed-030 / mixed-032 / zh-050 / zh-059）执行证据驱动修复并全量重跑 150 条二审：
+  - 新增 `scripts/corpus_v2_repair.py`（validate / report 两个子命令）——确定性 fail-closed 修复验证器：
+    - ledger 的 case 集合必须**恰好**等于 10 条目标（缺少 / 多余 / 非法 action / 缺字段 → 失败）；每条 evidence 的 snippet SHA-256 必须与草稿 `chunk_text_snippet` 复算一致且是连续证据（`snippet_is_evidence`），ledger 证据必须恰好覆盖草稿中的全部证据
+    - 10 条之外的非目标行必须与旧草稿逐行不变（字节级 JSON 相等）；150 条保持唯一、schema 合法（必需键 / relevance_level 枚举 / relevant_chunk_ids 与 relevant_chunks 一致）
+    - annotation 必须保持 `LLM_ASSISTED` / `pending`（review_status=pending、reviewed_by 空、review_notes 含 LLM_ASSISTED），整行 JSON 出现 HUMAN/HUMAN_APPROVED 声明 → 失败；answerable 行必须非空证据；`changed_to_refusal` 只允许 `should_refuse=True` + `relevance_level="none"` 语义
+    - `report`：生成 `repair-evidence-report.md`（逐条修复判定 + 证据 SHA 明细 + 全量二审汇总，不按 split）+ `repair-manifest.json`（旧/新草稿、chunks、ledger SHA-256 + 产物 SHA）
+  - 修复判定（10 条全部 `corrected`，1 条真值不变）：
+    - en-038：答案点不变，证据由章节标题替换为目录（3.2 Views / 3.3 Foreign Keys / 3.4 Transactions）与第 3 章正文
+    - en-040：补齐 SQLite 完整语法图（begin/commit/rollback-stmt）与 PG Transactions 小节 BEGIN/COMMIT/ROLLBACK 原文
+    - en-043：删除无证据的 PG 否定点，答案收缩为 SQLite 正面证据结论
+    - en-046：source-only → chunk 级，补齐 f.write(string) / filehandle.write / fsPromises.writeFile 证据
+    - en-047 / mixed-032：原"PG 第 2 章未收录 JOIN"与目录（2.6 Joins Between Tables）矛盾，更正为目录证据；SQLite 补齐 LEFT/RIGHT/FULL 操作符片段
+    - mixed-025：source-only → chunk 级，头部编者栏证据（Adam Turner 和 Thomas Wouters）
+    - mixed-030：删除无证据的"类是可复用代码单元"，改为 9. 类章节与 React Intro 直接表述
+    - zh-050：原"未列出 datetime 变更"与文档实际内容矛盾，修正为弃用章节（utcnow / utcfromtimestamp）与 copy.replace 支持 datetime 类型
+    - zh-059：`retained_after_evidence_check`——chunk 原文含"# 6. 模块¶"，答案正确，不改真值，仅扩展 snippet
+  - 修复后重建 evidence-review pack（新草稿 SHA，evidence 146 → 158）并全量重跑 150 条 deepseek-chat 二审（禁止 gpt-5.6-sol；身份固定 LLM_ASSISTED_SECOND_PASS），fail-closed verify 通过
+  - 产物：`evaluation/datasets/v2/review/` 下 `repair-ledger.jsonl`、`repair-evidence-report.md`、`repair-manifest.json` 与重建后的 pack / auto-review 全套；不生成正式 reviewed-truth overlay，不改生产配置，不运行检索 / 特征扫描 / 阈值选择 / 生成评测，不读取或输出 dev/holdout/split 身份；不 commit、不 push
+
+- **v2 证据驱动二次审阅（LLM_ASSISTED_SECOND_PASS，TDD：17 个新测试）** — 对 150 条 LLM_ASSISTED 草稿执行独立二审，自动发现错误问答真值 / 拒答标签 / source-only 判断 / 多轮链关系，绝不伪称人工审核：
+  - 新增 `scripts/corpus_v2_review.py`（pack / review / verify 三个子命令）：
+    - `pack`：离线、确定性构建 evidence-review pack（150 条：query + previous-turn 上下文 + 草稿标签 + source/chunk 原文证据（snippet + 完整 chunk 文本）+ 每条 evidence SHA-256）；不含任何 split / dev / holdout / 检索分数 / 候选集字段；输入草稿与语料 SHA-256 写入 manifest；chunk 缺失、snippet 非连续证据、多轮链结构断裂（follow_up_to 缺失 / turn 不连续 / chain_id 不一致）、重复 case id → fail-closed 立即失败
+    - `review`：按 case_id 逐条调用独立审阅 LLM（temperature=0.0；模型取自 `LLM_MODEL`，默认 `deepseek-chat`，**代码级禁止 gpt-5.6-sol**；审阅人身份固定 `LLM_ASSISTED_SECOND_PASS`），逐项核验 answerable/refusal、chunk/source 相关性、snippet 充分性、多轮 parent/turn 关系；输出 confirmed / reject / needs_followup + 置信度 + 结构化理由 + 问题类别；LLM 输出非法（不可解析 / 非法值 / 调用失败）→ 整体失败且不产出产物
+    - `verify`：fail-closed 重校验——草稿 / chunks SHA 漂移、pack 被篡改、evidence SHA 复算不一致、case 重复/遗漏、reviewer 身份伪装 → 立即失败
+  - 审计产物：`evaluation/datasets/v2/review/` 下 `auto-review.jsonl`（150 条）、`auto-review-evidence-report.md`（全量汇总：confirmed/reject/needs_followup 数量、草稿与二审一致率、置信度分布、问题类别分布、待修复清单；**不按 split 分析**）、`auto-review-fixlist.jsonl`（仅 reject/needs_followup 时生成）、`auto-review-manifest.json`
+  - fail-closed 门槛：全部 150 条 confirmed 才输出 "LLM-assisted candidate review complete" 结论，且仍为 LLM_ASSISTED 状态、未经人工批准；reject / needs_followup 不自动篡改草稿，仅输出待修复清单
+  - 约束：只读审阅——不修改 v2 原始草稿 / chunks / manifest / case-freeze / split-lock；不生成正式 reviewed-truth overlay；不改生产配置；不运行检索、特征扫描、alpha/阈值选择、LLM 生成评测；新产物单独暂存，不提交、不 push
+
 - **v2 语料暂存包 Windows 可验证性修复（TDD：6 个新测试）** — 解决暂存区 whitespace 检查失败（`git diff --cached --check` exit 2）与许可证审计脚本在 Windows 默认 GBK 控制台崩溃：
   - 新增最小范围 `.gitattributes`：仅对 `data/v2-corpus/documents/**` 与 `data/v2-corpus/attribution/licenses/**` 关闭 whitespace 检查——原始下载文档与许可证证据必须与上游逐字节一致，尾随空白 / tab 属于原文内容，禁止为消除检查错误而改写；代码、JSONL、标注、manifest 一律不豁免；`git diff --cached --check` 恢复 exit 0
   - `scripts/corpus_v2_licenses.py`：成功输出改为纯 ASCII（`↔` 仅保留于以 UTF-8 显式写出的 markdown 报告），Windows 默认 GBK/cp936 控制台下不再抛 `UnicodeEncodeError`，不依赖用户设置 `PYTHONIOENCODING`

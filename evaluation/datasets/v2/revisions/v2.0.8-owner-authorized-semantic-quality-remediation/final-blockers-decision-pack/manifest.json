@@ -1,0 +1,61 @@
+{
+ "blockers": [
+  "multi-030",
+  "mixed-027"
+ ],
+ "created_by": "corpus_v2_v208_final_blockers_decision_pack.py",
+ "declarations": {
+  "data_modified": "none",
+  "historical_verdicts_read": false,
+  "input_scope": [
+   "v2.0.8 candidate dir",
+   "chunks",
+   "chunk manifest",
+   "raw-codepoint strict validator"
+  ],
+  "llm_called": false,
+  "model_output_used_as_fact": false,
+  "network_used": false,
+  "overlay_generated": false,
+  "recommendation_made": false,
+  "split_created": false,
+  "v2_1_entered": false
+ },
+ "description": "v2.0.8 final blockers owner decision pack（只读、确定性；multi-030 / mixed-027 两个阻断项的决策选项与本地逐字证据；不自动选择任何选项；不修改任何数据；无 LLM/API、无联网）",
+ "deterministic": true,
+ "gate_verdict": "FINAL_BLOCKERS_DECISION_PACK_OK",
+ "inputs": {
+  "chunk-manifest.json": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks.jsonl": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "current-v2-draft.jsonl": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "deferred-chain-dependent-cases.jsonl": "94da4e2f23976d03872b8036bbab4cc6869cef5886fb4a6ed561677d1a25edf5",
+  "draft-after.jsonl": "e10c90ced621eb983e1dcb0eedf7ddc89369a4efe1d02b1f166d1056b248e59d",
+  "evidence-after.jsonl": "949f3791e2f776796126e2757b1ebf4a7a86db3a12cb2fc4853f251dd290c588",
+  "targeted-review-result.json": "2a0920fd53e25046ee65e8b9d7e2935b4e48caf452073e40e3b9c99edf5d3b05",
+  "targeted-review-status.json": "f635bdfea1b58968cdf21e7b5252e8b9cb642c6fd97b6cc9adc6b8a53a82bc4a",
+  "v208-manifest.json": "dd132e7c86b87a5d693d161a5b3931f3a923fc5cab7b2edf4438454e07d7cbb4"
+ },
+ "manifest_sha256": "71a691ed00e875141613d9fbcd86fa7de02ce28a172cfeb601ada225f8054f23",
+ "outputs": {
+  "OWNER_DECISION_GUIDE.md": "960dc7f16576bc36b0688c83c4b793e843506ffa33e44981894e4d8e19432d03",
+  "chain-impact-map.json": "af7e75d1d39bbb6a640c32d16b234ed2749dce51398bb0528f1c933f06871882",
+  "final-blockers-decision-pack.jsonl": "cad800f3593f2f89d5a63b9bb070f2a296e92568621d3902246bf1db9bd3a41d",
+  "final-blockers-report.md": "abdcfc8769c36c05b827eeeda950a3367e889c56851c350dd2c3a0f2e0ac571c",
+  "owner-decision-template.jsonl": "74074da7fe5a316a5d2f37bc85bae2bd08ff4284ae5b7924baacd0fdeff0ce11",
+  "raw-evidence-verification.json": "f3aef18e28ede882cb6f4ce6463575e4f28b3edbeb3335c599dfa66fba2918e8"
+ },
+ "rule_version": "v2.0.8-final-blockers-decision-pack-1",
+ "run_at": "2026-08-11T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（不在已安装 skills 列表内，无法加载；已实际尝试）；已按任务约束实施等价的确定性质量检查（完整性 / 唯一性 / 引用完整性 / 连续性 / 一致性），全部为机械复算，无 LLM 参与。",
+ "task": "v2.0.8-final-blockers-owner-decision-pack",
+ "validation": {
+  "case_count_exact_143": true,
+  "chain_cases_byte_identical": true,
+  "chain_gate_exact": true,
+  "deferred_ledger_exact": true,
+  "evidence_count_exact_151": true,
+  "options_unselected": true,
+  "strict_validation_151_151": true,
+  "targeted_review_fact_verified": true
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "active_allowed": false,
+ "contract": "raw-codepoint-v1",
+ "data_analytics_skill": "load failed: skill not installed; deterministic equivalent checks executed",
+ "evidence_rows": 161,
+ "invariants": {
+  "case_and_answer_fields_unchanged": true,
+  "chunks_sha_unchanged": true,
+  "draft_sha_unchanged": true
+ },
+ "migrated_rows": 148,
+ "normalization": "display-whitespace-v1",
+ "raw_span_rebuild_pass": 148,
+ "unresolved_rows": 13
+}

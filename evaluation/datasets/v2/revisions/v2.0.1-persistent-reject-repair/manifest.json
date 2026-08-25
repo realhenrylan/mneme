@@ -1,0 +1,327 @@
+{
+ "task": "v2 persistent-reject minimal evidence repair",
+ "revision": "v2.0.1",
+ "target_case_ids": [
+  "en-052",
+  "en-055",
+  "mixed-016",
+  "mixed-026",
+  "multi-014"
+ ],
+ "inputs": {
+  "draft_before": {
+   "sha256": "e289d1f0cff5daa2bed54b23a31cd72c7e40a0c46fb7f2638e5b05bfbeb2382f",
+   "rows": 150
+  },
+  "draft_after": {
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+   "rows": 150
+  },
+  "chunks": {
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "audit_manifest": {
+   "sha256": "1e6024c167348dcce18be82a0786af801d8d239df877e6b6c978a4eac8bc37c7"
+  },
+  "merged_adjudications": {
+   "sha256": "b39f92cdf1b6c6f6dd9595194dac9ef6c0affdc7af18722427ebd478e4db34a6"
+  },
+  "selection_manifest": {
+   "sha256": "b0ccab107d678169f846559e9e0eabc8d8b8953d1992a0d25a1fc20ab814c32a"
+  },
+  "human_review_pack_before": {
+   "sha256": "ceab00700da16526f6c2a68b8a8e2776ba42379fcfb41095b1378f58a0be267a"
+  }
+ },
+ "transformations": {
+  "en-052": {
+   "reason": "删除无支持的 Rust memory-safety 子结论；保留已支持的 PostgreSQL durability 结论；不编造替代表述",
+   "changed_fields": {
+    "acceptable_answer_points": {
+     "before": [
+      "PostgreSQL: transaction durability (logged to disk)",
+      "Rust: ownership rules guarantee memory safety"
+     ],
+     "after": [
+      "PostgreSQL: transaction durability (logged to disk)"
+     ]
+    }
+   }
+  },
+  "en-055": {
+   "reason": "收窄为证据等价的英文表述（chunk_49 `&s1` 创建引用直接支撑）；删除无证据的 & 声称",
+   "changed_fields": {
+    "relevant_chunks": {
+     "before": [
+      {
+       "source_id": "rust-book-core.md",
+       "chunk_id": "4f9001ca8c15_chunk_48",
+       "chunk_text_snippet": "A reference is like a pointer in that it’s an address we can follow to access\nthe data stored at that address; that data is owned by some other variable.",
+       "page": null,
+       "section": "4.2 References and Borrowing"
+      }
+     ],
+     "after": [
+      {
+       "source_id": "rust-book-core.md",
+       "chunk_id": "4f9001ca8c15_chunk_48",
+       "chunk_text_snippet": "A reference is like a pointer in that it’s an address we can follow to access\nthe data stored at that address; that data is owned by some other variable.",
+       "page": null,
+       "section": "4.2 References and Borrowing"
+      },
+      {
+       "source_id": "rust-book-core.md",
+       "chunk_id": "4f9001ca8c15_chunk_49",
+       "chunk_text_snippet": "The `&s1` syntax lets us create a reference that _refers_ to the value of `s1`\nbut does not own it.",
+       "page": null,
+       "section": "4.2 References and Borrowing"
+      }
+     ]
+    },
+    "relevant_chunk_ids": {
+     "before": [
+      "4f9001ca8c15_chunk_48"
+     ],
+     "after": [
+      "4f9001ca8c15_chunk_48",
+      "4f9001ca8c15_chunk_49"
+     ]
+    },
+    "acceptable_answer_points": {
+     "before": [
+      "& 运算符（借用/引用）"
+     ],
+     "after": [
+      "The `&` operator creates a reference (e.g., `&s1`)"
+     ]
+    }
+   }
+  },
+  "mixed-016": {
+   "reason": "收窄为术语表形式 argument — 参数；parameter — 形参，为两项保留/补齐术语表证据",
+   "changed_fields": {
+    "relevant_chunks": {
+     "before": [
+      {
+       "source_id": "python-glossary-zh.md",
+       "chunk_id": "c9fd20815ea8_chunk_1",
+       "chunk_text_snippet": "参数会被赋值给函数体中对应的局部变量。有关赋值规则参见 调用 一节。根据语法，任何表达式都可用来表示一个参数；最终算出的值会被赋给对应的局部变量。\n 另参见 parameter 术语表条目",
+       "page": null,
+       "section": "argument 参数"
+      }
+     ],
+     "after": [
+      {
+       "source_id": "python-glossary-zh.md",
+       "chunk_id": "c9fd20815ea8_chunk_1",
+       "chunk_text_snippet": "参数会被赋值给函数体中对应的局部变量。有关赋值规则参见 调用 一节。根据语法，任何表达式都可用来表示一个参数；最终算出的值会被赋给对应的局部变量。\n 另参见 parameter 术语表条目",
+       "page": null,
+       "section": "argument 参数"
+      },
+      {
+       "source_id": "python-glossary-zh.md",
+       "chunk_id": "c9fd20815ea8_chunk_14",
+       "chunk_text_snippet": "parameter -- 形参",
+       "page": null,
+       "section": "parameter 形参"
+      }
+     ]
+    },
+    "relevant_chunk_ids": {
+     "before": [
+      "c9fd20815ea8_chunk_1"
+     ],
+     "after": [
+      "c9fd20815ea8_chunk_1",
+      "c9fd20815ea8_chunk_14"
+     ]
+    },
+    "acceptable_answer_points": {
+     "before": [
+      "argument 译为 参数",
+      "parameter 为另一术语表条目（形参）"
+     ],
+     "after": [
+      "argument — 参数",
+      "parameter — 形参"
+     ]
+    }
+   }
+  },
+  "mixed-026": {
+   "reason": "删除无本地证据的子结论「计算器、字符串、列表示例」；保留已支持的章节标题对应结论",
+   "changed_fields": {
+    "acceptable_answer_points": {
+     "before": [
+      "对应：同一章，标题翻译不同",
+      "内容均为非正式介绍（计算器、字符串、列表示例）"
+     ],
+     "after": [
+      "对应：同一章，标题翻译不同"
+     ]
+    }
+   }
+  },
+  "multi-014": {
+   "reason": "按审计定位的教程 6.4.1 / chunk_38 精确 span 补入本地证据与 chunk 引用（答案点不变）",
+   "changed_fields": {
+    "relevant_chunks": {
+     "before": [
+      {
+       "source_id": "python-tutorial-zh.md",
+       "chunk_id": "32c427fb50e2_chunk_31",
+       "chunk_text_snippet": "这种方式会导入所有不以下划线 (\n```\n_\n```\n) 开头的名称。 大多数情况下，不要用这个功能，这种方式向解释器导入了一批未知的名称，可能会覆盖已经定义的名称。",
+       "page": null,
+       "section": "6.1.1 以脚本方式执行模块"
+      }
+     ],
+     "after": [
+      {
+       "source_id": "python-tutorial-zh.md",
+       "chunk_id": "32c427fb50e2_chunk_31",
+       "chunk_text_snippet": "这种方式会导入所有不以下划线 (\n```\n_\n```\n) 开头的名称。 大多数情况下，不要用这个功能，这种方式向解释器导入了一批未知的名称，可能会覆盖已经定义的名称。",
+       "page": null,
+       "section": "6.1.1 以脚本方式执行模块"
+      },
+      {
+       "source_id": "python-tutorial-zh.md",
+       "chunk_id": "32c427fb50e2_chunk_38",
+       "chunk_text_snippet": "记住，使用\n```\nfrom package import specific_submodule\n```\n 没有任何问题！ 实际上，除了导入模块使用不同包的同名子模块之外，这种方式是推荐用法。",
+       "page": null,
+       "section": "6.4.1 从包中导入 *"
+      }
+     ]
+    },
+    "relevant_chunk_ids": {
+     "before": [
+      "32c427fb50e2_chunk_31"
+     ],
+     "after": [
+      "32c427fb50e2_chunk_31",
+      "32c427fb50e2_chunk_38"
+     ]
+    }
+   }
+  }
+ },
+ "evidence_verification": [
+  {
+   "case_id": "multi-014",
+   "chunk_id": "32c427fb50e2_chunk_38",
+   "source_id": "python-tutorial-zh.md",
+   "answer_point_index": 1,
+   "section": "6.4.1 从包中导入 *",
+   "snippet_sha256": "12a40dc2c1da64bfa03286c5f8761fa4b3203acd44b8f0a29281c7d367523eb3",
+   "char_start": 321,
+   "char_end": 359,
+   "snippet_start": 311,
+   "snippet_end": 407,
+   "core_located_once": true,
+   "snippet_located_once": true,
+   "snippet_is_evidence": true,
+   "source_matches": true,
+   "core_range_matches": true
+  },
+  {
+   "case_id": "mixed-016",
+   "chunk_id": "c9fd20815ea8_chunk_14",
+   "source_id": "python-glossary-zh.md",
+   "answer_point_index": 1,
+   "section": "parameter 形参",
+   "snippet_sha256": "7591603098f49662b9d5ec87e91d2aa9f0abe3921c8710d04fb0cb90dc527d7b",
+   "char_start": 783,
+   "char_end": 798,
+   "snippet_start": 783,
+   "snippet_end": 798,
+   "core_located_once": true,
+   "snippet_located_once": true,
+   "snippet_is_evidence": true,
+   "source_matches": true,
+   "core_range_matches": true
+  },
+  {
+   "case_id": "en-055",
+   "chunk_id": "4f9001ca8c15_chunk_49",
+   "source_id": "rust-book-core.md",
+   "answer_point_index": 0,
+   "section": "4.2 References and Borrowing",
+   "snippet_sha256": "8dfd66263219c5ca4a96ed5f2fcd67c845de4926f8382b2b619aeb59e5ba9d36",
+   "char_start": 1424,
+   "char_end": 1467,
+   "snippet_start": 1424,
+   "snippet_end": 1523,
+   "core_located_once": true,
+   "snippet_located_once": true,
+   "snippet_is_evidence": true,
+   "source_matches": true,
+   "core_range_matches": true
+  }
+ ],
+ "data_quality": {
+  "targets_with_evidence": [
+   "en-052",
+   "en-055",
+   "mixed-016",
+   "mixed-026",
+   "multi-014"
+  ],
+  "targets_without_evidence": [],
+  "answer_points_without_evidence": [],
+  "all_answer_points_have_evidence": true,
+  "all_chunks_exist": true,
+  "all_snippets_contiguous": true,
+  "all_sources_match": true,
+  "chunk_id_lists_consistent": true,
+  "duplicate_chunk_ids": [],
+  "duplicate_answer_points": []
+ },
+ "pack": {
+  "regenerated": true,
+  "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\human-review\\human-review-pack.jsonl",
+  "rows": 150,
+  "verify_errors": [],
+  "human_fields_empty": true
+ },
+ "freeze_lock": {
+  "pool_total": 260,
+  "case_set_unchanged": true,
+  "case_ids_sha256_match": true,
+  "target_meta_unchanged": {
+   "en-052": true,
+   "en-055": true,
+   "mixed-016": true,
+   "mixed-026": true,
+   "multi-014": true
+  },
+  "lock_verifies": true,
+  "lock_holdout_ids_not_persisted": true
+ },
+ "outputs": {
+  "draft-before.jsonl": {
+   "sha256": "e289d1f0cff5daa2bed54b23a31cd72c7e40a0c46fb7f2638e5b05bfbeb2382f"
+  },
+  "draft-after.jsonl": {
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc"
+  },
+  "draft-field-diff.jsonl": {
+   "sha256": "29768ad534483b0786d565aec59660dc91f29eeeaa345d9ec2b02fe029c1a65f"
+  },
+  "evidence-verification.jsonl": {
+   "sha256": "92016cd2abbd192478e0bdfa35665dd7217830645c8148c9f95ec97fa40e73a5"
+  },
+  "pack-before.jsonl": {
+   "sha256": "ceab00700da16526f6c2a68b8a8e2776ba42379fcfb41095b1378f58a0be267a"
+  },
+  "data-quality-report.json": {
+   "sha256": "f26dd54364da285dd3f20152e823d10f4386f69b93ae0dd21a1b7103b0698dc3"
+  },
+  "freeze-lock-verification.json": {
+   "sha256": "c344cdf8a97403ff824a32bfb93a42d40c62b73cd72538f8505cf19bfd706ae2"
+  },
+  "persistent-reject-repair.md": {
+   "sha256": "ff2c65d1fe000234c763da2ae112e2cef0c3877b6bf507b14d4adcb71ff26ce7"
+  }
+ },
+ "created_by": "corpus_v2_persistent_reject_repair.py run",
+ "note": "机械、确定性的证据修复（依据 persistent-reject-evidence-audit）；不构成人工审核、人工批准或 v2.1 准入。"
+}

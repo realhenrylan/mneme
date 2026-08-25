@@ -1,0 +1,116 @@
+{
+ "actor": "OWNER_AUTHORIZED_V2_0_11_OWNER_DECISION_PACK",
+ "classifications": {
+  "answer_point_level": {
+   "exact": 7,
+   "partial": 12,
+   "translation": 8
+  },
+  "case_level": {
+   "exact": 7,
+   "partial": 7,
+   "translation": 4
+  }
+ },
+ "counts": {
+  "case_count": 22,
+  "classification_exact": 7,
+  "classification_no_direct": 0,
+  "classification_partial": 7,
+  "classification_same_source": 0,
+  "classification_translation": 4,
+  "errors": 4,
+  "reject": 18,
+  "template_rows": 22
+ },
+ "data_quality": {
+  "completeness": {
+   "error_rows_complete": true,
+   "reject_rows_complete": true,
+   "required_fields_present": true,
+   "status": "ok",
+   "target_count_exact": true,
+   "template_rows_complete": true
+  },
+  "consistency": {
+   "classification_distribution_stable": true,
+   "double_build_deterministic": true,
+   "error_missing_shas_not_fabricated": true,
+   "reject_response_shas_consistent": true,
+   "status": "ok",
+   "targeted_review_counts_conserved": true
+  },
+  "continuity": {
+   "draft_byte_identical_to_v210": true,
+   "evidence_delta_only_authorized_en048": true,
+   "input_shas_stable": true,
+   "no_dangling_draft_refs": true,
+   "status": "ok"
+  },
+  "downstream_risk": "此包仅供 owner 决策；任何质量异常都必须保持 gate blocked（构建为 fail-closed，异常时零输出）。",
+  "referential_integrity": {
+   "candidate_and_review_manifests_verified": true,
+   "evidence_case_refs_valid": true,
+   "evidence_chunk_refs_valid": true,
+   "raw_spans_match_chunk_text": true,
+   "status": "ok",
+   "targets_in_candidate_draft": true
+  },
+  "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载——可用技能列表中没有该技能）；已实施等价的确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+  "uniqueness": {
+   "case_ids_unique_in_pack": true,
+   "evidence_anchors_unique": true,
+   "results_case_ids_unique": true,
+   "status": "ok",
+   "template_case_ids_unique": true
+  }
+ },
+ "declarations": {
+  "active_created": false,
+  "candidate_draft_evidence_unchanged": true,
+  "human_approved": false,
+  "human_reviewed": false,
+  "llm_called": false,
+  "locked_created": false,
+  "model_probe_used": false,
+  "network_used": false,
+  "old_decisions_treated_as_fact": false,
+  "overlay_generated": false,
+  "read_only": true,
+  "review_results_reused": false,
+  "split_created": false,
+  "targeted_review_unchanged": true,
+  "v210_triage_lineage_only": true,
+  "v2_1_entered": false
+ },
+ "gate_verdict": "OWNER_DECISION_PACK_OK",
+ "reviewed_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "rule_version": "v2.0.11-owner-decision-pack-1",
+ "run_at": "2026-08-12T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载——可用技能列表中没有该技能）；已实施等价的确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+ "target_set": [
+  "en-040",
+  "en-041",
+  "en-045",
+  "en-047",
+  "en-051",
+  "en-052",
+  "mixed-022",
+  "mixed-028",
+  "mixed-029",
+  "mixed-030",
+  "mixed-033",
+  "mixed-034",
+  "multi-012",
+  "multi-027",
+  "zh-023",
+  "zh-036",
+  "zh-040",
+  "zh-046",
+  "zh-050",
+  "zh-052",
+  "zh-054",
+  "zh-058"
+ ],
+ "task": "v2.0.11-owner-decision-pack"
+}

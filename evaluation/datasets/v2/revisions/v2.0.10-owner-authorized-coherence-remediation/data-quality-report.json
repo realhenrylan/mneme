@@ -1,0 +1,43 @@
+{
+ "dataset": "v2.0.10 owner-authorized coherence-remediation candidate",
+ "deterministic_data_quality_checks": {
+  "completeness": {
+   "all_answerable_cases_have_evidence": true,
+   "all_refusal_cases_have_no_evidence": true,
+   "case_count_conserved": true,
+   "evidence_count_conserved": true
+  },
+  "consistency": {
+   "candidate_remains_blocked": true,
+   "expected_action_conservation": true,
+   "no_review_results_reused": true,
+   "strict_covered_equals_passed": true
+  },
+  "continuity": {
+   "all_raw_spans_rebuildable": true,
+   "non_target_rows_byte_identical": true,
+   "retired_original_draft_preserved": true,
+   "retired_original_evidence_preserved": true
+  },
+  "referential_integrity": {
+   "no_dangling_case_references": true,
+   "retired_case_absent_from_after": true,
+   "retired_evidence_absent_from_after": true,
+   "same_source_additions_declared": true
+  },
+  "uniqueness": {
+   "draft_case_ids_unique": true,
+   "evidence_anchors_unique": true,
+   "evidence_rows_unique": true,
+   "six_repair_actions_unique": true
+  }
+ },
+ "findings": [],
+ "grain": "one draft case and one raw-codepoint evidence row",
+ "risk": "CANDIDATE only; strict-coordinate validity is not review approval",
+ "skill": {
+  "applied": "workflow adapted to deterministic candidate validation",
+  "available": true,
+  "name": "data-analytics:analyze-data-quality"
+ }
+}

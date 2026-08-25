@@ -1,0 +1,74 @@
+{
+ "activation_blocked": true,
+ "actor": "OWNER_AUTHORIZED_FINAL_BLOCKER_CLOSURE",
+ "case_count_after": 148,
+ "case_count_before": 149,
+ "coordinate_contract": "raw-codepoint-v1",
+ "counts": {
+  "answer_points_narrowed": 2,
+  "answer_points_removed": 2,
+  "case_after": 148,
+  "case_before": 149,
+  "evidence_added": 8,
+  "evidence_after": 162,
+  "evidence_before": 159,
+  "evidence_removed": 5,
+  "multi_span_spans": 6,
+  "remaining_blockers": 0,
+  "retired": 1,
+  "retired_evidence": 1
+ },
+ "deterministic_rebuild": true,
+ "forbidden_outputs": [
+  "active metadata",
+  "overlay",
+  "v2.1",
+  "split",
+  "locked config"
+ ],
+ "human_reviewed": false,
+ "inputs": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "pack_jsonl": "71101047e8d78f8ef196e8a6b40a56ce7dd5f120184343704a1320fad8cb7da1",
+  "pack_manifest": "b2d599310169a5a58f233c3e314e3236824a0a170caf935295caf2ac45410f70",
+  "v205_draft_after": "ef0c24912bd19a74e37e3cad4b7a54d34e7b26138745f049d99d6ec74fca768d",
+  "v205_evidence_after": "c6079380b81ffeb0e7b3f5d0779a821e7c50a8068015f28fca6eb2ad09794acf",
+  "v205_manifest": "34a7eaa87b31aee121b88c4e6016a60a39c5938e23e1f58eea6562e6dc866d7a"
+ },
+ "manifest_sha256": "f3290a8e1d2f07a9c1230f9eee752fb552c7fd32c2fbaa757c224929ed26e1e9",
+ "multi_span_policy": "multi_span_exact_evidence_v1",
+ "outputs": {
+  "REPAIR_REPORT.md": "aa6dd4603c64196f3ccb57fdce4ae9100325d6532932539076db767ba4eb1692",
+  "REVIEW_AND_SPLIT_REBUILD_REQUIRED.md": "fa50ec0ed74fd0956eb04ac9947fe5ea730bf59dd0a4ff977f1c362490396c16",
+  "coordinate-validation-report.json": "4b7be5ce436e29ed21536ae91b26967ec9b0ee4d7cd28e3b359c126712f714b1",
+  "data-quality-report.json": "a069e9e4d192d7f0a29bd62ecda8c4041d568b7d465594105f12491935a4d760",
+  "draft-after.jsonl": "9d56d339f47bb2aff1591973e7bcb162ff4b1a562f210e446875bfaa08a78c28",
+  "draft-before.jsonl": "ef0c24912bd19a74e37e3cad4b7a54d34e7b26138745f049d99d6ec74fca768d",
+  "evidence-after.jsonl": "cdfe85540512f03df954ee75ddf000e9cd3bde3ac01526d29f1ccef97385690e",
+  "evidence-before.jsonl": "c6079380b81ffeb0e7b3f5d0779a821e7c50a8068015f28fca6eb2ad09794acf",
+  "multi-span-evidence-ledger.jsonl": "fece83268789a298ae5500831f43a0849f3675d1992ead9ba48ab733c721f1a7",
+  "multi-span-evidence-policy.md": "a65670e2c637da910c9cb5556e817803fe97ab881abd4527e532a894987742cb",
+  "reannotation-diff.jsonl": "01da083dc72dfb39fe0c33496bb8b39dacaf7d3f457f2e019b7a3e292420f581",
+  "retired-cases.jsonl": "f6f5127386da01dc6fae3fefaa6f06a907afc5259c3d1ef6920904888fdfeb74",
+  "retired-evidence.jsonl": "f508606a8ba586b6f94ff1106c968a0015bc9b9c9f72b2617a065ac0117a69bd"
+ },
+ "overlay_generated": false,
+ "revision_status": "CANDIDATE",
+ "source_scope_expansion": {
+  "case_id": "zh-035",
+  "chunk_ids": [
+   "e564a122a7a2_chunk_61",
+   "e564a122a7a2_chunk_64",
+   "e564a122a7a2_chunk_65"
+  ],
+  "marker": "OWNER_AUTHORIZED_MULTI_SOURCE_EXACT_EVIDENCE_SCOPE_EXPANSION",
+  "sources": [
+   "python-tutorial-en.md"
+  ]
+ },
+ "status": "CANDIDATE",
+ "timestamp": "2026-08-10T00:00:00+00:00",
+ "v2_1_entered": false
+}

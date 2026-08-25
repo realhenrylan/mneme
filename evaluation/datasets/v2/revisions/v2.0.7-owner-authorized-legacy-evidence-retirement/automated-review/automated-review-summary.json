@@ -1,0 +1,35 @@
+{
+ "assessment_counts": {
+  "directly_supported": 132,
+  "faithful_paraphrase": 4,
+  "unsupported": 27
+ },
+ "data_quality_check": "deterministic_equivalent (skill unavailable)",
+ "decision_counts": {
+  "confirmed": 126,
+  "needs_followup": 0,
+  "reject": 22
+ },
+ "forbidden_models_guard": [
+  "gpt-5.6-sol",
+  "deepseek-v4-flash"
+ ],
+ "gate_verdict": "AUTOMATED_REVIEW_GATE_BLOCKED",
+ "max_tokens": 8000,
+ "model": "deepseek-v4-pro",
+ "n_cases": 148,
+ "non_confirmed_count": 22,
+ "overlay_generated": false,
+ "parse_total_retries": 0,
+ "refusal_assessment_counts": {
+  "correct_refusal": 31,
+  "incorrect_refusal": 0,
+  "not_applicable": 117
+ },
+ "reviewer_identity": "LLM_ASSISTED_OWNER_AUTHORIZED_V2_0_7",
+ "reviewer_type": "LLM_ASSISTED_OWNER_AUTHORIZED_V2_0_7",
+ "temperature": 0.0,
+ "thinking_disabled": true,
+ "transport_max_retries": 0,
+ "transport_total_retries": 0
+}

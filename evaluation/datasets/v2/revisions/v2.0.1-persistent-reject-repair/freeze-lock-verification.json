@@ -1,0 +1,14 @@
+{
+ "pool_total": 260,
+ "case_set_unchanged": true,
+ "case_ids_sha256_match": true,
+ "target_meta_unchanged": {
+  "en-052": true,
+  "en-055": true,
+  "mixed-016": true,
+  "mixed-026": true,
+  "multi-014": true
+ },
+ "lock_verifies": true,
+ "lock_holdout_ids_not_persisted": true
+}

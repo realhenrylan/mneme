@@ -26,7 +26,8 @@ from typing import Any
 from evaluation.schema import EvalCase, load_dataset
 from evaluation.citation_metrics import (
     CitationMetrics,
-    evaluate_citations,
+    evaluate_citations_context_aware,
+    parse_sources_citation_map,
 )
 
 
@@ -149,13 +150,10 @@ class GenerationRunner:
             sources = ""
         total_ms = (time.perf_counter() - total_start) * 1000
 
-        # Build valid citation IDs from sources string
-        # sources format: [S1] filename (p.X; chunk_id=...): snippet...
-        import re
-        valid_ids: set[str] = set()
-        for match in re.finditer(r'\[(S\d+)\]', sources):
-            valid_ids.add(match.group(1))
-
+        # ── 引用指标（契约 v2：context-aware，禁止占位） ──
+        # runner 无独立检索网格：生产路径 context 与 sources 同源同截断
+        # （_build_context 与 format_sources 使用同一 top_indices[:context_k]），
+        # 故以 sources 解析的 chunk 作为 context 证据（文档化于实现报告）。
         # Build relevant chunk IDs from ground truth.
         # Use snippet-level matching instead of source-level expansion (§5.1).
         relevant_chunk_ids: set[str] = set()
@@ -168,20 +166,28 @@ class GenerationRunner:
                 )
                 if method in ("exact", "overlap"):
                     relevant_chunk_ids.update(matched_ids)
-
-        # All retrieved IDs (from sources string)
-        all_retrieved_ids: set[str] = set()
-        for match in re.finditer(r'chunk_id=([^\s);:]+)', sources):
-            all_retrieved_ids.add(match.group(1))
-
-        # Compute citation metrics
-        citation_metrics = evaluate_citations(
+        parsed = parse_sources_citation_map(sources)
+        chunk_to_source = {
+            str(m.get("chunk_id")): (
+                m.get("source_name") or m.get("source")
+                or m.get("source_id") or ""
+            )
+            for m in self._all_metadatas if m.get("chunk_id")
+        }
+        context_chunk_ids = sorted(parsed.values())
+        citation_metrics = evaluate_citations_context_aware(
             answer=answer,
-            valid_ids=valid_ids,
+            sources=sources,
+            context_chunk_ids=context_chunk_ids,
+            context_source_ids=sorted({
+                chunk_to_source[c] for c in context_chunk_ids
+                if c in chunk_to_source and chunk_to_source[c]
+            }),
+            candidate_chunk_ids=context_chunk_ids,
+            chunk_to_source=chunk_to_source,
             relevant_chunk_ids=relevant_chunk_ids,
-            all_retrieved_ids=all_retrieved_ids,
             answer_points=case.acceptable_answer_points,
-            context="",  # Not stored; faithfulness uses heuristic
+            context_text=sources,
             should_refuse=case.should_refuse,
         )
 

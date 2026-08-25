@@ -1,0 +1,35 @@
+{
+ "reviewer_identity": "LLM_ASSISTED_OWNER_AUTHORIZED",
+ "reviewer_type": "LLM_ASSISTED_OWNER_AUTHORIZED",
+ "model": "deepseek-v4-pro",
+ "temperature": 0.0,
+ "max_tokens": 8000,
+ "n_cases": 150,
+ "decision_counts": {
+  "confirmed": 113,
+  "reject": 20,
+  "needs_followup": 17
+ },
+ "inputs": {
+  "draft": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\annotations\\v2-cases-draft.jsonl",
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+   "rows": 150
+  },
+  "chunks": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "chunk_manifest": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunk-manifest.json",
+   "sha256": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a"
+  }
+ },
+ "pack_sha256": "2b88881775ba2fe138ea334ac4d75eb66d1cc27ef93e4ac456e7e59fe112382f",
+ "evidence_sha256_aggregate": "eb79e546580ac669f76f5473c580dbd0ca81eb5587dd0a5fc6dd919f643fb4ae",
+ "review_sha256": "ea2af431d7391bb8335086c673a7d4a4fea10b25601e9331a490f58a17af8224",
+ "summary_sha256": "d0421d4fb241b239049faa24490998f7a0cc2dd8f0016e6a3cea8e8c065cca14",
+ "report_sha256": "b2555f0c9cc8fc0665ec653b8545be87ca050cb5174cbde92b86ca52101da1ed",
+ "run_at": "2026-08-07T00:00:00+00:00",
+ "created_by": "corpus_v2_automated_review_reconcile.py"
+}

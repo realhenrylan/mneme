@@ -1,0 +1,36 @@
+{
+ "activation_blocked": true,
+ "counts": {
+  "blockers": 13,
+  "targets": 13
+ },
+ "human_reviewed": false,
+ "inputs": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "evidence": "af54ff88bd9384832593fd46301ef02bfd3408ed708508eec68dd5c7d8d1cbb9",
+  "migration": "9432ec318656a1a3dc3db47c3677b6303a7530a6383e1990d414213afbf6c16b",
+  "unresolved": "1b1d29aa0f3d407017ee68a2f7eef0fc3f76573bd3c62fd6f74f29ffeadb9f36",
+  "v2_manifest": "955abb5b588f92ef199ebaa195b87b5da34ddaa63addee28e41a1c80d9a33f75"
+ },
+ "manifest_sha256": "ee5f0d906219548fa74e7449b2c7ec669770a3f2e35b33ce92bffa667c57a463",
+ "max_tokens": 8000,
+ "model": "deepseek-v4-flash",
+ "outputs": {
+  "ACTIVATION_BLOCKED.md": "9c719cb492b154e0876be788eff30089793c717036e58e48671d1813ca7dee03",
+  "REANNOTATION_REPORT.md": "994278ce75b12adb65920d6c0ac93c3effe6032c49d2ae383a27d16d2be6e20d",
+  "reannotation-blockers.jsonl": "aefe1ae42f6f0d83ce1873d05e8b397d99ca6504fcf215dea3bd7bd846c33f90"
+ },
+ "reannotation_actor": "LLM_ASSISTED_OWNER_AUTHORIZED",
+ "revision_status": "CANDIDATE",
+ "rule_version": "v2.0.4-owner-authorized-conservative-reannotation-1",
+ "status": "BLOCKED",
+ "temperature": 0.0,
+ "thinking": {
+  "thinking": {
+   "type": "disabled"
+  }
+ },
+ "timestamp": "2026-08-10T00:00:00+00:00"
+}

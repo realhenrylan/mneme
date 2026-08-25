@@ -1,0 +1,127 @@
+{
+ "n_blocking": 37,
+ "by_category": {
+  "exact_local_evidence_available": [
+   "en-031",
+   "multi-020",
+   "zh-040"
+  ],
+  "no_local_evidence_found": [
+   "zh-045",
+   "zh-056"
+  ],
+  "partial_or_paraphrase_evidence_only": [
+   "en-029",
+   "en-041",
+   "en-042",
+   "en-044",
+   "en-048",
+   "en-049",
+   "en-051",
+   "mixed-016",
+   "mixed-029",
+   "multi-018",
+   "multi-019",
+   "multi-028",
+   "zh-042",
+   "zh-046",
+   "zh-048",
+   "zh-050",
+   "zh-052",
+   "zh-053"
+  ],
+  "refusal_label_or_schema_inconsistency": [
+   "en-052",
+   "mixed-027",
+   "noanswer-026",
+   "noanswer-029",
+   "noanswer-030",
+   "noanswer-031",
+   "noanswer-032",
+   "noanswer-037",
+   "noanswer-040",
+   "noanswer-044",
+   "noanswer-045",
+   "noanswer-052",
+   "noanswer-054"
+  ],
+  "semantic_judgment_unresolved": [
+   "en-034"
+  ]
+ },
+ "by_decision": {
+  "needs_followup": 17,
+  "reject": 20
+ },
+ "by_language": {
+  "en": 17,
+  "mixed": 6,
+  "zh": 14
+ },
+ "by_query_type": {
+  "cross_document": 15,
+  "metadata": 3,
+  "mixed_intent": 1,
+  "multi_turn": 4,
+  "no_answer": 11,
+  "single_fact": 3
+ },
+ "by_sub_type": {
+  "evidence_gap": 3,
+  "missing_refusal_turn_label": 11,
+  "refusal_assessment_conflict": 2,
+  "zero_answer_points_modeling": 2
+ },
+ "mechanically_repairable": {
+  "n": 3,
+  "case_ids": [
+   "en-031",
+   "multi-020",
+   "zh-040"
+  ]
+ },
+ "requires_owner_policy": {
+  "n": 34,
+  "case_ids": [
+   "en-029",
+   "en-034",
+   "en-041",
+   "en-042",
+   "en-044",
+   "en-048",
+   "en-049",
+   "en-051",
+   "en-052",
+   "mixed-016",
+   "mixed-027",
+   "mixed-029",
+   "multi-018",
+   "multi-019",
+   "multi-028",
+   "noanswer-026",
+   "noanswer-029",
+   "noanswer-030",
+   "noanswer-031",
+   "noanswer-032",
+   "noanswer-037",
+   "noanswer-040",
+   "noanswer-044",
+   "noanswer-045",
+   "noanswer-052",
+   "noanswer-054",
+   "zh-042",
+   "zh-045",
+   "zh-046",
+   "zh-048",
+   "zh-050",
+   "zh-052",
+   "zh-053",
+   "zh-056"
+  ]
+ },
+ "overlay_generated": false,
+ "v2_1_entry": "BLOCKED",
+ "deterministic": true,
+ "run_at": "2026-08-07T00:00:00+00:00",
+ "created_by": "corpus_v2_remediation_triage.py"
+}

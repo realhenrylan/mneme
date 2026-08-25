@@ -1,0 +1,33 @@
+{
+ "case_id": "mixed-027",
+ "created_by": "corpus_v2_v208_semantic_quality_remediation.py",
+ "declarations": {
+  "case_data_changed": false,
+  "fallback_used": false,
+  "model_fixed": "deepseek-v4-pro",
+  "overlay_generated": false
+ },
+ "diagnostic_only": true,
+ "inputs": {
+  "candidate-manifest.json": "dd132e7c86b87a5d693d161a5b3931f3a923fc5cab7b2edf4438454e07d7cbb4",
+  "payload_sha256": "5956c63eb795a438ac35ebbd137520059e11797e3dd96373db7d9e0cf533dd72"
+ },
+ "manifest_sha256": "8d8c2b02b0063efbbccc81db8ecc1cb827cfcc0a107873ce3de9b5b34f279820",
+ "max_retries": 3,
+ "max_tokens": 8000,
+ "model": "deepseek-v4-pro",
+ "outputs": {
+  "payload.jsonl": "0e0407f66b68423bae4dd0ac5c56eca37e4ef1f38e49f1adbcc7bfdabf82fc0f",
+  "raw-response.jsonl": "678854047ede76e859e352febfdf0a06335aadb641ab70287d920f69ef817155",
+  "review-status.json": "f635bdfea1b58968cdf21e7b5252e8b9cb642c6fd97b6cc9adc6b8a53a82bc4a",
+  "targeted-review-report.md": "d5e70ec3d614c13003be7fe0e2a793a135e26685118bf28b9e5b626084f99216",
+  "targeted-review-result.json": "2a0920fd53e25046ee65e8b9d7e2935b4e48caf452073e40e3b9c99edf5d3b05"
+ },
+ "retries_used": 0,
+ "rule_version": "v2.0.8-semantic-quality-remediation-chain-safe-1",
+ "run_at": "2026-08-11T00:00:00+00:00",
+ "status": "TARGETED_REVIEW_OK",
+ "task": "v2.0.8-targeted-blind-re-review",
+ "temperature": 0.0,
+ "thinking_disabled": true
+}

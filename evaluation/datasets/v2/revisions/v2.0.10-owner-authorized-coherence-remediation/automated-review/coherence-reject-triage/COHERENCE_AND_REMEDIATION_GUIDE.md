@@ -1,0 +1,82 @@
+# Coherence & Remediation Guide — v2.0.10 automated review
+
+## 范围与边界
+
+本目录由 `corpus_v2_v210_coherence_reject_triage.py` 确定性生成（只读、无 LLM、无联网）。
+它是对 v2.0.10 fresh full blind automated review（gate=AUTOMATED_REVIEW_GATE_BLOCKED，
+113 confirmed / 19 reject / 0 needs_followup / 4 errors）的**本地根因分流**，不是人工审核、
+不是人工批准、不是 active 版本、不是 v2.1 准入。本目录不修改 candidate draft/evidence/
+chunks/review，不生成 overlay。
+
+## 一、分流一：model-output coherence errors（4 条）
+
+目标：`en-052`、`mixed-030`、`mixed-033`、`zh-040`。
+
+- 判定依据（契约层）：issue 记录为 `kind=error`、`attempts=4`、detail 为
+  `reject/needs_followup without any disagreement`。该语义 = 本地校验器在 4 次重试中
+  均未发现任何分歧（全部答案点 supported、refusal 一致），而统一 decision 契约要求
+  此时 decision=confirmed；模型却输出 reject/needs_followup → 模型输出自相矛盾。
+- 归类：一律 `model_output_contract_inconsistency`。
+- 红线：**不得**把 error 改写为 confirmed/reject；**不得**重跑模型；**不得**写回 review。
+  本任务只生成诊断与后续可选 recheck 规格（见 `owner-decision-template.jsonl`）。
+- expected decision 的推导：契约层为 `confirmed`；证据层（本地 raw evidence 对答案点
+  的确定性关系）作为辅助核验记录在 `answer_point_relations`。
+
+## 二、分流二：substantive rejects（19 条）的分类定义
+
+对每个 reject 的每个答案点，只基于 candidate 当前 raw evidence 与同 source chunk
+原文做确定性分类：
+
+| 分类 | 含义 | 机械判定信号 |
+|---|---|---|
+| `exact` | 证据直接支撑答案点，分歧在 review 语义判断 | 规范化后答案点 ⊆ 证据 span（verbatim/containment） |
+| `partial` | 证据仅部分支撑或为改写 | 同语言最长公共连续子串 ≥ max(3, 0.10×较短文本长度)；或跨语言但答案点全部 ASCII 内容已被证据覆盖 |
+| `same_source` | 当前证据未覆盖，但同 source 存在可证明候选 evidence | 原文/剥代码围栏/（跨语言时）最长未覆盖 ASCII token 命中同 source chunk 且不重叠现有 span |
+| `translation` | 翻译等价性需 owner 政策裁定 | 答案点与证据跨语言、无原文候选（有 token 或共享数字） |
+| `no_direct` | 声明 source 中无机械可证的直接支持 | 无 containment、无同源候选、无有效共享 |
+
+case 级分类 = 答案点分类中**证据最弱**者（severity：exact < partial < same-source <
+translation < no-direct）。
+
+**边界红线**：token 片段、跨 source 文本、模型解释或语义猜测一律不得标为 direct
+evidence；`same_source` 候选必须给出 source、chunk、Unicode `[start,end)`、
+raw span 与唯一性（occurrence count），且不得与现有 evidence span 重叠。
+
+## 三、只读建议动作
+
+| 动作 | 触发 | 含义 |
+|---|---|---|
+| `targeted_recheck_required` | case 级 exact / partial | 证据存在或部分存在，建议对模型判定做定向复审（不得自动确认） |
+| `repair_candidate` | case 级 same-source | 存在可证明候选 evidence，建议 owner 授权后修复 evidence 分配 |
+| `remove_answer_point` | no-direct 且非全部答案点无支撑 | 建议移除该无支撑答案点（需 owner 授权） |
+| `retire_case` | 全部答案点 no-direct | 建议退役该 case（需 owner 授权） |
+| `keep_unresolved` | translation | 保持未决，等待 owner 政策或人工判定 |
+
+所有建议均为**只读**：本任务不自动应用任何建议。
+
+## 四、五维数据质量
+
+`data-quality-report.json` 覆盖完整性（answerable/refusal 与 evidence 的对应、
+计数守恒）、唯一性（case id、evidence anchor、evidence 行字节级唯一）、引用完整性
+（issues→draft、evidence→chunk、source 一致）、连续性（follow_up_to 引用存在、
+strict raw span 可重建、输入 SHA 不变）、一致性（review 计数守恒、issues 守恒、
+strict covered==passed、candidate 保持 blocked）。skill 可用性已在报告内如实记录。
+
+## 五、owner 决策流程
+
+1. 审阅 `reject-root-cause-triage.jsonl`（逐答案点明细）与 `review-coherence-errors.jsonl`。
+2. 在 `owner-decision-template.jsonl` 每行的 `owner_decision` / `owner_reviewer` /
+   `owner_notes` 填值（当前为空）。
+3. 对 repair/remove/retire 动作：授权后在**新 revision** 中执行确定性修改并重跑
+   strict 校验；对 recheck 动作：可发起一次全新盲态复审。
+4. 任何动作完成前，v2.0.10 保持 CANDIDATE / activation_blocked / split_reseal_required。
+
+## 六、统计守恒（预检 fail-closed）
+
+- candidate：136 cases / 148 strict evidence（covered == passed == 148，legacy=0，
+  evidence 行字节级全唯一）。
+- review canonical：113 confirmed + 19 reject + 0 needs_followup + 4 errors = 136；
+  23 条 issue 的 case_id 无重复、无遗漏；无 overlay。
+- candidate/review manifest 自哈希与输入输出 SHA 均一致；本任务前后输入 SHA 不变。
+- 五维确定性检查全部通过（data-analytics:analyze-data-quality 不可用时按等价
+  确定性检查执行并如实记录）。

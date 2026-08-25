@@ -1,0 +1,39 @@
+{
+ "activation_blocked": true,
+ "anchor_algorithm_version": "raw-codepoint-v1-unique-quote",
+ "counts": {
+  "action_counts": {
+   "keep_unresolved": 13
+  },
+  "activation_blocked": true,
+  "automatic_processing_blocked": true,
+  "proposal_count": 13,
+  "still_unresolved_count": 13,
+  "unique_raw_anchor_count": 0
+ },
+ "lineage_note": "Flash-only quote-only batch; do not mix with prior Pro results",
+ "manifest_sha256": "b2f85751a6d5b589566053e7ece34b4e50e738fc4c925392e4335e4cdda205f0",
+ "max_tokens": 8000,
+ "model": "deepseek-v4-flash",
+ "outputs": {
+  "OWNER_DECISION_MATRIX-v2.md": "45becc1364ae4ff7292a0c5ae2e0a34cb20a479362cf6187c5d289bf3556122a",
+  "coordinate-resolution-proposals-v2.jsonl": "a404a8e4a525a9f1bc79ceb4a9eedcd9e611a36538cfb0b6ba5b6c102373ab77",
+  "local-anchor-audit.jsonl": "89b113488d8e0a00550d6750b45c9c8828b914febefe6e65295ae5d923815ab0",
+  "raw-model-responses-v2.jsonl": "92ad329f22e05924204859797f7e6e82ed217be4633fd1b7ec4531813ae2c275",
+  "resolution-options-summary-v2.json": "928ca9d074cbe993ff276f0cc13df7dcc14d36464038fc2b3e47b4ef0227eee3",
+  "resolution-proposals-v2-report.md": "c0093c2f5161ba8342ebe034ee1c4601c14f5ab51dcb0eb580bc5145fa86d5bb"
+ },
+ "retry_policy": {
+  "gateway_max_retries": 3
+ },
+ "rule_version": "v2.0.2-coordinate-resolution-proposals-quote-only-flash-1",
+ "schema": "quote-only-no-model-coordinates",
+ "temperature": 0.0,
+ "thinking": {
+  "thinking": {
+   "type": "disabled"
+  }
+ },
+ "timestamp": "2026-08-10T00:00:00+00:00",
+ "version": "v2.0.2-coordinate-resolution-proposals-v2"
+}

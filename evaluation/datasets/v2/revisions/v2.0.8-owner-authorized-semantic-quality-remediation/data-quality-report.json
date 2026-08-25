@@ -1,0 +1,47 @@
+{
+ "equivalent_deterministic_checks": {
+  "completeness": {
+   "deferred_cases": 1,
+   "draft_after": 143,
+   "draft_before": 148,
+   "evidence_after": 151,
+   "evidence_before": 161,
+   "removed_answer_points": 4,
+   "replaced_answer_points": 7,
+   "retired_cases": 5,
+   "retired_evidence": 9,
+   "scope_expanded_cases": 1,
+   "translation_policy_cases": 3
+  },
+  "consistency": {
+   "batch_conservation": true,
+   "case_count_exact": true,
+   "evidence_count_exact": true,
+   "strict_validation_passed": true
+  },
+  "continuity": {
+   "all_rebuildable": true,
+   "draft_before_bytes_preserved": true,
+   "raw_spans_rebuildable": 151
+  },
+  "referential_integrity": {
+   "deferred_case_retained_in_draft": true,
+   "draft_ids_in_candidate_set": true,
+   "evidence_chunks_in_corpus": true,
+   "evidence_sources_match_chunk": true,
+   "retired_cases_not_in_draft": true
+  },
+  "uniqueness": {
+   "diff_case_ids_unique": true,
+   "draft_case_ids_unique": true,
+   "evidence_keys_unique": false,
+   "retired_case_ids_unique": true
+  }
+ },
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ },
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（不在已安装 skills 列表内，无法加载；已实际尝试）；已按任务约束实施等价的确定性质量检查（完整性 / 唯一性 / 引用完整性 / 连续性 / 一致性），全部为机械复算，无 LLM 参与。"
+}

@@ -1,0 +1,18 @@
+{
+ "answer_point_count": 1,
+ "byte_identical": true,
+ "case_id": "mixed-033",
+ "data_modified": false,
+ "deletion_advice": {
+  "note": "两条 evidence 行字节级完全一致（同 chunk / 同 raw range / 同 raw span / 同 snippet SHA / 同 source），均支撑同一保留答案点；删除任意一条不改变任何语义、答案点或 source/chunk 关系（144 → 143）。但任何删除都必须由 owner 明确授权，并同步更新 manifest 计数与 outputs SHA 后重跑 strict 校验；本任务只写建议，不修改数据。",
+  "owner_authorization_required": true,
+  "semantically_safe": true
+ },
+ "rows": 2,
+ "same_chunk": true,
+ "same_range": true,
+ "same_raw_span": true,
+ "same_snippet_sha": true,
+ "same_source": true,
+ "supports_same_answer_point": true
+}

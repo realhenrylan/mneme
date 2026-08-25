@@ -1,0 +1,13 @@
+{
+ "equivalent_deterministic_checks": {
+  "raw_contiguous": true,
+  "row_count": 0,
+  "source_consistent": true,
+  "unique_case_chunk": 0
+ },
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ }
+}

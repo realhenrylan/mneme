@@ -1,0 +1,91 @@
+{
+ "task": "targeted post-repair machine review (diagnostic only)",
+ "reviewer_model": "deepseek-v4-pro",
+ "temperature": 0.0,
+ "max_tokens": 8000,
+ "n_cases": 5,
+ "inputs": {
+  "draft": {
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc"
+  },
+  "chunks": {
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  }
+ },
+ "cases": [
+  {
+   "case_id": "en-052",
+   "index": 1,
+   "prompt_sha256": "2d2ecdbac85f4e2a755d8b67fb797ed87b37d4cf1f192c895b5bea9b81c50543",
+   "response_sha256": "77507c1b62e7c70affc5fc2d6f0f71072408ffa554c5a9473949ced14c029024",
+   "parse_retries": 0,
+   "retries_used": 0,
+   "status": "confirmed"
+  },
+  {
+   "case_id": "en-055",
+   "index": 2,
+   "prompt_sha256": "91fa2acd69860d21bc9f26f8939840faaacfec43a635a10d4e11c35c36462662",
+   "response_sha256": "1817af2934dec338b53defe46c7147a82a9090641fa2ffbfde492989cd59e1ff",
+   "parse_retries": 0,
+   "retries_used": 0,
+   "status": "confirmed"
+  },
+  {
+   "case_id": "mixed-016",
+   "index": 3,
+   "prompt_sha256": "fa2e8419df22d29088d87a2181be4d484d6ad1843684b259ca545f0f099c19ad",
+   "response_sha256": "6653bd25120257eb0e4327686548e02e3fd2983c9e9288a3a9e041c06b166246",
+   "parse_retries": 0,
+   "retries_used": 0,
+   "status": "confirmed"
+  },
+  {
+   "case_id": "mixed-026",
+   "index": 4,
+   "prompt_sha256": "8dcc561656475f31697a7d193b78438f4bfebb2d21df10444013a7bc6b55ad43",
+   "response_sha256": "4850c3fab6cc5857248e43aa2045e84bac507022c938c885254f7aa48c92bec1",
+   "parse_retries": 0,
+   "retries_used": 0,
+   "status": "confirmed"
+  },
+  {
+   "case_id": "multi-014",
+   "index": 5,
+   "prompt_sha256": "4319c802dffefbcaa1908b2af8c59d72319151ab3c6f078d6c207a5ad4102124",
+   "response_sha256": "a58ccd2f2267e05e4857f5018b15656765a401527eae1190d91a43c2517f6a8c",
+   "parse_retries": 0,
+   "retries_used": 0,
+   "status": "confirmed"
+  }
+ ],
+ "verdicts": {
+  "confirmed": 5,
+  "reject": 0,
+  "needs_followup": 0
+ },
+ "retries": {
+  "transport_retries_total": 0,
+  "transport_retries_max": 0,
+  "parse_retries_total": 0,
+  "parse_retries_max": 2
+ },
+ "outputs": {
+  "targeted-input-pack.jsonl": {
+   "sha256": "2ed55e1dbeacd1ff676eb5b59743bd603afbcfc14e064398467238a65278a67d"
+  },
+  "post-repair-reviews.jsonl": {
+   "sha256": "91f606b2225eac4a33ed672bf293c1ff18b0d500d06bbcc7cc1f319fe487b9c6"
+  },
+  "raw-responses.jsonl": {
+   "sha256": "4cc68d499170fea2712989abfab56c1f3054a3338496211cde9f2fff0b57e578"
+  },
+  "MACHINE_REVIEWED_DIAGNOSTIC_ONLY.md": {
+   "sha256": "77af9cf24dddf0b2fe5f1c802952dda2e77f54f9802ac67760f210c1d5eaf500"
+  }
+ },
+ "fail_closed": false,
+ "status": "MACHINE_REVIEWED_DIAGNOSTIC_ONLY",
+ "created_by": "corpus_v2_targeted_machine_review.py run",
+ "note": "机器复审诊断证据；不是人工终审、不是上线批准、不是 v2.1 准入；未生成任何 overlay。"
+}

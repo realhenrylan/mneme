@@ -1,0 +1,626 @@
+{
+ "selection_algorithm": "sha256('v2-semantic-adjudication-v1:' + case_id) 升序排序，取前 20 条",
+ "control_salt": "v2-semantic-adjudication-v1:",
+ "control_count": 20,
+ "disputed_count": 82,
+ "total_cases": 102,
+ "controls": [
+  "en-022",
+  "en-025",
+  "en-037",
+  "en-032",
+  "noanswer-034",
+  "noanswer-030",
+  "multi-012",
+  "en-038",
+  "zh-036",
+  "multi-029",
+  "en-026",
+  "noanswer-045",
+  "mixed-035",
+  "en-033",
+  "en-028",
+  "mixed-017",
+  "en-043",
+  "zh-026",
+  "multi-030",
+  "zh-050"
+ ],
+ "disputed": [
+  "en-024",
+  "en-029",
+  "en-030",
+  "en-031",
+  "en-040",
+  "en-041",
+  "en-042",
+  "en-044",
+  "en-045",
+  "en-046",
+  "en-047",
+  "en-048",
+  "en-049",
+  "en-050",
+  "en-051",
+  "en-052",
+  "en-053",
+  "en-055",
+  "mixed-016",
+  "mixed-018",
+  "mixed-019",
+  "mixed-020",
+  "mixed-022",
+  "mixed-025",
+  "mixed-026",
+  "mixed-027",
+  "mixed-028",
+  "mixed-029",
+  "mixed-030",
+  "mixed-031",
+  "mixed-032",
+  "mixed-034",
+  "multi-011",
+  "multi-013",
+  "multi-014",
+  "multi-015",
+  "multi-016",
+  "multi-018",
+  "multi-019",
+  "multi-020",
+  "multi-022",
+  "multi-023",
+  "multi-025",
+  "multi-026",
+  "multi-028",
+  "noanswer-031",
+  "noanswer-032",
+  "noanswer-037",
+  "noanswer-038",
+  "noanswer-039",
+  "noanswer-040",
+  "noanswer-042",
+  "noanswer-043",
+  "noanswer-044",
+  "noanswer-046",
+  "noanswer-047",
+  "noanswer-048",
+  "noanswer-049",
+  "noanswer-052",
+  "noanswer-053",
+  "zh-021",
+  "zh-024",
+  "zh-025",
+  "zh-031",
+  "zh-032",
+  "zh-033",
+  "zh-038",
+  "zh-040",
+  "zh-042",
+  "zh-044",
+  "zh-045",
+  "zh-046",
+  "zh-047",
+  "zh-048",
+  "zh-049",
+  "zh-052",
+  "zh-053",
+  "zh-054",
+  "zh-055",
+  "zh-056",
+  "zh-057",
+  "zh-058"
+ ],
+ "mapping": [
+  {
+   "index": 1,
+   "case_id": "en-022",
+   "role": "control"
+  },
+  {
+   "index": 2,
+   "case_id": "en-024",
+   "role": "disputed"
+  },
+  {
+   "index": 3,
+   "case_id": "en-025",
+   "role": "control"
+  },
+  {
+   "index": 4,
+   "case_id": "en-026",
+   "role": "control"
+  },
+  {
+   "index": 5,
+   "case_id": "en-028",
+   "role": "control"
+  },
+  {
+   "index": 6,
+   "case_id": "en-029",
+   "role": "disputed"
+  },
+  {
+   "index": 7,
+   "case_id": "en-030",
+   "role": "disputed"
+  },
+  {
+   "index": 8,
+   "case_id": "en-031",
+   "role": "disputed"
+  },
+  {
+   "index": 9,
+   "case_id": "en-032",
+   "role": "control"
+  },
+  {
+   "index": 10,
+   "case_id": "en-033",
+   "role": "control"
+  },
+  {
+   "index": 11,
+   "case_id": "en-037",
+   "role": "control"
+  },
+  {
+   "index": 12,
+   "case_id": "en-038",
+   "role": "control"
+  },
+  {
+   "index": 13,
+   "case_id": "en-040",
+   "role": "disputed"
+  },
+  {
+   "index": 14,
+   "case_id": "en-041",
+   "role": "disputed"
+  },
+  {
+   "index": 15,
+   "case_id": "en-042",
+   "role": "disputed"
+  },
+  {
+   "index": 16,
+   "case_id": "en-043",
+   "role": "control"
+  },
+  {
+   "index": 17,
+   "case_id": "en-044",
+   "role": "disputed"
+  },
+  {
+   "index": 18,
+   "case_id": "en-045",
+   "role": "disputed"
+  },
+  {
+   "index": 19,
+   "case_id": "en-046",
+   "role": "disputed"
+  },
+  {
+   "index": 20,
+   "case_id": "en-047",
+   "role": "disputed"
+  },
+  {
+   "index": 21,
+   "case_id": "en-048",
+   "role": "disputed"
+  },
+  {
+   "index": 22,
+   "case_id": "en-049",
+   "role": "disputed"
+  },
+  {
+   "index": 23,
+   "case_id": "en-050",
+   "role": "disputed"
+  },
+  {
+   "index": 24,
+   "case_id": "en-051",
+   "role": "disputed"
+  },
+  {
+   "index": 25,
+   "case_id": "en-052",
+   "role": "disputed"
+  },
+  {
+   "index": 26,
+   "case_id": "en-053",
+   "role": "disputed"
+  },
+  {
+   "index": 27,
+   "case_id": "en-055",
+   "role": "disputed"
+  },
+  {
+   "index": 28,
+   "case_id": "mixed-016",
+   "role": "disputed"
+  },
+  {
+   "index": 29,
+   "case_id": "mixed-017",
+   "role": "control"
+  },
+  {
+   "index": 30,
+   "case_id": "mixed-018",
+   "role": "disputed"
+  },
+  {
+   "index": 31,
+   "case_id": "mixed-019",
+   "role": "disputed"
+  },
+  {
+   "index": 32,
+   "case_id": "mixed-020",
+   "role": "disputed"
+  },
+  {
+   "index": 33,
+   "case_id": "mixed-022",
+   "role": "disputed"
+  },
+  {
+   "index": 34,
+   "case_id": "mixed-025",
+   "role": "disputed"
+  },
+  {
+   "index": 35,
+   "case_id": "mixed-026",
+   "role": "disputed"
+  },
+  {
+   "index": 36,
+   "case_id": "mixed-027",
+   "role": "disputed"
+  },
+  {
+   "index": 37,
+   "case_id": "mixed-028",
+   "role": "disputed"
+  },
+  {
+   "index": 38,
+   "case_id": "mixed-029",
+   "role": "disputed"
+  },
+  {
+   "index": 39,
+   "case_id": "mixed-030",
+   "role": "disputed"
+  },
+  {
+   "index": 40,
+   "case_id": "mixed-031",
+   "role": "disputed"
+  },
+  {
+   "index": 41,
+   "case_id": "mixed-032",
+   "role": "disputed"
+  },
+  {
+   "index": 42,
+   "case_id": "mixed-034",
+   "role": "disputed"
+  },
+  {
+   "index": 43,
+   "case_id": "mixed-035",
+   "role": "control"
+  },
+  {
+   "index": 44,
+   "case_id": "multi-011",
+   "role": "disputed"
+  },
+  {
+   "index": 45,
+   "case_id": "multi-012",
+   "role": "control"
+  },
+  {
+   "index": 46,
+   "case_id": "multi-013",
+   "role": "disputed"
+  },
+  {
+   "index": 47,
+   "case_id": "multi-014",
+   "role": "disputed"
+  },
+  {
+   "index": 48,
+   "case_id": "multi-015",
+   "role": "disputed"
+  },
+  {
+   "index": 49,
+   "case_id": "multi-016",
+   "role": "disputed"
+  },
+  {
+   "index": 50,
+   "case_id": "multi-018",
+   "role": "disputed"
+  },
+  {
+   "index": 51,
+   "case_id": "multi-019",
+   "role": "disputed"
+  },
+  {
+   "index": 52,
+   "case_id": "multi-020",
+   "role": "disputed"
+  },
+  {
+   "index": 53,
+   "case_id": "multi-022",
+   "role": "disputed"
+  },
+  {
+   "index": 54,
+   "case_id": "multi-023",
+   "role": "disputed"
+  },
+  {
+   "index": 55,
+   "case_id": "multi-025",
+   "role": "disputed"
+  },
+  {
+   "index": 56,
+   "case_id": "multi-026",
+   "role": "disputed"
+  },
+  {
+   "index": 57,
+   "case_id": "multi-028",
+   "role": "disputed"
+  },
+  {
+   "index": 58,
+   "case_id": "multi-029",
+   "role": "control"
+  },
+  {
+   "index": 59,
+   "case_id": "multi-030",
+   "role": "control"
+  },
+  {
+   "index": 60,
+   "case_id": "noanswer-030",
+   "role": "control"
+  },
+  {
+   "index": 61,
+   "case_id": "noanswer-031",
+   "role": "disputed"
+  },
+  {
+   "index": 62,
+   "case_id": "noanswer-032",
+   "role": "disputed"
+  },
+  {
+   "index": 63,
+   "case_id": "noanswer-034",
+   "role": "control"
+  },
+  {
+   "index": 64,
+   "case_id": "noanswer-037",
+   "role": "disputed"
+  },
+  {
+   "index": 65,
+   "case_id": "noanswer-038",
+   "role": "disputed"
+  },
+  {
+   "index": 66,
+   "case_id": "noanswer-039",
+   "role": "disputed"
+  },
+  {
+   "index": 67,
+   "case_id": "noanswer-040",
+   "role": "disputed"
+  },
+  {
+   "index": 68,
+   "case_id": "noanswer-042",
+   "role": "disputed"
+  },
+  {
+   "index": 69,
+   "case_id": "noanswer-043",
+   "role": "disputed"
+  },
+  {
+   "index": 70,
+   "case_id": "noanswer-044",
+   "role": "disputed"
+  },
+  {
+   "index": 71,
+   "case_id": "noanswer-045",
+   "role": "control"
+  },
+  {
+   "index": 72,
+   "case_id": "noanswer-046",
+   "role": "disputed"
+  },
+  {
+   "index": 73,
+   "case_id": "noanswer-047",
+   "role": "disputed"
+  },
+  {
+   "index": 74,
+   "case_id": "noanswer-048",
+   "role": "disputed"
+  },
+  {
+   "index": 75,
+   "case_id": "noanswer-049",
+   "role": "disputed"
+  },
+  {
+   "index": 76,
+   "case_id": "noanswer-052",
+   "role": "disputed"
+  },
+  {
+   "index": 77,
+   "case_id": "noanswer-053",
+   "role": "disputed"
+  },
+  {
+   "index": 78,
+   "case_id": "zh-021",
+   "role": "disputed"
+  },
+  {
+   "index": 79,
+   "case_id": "zh-024",
+   "role": "disputed"
+  },
+  {
+   "index": 80,
+   "case_id": "zh-025",
+   "role": "disputed"
+  },
+  {
+   "index": 81,
+   "case_id": "zh-026",
+   "role": "control"
+  },
+  {
+   "index": 82,
+   "case_id": "zh-031",
+   "role": "disputed"
+  },
+  {
+   "index": 83,
+   "case_id": "zh-032",
+   "role": "disputed"
+  },
+  {
+   "index": 84,
+   "case_id": "zh-033",
+   "role": "disputed"
+  },
+  {
+   "index": 85,
+   "case_id": "zh-036",
+   "role": "control"
+  },
+  {
+   "index": 86,
+   "case_id": "zh-038",
+   "role": "disputed"
+  },
+  {
+   "index": 87,
+   "case_id": "zh-040",
+   "role": "disputed"
+  },
+  {
+   "index": 88,
+   "case_id": "zh-042",
+   "role": "disputed"
+  },
+  {
+   "index": 89,
+   "case_id": "zh-044",
+   "role": "disputed"
+  },
+  {
+   "index": 90,
+   "case_id": "zh-045",
+   "role": "disputed"
+  },
+  {
+   "index": 91,
+   "case_id": "zh-046",
+   "role": "disputed"
+  },
+  {
+   "index": 92,
+   "case_id": "zh-047",
+   "role": "disputed"
+  },
+  {
+   "index": 93,
+   "case_id": "zh-048",
+   "role": "disputed"
+  },
+  {
+   "index": 94,
+   "case_id": "zh-049",
+   "role": "disputed"
+  },
+  {
+   "index": 95,
+   "case_id": "zh-050",
+   "role": "control"
+  },
+  {
+   "index": 96,
+   "case_id": "zh-052",
+   "role": "disputed"
+  },
+  {
+   "index": 97,
+   "case_id": "zh-053",
+   "role": "disputed"
+  },
+  {
+   "index": 98,
+   "case_id": "zh-054",
+   "role": "disputed"
+  },
+  {
+   "index": 99,
+   "case_id": "zh-055",
+   "role": "disputed"
+  },
+  {
+   "index": 100,
+   "case_id": "zh-056",
+   "role": "disputed"
+  },
+  {
+   "index": 101,
+   "case_id": "zh-057",
+   "role": "disputed"
+  },
+  {
+   "index": 102,
+   "case_id": "zh-058",
+   "role": "disputed"
+  }
+ ],
+ "note": "本清单仅保存在审计侧，绝不进入模型输入"
+}

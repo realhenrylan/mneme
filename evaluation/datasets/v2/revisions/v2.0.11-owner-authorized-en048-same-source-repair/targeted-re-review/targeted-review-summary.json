@@ -1,0 +1,104 @@
+{
+ "counts": {
+  "case_count": 22,
+  "confirmed": 0,
+  "errors": 4,
+  "needs_followup": 0,
+  "reject": 18
+ },
+ "data_quality": {
+  "completeness": {
+   "every_target_reviewed": true,
+   "results_rows_complete": true,
+   "status": "ok",
+   "target_count_exact": true
+  },
+  "consistency": {
+   "blind_payload": true,
+   "model_identity_verified": true,
+   "no_fallback": true,
+   "status": "ok",
+   "strict_candidate_passed": true
+  },
+  "continuity": {
+   "candidate_unchanged": true,
+   "input_shas_stable": true,
+   "no_old_decisions_reused": true,
+   "status": "ok"
+  },
+  "referential_integrity": {
+   "evidence_refs_valid": true,
+   "review_triage_manifests_verified": true,
+   "status": "ok",
+   "targets_in_candidate_draft": true
+  },
+  "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载）；已执行等价确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+  "uniqueness": {
+   "issues_rows_unique": true,
+   "results_rows_unique": false,
+   "status": "ok",
+   "target_case_ids_unique": true
+  }
+ },
+ "declarations": {
+  "active_created": false,
+  "blind_payload": true,
+  "candidate_draft_evidence_unchanged": true,
+  "historical_verdicts_read": false,
+  "human_approved": false,
+  "human_reviewed": false,
+  "llm_called": true,
+  "model_identity_verified": true,
+  "network_used": true,
+  "no_fallback": true,
+  "old_decisions_in_payload": false,
+  "overlay_generated": false,
+  "review_results_reused": false,
+  "split_created": false,
+  "v2_1_entered": false
+ },
+ "gate_verdict": "TARGETED_REVIEW_BLOCKED",
+ "issues_rows": 22,
+ "model": "deepseek-v4-pro",
+ "parameters": {
+  "fallback": "none",
+  "max_retries": 3,
+  "max_tokens": 8000,
+  "temperature": 0.0,
+  "thinking": "disabled"
+ },
+ "probe": {
+  "content_sha256": "845a48c2589332e97e8362465c36901469543508a4d3b65f2a97bcffac3af18c",
+  "expected_model": "deepseek-v4-pro",
+  "model": "deepseek-v4-pro",
+  "ok": true
+ },
+ "rule_version": "v2.0.11-targeted-remaining22-review-1",
+ "run_at": "2026-08-11T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载）；已执行等价确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+ "target_set": [
+  "en-040",
+  "en-041",
+  "en-045",
+  "en-047",
+  "en-051",
+  "en-052",
+  "mixed-022",
+  "mixed-028",
+  "mixed-029",
+  "mixed-030",
+  "mixed-033",
+  "mixed-034",
+  "multi-012",
+  "multi-027",
+  "zh-023",
+  "zh-036",
+  "zh-040",
+  "zh-046",
+  "zh-050",
+  "zh-052",
+  "zh-054",
+  "zh-058"
+ ],
+ "task": "v2.0.11-targeted-remaining22-review"
+}

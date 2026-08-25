@@ -1,0 +1,52 @@
+{
+ "counts": {
+  "case_count": 137,
+  "confirmed": 111,
+  "errors": 4,
+  "evidence_count": 144,
+  "issues_rows": 26,
+  "needs_followup": 0,
+  "reject": 22
+ },
+ "created_by": "corpus_v2_v209_coherence_reject_triage.py",
+ "declarations": {
+  "active_created": false,
+  "data_modified": false,
+  "historical_verdicts_read": false,
+  "llm_called": false,
+  "network_used": false,
+  "overlay_generated": false,
+  "split_created": false,
+  "v2_1_entered": false
+ },
+ "deterministic": true,
+ "gate_verdict": "COHERENCE_REJECT_TRIAGE_OK",
+ "inputs": {
+  "candidate-draft-after.jsonl": "7c0dd9032db95a32b8e5bdf966592b33ae6bffd4214860fa85ea5fb98dfc7cf6",
+  "candidate-evidence-after.jsonl": "cbd25a4cdd798fcfd2a649af38010061a65fae3a2cebd0958fde13ee54ae56ff",
+  "chunk-manifest.json": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks.jsonl": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+ },
+ "manifest_sha256": "eaf48e32d2cf4f6f26783f38f127aa5b0d9885aa29c4c7b5f94547894de8707c",
+ "metadata": {
+  "activation_blocked": true,
+  "human_reviewed": false,
+  "overlay_generated": false,
+  "revision_status": "CANDIDATE",
+  "split_reseal_required": true,
+  "v2_1_entered": false
+ },
+ "outputs": {
+  "COHERENCE_AND_REMEDIATION_GUIDE.md": "592da46f42e1db9bb40149b573fac2e13a118a10e1d50aaa11ac5dd7383bae41",
+  "mixed-033-duplicate-evidence-check.json": "540a4bc5684a25a77436430911da7a7890d043f4bad308284f62136e27eb70ce",
+  "owner-decision-template.jsonl": "fe3c4b29bc8a98c994d39740ee8d87a596e94f7a3a57956b1aae960e568cab63",
+  "reject-root-cause-triage.jsonl": "843f05512a2eb5d5fab445d884e64f5aceda4131e34f0987d68586d4d7f6c7c4",
+  "review-coherence-errors.jsonl": "bcea72a2d33e272e4aa1770bd9456bd8acfd62eb077aea017ecd05f64ec04501",
+  "triage-report.md": "2108b68c5f163e8d7226c6b3f70c08ee47f0473dfc0fa3015f5bba411e2c37ec",
+  "triage-summary.json": "98801371742e50702b299f4fc3d007a4a46c9ecd621f78e1653a49bb9e87cb8a"
+ },
+ "rule_version": "v2.0.9-coherence-reject-triage-1",
+ "run_at": "2026-08-11T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（不在已安装 skills 列表内，无法加载；已实际尝试）；已按任务约束执行等价的确定性五维检查（完整性 / 唯一性 / 引用完整性 / 连续性 / 一致性），全部为机械复算，无 LLM 参与。",
+ "task": "v2.0.9-automated-review-coherence-and-reject-root-cause-triage"
+}

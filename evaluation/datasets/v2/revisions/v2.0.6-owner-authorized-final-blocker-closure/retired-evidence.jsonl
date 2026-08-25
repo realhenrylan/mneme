@@ -1,0 +1,1 @@
+{"case_id": "zh-032", "chunk_id": "32c427fb50e2_chunk_52", "reason": "no_directly_supported_answer_point_after_owner_authorized_review", "retired_by": "OWNER_AUTHORIZED_FINAL_BLOCKER_CLOSURE", "snippet": "内置的 ExceptionGroup 打包了一个异常实例的列表，这样它们就可以一起被引发", "source_id": "python-tutorial-zh.md"}

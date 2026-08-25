@@ -1,0 +1,72 @@
+{
+ "task": "persistent-reject-evidence-audit",
+ "description": "v2 持续 reject case 的本地证据可修复性审计（确定性、离线、无 LLM/API）",
+ "llm": null,
+ "target_case_ids": [
+  "en-052",
+  "en-055",
+  "mixed-016",
+  "mixed-026",
+  "multi-014"
+ ],
+ "constants": {
+  "min_span_len": 8,
+  "coverage_exact": 0.75,
+  "cjk_threshold": 0.3,
+  "cjk_source_threshold": 0.1,
+  "expected_pack_rows": 150
+ },
+ "inputs": {
+  "merged-adjudications.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\llm-semantic-adjudication\\coherence-recheck\\merged-adjudications.jsonl",
+   "rows": 102,
+   "sha256": "b39f92cdf1b6c6f6dd9595194dac9ef6c0affdc7af18722427ebd478e4db34a6"
+  },
+  "selection-manifest.json": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\llm-semantic-adjudication\\selection-manifest.json",
+   "rows": 102,
+   "sha256": "b0ccab107d678169f846559e9e0eabc8d8b8953d1992a0d25a1fc20ab814c32a"
+  },
+  "human-review-pack.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\human-review\\human-review-pack.jsonl",
+   "rows": 150,
+   "sha256": "ceab00700da16526f6c2a68b8a8e2776ba42379fcfb41095b1378f58a0be267a"
+  },
+  "chunks.jsonl": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
+   "rows": 1006,
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  }
+ },
+ "validation": {
+  "merged_rows_ok": true,
+  "reject_set_matches_target": true,
+  "target_in_disputed": true,
+  "pack_rows_ok": true,
+  "chunk_ids_unique": true
+ },
+ "outputs": {
+  "persistent-reject-cases.jsonl": {
+   "rows": 5,
+   "sha256": "07e35e6767b76ffa41c240885441991ee9aa0a7859ba9f4084c5381a57a38aba"
+  },
+  "candidate-evidence-spans.jsonl": {
+   "rows": 432,
+   "sha256": "07d8b69fbc51b8274d97ea441d19984c9d311cff2659d766e5f0d087b21af6c4"
+  },
+  "repair-feasibility-summary.json": {
+   "rows": 112,
+   "sha256": "2be18c0cb00de857e5a6e3ad35393e7352a6ede333bd5de4ce98039b2adb9898"
+  },
+  "persistent-reject-evidence-audit.md": {
+   "rows": 568,
+   "sha256": "30883ba469ac15ad8bf89ebc21a5a9db28565dd1543947cfb9af18f6c385c0b3"
+  },
+  "manifest.json": {
+   "rows": 1,
+   "sha256": "fa854bcf8e4e07155230a8428381540db996e2fb79eac9e3deb4eae57ce78ca5"
+  }
+ },
+ "created_by": "scripts/corpus_v2_persistent_reject_audit.py",
+ "note": "证据可修复性审计，不代表自动修复、人工审核或 v2.1 准入"
+}

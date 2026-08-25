@@ -1,0 +1,64 @@
+{
+ "coordinate_contract": "raw-codepoint-v1",
+ "legacy_rows_remaining": 1,
+ "raw_rows_validated": 161,
+ "remaining_blockers": 0,
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ },
+ "strict_validation": "PASS",
+ "target_cases": {
+  "mixed-022": {
+   "all_raw_codepoint_v1": true,
+   "evidence_rows": 1,
+   "raw_ranges": [
+    {
+     "end": 55,
+     "start": 18
+    }
+   ]
+  },
+  "mixed-028": {
+   "all_raw_codepoint_v1": true,
+   "evidence_rows": 1,
+   "raw_ranges": [
+    {
+     "end": 157,
+     "start": 152
+    }
+   ]
+  },
+  "zh-035": {
+   "all_raw_codepoint_v1": true,
+   "evidence_rows": 6,
+   "raw_ranges": [
+    {
+     "end": 557,
+     "start": 550
+    },
+    {
+     "end": 999,
+     "start": 992
+    },
+    {
+     "end": 1270,
+     "start": 1263
+    },
+    {
+     "end": 1499,
+     "start": 1492
+    },
+    {
+     "end": 1530,
+     "start": 1523
+    },
+    {
+     "end": 197,
+     "start": 190
+    }
+   ]
+  }
+ }
+}

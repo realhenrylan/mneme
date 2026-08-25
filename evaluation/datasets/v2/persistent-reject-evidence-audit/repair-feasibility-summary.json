@@ -1,0 +1,112 @@
+{
+ "task": "persistent-reject-evidence-audit",
+ "n_cases": 5,
+ "case_ids": [
+  "en-052",
+  "en-055",
+  "mixed-016",
+  "mixed-026",
+  "multi-014"
+ ],
+ "n_answer_points": 9,
+ "n_unsupported_points": 5,
+ "constants": {
+  "min_span_len": 8,
+  "coverage_exact": 0.75,
+  "cjk_threshold": 0.3,
+  "cjk_source_threshold": 0.1,
+  "expected_pack_rows": 150
+ },
+ "per_case": {
+  "en-052": {
+   "n_points": 2,
+   "n_unsupported": 1,
+   "points": [
+    {
+     "answer_point_index": 0,
+     "repair_feasibility": "only_paraphrase_or_partial_evidence",
+     "proposed_action": "manual_semantic_adjudication_required"
+    },
+    {
+     "answer_point_index": 1,
+     "repair_feasibility": "only_paraphrase_or_partial_evidence",
+     "proposed_action": "manual_semantic_adjudication_required"
+    }
+   ]
+  },
+  "en-055": {
+   "n_points": 1,
+   "n_unsupported": 1,
+   "points": [
+    {
+     "answer_point_index": 0,
+     "repair_feasibility": "no_local_evidence_found",
+     "proposed_action": "manual_semantic_adjudication_required"
+    }
+   ]
+  },
+  "mixed-016": {
+   "n_points": 2,
+   "n_unsupported": 1,
+   "points": [
+    {
+     "answer_point_index": 0,
+     "repair_feasibility": "only_paraphrase_or_partial_evidence",
+     "proposed_action": "manual_semantic_adjudication_required"
+    },
+    {
+     "answer_point_index": 1,
+     "repair_feasibility": "only_paraphrase_or_partial_evidence",
+     "proposed_action": "manual_semantic_adjudication_required"
+    }
+   ]
+  },
+  "mixed-026": {
+   "n_points": 2,
+   "n_unsupported": 1,
+   "points": [
+    {
+     "answer_point_index": 0,
+     "repair_feasibility": "no_local_evidence_found",
+     "proposed_action": "manual_semantic_adjudication_required"
+    },
+    {
+     "answer_point_index": 1,
+     "repair_feasibility": "no_local_evidence_found",
+     "proposed_action": "remove_unsupported_answer_point"
+    }
+   ]
+  },
+  "multi-014": {
+   "n_points": 2,
+   "n_unsupported": 1,
+   "points": [
+    {
+     "answer_point_index": 0,
+     "repair_feasibility": "only_paraphrase_or_partial_evidence",
+     "proposed_action": "manual_semantic_adjudication_required"
+    },
+    {
+     "answer_point_index": 1,
+     "repair_feasibility": "exact_local_evidence_available",
+     "proposed_action": "add_exact_evidence"
+    }
+   ]
+  }
+ },
+ "feasibility_counts": {
+  "only_paraphrase_or_partial_evidence": 5,
+  "no_local_evidence_found": 3,
+  "exact_local_evidence_available": 1
+ },
+ "action_counts": {
+  "manual_semantic_adjudication_required": 7,
+  "remove_unsupported_answer_point": 1,
+  "add_exact_evidence": 1
+ },
+ "spans": {
+  "total": 432,
+  "in_scope": 82,
+  "out_of_scope_only": 350
+ }
+}

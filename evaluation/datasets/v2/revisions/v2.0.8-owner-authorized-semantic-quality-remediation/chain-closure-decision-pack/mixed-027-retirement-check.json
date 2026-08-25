@@ -1,0 +1,755 @@
+{
+ "answer_points": [
+  {
+   "answer_point": "术语表：原子化操作不可再分",
+   "answer_point_index": 0,
+   "best_evidence": {
+    "chunk_id": "c9fd20815ea8_chunk_2",
+    "exact_contiguous": false,
+    "max_contiguous_coverage": 0.3846,
+    "max_contiguous_len": 5,
+    "raw_chunk_char_range": {
+     "end": 47,
+     "start": 0
+    },
+    "raw_evidence_span": "atomic operation -- 原子化操作¶\n作为一个单独的、不可再分的步骤执行的操作",
+    "source_id": "python-glossary-zh.md",
+    "span_rebuildable": true,
+    "strict_in_span_coverage": 0.0,
+    "token_fragments": [
+     {
+      "ap_range": [
+       4,
+       9
+      ],
+      "length": 5,
+      "span_range": [
+       20,
+       25
+      ],
+      "text": "原子化操作"
+     },
+     {
+      "ap_range": [
+       5,
+       9
+      ],
+      "length": 4,
+      "span_range": [
+       21,
+       25
+      ],
+      "text": "子化操作"
+     },
+     {
+      "ap_range": [
+       6,
+       9
+      ],
+      "length": 3,
+      "span_range": [
+       22,
+       25
+      ],
+      "text": "化操作"
+     },
+     {
+      "ap_range": [
+       7,
+       9
+      ],
+      "length": 2,
+      "span_range": [
+       23,
+       25
+      ],
+      "text": "操作"
+     },
+     {
+      "ap_range": [
+       9,
+       13
+      ],
+      "length": 4,
+      "span_range": [
+       35,
+       39
+      ],
+      "text": "不可再分"
+     },
+     {
+      "ap_range": [
+       10,
+       13
+      ],
+      "length": 3,
+      "span_range": [
+       36,
+       39
+      ],
+      "text": "可再分"
+     },
+     {
+      "ap_range": [
+       11,
+       13
+      ],
+      "length": 2,
+      "span_range": [
+       37,
+       39
+      ],
+      "text": "再分"
+     }
+    ]
+   },
+   "complete_verbatim_hit_in_source": false,
+   "contiguous_support": false,
+   "direct_strict_support": false,
+   "evidence_checks": [
+    {
+     "chunk_id": "8b191b241b93_chunk_1",
+     "exact_contiguous": false,
+     "max_contiguous_coverage": 0.0,
+     "max_contiguous_len": 0,
+     "raw_chunk_char_range": {
+      "end": 213,
+      "start": 75
+     },
+     "raw_evidence_span": "sql-stmt:\n      EXPLAIN    QUERY    PLAN          alter-table-stmt       analyze-stmt       attach-stmt       begin-stmt       commit-stmt",
+     "source_id": "sqlite-lang.md",
+     "span_rebuildable": true,
+     "strict_in_span_coverage": 0.0,
+     "strict_in_span_hits": [],
+     "token_fragments": []
+    },
+    {
+     "chunk_id": "c9fd20815ea8_chunk_2",
+     "exact_contiguous": false,
+     "max_contiguous_coverage": 0.3846,
+     "max_contiguous_len": 5,
+     "raw_chunk_char_range": {
+      "end": 47,
+      "start": 0
+     },
+     "raw_evidence_span": "atomic operation -- 原子化操作¶\n作为一个单独的、不可再分的步骤执行的操作",
+     "source_id": "python-glossary-zh.md",
+     "span_rebuildable": true,
+     "strict_in_span_coverage": 0.0,
+     "strict_in_span_hits": [],
+     "token_fragments": [
+      {
+       "ap_range": [
+        4,
+        9
+       ],
+       "length": 5,
+       "span_range": [
+        20,
+        25
+       ],
+       "text": "原子化操作"
+      },
+      {
+       "ap_range": [
+        5,
+        9
+       ],
+       "length": 4,
+       "span_range": [
+        21,
+        25
+       ],
+       "text": "子化操作"
+      },
+      {
+       "ap_range": [
+        6,
+        9
+       ],
+       "length": 3,
+       "span_range": [
+        22,
+        25
+       ],
+       "text": "化操作"
+      },
+      {
+       "ap_range": [
+        7,
+        9
+       ],
+       "length": 2,
+       "span_range": [
+        23,
+        25
+       ],
+       "text": "操作"
+      },
+      {
+       "ap_range": [
+        9,
+        13
+       ],
+       "length": 4,
+       "span_range": [
+        35,
+        39
+       ],
+       "text": "不可再分"
+      },
+      {
+       "ap_range": [
+        10,
+        13
+       ],
+       "length": 3,
+       "span_range": [
+        36,
+        39
+       ],
+       "text": "可再分"
+      },
+      {
+       "ap_range": [
+        11,
+        13
+       ],
+       "length": 2,
+       "span_range": [
+        37,
+        39
+       ],
+       "text": "再分"
+      }
+     ]
+    }
+   ],
+   "same_source_scope": true,
+   "source_wide": {
+    "full_ap_hit_details": [],
+    "full_ap_hits": 0,
+    "full_ap_unique": false,
+    "longest_substring_hits": [],
+    "longest_substring_len": 0,
+    "longest_substring_occurrences": 0,
+    "longest_substring_text": "",
+    "longest_substring_unique": false,
+    "sources": [
+     "python-glossary-zh.md",
+     "sqlite-lang.md"
+    ]
+   },
+   "unique": false
+  },
+  {
+   "answer_point": "SQLite 语法页仅列出 begin-stmt，未展开事务原子性说明",
+   "answer_point_index": 1,
+   "best_evidence": {
+    "chunk_id": "8b191b241b93_chunk_1",
+    "exact_contiguous": false,
+    "max_contiguous_coverage": 0.3143,
+    "max_contiguous_len": 11,
+    "raw_chunk_char_range": {
+     "end": 213,
+     "start": 75
+    },
+    "raw_evidence_span": "sql-stmt:\n      EXPLAIN    QUERY    PLAN          alter-table-stmt       analyze-stmt       attach-stmt       begin-stmt       commit-stmt",
+    "source_id": "sqlite-lang.md",
+    "span_rebuildable": true,
+    "strict_in_span_coverage": 0.2857,
+    "token_fragments": [
+     {
+      "ap_range": [
+       0,
+       3
+      ],
+      "length": 3,
+      "span_range": [
+       75,
+       78
+      ],
+      "text": "SQL"
+     },
+     {
+      "ap_range": [
+       1,
+       3
+      ],
+      "length": 2,
+      "span_range": [
+       76,
+       78
+      ],
+      "text": "QL"
+     },
+     {
+      "ap_range": [
+       3,
+       5
+      ],
+      "length": 2,
+      "span_range": [
+       206,
+       208
+      ],
+      "text": "it"
+     },
+     {
+      "ap_range": [
+       4,
+       6
+      ],
+      "length": 2,
+      "span_range": [
+       127,
+       129
+      ],
+      "text": "te"
+     },
+     {
+      "ap_range": [
+       13,
+       24
+      ],
+      "length": 11,
+      "span_range": [
+       178,
+       195
+      ],
+      "text": " begin-stmt"
+     },
+     {
+      "ap_range": [
+       14,
+       24
+      ],
+      "length": 10,
+      "span_range": [
+       185,
+       195
+      ],
+      "text": "begin-stmt"
+     },
+     {
+      "ap_range": [
+       15,
+       24
+      ],
+      "length": 9,
+      "span_range": [
+       186,
+       195
+      ],
+      "text": "egin-stmt"
+     },
+     {
+      "ap_range": [
+       16,
+       24
+      ],
+      "length": 8,
+      "span_range": [
+       187,
+       195
+      ],
+      "text": "gin-stmt"
+     },
+     {
+      "ap_range": [
+       17,
+       24
+      ],
+      "length": 7,
+      "span_range": [
+       188,
+       195
+      ],
+      "text": "in-stmt"
+     },
+     {
+      "ap_range": [
+       18,
+       24
+      ],
+      "length": 6,
+      "span_range": [
+       189,
+       195
+      ],
+      "text": "n-stmt"
+     },
+     {
+      "ap_range": [
+       19,
+       24
+      ],
+      "length": 5,
+      "span_range": [
+       78,
+       83
+      ],
+      "text": "-stmt"
+     },
+     {
+      "ap_range": [
+       20,
+       24
+      ],
+      "length": 4,
+      "span_range": [
+       79,
+       83
+      ],
+      "text": "stmt"
+     },
+     {
+      "ap_range": [
+       21,
+       24
+      ],
+      "length": 3,
+      "span_range": [
+       80,
+       83
+      ],
+      "text": "tmt"
+     },
+     {
+      "ap_range": [
+       22,
+       24
+      ],
+      "length": 2,
+      "span_range": [
+       81,
+       83
+      ],
+      "text": "mt"
+     }
+    ]
+   },
+   "complete_verbatim_hit_in_source": false,
+   "contiguous_support": false,
+   "direct_strict_support": false,
+   "evidence_checks": [
+    {
+     "chunk_id": "8b191b241b93_chunk_1",
+     "exact_contiguous": false,
+     "max_contiguous_coverage": 0.3143,
+     "max_contiguous_len": 11,
+     "raw_chunk_char_range": {
+      "end": 213,
+      "start": 75
+     },
+     "raw_evidence_span": "sql-stmt:\n      EXPLAIN    QUERY    PLAN          alter-table-stmt       analyze-stmt       attach-stmt       begin-stmt       commit-stmt",
+     "source_id": "sqlite-lang.md",
+     "span_rebuildable": true,
+     "strict_in_span_coverage": 0.2857,
+     "strict_in_span_hits": [
+      {
+       "chunk_range": [
+        185,
+        195
+       ],
+       "text": "begin-stmt"
+      }
+     ],
+     "token_fragments": [
+      {
+       "ap_range": [
+        0,
+        3
+       ],
+       "length": 3,
+       "span_range": [
+        75,
+        78
+       ],
+       "text": "SQL"
+      },
+      {
+       "ap_range": [
+        1,
+        3
+       ],
+       "length": 2,
+       "span_range": [
+        76,
+        78
+       ],
+       "text": "QL"
+      },
+      {
+       "ap_range": [
+        3,
+        5
+       ],
+       "length": 2,
+       "span_range": [
+        206,
+        208
+       ],
+       "text": "it"
+      },
+      {
+       "ap_range": [
+        4,
+        6
+       ],
+       "length": 2,
+       "span_range": [
+        127,
+        129
+       ],
+       "text": "te"
+      },
+      {
+       "ap_range": [
+        13,
+        24
+       ],
+       "length": 11,
+       "span_range": [
+        178,
+        195
+       ],
+       "text": " begin-stmt"
+      },
+      {
+       "ap_range": [
+        14,
+        24
+       ],
+       "length": 10,
+       "span_range": [
+        185,
+        195
+       ],
+       "text": "begin-stmt"
+      },
+      {
+       "ap_range": [
+        15,
+        24
+       ],
+       "length": 9,
+       "span_range": [
+        186,
+        195
+       ],
+       "text": "egin-stmt"
+      },
+      {
+       "ap_range": [
+        16,
+        24
+       ],
+       "length": 8,
+       "span_range": [
+        187,
+        195
+       ],
+       "text": "gin-stmt"
+      },
+      {
+       "ap_range": [
+        17,
+        24
+       ],
+       "length": 7,
+       "span_range": [
+        188,
+        195
+       ],
+       "text": "in-stmt"
+      },
+      {
+       "ap_range": [
+        18,
+        24
+       ],
+       "length": 6,
+       "span_range": [
+        189,
+        195
+       ],
+       "text": "n-stmt"
+      },
+      {
+       "ap_range": [
+        19,
+        24
+       ],
+       "length": 5,
+       "span_range": [
+        78,
+        83
+       ],
+       "text": "-stmt"
+      },
+      {
+       "ap_range": [
+        20,
+        24
+       ],
+       "length": 4,
+       "span_range": [
+        79,
+        83
+       ],
+       "text": "stmt"
+      },
+      {
+       "ap_range": [
+        21,
+        24
+       ],
+       "length": 3,
+       "span_range": [
+        80,
+        83
+       ],
+       "text": "tmt"
+      },
+      {
+       "ap_range": [
+        22,
+        24
+       ],
+       "length": 2,
+       "span_range": [
+        81,
+        83
+       ],
+       "text": "mt"
+      }
+     ]
+    },
+    {
+     "chunk_id": "c9fd20815ea8_chunk_2",
+     "exact_contiguous": false,
+     "max_contiguous_coverage": 0.0571,
+     "max_contiguous_len": 2,
+     "raw_chunk_char_range": {
+      "end": 47,
+      "start": 0
+     },
+     "raw_evidence_span": "atomic operation -- 原子化操作¶\n作为一个单独的、不可再分的步骤执行的操作",
+     "source_id": "python-glossary-zh.md",
+     "span_rebuildable": true,
+     "strict_in_span_coverage": 0.0,
+     "strict_in_span_hits": [],
+     "token_fragments": [
+      {
+       "ap_range": [
+        30,
+        32
+       ],
+       "length": 2,
+       "span_range": [
+        20,
+        22
+       ],
+       "text": "原子"
+      }
+     ]
+    }
+   ],
+   "same_source_scope": true,
+   "source_wide": {
+    "full_ap_hit_details": [],
+    "full_ap_hits": 0,
+    "full_ap_unique": false,
+    "longest_substring_hits": [
+     {
+      "chunk_id": "8b191b241b93_chunk_1",
+      "range": [
+       185,
+       195
+      ]
+     }
+    ],
+    "longest_substring_len": 10,
+    "longest_substring_occurrences": 1,
+    "longest_substring_text": "begin-stmt",
+    "longest_substring_unique": true,
+    "sources": [
+     "python-glossary-zh.md",
+     "sqlite-lang.md"
+    ]
+   },
+   "unique": false
+  }
+ ],
+ "blocker_type": "retirement_safety_check",
+ "case_id": "mixed-027",
+ "dependency_facts": {
+  "chain_id": null,
+  "chain_membership": null,
+  "doc_target": null,
+  "follow_up_to": null,
+  "incoming_case_refs": [],
+  "n_answer_points": 2,
+  "n_evidence": 2,
+  "outgoing_case_refs": [],
+  "previous_turns": null
+ },
+ "impact": {
+  "answer_points_removed": 2,
+  "case_count_after": 142,
+  "case_count_before": 143,
+  "case_id_doc_target_refs": [],
+  "chain_impact": {},
+  "cohort": [
+   "mixed-027"
+  ],
+  "cohort_size": 1,
+  "dangling_ref_count": 0,
+  "dangling_refs": [],
+  "evidence_count_after": 149,
+  "evidence_count_before": 151,
+  "evidence_rows_removed": 2,
+  "executable": true,
+  "external_refs": [],
+  "internal_refs": [],
+  "orphan_previous_turns": [],
+  "upstream_chains_affected": []
+ },
+ "options": [
+  {
+   "impact": {
+    "answer_points_removed": 2,
+    "case_count_after": 142,
+    "case_count_before": 143,
+    "case_id_doc_target_refs": [],
+    "chain_impact": {},
+    "cohort": [
+     "mixed-027"
+    ],
+    "cohort_size": 1,
+    "dangling_ref_count": 0,
+    "dangling_refs": [],
+    "evidence_count_after": 149,
+    "evidence_count_before": 151,
+    "evidence_rows_removed": 2,
+    "executable": true,
+    "external_refs": [],
+    "internal_refs": [],
+    "orphan_previous_turns": [],
+    "upstream_chains_affected": []
+   },
+   "meets_criteria": true,
+   "note": "mixed-027 无 follow-up/chain/previous_turn/doc_target/其他 case 引用依赖，退役不造成任何链断裂；143→142、evidence 151→149、2 answer points",
+   "option": "retire_single_case_safely"
+  },
+  {
+   "meets_criteria": true,
+   "note": "保持 v2.0.8 现状：mixed-027 数据未改；这不是 resolved / confirmed / 已接受的质量结论；fresh review 需所有者另行授权",
+   "option": "keep_deferred_and_block_fresh_review"
+  }
+ ],
+ "owner_decision_required": true,
+ "recommendation": null,
+ "retire_single_case_safely": true
+}

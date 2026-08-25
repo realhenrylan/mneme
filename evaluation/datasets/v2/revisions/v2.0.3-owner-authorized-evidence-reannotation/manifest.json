@@ -1,0 +1,27 @@
+{
+ "activation_blocked": true,
+ "coordinate_contract": "raw-codepoint-v1",
+ "counts": {
+  "blockers": 13,
+  "unresolved": 13
+ },
+ "human_reviewed": false,
+ "inputs": {
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "evidence": "af54ff88bd9384832593fd46301ef02bfd3408ed708508eec68dd5c7d8d1cbb9",
+  "v2_manifest": "955abb5b588f92ef199ebaa195b87b5da34ddaa63addee28e41a1c80d9a33f75"
+ },
+ "manifest_sha256": "598120b4cfdc012e8a03d9389081d9e4fb9515c729dda65a4a6c46ff9707cc67",
+ "max_tokens": 8000,
+ "model": "deepseek-v4-flash",
+ "outputs": {
+  "REANNOTATION_REPORT.md": "d053e43187c87a775b04b26441fa6828d56aa33551d8b7a43c521ac6726b6fd2",
+  "reannotation-blockers.jsonl": "917340b037663973f6070f14a18d3288d0628fdf490275fbe962b59d942b9b70"
+ },
+ "reannotation_actor": "LLM_ASSISTED_OWNER_AUTHORIZED",
+ "revision_status": "CANDIDATE",
+ "rule_version": "v2.0.3-owner-authorized-evidence-reannotation-1",
+ "temperature": 0.0,
+ "timestamp": "2026-08-10T00:00:00+00:00"
+}

@@ -1,0 +1,36 @@
+{
+ "activation_blocked": true,
+ "candidate_manifest_sha256": "955abb5b588f92ef199ebaa195b87b5da34ddaa63addee28e41a1c80d9a33f75",
+ "counts": {
+  "format_transform_requires_policy": 2,
+  "legacy_range_disambiguable_duplicate": 0,
+  "semantic_or_content_drift": 11,
+  "source_or_chunk_integrity_problem": 0,
+  "whitespace_or_line_ending_only": 0
+ },
+ "inputs": {
+  "chunks": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "draft": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\annotations\\v2-cases-draft.jsonl",
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc"
+  },
+  "evidence": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\automated-review\\automated-review-evidence.jsonl",
+   "sha256": "af54ff88bd9384832593fd46301ef02bfd3408ed708508eec68dd5c7d8d1cbb9"
+  }
+ },
+ "manifest_sha256": "8ee3092200304db01cc0c8927692739d2fee347663872911f19e1c387a2ea5eb",
+ "outputs": {
+  "resolution-candidates.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "unresolved-triage-report.md": "528e5efb7adc1b8e0769501212197b58c93ae450782a032f41040a0b170aed45",
+  "unresolved-triage-summary.json": "c34b87bd867f152fe7c672874392ebbce89d968e81d2325fa87863eea2ff2c7a",
+  "unresolved-triage.jsonl": "42238016316e24d3dacb1962f01fe502bef76ec9bc093b13e51e4bd99d4c6b0c"
+ },
+ "rule_version": "v2.0.2-unresolved-triage-1",
+ "skill_note": "Skill not found: data-analytics:analyze-data-quality; deterministic equivalent checks executed",
+ "timestamp": "2026-08-07T00:00:00+00:00",
+ "version": "v2.0.2-unresolved-triage"
+}

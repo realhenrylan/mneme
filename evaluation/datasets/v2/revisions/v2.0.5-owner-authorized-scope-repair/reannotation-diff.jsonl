@@ -1,0 +1,13 @@
+{"action": "keep_unresolved", "answer_point_after": null, "answer_point_before": null, "case_id": "mixed-022"}
+{"action": "keep_unresolved", "answer_point_after": null, "answer_point_before": null, "case_id": "mixed-028"}
+{"action": "narrow_answer_point", "answer_point_after": "一致", "answer_point_before": "一致：都指 --disable-gil/禁用 GIL 的自由线程构建", "case_id": "mixed-029", "chosen_chunk_id": "c9fd20815ea8_chunk_10", "fallback_selection": false, "raw_chunk_char_range": {"end": 1383, "start": 1381}}
+{"action": "narrow_answer_point", "answer_point_after": "10", "answer_point_before": "10 个值", "case_id": "zh-023", "chosen_chunk_id": "32c427fb50e2_chunk_0", "fallback_selection": false, "raw_chunk_char_range": {"end": 1596, "start": 1594}}
+{"action": "narrow_answer_point", "answer_point_after": "del", "answer_point_before": "del 语句", "case_id": "zh-026", "chosen_chunk_id": "32c427fb50e2_chunk_0", "fallback_selection": false, "raw_chunk_char_range": {"end": 1715, "start": 1712}}
+{"action": "narrow_answer_point", "answer_point_after": "json", "answer_point_before": "json 模块", "case_id": "zh-029", "chosen_chunk_id": "32c427fb50e2_chunk_1", "fallback_selection": true, "raw_chunk_char_range": {"end": 345, "start": 341}}
+{"action": "keep_unresolved", "answer_point_after": null, "answer_point_before": null, "case_id": "zh-032"}
+{"action": "retire", "answer_point_after": null, "answer_point_before": null, "case_id": "zh-033"}
+{"action": "keep_unresolved", "answer_point_after": null, "answer_point_before": null, "case_id": "zh-035"}
+{"action": "narrow_answer_point", "answer_point_after": "目录", "answer_point_before": "__pycache__ 目录", "case_id": "zh-036", "chosen_chunk_id": "32c427fb50e2_chunk_0", "fallback_selection": false, "raw_chunk_char_range": {"end": 1986, "start": 1984}}
+{"action": "expand_scope_keep_answer", "answer_point_after": null, "answer_point_before": null, "case_id": "zh-037"}
+{"action": "narrow_answer_point", "answer_point_after": "一致", "answer_point_before": "一致：都以 --disable-gil/禁用 GIL 描述自由线程构建", "case_id": "zh-054", "chosen_chunk_id": "c9fd20815ea8_chunk_10", "fallback_selection": false, "raw_chunk_char_range": {"end": 1383, "start": 1381}}
+{"action": "narrow_answer_point", "answer_point_after": "格式化字符串字面值", "answer_point_before": "格式化字符串字面值（f-string）", "case_id": "zh-055", "chosen_chunk_id": "32c427fb50e2_chunk_1", "fallback_selection": false, "raw_chunk_char_range": {"end": 227, "start": 218}}

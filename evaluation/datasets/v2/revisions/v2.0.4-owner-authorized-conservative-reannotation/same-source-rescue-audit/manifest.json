@@ -1,0 +1,66 @@
+{
+ "activation_blocked": true,
+ "audit_only": true,
+ "coordinate_contract": "raw-codepoint-v1",
+ "counts": {
+  "consider_explicit_scope_expansion": [
+   "zh-037"
+  ],
+  "consider_narrowing_after_scope_expansion": [
+   "mixed-029",
+   "zh-023",
+   "zh-026",
+   "zh-029",
+   "zh-035",
+   "zh-036",
+   "zh-054",
+   "zh-055"
+  ],
+  "consider_retire_case": [
+   "zh-033"
+  ],
+  "counts": {
+   "ambiguous_duplicate": 1,
+   "lexical_related_only": 0,
+   "no_same_source_candidate_found": 1,
+   "verbatim_clause_only_found": 7,
+   "verbatim_full_answer_point_found": 1
+  },
+  "input_sha256": {
+   "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+   "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+   "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+   "pack": "5ef6ce0762231249155f5ef1f20d10e72d2a86a86954a84d257f1c7f19d87a64"
+  },
+  "no_actionable_rescue_candidate": [],
+  "targets": 10
+ },
+ "deterministic_rebuild": true,
+ "forbidden_outputs": [
+  "draft-after.jsonl",
+  "evidence-after.jsonl",
+  "overlay",
+  "active metadata",
+  "v2.1"
+ ],
+ "human_reviewed": false,
+ "inputs": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "pack": "5ef6ce0762231249155f5ef1f20d10e72d2a86a86954a84d257f1c7f19d87a64"
+ },
+ "manifest_sha256": "10bd1d0f8c57038fd9fca3c113141db697478cee9ae3d790795aceb16e3e7cd4",
+ "model": null,
+ "outputs": {
+  "SCOPE_RESCUE_OWNER_MATRIX.md": "42f3e94aace17510969c02e94b5f76b5684cc90328faf43034a40eea635c34f7",
+  "data-quality-report.json": "1bfafdb693271f683e201fd889bbf03c12a56532cb4f4bf25d51d94b3e5ab408",
+  "same-source-candidate-spans.jsonl": "6eecc3b892ac93b077fb5fc0d482aa7d7fc2c7ea1636d3641511109b281df83e",
+  "same-source-rescue-report.md": "10b37401f7b743f93665a7847a97499c2b08b9a7b83e875173e11fa10d3766c7",
+  "same-source-rescue-results.jsonl": "45788ebcbfe97200ed58d48b687788fb64cf344e46e3b891cc43c94b772212ef",
+  "same-source-rescue-summary.json": "ed0132924f16daf38abd6a9fafce52946c03c006dd14c9121d876defdf9c735d"
+ },
+ "revision_status": "CANDIDATE",
+ "status": "AUDIT_OK",
+ "timestamp": "2026-08-10T00:00:00+00:00"
+}

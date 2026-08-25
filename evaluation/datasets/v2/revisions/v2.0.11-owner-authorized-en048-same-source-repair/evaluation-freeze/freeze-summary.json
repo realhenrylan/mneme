@@ -1,0 +1,38 @@
+{
+ "activation_blocked": true,
+ "actor": "OWNER_AUTHORIZED_V2_0_11_CONTRACT_ERROR_DIAGNOSTIC_AND_FREEZE",
+ "deferred_count": 18,
+ "deferred_note": "无 candidate 数据动作；未来仅可进入 v2.1 治理流程",
+ "deferred_owner_decision": "deferred",
+ "diagnostic_case_count": 4,
+ "diagnostic_statuses": {
+  "contract_error": 4
+ },
+ "freeze_rationale": "owner 授权：v2.0.11 冻结为工程评测候选基线，不再继续打磨；后续任何语料改进只能进入 v2.1，不回写 v2.0.11。",
+ "frozen_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "frozen_revision_status": "CANDIDATE",
+ "gate_verdict": "EVALUATION_BASELINE_FROZEN",
+ "human_reviewed": false,
+ "invariants": {
+  "candidate_bytes_unchanged": true,
+  "diagnostic_bytes_unchanged": true,
+  "no_active": true,
+  "no_locked": true,
+  "no_overlay": true,
+  "no_split": true,
+  "no_v2_1": true,
+  "owner_template_pristine": true,
+  "pack_bytes_unchanged": true,
+  "review_bytes_unchanged": true
+ },
+ "revision_state": {
+  "candidate_gate": "EN048_SAME_SOURCE_REPAIR_CANDIDATE_OK",
+  "contract_error_diagnostic_gate": "CONTRACT_ERROR_DIAGNOSTIC_COMPLETE",
+  "owner_decision_pack_gate": "OWNER_DECISION_PACK_OK",
+  "targeted_review_gate": "TARGETED_REVIEW_BLOCKED"
+ },
+ "rule_version": "v2.0.11-evaluation-freeze-1",
+ "run_at": "2026-08-12T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载——可用技能列表中没有该技能）；已实施等价的确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+ "task": "v2.0.11-evaluation-freeze"
+}

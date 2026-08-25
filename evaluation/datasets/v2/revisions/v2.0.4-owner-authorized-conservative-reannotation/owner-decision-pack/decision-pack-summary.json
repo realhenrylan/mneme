@@ -1,0 +1,22 @@
+{
+ "input_sha256": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "migration": "9432ec318656a1a3dc3db47c3677b6303a7530a6383e1990d414213afbf6c16b",
+  "unresolved": "1b1d29aa0f3d407017ee68a2f7eef0fc3f76573bd3c62fd6f74f29ffeadb9f36",
+  "v204_blockers": "96e812a77bd718787bf772bc7c7b9027f273950473e8543a4777b2c4145bbbc7",
+  "v204_blockers_out": "aefe1ae42f6f0d83ce1873d05e8b397d99ca6504fcf215dea3bd7bd846c33f90",
+  "v204_manifest": "955abb5b588f92ef199ebaa195b87b5da34ddaa63addee28e41a1c80d9a33f75",
+  "v204_manifest_out": "769936811d5b1a0e580a9e8565873bbafcdc9e7ccf4fb1f8dbb15dc9a670070a"
+ },
+ "is_refusal_case": 0,
+ "needs_scope_expansion_candidates": 751,
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ },
+ "targets": 13,
+ "zero_answer_point_risk": 10
+}

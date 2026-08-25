@@ -1,0 +1,41 @@
+{
+ "coordinate_contract": "raw-codepoint-v1",
+ "invalid_count": 0,
+ "legacy_rows_remaining": 0,
+ "raw_rows_validated": 161,
+ "retired_legacy_evidence": {
+  "char_range": {
+   "end": 112,
+   "start": 74
+  },
+  "char_range_carried_verbatim": true,
+  "chunk_id": "32c427fb50e2_chunk_33",
+  "evidence_identity": "zh-037::32c427fb50e2_chunk_33::legacy",
+  "reason": "redundant_legacy_coordinate_superseded_by_raw_codepoint_v1_evidence",
+  "reinterpreted_as_raw": false,
+  "snippet": "内置函数 dir() 用于查找模块定义的名称。返回结果是经过排序的字符串列表",
+  "source_id": "python-tutorial-zh.md"
+ },
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ },
+ "strict_validation": "PASS",
+ "strict_validator_covered_count": 161,
+ "strict_validator_passed_count": 161,
+ "successor_evidence": {
+  "case_id": "zh-037",
+  "chunk_id": "32c427fb50e2_chunk_32",
+  "covers_retained_answer_point": true,
+  "evidence_identity": "zh-037::32c427fb50e2_chunk_32::raw-codepoint-v1",
+  "raw_chunk_char_range": {
+   "end": 1931,
+   "start": 1921
+  },
+  "raw_evidence_span": "经过排序的字符串列表",
+  "source_id": "python-tutorial-zh.md"
+ },
+ "uncovered_count": 0,
+ "unresolved_rows": 0
+}

@@ -1,0 +1,29 @@
+{
+ "n_cases": 150,
+ "reviewer_identity": "LLM_ASSISTED_OWNER_AUTHORIZED",
+ "reviewer_type": "LLM_ASSISTED_OWNER_AUTHORIZED",
+ "model": "deepseek-v4-pro",
+ "temperature": 0.0,
+ "max_tokens": 8000,
+ "decision_counts": {
+  "confirmed": 113,
+  "reject": 20,
+  "needs_followup": 17
+ },
+ "confidence_distribution": {
+  "high": 145,
+  "medium": 5,
+  "low": 0
+ },
+ "confirmed_rate": 0.7533333333333333,
+ "transport_total_retries": 0,
+ "transport_max_retries": 0,
+ "parse_total_retries": 0,
+ "non_confirmed_count": 37,
+ "overlay_eligible": false,
+ "data_quality_check": "deterministic_equivalent (skill unavailable)",
+ "forbidden_models_guard": [
+  "gpt-5.6-sol",
+  "deepseek-v4-flash"
+ ]
+}

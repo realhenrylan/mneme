@@ -1,0 +1,57 @@
+{
+ "activation_blocked": true,
+ "actor": "OWNER_AUTHORIZED_DETERMINISTIC_SCOPE_REPAIR",
+ "case_count_after": 149,
+ "case_count_before": 150,
+ "coordinate_contract": "raw-codepoint-v1",
+ "counts": {
+  "case_after": 149,
+  "case_before": 150,
+  "evidence_added": 8,
+  "evidence_after": 159,
+  "evidence_before": 161,
+  "expanded_scope": 1,
+  "narrowed": 7,
+  "orphan_evidence_removed": 10,
+  "remaining_blockers": 4,
+  "retired": 1
+ },
+ "forbidden_outputs": [
+  "overlay",
+  "active metadata",
+  "v2.1 pointer",
+  "split reuse"
+ ],
+ "human_reviewed": false,
+ "inputs": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "migration": "9432ec318656a1a3dc3db47c3677b6303a7530a6383e1990d414213afbf6c16b",
+  "pack": "5ef6ce0762231249155f5ef1f20d10e72d2a86a86954a84d257f1c7f19d87a64",
+  "rescue_manifest": "6afd542b0a7aa473c265f97c7b8ad132dd98870491834022e19a6bd077bdf3e5",
+  "rescue_results": "45788ebcbfe97200ed58d48b687788fb64cf344e46e3b891cc43c94b772212ef",
+  "rescue_spans": "6eecc3b892ac93b077fb5fc0d482aa7d7fc2c7ea1636d3641511109b281df83e",
+  "unresolved": "1b1d29aa0f3d407017ee68a2f7eef0fc3f76573bd3c62fd6f74f29ffeadb9f36",
+  "v2_manifest": "955abb5b588f92ef199ebaa195b87b5da34ddaa63addee28e41a1c80d9a33f75"
+ },
+ "manifest_sha256": "8badfdb93fd24380564c6251429f4f56dfc2a15758bbd98bfe214df4b0423ef0",
+ "outputs": {
+  "REMAINING_BLOCKERS.md": "f6ae0a3382d9bdd2b96e0771937deeef49180b12e23b0fa9477d752265279cea",
+  "REPAIR_REPORT.md": "0cb7eb57b0ea7b9401cb4fbb855eb76fb8d3b244a14bf0e221d8a3514c22710b",
+  "SPLIT_RESEAL_REQUIRED.md": "f5001587a6a805688dc5a74acfc4dc2c69268bb1163ce90daa44634b60a5febb",
+  "coordinate-validation-report.json": "973ec22374d815e61d7a75cfd309b782656dc4fe7512241576a7983883b65b3f",
+  "data-quality-report.json": "7f43b4c4619af5dc662567461644e13651959ea02ca7a6b0f5e9e8e9cbf4ad87",
+  "draft-after.jsonl": "ef0c24912bd19a74e37e3cad4b7a54d34e7b26138745f049d99d6ec74fca768d",
+  "draft-before.jsonl": "211c1e874af40be3489a72441c860e5deb86d2f46a09696f47d203ea06482a71",
+  "evidence-after.jsonl": "c6079380b81ffeb0e7b3f5d0779a821e7c50a8068015f28fca6eb2ad09794acf",
+  "evidence-before.jsonl": "285a002999b010faa5fde24b985ce4dbdaddf6130c70c275b6a1b34358fe98a7",
+  "raw-scope-additions.jsonl": "5096d4ac3e59c65cb07dc786b123a37b6ad35266c74b4a3580d9f284562f6051",
+  "reannotation-diff.jsonl": "db056b147f7ed915df29b50a995ade708f6680cd274f9bd210b18c06e91ff924",
+  "retired-cases.jsonl": "9e66aef1154598505d63c7cc922ec285092c9607c28b7344013cbd1ddafbe615",
+  "retired-evidence.jsonl": "dfac6ad65d33bb71635713f4340959d53d79d66373d20e1203e2d540357d2760"
+ },
+ "revision_status": "CANDIDATE",
+ "status": "CANDIDATE",
+ "timestamp": "2026-08-10T00:00:00+00:00"
+}

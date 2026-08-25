@@ -1,0 +1,152 @@
+{
+ "task": "v2 semantic adjudication coherence audit（只读）",
+ "reviewer_model": "deepseek-v4-pro",
+ "prompt_sha256": "0aa95c8106b37b0f27d7fbd4b6514163f3c73ca8b22109aa79051d03a0e3dd96",
+ "n_total": 102,
+ "n_violating": 4,
+ "violations_sha256": "7f829455ae848ca5cd4108c216dd025193b1d3c86e994c8c4167a014574f94c3",
+ "violations": [
+  {
+   "index": 20,
+   "case_id": "en-047",
+   "role": "disputed",
+   "layer": "跨文档",
+   "rules": [
+    {
+     "rule": "supports_index_not_contiguous",
+     "detail": "每个答案点必须恰好一条 assessment 且 index 连续不重复：需要 [0, 1]，实际 [0, 0, 1]"
+    }
+   ],
+   "semantic_verdict": "confirmed",
+   "verdict_rationale": "第一个答案点概括了 SQLite SELECT 页面存在 JOIN 小节并涵盖多种 JOIN 操作符，从证据 chunks 中可找到相关操作符描述，虽未逐字出现“SQLite SELECT 页有 JOIN 专门小节”但属于忠实转述；第二个答案点在 PostgreSQL 教程目录中直接出现“2.6. Joins Between Tables”，逐字支持。因此两个答案点均被证据支持。",
+   "answer_point_supports": [
+    {
+     "answer_point_index": 0,
+     "chunk_id": "8b191b241b93_chunk_39",
+     "excerpt": "If the join-operator is a \"LEFT JOIN\" or \"LEFT OUTER JOIN\"... If the join-operator is a \"RIGHT JOIN\"... A \"FULL JOIN\" or \"FULL OUTER JOIN\"...",
+     "support_level": "faithful_paraphrase"
+    },
+    {
+     "answer_point_index": 0,
+     "chunk_id": "8b191b241b93_chunk_40",
+     "excerpt": "There is no difference between the \"INNER JOIN\", \"JOIN\" and \",\" join operators... The \"CROSS JOIN\" join operator produces the same result as the \"INNER JOIN\", \"JOIN\" and \",\" operators",
+     "support_level": "direct_snippet"
+    },
+    {
+     "answer_point_index": 1,
+     "chunk_id": "761b22915b5e_chunk_0",
+     "excerpt": "2.6. Joins Between Tables",
+     "support_level": "direct_snippet"
+    }
+   ],
+   "refusal_assessment": null,
+   "refusal_evidence": []
+  },
+  {
+   "index": 37,
+   "case_id": "mixed-028",
+   "role": "disputed",
+   "layer": "跨文档",
+   "rules": [
+    {
+     "rule": "supports_index_not_contiguous",
+     "detail": "每个答案点必须恰好一条 assessment 且 index 连续不重复：需要 [0, 1]，实际 [0, 1, 1]"
+    }
+   ],
+   "semantic_verdict": "reject",
+   "verdict_rationale": "答案点1“两者都让数据变化驱动界面更新”在所提供的语料中无法找到支持，尤其是Vue分块未提及界面更新驱动；答案点2中Vue部分有直接证据，React部分可视为忠实转述，但整体答案因答案点1无依据而不可接受。",
+   "answer_point_supports": [
+    {
+     "answer_point_index": 0,
+     "chunk_id": "",
+     "excerpt": "",
+     "support_level": "unsupported"
+    },
+    {
+     "answer_point_index": 1,
+     "chunk_id": "5927c70d0f8e_chunk_9",
+     "excerpt": "In Vue 3, data is made reactive by leveraging JavaScript Proxies",
+     "support_level": "direct_snippet"
+    },
+    {
+     "answer_point_index": 1,
+     "chunk_id": "993955159403_chunk_7",
+     "excerpt": "State: 组件的记忆...在 React 中，这种特定于组件的记忆被称为状态。你可以用 useState Hook 为组件添加状态。",
+     "support_level": "faithful_paraphrase"
+    }
+   ],
+   "refusal_assessment": null,
+   "refusal_evidence": []
+  },
+  {
+   "index": 38,
+   "case_id": "mixed-029",
+   "role": "disputed",
+   "layer": "跨文档",
+   "rules": [
+    {
+     "rule": "supports_index_not_contiguous",
+     "detail": "每个答案点必须恰好一条 assessment 且 index 连续不重复：需要 [0]，实际 [0, 0]"
+    }
+   ],
+   "semantic_verdict": "confirmed",
+   "verdict_rationale": "答案点断言术语表 free-threaded build 与新特性自由线程章节在构建方式上一致，都指 --disable-gil/禁用 GIL 的自由线程构建。术语表 chunk 明确记载“在编译之前使用了 --disable-gil 选项进行配置”，新特性 chunk 也指出“可以附带 --disable-gil 选项使用源代码来构建 CPython”，两者在构建方式上完全吻合，支持答案点。",
+   "answer_point_supports": [
+    {
+     "answer_point_index": 0,
+     "chunk_id": "81544765752f_chunk_3",
+     "excerpt": "可以附带 --disable-gil 选项使用源代码来构建 CPython",
+     "support_level": "within_chunk_outside_snippet"
+    },
+    {
+     "answer_point_index": 0,
+     "chunk_id": "c9fd20815ea8_chunk_7",
+     "excerpt": "在编译之前使用了 --disable-gil 选项进行配置",
+     "support_level": "direct_snippet"
+    }
+   ],
+   "refusal_assessment": null,
+   "refusal_evidence": []
+  },
+  {
+   "index": 76,
+   "case_id": "noanswer-052",
+   "role": "disputed",
+   "layer": "拒答",
+   "rules": [
+    {
+     "rule": "refusal_assessment_mismatch",
+     "detail": "refusal_assessment=no_answer 要求 semantic_verdict=confirmed，实际 reject"
+    }
+   ],
+   "semantic_verdict": "reject",
+   "verdict_rationale": "提供的chunks与evidence均为空，没有任何语料可支撑回答，因此拒答合理。",
+   "answer_point_supports": [],
+   "refusal_assessment": "no_answer",
+   "refusal_evidence": []
+  }
+ ],
+ "created_by": "corpus_v2_llm_semantic_coherence.py audit",
+ "note": "只读审计：未修改任何标注、盲包、chunks、manifest 或生产配置；违反 case 的定点重审产物见 coherence-recheck/",
+ "inputs": {
+  "blank_pack": {
+   "sha256": "ceab00700da16526f6c2a68b8a8e2776ba42379fcfb41095b1378f58a0be267a"
+  },
+  "filled_pack": {
+   "sha256": "97ccaef8e2b9baa0448bffe96783d7101cfb844be9390592f2185a8eb11d76f1"
+  },
+  "chunks": {
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "blind_input_pack": {
+   "sha256": "7607758d623a31fc2c8c6630465af971854f3294b9d47263c0cbad4177a0a01d"
+  },
+  "adjudications": {
+   "sha256": "4c2524bfe0cc461703be7abe92aa748e345d829bb5a47dfd9079cfb6efac6ecc",
+   "rows": 102
+  },
+  "selection_manifest": {
+   "sha256": "b0ccab107d678169f846559e9e0eabc8d8b8953d1992a0d25a1fc20ab814c32a"
+  }
+ }
+}

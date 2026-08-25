@@ -1,0 +1,85 @@
+{
+ "activation_blocked": true,
+ "counts": {
+  "deferred": 18,
+  "diagnostic_cases": 4,
+  "diagnostic_statuses": {
+   "contract_error": 4
+  }
+ },
+ "created_by": "corpus_v2_v211_contract_error_diagnostic.py",
+ "declarations": {
+  "active_created": false,
+  "candidate_data_unchanged": true,
+  "diagnostic_unchanged": true,
+  "is_review_acceptance": false,
+  "llm_called": false,
+  "locked_created": false,
+  "network_used": false,
+  "not_human_approval": true,
+  "overlay_generated": false,
+  "owner_template_pristine": true,
+  "pack_unchanged": true,
+  "review_unchanged": true,
+  "split_created": false,
+  "targeted_review_blocked_unchanged": true,
+  "v2_1_entered": false
+ },
+ "frozen_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "frozen_revision_manifest_sha256": "6cab6786a47f077ced789066d42f9c1c3739d9f24a3af2e44eefbf386c60707e",
+ "frozen_revision_status": "CANDIDATE",
+ "gate_verdict": "EVALUATION_BASELINE_FROZEN",
+ "inputs": {
+  "candidate-draft-after.jsonl": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720",
+  "candidate-evidence-after.jsonl": "6df8e175ee0a028062c806a910c70890820576d62857cee41551ad777b829d17",
+  "candidate-manifest.json": "6cab6786a47f077ced789066d42f9c1c3739d9f24a3af2e44eefbf386c60707e",
+  "chunk-manifest.json": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks.jsonl": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "current-v2-draft.jsonl": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "diagnostic-issues.jsonl": "575c5c0d440b4b31b2e1f8660def921d457f93d7d60c94a0366fcfb54f23499e",
+  "diagnostic-manifest.json": "b9016a13d88382858f9451769e1a7ce9f1c0853979fe83098f723efb6eacf9d1",
+  "diagnostic-raw-model-attempts.jsonl": "725d71d2344241df30eebb3c84ea7955aea694ca7a221411854479bfc71cd5ca",
+  "diagnostic-results.jsonl": "575c5c0d440b4b31b2e1f8660def921d457f93d7d60c94a0366fcfb54f23499e",
+  "diagnostic-summary.json": "ecdbb0d61433b6691eef0a646d76f6de470fac8aa973997f588f4aa63e77d753",
+  "pack-manifest.json": "ed2b8fccfd08fb79886a95fcc89de4c9ff70e8a06b6fcacda2e92a60de041aa9",
+  "pack-owner-decision-template.jsonl": "bf056ab25e58399635016ba21002c1222eb31f43811ec8079ae63b35c4001044",
+  "pack-persistent-contract-errors.jsonl": "4b69d2533af56ea78a7fd66c0c30786292aa481de6f3f8bf0a3776f376728cc0",
+  "pack-stable-reject-root-cause-triage.jsonl": "6f0873b47d3414bec5c1f2a303b824c521493ec662ff9730692850a43ccbf240",
+  "review-manifest.json": "220ed9c23c7d55550bdc25ac78c84d74de454a1ab7f31a56dccf4e5aa84f4320",
+  "targeted-review-issues.jsonl": "355100248eac64b8611ab32e3ea9af76ea2214754ccc981e96257e9152d39661",
+  "targeted-review-results.jsonl": "ec441bfa98d5b834eba14b7431d19a90cd4b0ce19ba2cfeba9b2f36e889e69f2",
+  "triage-manifest.json": "0a6e2f85aa861b3747ae6ad8ba748e0f500abcaddb4aabab794bdd27ffccd453",
+  "triage-owner-decision-template.jsonl": "c57f97726e5c025fc3479b87bbb6bc752605f1eb8f3ca06db7ae9e06c4c2ac36",
+  "triage-reject-root-cause-triage.jsonl": "5cbffc6dd59979115c235a520e9bb7e592aca54b9d354eb506c3825850a34e19",
+  "triage-review-coherence-errors.jsonl": "10b4e07e7328be1506ebf24894ad72d84aeed4e5256f9dcaef171ba776401fc6",
+  "v210-draft-after.jsonl": "6e5d233e7bdd37dab838fd88fcb26b29a896aa2b2e1b87367ba3875da6604720",
+  "v210-evidence-after.jsonl": "0778c7c679bab9e96c944c050d7dcd40047ec0d7a7a04f05e0ac2455239ea977"
+ },
+ "manifest_sha256": "cd75d485d7463d0239764c8c9bfe560c71afc4564924ea0976b9a6e704abf3f0",
+ "metadata": {
+  "activation_blocked": true,
+  "human_reviewed": false,
+  "overlay_generated": false,
+  "revision_status": "CANDIDATE",
+  "split_reseal_required": true,
+  "v2_1_entered": false
+ },
+ "outputs": {
+  "FROZEN_EVALUATION_BASELINE.md": "458cfe70fa0708cb76dbdafc5aa0ca11193d917154d3fa9bdd77a33b5689c99c",
+  "deferred-owner-decisions.jsonl": "ce521f18cfb56148c2146a18101208d675c7b7888af689dd5016362dfa5a9e66",
+  "freeze-summary.json": "17c8ba4f2c5d18a3ff9aa0ca0a6a7a53f32229ffcb5992852aaa4844c627dade"
+ },
+ "rule_version": "v2.0.11-evaluation-freeze-1",
+ "run_at": "2026-08-12T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载——可用技能列表中没有该技能）；已实施等价的确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+ "task": "v2.0.11-evaluation-freeze",
+ "validation": {
+  "candidate_manifest_verified": true,
+  "deferred_set_exact": true,
+  "diagnostic_verified": true,
+  "no_forbidden_artifacts": true,
+  "pack_manifest_verified": true,
+  "strict_validation_covered_equals_passed": true,
+  "targeted_review_manifest_verified": true
+ }
+}

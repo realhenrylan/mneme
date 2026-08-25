@@ -1,0 +1,77 @@
+{
+ "activation_blocked": true,
+ "counts": {
+  "action_counts": {
+   "keep_unresolved": 13
+  },
+  "automatic_processing_blocked": true,
+  "candidate_auto_resolution_count": 0,
+  "category_counts": {
+   "format_transform_requires_policy": 2,
+   "legacy_range_disambiguable_duplicate": 0,
+   "semantic_or_content_drift": 11,
+   "source_or_chunk_integrity_problem": 0,
+   "whitespace_or_line_ending_only": 0
+  },
+  "no_local_raw_evidence_case_ids": [
+   "mixed-022",
+   "mixed-028",
+   "mixed-029",
+   "zh-023",
+   "zh-026",
+   "zh-029",
+   "zh-032",
+   "zh-033",
+   "zh-035",
+   "zh-036",
+   "zh-037",
+   "zh-054",
+   "zh-055"
+  ],
+  "proposal_count": 13
+ },
+ "inputs": {
+  "audit": {
+   "sha256": "7d6fd27d1e95b13ecc0d69e2ed44b1a8283d0789dc77764d99bec50c5a00cba1"
+  },
+  "candidate_manifest": {
+   "sha256": "955abb5b588f92ef199ebaa195b87b5da34ddaa63addee28e41a1c80d9a33f75"
+  },
+  "chunk_manifest": {
+   "sha256": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a"
+  },
+  "chunks": {
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "draft": {
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc"
+  },
+  "migration": {
+   "sha256": "9432ec318656a1a3dc3db47c3677b6303a7530a6383e1990d414213afbf6c16b"
+  },
+  "quality": {
+   "sha256": "afd2980eddbdaf4cd0251393c67e07d7706772a5121f4cb19f0bb977a5ebab68"
+  },
+  "unresolved": {
+   "sha256": "1b1d29aa0f3d407017ee68a2f7eef0fc3f76573bd3c62fd6f74f29ffeadb9f36"
+  }
+ },
+ "lineage_note": "Flash-only batch; do not mix or compare with prior Pro results",
+ "manifest_sha256": "fd548f9f7827c06d10547c44b1252e5fd8f75359604b98af1183607e01c666a4",
+ "max_tokens": 8000,
+ "model": "deepseek-v4-flash",
+ "outputs": {
+  "OWNER_DECISION_MATRIX.md": "c40568ca58006e38115bcc02d328d1cd8768de7a0b2f4f0a83ab9058e40a03cb",
+  "coordinate-resolution-proposals.jsonl": "91d3044aec1961701d15c10becf5cc31394105cb4a9360f5ad8a809f5586ce30",
+  "raw-model-responses.jsonl": "5aa000b9069594ab7558d1e26fe1c170092f569fb08a0d3e7ff6a5a1674d6a44",
+  "resolution-options-summary.json": "3fa4b4935b995c693084a3ad8ea292fcefc1ecea633a029b04eda45a763d0ed1",
+  "resolution-proposals-report.md": "81bd2c8f1201cbbaed2d7356c00480d4fb2008a12fef3b1f58a8a4be2156c6ab"
+ },
+ "retry_policy": {
+  "gateway_max_retries": 3
+ },
+ "rule_version": "v2.0.2-coordinate-resolution-proposals-flash-2",
+ "temperature": 0.0,
+ "timestamp": "2026-08-07T00:00:00+00:00",
+ "version": "v2.0.2-coordinate-resolution-proposals"
+}

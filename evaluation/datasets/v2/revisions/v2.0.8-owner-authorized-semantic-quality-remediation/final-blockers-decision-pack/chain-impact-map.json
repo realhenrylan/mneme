@@ -1,0 +1,170 @@
+{
+ "case_ids": [
+  "multi-030",
+  "multi-031",
+  "multi-032",
+  "multi-033",
+  "multi-034"
+ ],
+ "cases": {
+  "multi-030": {
+   "chain_id": "multi-028",
+   "construction": "follow_up",
+   "doc_target": "python-tutorial-zh",
+   "evidence": [
+    {
+     "chunk_id": "32c427fb50e2_chunk_3",
+     "raw_chunk_char_range": {
+      "end": 65,
+      "start": 0
+     }
+    }
+   ],
+   "follow_up_to": null,
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "turn": 1
+  },
+  "multi-031": {
+   "chain_id": "multi-028",
+   "construction": "follow_up",
+   "doc_target": "python-tutorial-en",
+   "evidence": [
+    {
+     "chunk_id": "e564a122a7a2_chunk_7",
+     "raw_chunk_char_range": {
+      "end": 238,
+      "start": 174
+     }
+    }
+   ],
+   "follow_up_to": "multi-030",
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "turn": 2
+  },
+  "multi-032": {
+   "chain_id": "multi-030",
+   "construction": "follow_up",
+   "doc_target": "react-learn-zh",
+   "evidence": [
+    {
+     "chunk_id": "993955159403_chunk_0",
+     "raw_chunk_char_range": {
+      "end": 161,
+      "start": 104
+     }
+    }
+   ],
+   "follow_up_to": null,
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "turn": 1
+  },
+  "multi-033": {
+   "chain_id": "multi-030",
+   "construction": "follow_up",
+   "doc_target": "react-learn-zh",
+   "evidence": [
+    {
+     "chunk_id": "993955159403_chunk_4",
+     "raw_chunk_char_range": {
+      "end": 49,
+      "start": 0
+     }
+    }
+   ],
+   "follow_up_to": "multi-032",
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "turn": 2
+  },
+  "multi-034": {
+   "chain_id": "multi-030",
+   "construction": "follow_up",
+   "doc_target": "react-learn-zh",
+   "evidence": [
+    {
+     "chunk_id": "993955159403_chunk_7",
+     "raw_chunk_char_range": {
+      "end": 148,
+      "start": 133
+     }
+    }
+   ],
+   "follow_up_to": "multi-033",
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "turn": 3
+  }
+ },
+ "deferred_reason": "retirement_deferred_due_to_active_follow_up_chain_dependency",
+ "edges": [
+  {
+   "from": "multi-030",
+   "in_group": true,
+   "relation": "follow_up_to",
+   "to": "multi-031"
+  },
+  {
+   "from": "multi-030",
+   "in_group": true,
+   "relation": "chain_id",
+   "to": "multi-032"
+  },
+  {
+   "from": "multi-030",
+   "in_group": true,
+   "relation": "chain_id",
+   "to": "multi-033"
+  },
+  {
+   "from": "multi-030",
+   "in_group": true,
+   "relation": "chain_id",
+   "to": "multi-034"
+  },
+  {
+   "from": "multi-032",
+   "in_group": true,
+   "relation": "follow_up_to",
+   "to": "multi-033"
+  },
+  {
+   "from": "multi-033",
+   "in_group": true,
+   "relation": "follow_up_to",
+   "to": "multi-034"
+  }
+ ],
+ "impact_summary": {
+  "answer_points_removed": 5,
+  "cases_removed": 5,
+  "downstream_refs_inside_group": 6,
+  "evidence_rows_removed": 5,
+  "external_refs_outside_group": 0,
+  "indivisible_group": true,
+  "retire_group": [
+   "multi-030",
+   "multi-031",
+   "multi-032",
+   "multi-033",
+   "multi-034"
+  ],
+  "upstream_chains_affected": [
+   "multi-028"
+  ]
+ },
+ "upstream_impact": {
+  "multi-028": {
+   "chain_id": "multi-025",
+   "doc_target": "postgresql-tutorial",
+   "follow_up_to": "multi-027",
+   "lost_chain_members": [
+    "multi-030",
+    "multi-031"
+   ],
+   "note": "chain multi-028 的成员 ['multi-030', 'multi-031'] 随退役组移除，chain multi-028 将缺员"
+  }
+ }
+}

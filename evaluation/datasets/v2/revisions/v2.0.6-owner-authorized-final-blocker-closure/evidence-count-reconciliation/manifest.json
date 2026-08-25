@@ -1,0 +1,45 @@
+{
+ "counts": {
+  "active_evidence_count": 162,
+  "arithmetic": "159 - 5 + 8 = 162",
+  "arithmetic_holds": true,
+  "evidence_after": 162,
+  "evidence_before": 159,
+  "legacy_count": 1,
+  "newly_added_raw_evidence": 8,
+  "raw_codepoint_v1_count": 161,
+  "retired_evidence": 1,
+  "target_old_evidence_removed": 5
+ },
+ "deterministic_rebuild": true,
+ "forbidden_outputs": [
+  "overlay",
+  "active metadata",
+  "v2.1",
+  "review results",
+  "split",
+  "locked config"
+ ],
+ "inputs": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "draft_after": "9d56d339f47bb2aff1591973e7bcb162ff4b1a562f210e446875bfaa08a78c28",
+  "evidence_after": "cdfe85540512f03df954ee75ddf000e9cd3bde3ac01526d29f1ccef97385690e",
+  "evidence_before": "c6079380b81ffeb0e7b3f5d0779a821e7c50a8068015f28fca6eb2ad09794acf",
+  "retired_evidence": "f508606a8ba586b6f94ff1106c968a0015bc9b9c9f72b2617a065ac0117a69bd",
+  "v205_manifest": "34a7eaa87b31aee121b88c4e6016a60a39c5938e23e1f58eea6562e6dc866d7a",
+  "v206_manifest": "e2cfd671df0a8967c8ad512ff4db9cf87b7024b862c90a8ec7c8999d3e9c0805"
+ },
+ "manifest_sha256": "eecf877d899d0b623d1e14d76f27a75cc6cbe5ec0341dc7af21ab66aae699140",
+ "outputs": {
+  "evidence-count-reconciliation.json": "91720e8ae9b3c2b586f1e9d0b21dc50f88d4becaa65c32dbfc9a190b651ff32a",
+  "reconciliation-report.md": "306487b77e40f11e9bf4a15de8d352155539e58a057d1e8446cde44211140f55",
+  "strict-validation-coverage.jsonl": "8e850dd2d2f77970f94c3dc477a77fc177fbfb1e72afb622abb2d8609fc0f41c"
+ },
+ "read_only": true,
+ "reconciliation": true,
+ "status": "RECONCILIATION_BLOCKED",
+ "timestamp": "2026-08-10T00:00:00+00:00",
+ "verdict_reason": "failing conditions: strict_validator_covered_count == 162, strict_validator_passed_count == 162, uncovered_count == 0, invalid_count == 0; blocker: 1 row(s) not strictly legal (zh-037 legacy_coordinate)"
+}

@@ -1,0 +1,187 @@
+{
+ "actor": "OWNER_AUTHORIZED_FINAL_DEPENDENCY_CLOSED_RETIREMENT",
+ "authorization": "OWNER_AUTHORIZED_FINAL_DEPENDENCY_CLOSED_RETIREMENT",
+ "counts": {
+  "case_after": 137,
+  "case_before": 143,
+  "evidence_after": 144,
+  "evidence_before": 151,
+  "retired_answer_points": 7,
+  "retired_cases": 6,
+  "retired_evidence": 7
+ },
+ "dependency_closure": {
+  "case_id_doc_target_refs": [],
+  "chain_impact": {
+   "multi-028": {
+    "members": [
+     "multi-030",
+     "multi-031"
+    ],
+    "remaining_members": [],
+    "retired_members": [
+     "multi-030",
+     "multi-031"
+    ],
+    "status": "fully_retired"
+   },
+   "multi-030": {
+    "members": [
+     "multi-032",
+     "multi-033",
+     "multi-034"
+    ],
+    "remaining_members": [],
+    "retired_members": [
+     "multi-032",
+     "multi-033",
+     "multi-034"
+    ],
+    "status": "fully_retired"
+   }
+  },
+  "cohort": [
+   "multi-030",
+   "multi-031",
+   "multi-032",
+   "multi-033",
+   "multi-034"
+  ],
+  "cohort_matches_minimal_closure": true,
+  "dangling_ref_count": 0,
+  "dangling_refs": [],
+  "excludes_multi028": "multi-028 不引用组内任何 case（multi-028.chain_id=multi-025、follow_up_to=multi-027），无需入组",
+  "external_refs": [
+   {
+    "field_path": "metadata.chain_id",
+    "from": "multi-030",
+    "relation": "chain_id",
+    "to": "multi-028"
+   },
+   {
+    "field_path": "metadata.chain_id",
+    "from": "multi-031",
+    "relation": "chain_id",
+    "to": "multi-028"
+   }
+  ],
+  "internal_refs": [
+   {
+    "field_path": "metadata.follow_up_to",
+    "from": "multi-031",
+    "relation": "follow_up_to",
+    "to": "multi-030"
+   },
+   {
+    "field_path": "metadata.chain_id",
+    "from": "multi-032",
+    "relation": "chain_id",
+    "to": "multi-030"
+   },
+   {
+    "field_path": "metadata.chain_id",
+    "from": "multi-033",
+    "relation": "chain_id",
+    "to": "multi-030"
+   },
+   {
+    "field_path": "metadata.follow_up_to",
+    "from": "multi-033",
+    "relation": "follow_up_to",
+    "to": "multi-032"
+   },
+   {
+    "field_path": "metadata.chain_id",
+    "from": "multi-034",
+    "relation": "chain_id",
+    "to": "multi-030"
+   },
+   {
+    "field_path": "metadata.follow_up_to",
+    "from": "multi-034",
+    "relation": "follow_up_to",
+    "to": "multi-033"
+   }
+  ],
+  "minimal_closed_cohort_recomputed": [
+   "multi-030",
+   "multi-031",
+   "multi-032",
+   "multi-033",
+   "multi-034"
+  ],
+  "orphan_previous_turns": [],
+  "proof_rule": "不动点：cohort 中任一 case 被组外 case 引用 → 该引用者入组，直至稳定；multi-031.follow_up_to→multi-030 与 multi-032/033/034.chain_id→multi-030 强制其入组，组内再无对外引用者被组外引用",
+  "upstream_chains_affected": [
+   "multi-028",
+   "multi-030"
+  ]
+ },
+ "mixed027": {
+  "dependency_facts": {
+   "chain_id": null,
+   "chain_membership": null,
+   "doc_target": null,
+   "follow_up_to": null,
+   "incoming_case_refs": [],
+   "n_answer_points": 2,
+   "n_evidence": 2,
+   "outgoing_case_refs": [],
+   "previous_turns": null
+  },
+  "impact": {
+   "answer_points_removed": 2,
+   "case_count_after": 142,
+   "case_count_before": 143,
+   "case_id_doc_target_refs": [],
+   "chain_impact": {},
+   "cohort": [
+    "mixed-027"
+   ],
+   "cohort_size": 1,
+   "dangling_ref_count": 0,
+   "dangling_refs": [],
+   "evidence_count_after": 149,
+   "evidence_count_before": 151,
+   "evidence_rows_removed": 2,
+   "executable": true,
+   "external_refs": [],
+   "internal_refs": [],
+   "orphan_previous_turns": [],
+   "upstream_chains_affected": []
+  },
+  "incoming_case_refs": [],
+  "outgoing_case_refs": [],
+  "retire_single_case_safely": true
+ },
+ "note": "确定性退役（仅移除 6 个 case 及其 7 条 evidence）；严格证据验证通过不构成审阅通过或 active 准入；激活前需一次全新的 137-case 盲态机器复审，不得复用 v2.0.7 / v2.0.8 的 review 结果。",
+ "retire_cohort": {
+  "cohort": [
+   "multi-030",
+   "multi-031",
+   "multi-032",
+   "multi-033",
+   "multi-034"
+  ],
+  "minimal_closed_cohort_recomputed": [
+   "multi-030",
+   "multi-031",
+   "multi-032",
+   "multi-033",
+   "multi-034"
+  ],
+  "retirement_safe": true
+ },
+ "retire_isolated": {
+  "mixed-027": {
+   "retire_single_case_safely": true
+  }
+ },
+ "task": "v2.0.9-owner-authorized-final-dependency-closed-retirement",
+ "verification": {
+  "after_chain_members_clean": true,
+  "after_no_dangling_refs": true,
+  "non_target_rows_byte_identical": true,
+  "strict_validator_144_144": true
+ }
+}

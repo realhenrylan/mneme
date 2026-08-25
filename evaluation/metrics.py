@@ -129,6 +129,56 @@ def source_recall_at_k(
     return len(top_k_sources & relevant_source_ids) / len(relevant_source_ids)
 
 
+def context_source_recall(
+    context_source_ids: Sequence[str],
+    relevant_source_ids: set[str],
+) -> float:
+    """Compute source-level recall over the selected prompt context.
+
+    与 chunk-level ``context_recall`` 对称的 source 版本：测量实际进入
+    prompt 的去重 source 集合覆盖了多少 *relevant source*。分母为该
+    case 的 relevant sources，故 relevance_level=source 的 case 由此处
+    纳入统计（而非 chunk/context/citation 分母）。
+
+    Args:
+        context_source_ids: 实际进入 prompt 的去重 source IDs（有序）。
+        relevant_source_ids: 该 case 标注的相关 source 集合。
+
+    Returns:
+        Source recall 值 ∈ [0, 1]；无 relevant source 时返回 0.0。
+    """
+    if not relevant_source_ids:
+        return 0.0
+    context_sources = set(context_source_ids)
+    if not context_sources:
+        return 0.0
+    return len(context_sources & relevant_source_ids) / len(relevant_source_ids)
+
+
+def context_source_coverage(
+    context_source_ids: Sequence[str],
+    relevant_source_ids: set[str],
+) -> float:
+    """Compute source-level coverage (precision) over prompt context.
+
+    与 chunk-level ``context_precision`` 对称的 source 版本：测量 prompt
+    context 中的去重 source 有多少是 relevant。回答“context 是否被相关
+    source 占据”，用于衡量检索通道对 source recall 之后的 context 选取
+    效率。
+
+    Args:
+        context_source_ids: 实际进入 prompt 的去重 source IDs（有序）。
+        relevant_source_ids: 该 case 标注的相关 source 集合。
+
+    Returns:
+        Source coverage 值 ∈ [0, 1]；context 为空时返回 0.0。
+    """
+    context_sources = set(context_source_ids)
+    if not context_sources:
+        return 0.0
+    return len(context_sources & relevant_source_ids) / len(context_sources)
+
+
 # ── Aggregation helpers ─────────────────────────────────────────────
 
 def compute_retrieval_metrics(

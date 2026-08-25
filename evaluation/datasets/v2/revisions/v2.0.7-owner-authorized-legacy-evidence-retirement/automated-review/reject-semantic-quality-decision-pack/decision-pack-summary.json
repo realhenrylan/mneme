@@ -1,0 +1,127 @@
+{
+ "by_batch": {
+  "batch_a_replace_with_self_contained_exact_text": {
+   "case_ids": [
+    "mixed-028",
+    "mixed-029",
+    "zh-023",
+    "zh-026",
+    "zh-029",
+    "zh-036",
+    "zh-054"
+   ],
+   "n": 7
+  },
+  "batch_b_expand_same_source_scope": {
+   "case_ids": [
+    "zh-040"
+   ],
+   "n": 1
+  },
+  "batch_c_translation_policy_required": {
+   "case_ids": [
+    "en-029",
+    "multi-019",
+    "zh-052"
+   ],
+   "n": 3
+  },
+  "batch_d_retire_or_remove": {
+   "case_ids": [
+    "en-042",
+    "en-044",
+    "en-049",
+    "en-050",
+    "en-051",
+    "mixed-026",
+    "mixed-033",
+    "multi-030",
+    "zh-042",
+    "zh-045"
+   ],
+   "n": 10
+  },
+  "batch_e_targeted_re_review": {
+   "case_ids": [
+    "mixed-027"
+   ],
+   "n": 1
+  }
+ },
+ "by_category": {
+  "evidence_scope_insufficient_but_same_source_candidate_exists": 6,
+  "exact_evidence_present_but_review_semantic_disagrees": 8,
+  "no_direct_support_in_declared_source": 2,
+  "partial_or_paraphrase_only": 5,
+  "review_contract_or_model_semantics_inconsistency": 1
+ },
+ "by_recommended_action": {
+  "expand_same_source_evidence_scope": [
+   "zh-040"
+  ],
+  "owner_approved_translation_equivalence_policy": [
+   "en-029",
+   "multi-019",
+   "zh-052"
+  ],
+  "remove_unsupported_answer_point": [
+   "en-042",
+   "en-049",
+   "en-051",
+   "mixed-033"
+  ],
+  "replace_answer_point_with_self_contained_exact_raw_text": [
+   "mixed-028",
+   "mixed-029",
+   "zh-023",
+   "zh-026",
+   "zh-029",
+   "zh-036",
+   "zh-054"
+  ],
+  "retire_case": [
+   "en-044",
+   "en-050",
+   "mixed-026",
+   "multi-030",
+   "zh-042",
+   "zh-045"
+  ],
+  "targeted_blind_re_review": [
+   "mixed-027"
+  ]
+ },
+ "created_by": "corpus_v2_v207_reject_semantic_quality_decision_pack.py",
+ "deterministic": true,
+ "n_candidate_rows": 124,
+ "n_rejects": 22,
+ "n_self_contained_candidates": 39,
+ "overlay_generated": false,
+ "removal_zero_risk_cases": [
+  "en-044",
+  "en-050",
+  "mixed-026",
+  "multi-030",
+  "zh-042",
+  "zh-045"
+ ],
+ "run_at": "2026-08-10T00:00:00+00:00",
+ "semantic_quality_insufficient_cases": [
+  "en-029",
+  "en-042",
+  "en-044",
+  "en-049",
+  "en-050",
+  "en-051",
+  "mixed-026",
+  "mixed-027",
+  "mixed-033",
+  "multi-019",
+  "multi-030",
+  "zh-040",
+  "zh-042",
+  "zh-045",
+  "zh-052"
+ ],
+ "v2_1_entry": "BLOCKED"
+}

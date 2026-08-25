@@ -1,0 +1,84 @@
+{
+ "activation_blocked": true,
+ "counts": {
+  "confirmed": 126,
+  "needs_followup": 0,
+  "reject": 22
+ },
+ "created_by": "corpus_v2_v207_fresh_automated_review.py review",
+ "data_quality": {
+  "equivalent_deterministic_checks": {
+   "completeness": {
+    "answerable_cases_without_evidence": 0,
+    "draft_rows": 148,
+    "evidence_rows": 161
+   },
+   "consistency": {
+    "input_shas_unchanged": true,
+    "source_matches": true
+   },
+   "continuity": {
+    "spans_proved": 161
+   },
+   "referential_integrity": {
+    "chunk_text_sha_matches": true,
+    "evidence_chunks_in_corpus": true
+   },
+   "uniqueness": {
+    "unique_case_ids": 148,
+    "unique_evidence_rows": 161
+   }
+  },
+  "skill": {
+   "available": false,
+   "failure": "Skill not found: data-analytics:analyze-data-quality",
+   "name": "data-analytics:analyze-data-quality"
+  }
+ },
+ "decision_counts": {
+  "confirmed": 126,
+  "needs_followup": 0,
+  "reject": 22
+ },
+ "forbidden_outputs": [
+  "active metadata",
+  "overlay without 148/148",
+  "v2.1 pointer",
+  "split reuse",
+  "locked config"
+ ],
+ "gate_verdict": "AUTOMATED_REVIEW_GATE_BLOCKED",
+ "human_reviewed": false,
+ "inputs": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "draft_after": "9d56d339f47bb2aff1591973e7bcb162ff4b1a562f210e446875bfaa08a78c28",
+  "evidence_after": "6f0546ba64ae9398394d97e3e58cd2fca3f56ad64164688b74345d2d41fd7b00",
+  "v207_manifest": "33a95a30e463296125627e03d66c33818670969c268c582c3e6e593763b7d3da"
+ },
+ "manifest_sha256": "b9ad136932075b8a63fd2dc7301d29638125eca89c52050dc775328f7b73fe1b",
+ "max_retries": 3,
+ "max_tokens": 8000,
+ "model": "deepseek-v4-pro",
+ "n_cases": 148,
+ "outputs": {
+  "automated-review-evidence.jsonl": "4a9a81712802cb56d11c7f6b65ccc9572f405958a1dd3fb5b9b883d1444e1f40",
+  "automated-review-gate-report.md": "4352ba828eae2e771a0ba765f38534247154472b29d266e5f3a9b19d723772c3",
+  "automated-review-issues.jsonl": "ea2e6d02231f1005786f55eaae094f0f65818dcdb3dbdc0f108fe9a07ec4058f",
+  "automated-review-pack.jsonl": "1909b730c20770e41f1627297a0ab43afcd6fb07cc4943b6606f64b173ec2cd9",
+  "automated-review-report.md": "2108489861ee26ce95d82818fa94094e4e72c073d69388dc3770a5c8999f1fee",
+  "automated-review-summary.json": "f185bc065c78fcd364bedabc25f675b9380bd9824efb2a54bd317e36f9289144",
+  "automated-review.jsonl": "cb95b7a67725e8175a4734044b41668d943998c799773e1b71a5a53bc00ed42b",
+  "raw-model-responses.jsonl": "01d3f4df6578d9ccb06687ad62d71fffd50e962ccaadbd69a51f1a488e4a76ab"
+ },
+ "overlay_generated": false,
+ "reviewer_identity": "LLM_ASSISTED_OWNER_AUTHORIZED_V2_0_7",
+ "reviewer_type": "LLM_ASSISTED_OWNER_AUTHORIZED_V2_0_7",
+ "revision_status": "CANDIDATE",
+ "split_reseal_required": true,
+ "temperature": 0.0,
+ "thinking_disabled": true,
+ "timestamp": "2026-08-10T00:00:00+00:00",
+ "v2_1_entered": false
+}

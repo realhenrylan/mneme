@@ -1,0 +1,75 @@
+{
+ "counts": {
+  "answerable_cases": 106,
+  "case_count": 137,
+  "confirmed": 111,
+  "errors": 4,
+  "evidence_count": 144,
+  "needs_followup": 0,
+  "refusal_cases": 31,
+  "reject": 22
+ },
+ "created_by": "corpus_v2_v209_fresh_blind_automated_review.py",
+ "declarations": {
+  "active_created": false,
+  "candidate_draft_evidence_unchanged": true,
+  "historical_verdicts_read": false,
+  "human_approved": false,
+  "human_reviewed": false,
+  "llm_called": true,
+  "model_identity_verified": true,
+  "network_used": true,
+  "no_fallback": true,
+  "overlay_generated": false,
+  "review_results_reused": false,
+  "split_created": false,
+  "v2_1_entered": false
+ },
+ "gate_verdict": "AUTOMATED_REVIEW_GATE_BLOCKED",
+ "inputs": {
+  "candidate-draft-after.jsonl": "7c0dd9032db95a32b8e5bdf966592b33ae6bffd4214860fa85ea5fb98dfc7cf6",
+  "candidate-evidence-after.jsonl": "cbd25a4cdd798fcfd2a649af38010061a65fae3a2cebd0958fde13ee54ae56ff",
+  "candidate-manifest.json": "94df1532a4d0eb7b8073f0d68ad6e914a88b30836f305a8beb2431c99f0098ba",
+  "chunk-manifest.json": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks.jsonl": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "current-v2-draft.jsonl": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "translation-equivalence-policy-ledger.jsonl": "43e9840fb44a3979ba3392bc1320e1422e179e0b56ecb4b03afc83d28abc7fb9",
+  "translation-equivalence-policy.md": "5990645b488dce68f581b34b267b53839f6bf2c0cae184453d2afe4dc56c2678"
+ },
+ "manifest_sha256": "a18a03e9df563afceb46417a6a37095ec71ab260d64e7fc211ce47e52632f8ab",
+ "metadata": {
+  "activation_blocked": true,
+  "human_reviewed": false,
+  "overlay_generated": false,
+  "revision_status": "CANDIDATE",
+  "split_reseal_required": true,
+  "v2_1_entered": false
+ },
+ "model": "deepseek-v4-pro",
+ "outputs": {
+  "automated-review-gate-report.md": "8cadf9b9511a29a2855889a4e90b159ee42ee9cfa6ffd30d70bcfa98c0ea2215",
+  "automated-review-issues.jsonl": "86e83dba379132860229754dba4b29309d981740b21591d4ea0f9a63f5a7b2e5"
+ },
+ "parameters": {
+  "fallback": "none",
+  "max_retries": 3,
+  "max_tokens": 8000,
+  "temperature": 0.0,
+  "thinking": "disabled"
+ },
+ "reviewed_revision": "v2.0.9-owner-authorized-final-dependency-closed-retirement",
+ "reviewed_revision_manifest_sha256": "94df1532a4d0eb7b8073f0d68ad6e914a88b30836f305a8beb2431c99f0098ba",
+ "rule_version": "v2.0.9-fresh-blind-automated-review-1",
+ "run_at": "2026-08-11T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载）；已执行等价确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+ "task": "v2.0.9-fresh-full-blind-automated-review",
+ "validation": {
+  "all_cases_confirmed": false,
+  "case_count_exact": true,
+  "evidence_count_exact": true,
+  "identity_errors": 0,
+  "schema_errors": 4,
+  "strict_validation_144_144": true,
+  "transport_errors": 0
+ }
+}

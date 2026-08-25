@@ -1,0 +1,16 @@
+{
+ "coordinate_contract": "raw-codepoint-v1",
+ "invalid_count": 0,
+ "legacy_rows_remaining": 0,
+ "raw_rows_validated": 151,
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ },
+ "strict_validation": "PASS",
+ "strict_validator_covered_count": 151,
+ "strict_validator_passed_count": 151,
+ "uncovered_count": 0,
+ "unresolved_rows": 0
+}

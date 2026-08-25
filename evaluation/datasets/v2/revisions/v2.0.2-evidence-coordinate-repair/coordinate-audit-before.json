@@ -1,0 +1,12 @@
+{
+ "case_ids_sha256": "35dd1ebf7c2c01ee1a70c211ea59d2b3f5354c38301c54f7b7dea1bb655ee83c",
+ "chunks_sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+ "draft_content_fingerprint": "e1752a61e3cde49d9f903935c135763519d02ee982491714a4d27d1d05e493ee",
+ "draft_rows": 150,
+ "draft_sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+ "evidence_rows": 161,
+ "evidence_sha256": "af54ff88bd9384832593fd46301ef02bfd3408ed708508eec68dd5c7d8d1cbb9",
+ "legacy_direct_char_range_matches": 12,
+ "legacy_direct_char_range_mismatches": 149,
+ "unique_case_ids": 150
+}

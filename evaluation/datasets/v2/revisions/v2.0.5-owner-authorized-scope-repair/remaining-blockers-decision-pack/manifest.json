@@ -1,0 +1,46 @@
+{
+ "activation_blocked": true,
+ "coordinate_contract": "raw-codepoint-v1",
+ "counts": {
+  "duplicate_spans_total": 6,
+  "exact_raw_evidence_found": 3,
+  "narrowable_cases": 2,
+  "targets": 4,
+  "zero_answer_point_risk_overall": 1
+ },
+ "decision_pack": true,
+ "deterministic_rebuild": true,
+ "forbidden_outputs": [
+  "draft-after.jsonl",
+  "evidence-after.jsonl",
+  "overlay",
+  "active metadata",
+  "v2.1"
+ ],
+ "human_reviewed": false,
+ "inputs": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "draft_after": "ef0c24912bd19a74e37e3cad4b7a54d34e7b26138745f049d99d6ec74fca768d",
+  "evidence_after": "c6079380b81ffeb0e7b3f5d0779a821e7c50a8068015f28fca6eb2ad09794acf",
+  "pack_jsonl": "5ef6ce0762231249155f5ef1f20d10e72d2a86a86954a84d257f1c7f19d87a64",
+  "pack_manifest": "43356d535081c27f53b3abac46c5777ba10a6a66d5a79f93767640562da70e68",
+  "rescue_manifest": "6afd542b0a7aa473c265f97c7b8ad132dd98870491834022e19a6bd077bdf3e5",
+  "rescue_results": "45788ebcbfe97200ed58d48b687788fb64cf344e46e3b891cc43c94b772212ef",
+  "v205_manifest": "34a7eaa87b31aee121b88c4e6016a60a39c5938e23e1f58eea6562e6dc866d7a"
+ },
+ "manifest_sha256": "0717d11113fc2ff1c6885c327e79211a897991c01ddb8e9e321aa8d9eaeb1011",
+ "model": null,
+ "outputs": {
+  "OWNER_DECISION_GUIDE.md": "148fc1156bc1adfdc9ea2792c2555d835b994d19f78d94f7e901c56e046c4066",
+  "candidate-patch-template.jsonl": "ab5aceb22b127b577aad88922ca61e0702b79d6fee12ab95a2b839b99588576d",
+  "decision-pack-report.md": "751763add6d4bd2d1d770cc8b4289273753235578823e660071617048fda5fc3",
+  "decision-pack-summary.json": "a1d5f17eacc6b2ad99e61acd7e435825ed9dac30d446a1be1576594bd9399aaf",
+  "raw-source-contexts.jsonl": "e8f1c54db08aa344a8fdbfb270464cda77957886e5625ac879b920d59ced98be",
+  "remaining-blockers-decision-pack.jsonl": "71101047e8d78f8ef196e8a6b40a56ce7dd5f120184343704a1320fad8cb7da1"
+ },
+ "revision_status": "CANDIDATE",
+ "status": "DECISION_PACK",
+ "timestamp": "2026-08-10T00:00:00+00:00"
+}

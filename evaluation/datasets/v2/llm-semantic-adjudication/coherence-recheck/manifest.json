@@ -1,0 +1,172 @@
+{
+ "task": "v2 semantic adjudication coherence recheck",
+ "reviewer_model": "deepseek-v4-pro",
+ "temperature": 0.0,
+ "max_tokens": 8000,
+ "original_prompt_sha256": "0aa95c8106b37b0f27d7fbd4b6514163f3c73ca8b22109aa79051d03a0e3dd96",
+ "recheck_prompt_sha256": "8050cdfe10e7f89de8a5429d952c85770a83d9bd2fac6b8a123042e54242349e",
+ "recheck_max_attempts": 3,
+ "selection": {
+  "algorithm": "sha256('v2-semantic-adjudication-v1:' + case_id) 升序排序，取前 20 条",
+  "control_count": 20,
+  "disputed_count": 82,
+  "total_cases": 102
+ },
+ "inputs": {
+  "blank_pack": {
+   "sha256": "ceab00700da16526f6c2a68b8a8e2776ba42379fcfb41095b1378f58a0be267a"
+  },
+  "filled_pack": {
+   "sha256": "97ccaef8e2b9baa0448bffe96783d7101cfb844be9390592f2185a8eb11d76f1"
+  },
+  "chunks": {
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "blind_input_pack": {
+   "sha256": "7607758d623a31fc2c8c6630465af971854f3294b9d47263c0cbad4177a0a01d"
+  },
+  "adjudications": {
+   "sha256": "4c2524bfe0cc461703be7abe92aa748e345d829bb5a47dfd9079cfb6efac6ecc",
+   "rows": 102
+  },
+  "selection_manifest": {
+   "sha256": "b0ccab107d678169f846559e9e0eabc8d8b8953d1992a0d25a1fc20ab814c32a"
+  }
+ },
+ "audit": {
+  "n_total": 102,
+  "n_violating": 4,
+  "violations_sha256": "7f829455ae848ca5cd4108c216dd025193b1d3c86e994c8c4167a014574f94c3",
+  "audit_files": {
+   "coherence-audit.json": {
+    "sha256": "5a2e64bff00e7b27642fcd12ba9bbb84d3979d173c0abb4764e4159fbcbe6f7e"
+   },
+   "coherence-report.md": {
+    "sha256": "a88d63fce1c8576e454cdb3aab8dab252e0c805a801edee655825e97de5917ba"
+   }
+  }
+ },
+ "rechecks": {
+  "n_cases": 4,
+  "attempts_total": 4,
+  "attempts_max": 1,
+  "transport_retries_total": 0,
+  "transport_retries_max": 0,
+  "unparseable_total": 0,
+  "fixed_needs_followup": []
+ },
+ "merge": {
+  "rule": "违规 case 以重审结果替换（模型输出）；三次不合格按规则固定为 needs_followup 并记录失败证据",
+  "n_changed": 4,
+  "n_unchanged": 98,
+  "changed": [
+   {
+    "case_id": "en-047",
+    "old": "confirmed",
+    "new": "confirmed"
+   },
+   {
+    "case_id": "mixed-028",
+    "old": "reject",
+    "new": "confirmed"
+   },
+   {
+    "case_id": "mixed-029",
+    "old": "confirmed",
+    "new": "confirmed"
+   },
+   {
+    "case_id": "noanswer-052",
+    "old": "reject",
+    "new": "confirmed"
+   }
+  ]
+ },
+ "outputs": {
+  "rechecks.jsonl": {
+   "sha256": "da223f128b84df472a8d3aa4b65201e643f795a0a00beb235de6d907d0447398"
+  },
+  "merged-adjudications.jsonl": {
+   "sha256": "b39f92cdf1b6c6f6dd9595194dac9ef6c0affdc7af18722427ebd478e4db34a6"
+  },
+  "comparison-report.md": {
+   "sha256": "dcc095223122ac1af0dd9515445dc8c5aa2bf2c69cf7d2c88c8e16c6d4e1bba9"
+  },
+  "manifest.json": {
+   "sha256": "c3bee1d0eb5494d5e1311c5ec430cda79b72de1a90d66be26c42be521e0619bd",
+   "note": "内容摘要（去掉 outputs 中自身条目后的规范 JSON）"
+  }
+ },
+ "comparison": {
+  "disputed": {
+   "total": 82,
+   "agree": 5,
+   "disagree": 77,
+   "uncertain": 0
+  },
+  "controls": {
+   "total": 20,
+   "confirmed": 20,
+   "reject": 0,
+   "needs_followup": 0
+  },
+  "strata": {
+   "answerable": {
+    "disputed": {
+     "total": 67,
+     "agree": 5,
+     "disagree": 62,
+     "uncertain": 0
+    },
+    "controls": {
+     "total": 16,
+     "confirmed": 16,
+     "reject": 0,
+     "needs_followup": 0
+    }
+   },
+   "refusal": {
+    "disputed": {
+     "total": 15,
+     "agree": 0,
+     "disagree": 15,
+     "uncertain": 0
+    },
+    "controls": {
+     "total": 4,
+     "confirmed": 4,
+     "reject": 0,
+     "needs_followup": 0
+    }
+   },
+   "cross_document": {
+    "disputed": {
+     "total": 28,
+     "agree": 2,
+     "disagree": 26,
+     "uncertain": 0
+    },
+    "controls": {
+     "total": 2,
+     "confirmed": 2,
+     "reject": 0,
+     "needs_followup": 0
+    }
+   }
+  },
+  "support_levels": {
+   "direct_snippet": 77,
+   "within_chunk_outside_snippet": 6,
+   "faithful_paraphrase": 39,
+   "unsupported": 5
+  },
+  "refusal_assessments": {
+   "no_answer": 19,
+   "partial_topic_overlap_only": 0,
+   "substantive_answer_exists": 0,
+   "unclear": 0
+  }
+ },
+ "provider_note": "本轮与此前 deepseek-chat 同属 DeepSeek 提供方；第三轮模型身份未被历史 manifest 记录；不宣称模型或供应商独立性",
+ "created_by": "corpus_v2_llm_semantic_coherence.py recheck_and_merge"
+}

@@ -1,0 +1,36 @@
+{
+ "completeness": {
+  "every_attempt_preserved": true,
+  "raw_attempt_fields_present": true,
+  "results_rows_complete": true,
+  "status": "ok",
+  "target_count_exact": true
+ },
+ "consistency": {
+  "blind_payload": true,
+  "diagnostic_not_acceptance": true,
+  "no_fallback": true,
+  "probe_identity_verified": true,
+  "status": "ok"
+ },
+ "continuity": {
+  "candidate_unchanged": true,
+  "input_shas_stable": true,
+  "no_old_decisions_presumed": true,
+  "status": "ok"
+ },
+ "downstream_risk": "诊断仅供 owner 决策；任何质量异常都必须保持 gate blocked（预检为 fail-closed，异常时零输出）。",
+ "referential_integrity": {
+  "attempt_sequences_contiguous": true,
+  "manifests_verified": true,
+  "run_id_to_case_relation": true,
+  "status": "ok"
+ },
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载——可用技能列表中没有该技能）；已实施等价的确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+ "uniqueness": {
+  "attempts_unique": true,
+  "case_ids_unique": true,
+  "run_ids_unique": true,
+  "status": "ok"
+ }
+}

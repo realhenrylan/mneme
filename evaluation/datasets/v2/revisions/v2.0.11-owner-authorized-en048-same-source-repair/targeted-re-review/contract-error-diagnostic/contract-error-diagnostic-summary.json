@@ -1,0 +1,98 @@
+{
+ "actor": "OWNER_AUTHORIZED_V2_0_11_CONTRACT_ERROR_DIAGNOSTIC_AND_FREEZE",
+ "counts": {
+  "case_count": 4,
+  "contract_error": 4,
+  "expected_decision_none_presumed": true,
+  "identity_blocked": 0,
+  "issues_rows": 4,
+  "resolved": 0,
+  "total_attempts": 16,
+  "transport_blocked": 0
+ },
+ "data_quality": {
+  "completeness": {
+   "every_attempt_preserved": true,
+   "raw_attempt_fields_present": true,
+   "results_rows_complete": true,
+   "status": "ok",
+   "target_count_exact": true
+  },
+  "consistency": {
+   "blind_payload": true,
+   "diagnostic_not_acceptance": true,
+   "no_fallback": true,
+   "probe_identity_verified": true,
+   "status": "ok"
+  },
+  "continuity": {
+   "candidate_unchanged": true,
+   "input_shas_stable": true,
+   "no_old_decisions_presumed": true,
+   "status": "ok"
+  },
+  "downstream_risk": "诊断仅供 owner 决策；任何质量异常都必须保持 gate blocked（预检为 fail-closed，异常时零输出）。",
+  "referential_integrity": {
+   "attempt_sequences_contiguous": true,
+   "manifests_verified": true,
+   "run_id_to_case_relation": true,
+   "status": "ok"
+  },
+  "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载——可用技能列表中没有该技能）；已实施等价的确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+  "uniqueness": {
+   "attempts_unique": true,
+   "case_ids_unique": true,
+   "run_ids_unique": true,
+   "status": "ok"
+  }
+ },
+ "declarations": {
+  "active_created": false,
+  "blind_payload": true,
+  "is_review_acceptance": false,
+  "llm_called": true,
+  "locked_created": false,
+  "model_identity_verified": true,
+  "network_used": true,
+  "no_fallback": true,
+  "not_human_approval": true,
+  "nothing_auto_converted": true,
+  "old_contract_errors_not_presumed": true,
+  "overlay_generated": false,
+  "raw_responses_preserved": true,
+  "split_created": false,
+  "targeted_review_blocked_unchanged": true,
+  "v2_1_entered": false
+ },
+ "gate_verdict": "CONTRACT_ERROR_DIAGNOSTIC_COMPLETE",
+ "model": "deepseek-v4-pro",
+ "parameters": {
+  "fallback": "none",
+  "max_retries": 3,
+  "max_tokens": 8000,
+  "temperature": 0.0,
+  "thinking": "disabled"
+ },
+ "per_case_status": {
+  "en-052": "contract_error",
+  "mixed-030": "contract_error",
+  "mixed-033": "contract_error",
+  "zh-040": "contract_error"
+ },
+ "probe": {
+  "content_sha256": "845a48c2589332e97e8362465c36901469543508a4d3b65f2a97bcffac3af18c",
+  "expected_model": "deepseek-v4-pro",
+  "model": "deepseek-v4-pro",
+  "ok": true
+ },
+ "rule_version": "v2.0.11-contract-error-diagnostic-1",
+ "run_at": "2026-08-12T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（已实际尝试，无法加载——可用技能列表中没有该技能）；已实施等价的确定性五维检查（完整性/唯一性/引用完整性/连续性/一致性），全部为机械复算，无额外 LLM 参与。",
+ "target_set": [
+  "en-052",
+  "mixed-030",
+  "mixed-033",
+  "zh-040"
+ ],
+ "task": "v2.0.11-contract-error-diagnostic"
+}

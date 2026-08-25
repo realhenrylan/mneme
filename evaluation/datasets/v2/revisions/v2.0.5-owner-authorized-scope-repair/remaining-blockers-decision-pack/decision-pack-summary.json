@@ -1,0 +1,86 @@
+{
+ "counts": {
+  "duplicate_spans_total": 6,
+  "exact_raw_evidence_found": 3,
+  "narrowable_cases": 2,
+  "targets": 4,
+  "zero_answer_point_risk_overall": 1
+ },
+ "equivalent_deterministic_checks": {
+  "duplicate_spans_proved": true,
+  "raw_contiguous": true,
+  "row_count": 4,
+  "source_consistent": true,
+  "unique_case_chunk": 4
+ },
+ "input_sha256": {
+  "chunk_manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "draft_after": "ef0c24912bd19a74e37e3cad4b7a54d34e7b26138745f049d99d6ec74fca768d",
+  "evidence_after": "c6079380b81ffeb0e7b3f5d0779a821e7c50a8068015f28fca6eb2ad09794acf",
+  "pack_jsonl": "5ef6ce0762231249155f5ef1f20d10e72d2a86a86954a84d257f1c7f19d87a64",
+  "pack_manifest": "43356d535081c27f53b3abac46c5777ba10a6a66d5a79f93767640562da70e68",
+  "rescue_manifest": "6afd542b0a7aa473c265f97c7b8ad132dd98870491834022e19a6bd077bdf3e5",
+  "rescue_results": "45788ebcbfe97200ed58d48b687788fb64cf344e46e3b891cc43c94b772212ef",
+  "v205_manifest": "34a7eaa87b31aee121b88c4e6016a60a39c5938e23e1f58eea6562e6dc866d7a"
+ },
+ "per_case": {
+  "mixed-022": {
+   "available_actions": [
+    "keep_unresolved",
+    "narrow_answer_point_to_exact_raw_text",
+    "remove_unsupported_answer_point",
+    "retire_case"
+   ],
+   "duplicate_span_count": 0,
+   "exact_raw_evidence_found": true,
+   "narrowable_points": [
+    0
+   ],
+   "zero_answer_point_risk_overall": false
+  },
+  "mixed-028": {
+   "available_actions": [
+    "keep_unresolved",
+    "narrow_answer_point_to_exact_raw_text",
+    "remove_unsupported_answer_point",
+    "retire_case"
+   ],
+   "duplicate_span_count": 0,
+   "exact_raw_evidence_found": true,
+   "narrowable_points": [
+    1
+   ],
+   "zero_answer_point_risk_overall": false
+  },
+  "zh-032": {
+   "available_actions": [
+    "keep_unresolved",
+    "remove_unsupported_answer_point",
+    "retire_case"
+   ],
+   "duplicate_span_count": 0,
+   "exact_raw_evidence_found": false,
+   "narrowable_points": [],
+   "zero_answer_point_risk_overall": true
+  },
+  "zh-035": {
+   "available_actions": [
+    "keep_unresolved",
+    "retain_all_exact_duplicate_spans_with_explicit_multi_span_policy",
+    "retire_case"
+   ],
+   "duplicate_span_count": 6,
+   "exact_raw_evidence_found": true,
+   "narrowable_points": [],
+   "zero_answer_point_risk_overall": false
+  }
+ },
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ },
+ "targets": 4
+}

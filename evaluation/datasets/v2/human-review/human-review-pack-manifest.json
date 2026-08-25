@@ -1,0 +1,29 @@
+{
+ "pack_version": 1,
+ "n_cases": 150,
+ "inputs": {
+  "draft": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\annotations\\v2-cases-draft.jsonl",
+   "sha256": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+   "rows": 150
+  },
+  "chunks": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
+   "sha256": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+  },
+  "chunk_manifest": {
+   "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunk-manifest.json",
+   "sha256": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a"
+  },
+  "corpus_manifest": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\corpus-manifest.json",
+   "sha256": "84f04699c07ff1a7a8d13caabba3e377569b217816bb39db73f65df842037943"
+  },
+  "repair_ledger": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\review\\repair-ledger.jsonl",
+   "sha256": "c13235dfa65d78d9c98a8937ce0ad99532d31dddc50fd5303df16fa190f8c9f0"
+  }
+ },
+ "pack_sha256": "60bfc9d4a58aa65d1dcd0def5f7835baa576d9bf19e6d02e6b953c3752ca7e44",
+ "created_by": "corpus_v2_human_review_pack.py build"
+}

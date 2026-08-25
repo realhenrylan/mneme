@@ -1,0 +1,126 @@
+{
+ "constants": {
+  "cjk_source_threshold": 0.1,
+  "cjk_threshold": 0.3,
+  "coverage_exact": 0.75,
+  "expected_counts": [
+   126,
+   22,
+   0
+  ],
+  "min_span_len": 8
+ },
+ "created_by": "corpus_v2_v207_review_reject_triage.py",
+ "declarations": {
+  "data_modified": false,
+  "historical_verdicts_read": false,
+  "llm_called": false,
+  "network_used": false,
+  "overlay_generated": false,
+  "split_created": false,
+  "v2_1_entered": false
+ },
+ "description": "v2.0.7 automated-review 22 条 reject 的确定性根因分流（只读、离线、无 LLM/API）",
+ "deterministic": true,
+ "forbidden_outputs": [
+  "overlay",
+  "active metadata",
+  "v2.1 pointer",
+  "split reuse",
+  "locked config",
+  "evaluation results"
+ ],
+ "gate_verdict": "REJECT_TRIAGE_OK",
+ "inputs": {
+  "automated-review-evidence.jsonl": "4a9a81712802cb56d11c7f6b65ccc9572f405958a1dd3fb5b9b883d1444e1f40",
+  "automated-review-issues.jsonl": "ea2e6d02231f1005786f55eaae094f0f65818dcdb3dbdc0f108fe9a07ec4058f",
+  "automated-review-pack.jsonl": "1909b730c20770e41f1627297a0ab43afcd6fb07cc4943b6606f64b173ec2cd9",
+  "automated-review.jsonl": "cb95b7a67725e8175a4734044b41668d943998c799773e1b71a5a53bc00ed42b",
+  "candidate-manifest.json": "33a95a30e463296125627e03d66c33818670969c268c582c3e6e593763b7d3da",
+  "chunk-manifest": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+  "draft": "3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc",
+  "draft-after.jsonl": "9d56d339f47bb2aff1591973e7bcb162ff4b1a562f210e446875bfaa08a78c28",
+  "evidence-after.jsonl": "6f0546ba64ae9398394d97e3e58cd2fca3f56ad64164688b74345d2d41fd7b00",
+  "review-manifest.json": "c0e75274dcd83969b3505ae7095030aa46f873e5177a17cd8656f9aff99dc672"
+ },
+ "llm": null,
+ "manifest_sha256": "3cb5384dfbd98d2782da6af0e9ec496c7062176c6c6ae44e484cab078fdc42bd",
+ "n_rejects": 22,
+ "outputs": {
+  "candidate-evidence-spans.jsonl": "10351a0401347d8a49a3c33744013a64fd35e13b7c01fc941574de11ee213079",
+  "data-quality-report.json": "17c89f8e5fdb6f7af12c7e94215dcc486578db1e43fe88efbac0e9ebab97ba24",
+  "owner-decision-template.jsonl": "35e0214aca66cc1faf738cc30ddaaf645ae60a01c2cc6adf18951490e315b752",
+  "review-reject-triage-report.md": "3cfd005ed1a0be71c5c212d0332e46647112c4288de96b3cba0b9e3db270798b",
+  "review-reject-triage-summary.json": "178cd373cf7e01249e01dc69843671226b61cc5f32bfe545051f7f3cf82e1225",
+  "review-reject-triage.jsonl": "62e9005f9ef7ee7f2e2ba24a3831d636e3cda590bfdeef9d7f9b80ec8b810cad"
+ },
+ "rule_version": "v2.0.7-review-reject-triage-1",
+ "run_at": "2026-08-10T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（不在已安装 skills 列表内，无法加载）；已按任务约束实施等价的确定性质量检查（完整性 / 唯一性 / 引用完整性 / 连续性 / 一致性），全部为机械复算，无 LLM 参与。",
+ "summary_ref": {
+  "by_category": {
+   "evidence_scope_insufficient_but_same_source_candidate_exists": [
+    "en-042",
+    "en-049",
+    "en-051",
+    "mixed-033",
+    "zh-040",
+    "zh-042"
+   ],
+   "exact_evidence_present_but_review_semantic_disagrees": [
+    "mixed-028",
+    "mixed-029",
+    "multi-030",
+    "zh-023",
+    "zh-026",
+    "zh-029",
+    "zh-036",
+    "zh-054"
+   ],
+   "no_direct_support_in_declared_source": [
+    "mixed-026",
+    "zh-045"
+   ],
+   "partial_or_paraphrase_only": [
+    "en-029",
+    "en-044",
+    "en-050",
+    "multi-019",
+    "zh-052"
+   ],
+   "review_contract_or_model_semantics_inconsistency": [
+    "mixed-027"
+   ]
+  },
+  "candidate_span_rows": 119,
+  "n_rejects": 22,
+  "touched_by_v205_v206": [
+   "mixed-028",
+   "mixed-029",
+   "zh-023",
+   "zh-026",
+   "zh-029",
+   "zh-036",
+   "zh-054"
+  ],
+  "triage_rows": 22,
+  "zero_answer_point_risk_cases": [
+   "en-029",
+   "mixed-026",
+   "multi-019",
+   "zh-042",
+   "zh-045"
+  ]
+ },
+ "task": "v2.0.7-review-reject-triage",
+ "validation": {
+  "canonical_counts_exact": true,
+  "issues_set_matches_rejects": true,
+  "overlay_absent": true,
+  "pack_consistent": true,
+  "review_manifest_ok": true,
+  "sha_chain": true,
+  "strict_validator_161_161": true
+ }
+}

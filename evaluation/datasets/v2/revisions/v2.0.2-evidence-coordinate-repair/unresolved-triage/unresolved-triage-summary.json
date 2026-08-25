@@ -1,0 +1,13 @@
+{
+ "automatic_processing_blocked": true,
+ "candidate_case_ids": [],
+ "candidate_count": 0,
+ "category_counts": {
+  "format_transform_requires_policy": 2,
+  "legacy_range_disambiguable_duplicate": 0,
+  "semantic_or_content_drift": 11,
+  "source_or_chunk_integrity_problem": 0,
+  "whitespace_or_line_ending_only": 0
+ },
+ "recommendation": "保留 unresolved；仅后续经复核的候选可机械写入，当前不激活。"
+}

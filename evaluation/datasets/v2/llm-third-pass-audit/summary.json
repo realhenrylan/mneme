@@ -1,0 +1,113 @@
+{
+ "tool": "corpus_v2_llm_third_pass_audit",
+ "total_cases": 150,
+ "decision_counts": {
+  "confirmed": 68,
+  "reject": 82,
+  "needs_followup": 0
+ },
+ "reject_breakdown": {
+  "by_should_refuse": {
+   "answerable": {
+    "total": 119,
+    "reject": 67,
+    "reject_rate": 0.563
+   },
+   "refusal": {
+    "total": 31,
+    "reject": 15,
+    "reject_rate": 0.4839
+   }
+  },
+  "by_query_type": {
+   "cross_document": {
+    "total": 31,
+    "reject": 28,
+    "reject_rate": 0.9032
+   },
+   "metadata": {
+    "total": 19,
+    "reject": 6,
+    "reject_rate": 0.3158
+   },
+   "mixed_intent": {
+    "total": 12,
+    "reject": 6,
+    "reject_rate": 0.5
+   },
+   "multi_turn": {
+    "total": 24,
+    "reject": 13,
+    "reject_rate": 0.5417
+   },
+   "no_answer": {
+    "total": 30,
+    "reject": 15,
+    "reject_rate": 0.5
+   },
+   "single_fact": {
+    "total": 34,
+    "reject": 14,
+    "reject_rate": 0.4118
+   }
+  },
+  "by_language": {
+   "en": {
+    "total": 60,
+    "reject": 36,
+    "reject_rate": 0.6
+   },
+   "mixed": {
+    "total": 30,
+    "reject": 17,
+    "reject_rate": 0.5667
+   },
+   "zh": {
+    "total": 60,
+    "reject": 29,
+    "reject_rate": 0.4833
+   }
+  },
+  "refusal_rows": {
+   "total": 31,
+   "reject": 15,
+   "reject_rate": 0.4839
+  },
+  "cross_document_rows": {
+   "total": 30,
+   "reject": 28,
+   "reject_rate": 0.9333
+  }
+ },
+ "diagnostic_summary": {
+  "by_category": {
+   "answer_point_not_verbatim_in_snippet": 39,
+   "evidence_mapping_or_source_error": 0,
+   "cross_document_coverage_gap": 28,
+   "refusal_keyword_overlap_only": 15,
+   "refusal_substantive_answerability_claim": 0,
+   "other_or_unclassified": 0
+  },
+  "answer_point_text_facts": {
+   "answerable_rejects": 67,
+   "points_not_verbatim_in_snippet": 67,
+   "points_verbatim_in_snippet": 0
+  },
+  "snippet_boundary_cases": 3,
+  "refusal_keyword_facts": {
+   "refusal_rejects": 15,
+   "keyword_template_notes": 15
+  },
+  "mechanical_only_adjudication": 0,
+  "semantic_adjudication_required": 82
+ },
+ "lineage_limitation": "third-pass manifest 未声明任何输入/输出 SHA 字段：本审计只能校验其计数与报告统计的一致性，无法验证第三轮审阅的生成链完整性（产物 SHA 链见 manifest.json）。",
+ "conclusion": "本审计仅描述分歧结构：任何一条 reject 的最终裁决都需要超出确定性文本校验的语义判断。本审计不判定第三轮或此前审阅孰对，不改动任何数据，不生成 overlay，不解除 v2.1 人工门槛。",
+ "inputs": {
+  "blank_pack": "ceab00700da16526f6c2a68b8a8e2776ba42379fcfb41095b1378f58a0be267a",
+  "llm_filled_pack": "97ccaef8e2b9baa0448bffe96783d7101cfb844be9390592f2185a8eb11d76f1",
+  "llm_third_pass_manifest": "0b6023374b1d9a00823241564d3900f88372dddf4c805a39e959293a392014e8",
+  "llm_third_pass_report": "199cd165a24fade7bbb0b7c3b6775064084bb59fc6bbe671e276b44737336fb2",
+  "chunks": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772"
+ }
+}

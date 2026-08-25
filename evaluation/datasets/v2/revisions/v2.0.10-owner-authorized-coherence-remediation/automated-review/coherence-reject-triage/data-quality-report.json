@@ -1,0 +1,42 @@
+{
+ "dataset": "v2.0.10 coherence-reject-triage decision pack (read-only inputs)",
+ "deterministic_data_quality_checks": {
+  "completeness": {
+   "all_answerable_cases_have_evidence": true,
+   "all_refusal_cases_have_no_evidence": true,
+   "case_count_conserved": true,
+   "evidence_count_conserved": true
+  },
+  "consistency": {
+   "candidate_remains_blocked": true,
+   "issues_count_conservation": true,
+   "no_review_results_reused": true,
+   "review_counts_conservation": true,
+   "strict_covered_equals_passed": true
+  },
+  "continuity": {
+   "follow_up_to_references_exist": true,
+   "input_shas_unchanged": true,
+   "strict_raw_spans_rebuildable": true
+  },
+  "referential_integrity": {
+   "evidence_chunk_ids_exist": true,
+   "evidence_source_matches_chunk": true,
+   "issues_cases_exist_in_draft": true
+  },
+  "uniqueness": {
+   "draft_case_ids_unique": true,
+   "evidence_anchors_unique": true,
+   "evidence_rows_unique": true
+  }
+ },
+ "findings": [],
+ "grain": "one draft case and one raw-codepoint evidence row",
+ "risk": "只读分析包；不构成人工批准，不解除 AUTOMATED_REVIEW_GATE_BLOCKED，不改变 v2.0.10 activation-blocked 状态",
+ "skill": {
+  "available": false,
+  "name": "data-analytics:analyze-data-quality",
+  "note": "可用则实际使用；不可用时执行等价确定性五维检查（完整性 / 唯一性 / 引用完整性 / 连续性 / 一致性），全部为机械复算，无 LLM 参与。",
+  "paths": []
+ }
+}

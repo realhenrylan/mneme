@@ -1,0 +1,42 @@
+{
+ "activation_blocked": true,
+ "auto_applicable": false,
+ "case_ids_by_category": {
+  "anchor_catalog_insufficient": [],
+  "answer_semantics_not_directly_supported": [
+   "mixed-022",
+   "mixed-028",
+   "mixed-029",
+   "zh-026",
+   "zh-029",
+   "zh-036",
+   "zh-054",
+   "zh-055"
+  ],
+  "integrity_or_contract_blocker": [],
+  "model_or_schema_action_invalid": [
+   "zh-023",
+   "zh-035",
+   "zh-037"
+  ],
+  "scoped_chunk_evidence_absent": [
+   "zh-032",
+   "zh-033"
+  ],
+  "source_scope_expansion_required": []
+ },
+ "counts": {
+  "categories": {
+   "anchor_catalog_insufficient": 0,
+   "answer_semantics_not_directly_supported": 8,
+   "integrity_or_contract_blocker": 0,
+   "model_or_schema_action_invalid": 3,
+   "scoped_chunk_evidence_absent": 2,
+   "source_scope_expansion_required": 0
+  },
+  "scope_candidates": 0,
+  "total": 13
+ },
+ "requires_owner_authorization": true,
+ "rule_version": "v2.0.3-reannotation-blocker-audit-1"
+}

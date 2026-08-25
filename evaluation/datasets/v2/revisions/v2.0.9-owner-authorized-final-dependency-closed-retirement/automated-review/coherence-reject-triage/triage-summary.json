@@ -1,0 +1,95 @@
+{
+ "coherence_errors": {
+  "cases": [
+   "en-052",
+   "mixed-030",
+   "mixed-033",
+   "multi-011"
+  ],
+  "classification": "model_output_contract_inconsistency",
+  "count": 4,
+  "rewritten": false
+ },
+ "counts": {
+  "case_count": 137,
+  "confirmed": 111,
+  "errors": 4,
+  "evidence_count": 144,
+  "issues_rows": 26,
+  "needs_followup": 0,
+  "reject": 22
+ },
+ "declarations": {
+  "active_created": false,
+  "data_modified": false,
+  "historical_verdicts_read": false,
+  "llm_called": false,
+  "network_used": false,
+  "overlay_generated": false,
+  "split_created": false,
+  "v2_1_entered": false
+ },
+ "deterministic": true,
+ "gate_verdict": "COHERENCE_REJECT_TRIAGE_OK",
+ "input_sha_unchanged": true,
+ "mixed_033": {
+  "answer_point_count": 1,
+  "byte_identical": true,
+  "case_id": "mixed-033",
+  "data_modified": false,
+  "deletion_advice": {
+   "note": "两条 evidence 行字节级完全一致（同 chunk / 同 raw range / 同 raw span / 同 snippet SHA / 同 source），均支撑同一保留答案点；删除任意一条不改变任何语义、答案点或 source/chunk 关系（144 → 143）。但任何删除都必须由 owner 明确授权，并同步更新 manifest 计数与 outputs SHA 后重跑 strict 校验；本任务只写建议，不修改数据。",
+   "owner_authorization_required": true,
+   "semantically_safe": true
+  },
+  "rows": 2,
+  "same_chunk": true,
+  "same_range": true,
+  "same_raw_span": true,
+  "same_snippet_sha": true,
+  "same_source": true,
+  "supports_same_answer_point": true
+ },
+ "reject_triage": {
+  "by_action": {
+   "repair_candidate": 6,
+   "retire_case": 1,
+   "targeted_recheck_required": 15
+  },
+  "by_classification": {
+   "exact_evidence_present_but_review_semantic_disagrees": 7,
+   "no_direct_support_in_declared_source": 1,
+   "partial_or_paraphrase_only": 8,
+   "same_source_scope_candidate_exists": 6
+  },
+  "cases": [
+   "en-040",
+   "en-041",
+   "en-045",
+   "en-047",
+   "en-048",
+   "en-051",
+   "mixed-022",
+   "mixed-028",
+   "mixed-029",
+   "mixed-034",
+   "multi-012",
+   "multi-019",
+   "multi-020",
+   "multi-027",
+   "multi-028",
+   "zh-023",
+   "zh-036",
+   "zh-046",
+   "zh-050",
+   "zh-052",
+   "zh-054",
+   "zh-058"
+  ],
+  "count": 22
+ },
+ "rule_version": "v2.0.9-coherence-reject-triage-1",
+ "run_at": "2026-08-11T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用（不在已安装 skills 列表内，无法加载；已实际尝试）；已按任务约束执行等价的确定性五维检查（完整性 / 唯一性 / 引用完整性 / 连续性 / 一致性），全部为机械复算，无 LLM 参与。",
+ "task": "v2.0.9-automated-review-coherence-and-reject-root-cause-triage"
+}

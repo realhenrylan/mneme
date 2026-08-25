@@ -1,0 +1,14 @@
+{
+ "equivalent_deterministic_checks": {
+  "draft_rows_after": 149,
+  "evidence_rows_after": 159,
+  "legacy_direct_char_range_matches": 0,
+  "legacy_rows": 5,
+  "validate_evidence_after": true
+ },
+ "skill": {
+  "available": false,
+  "failure": "Skill not found: data-analytics:analyze-data-quality",
+  "name": "data-analytics:analyze-data-quality"
+ }
+}

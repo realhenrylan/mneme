@@ -1,0 +1,252 @@
+{
+ "case_ids": [
+  "multi-030",
+  "multi-031",
+  "multi-032",
+  "multi-033",
+  "multi-034"
+ ],
+ "cases": {
+  "multi-030": {
+   "case_id": "multi-030",
+   "chain_id": "multi-028",
+   "construction": "follow_up",
+   "doc_target": "python-tutorial-zh",
+   "evidence": [
+    {
+     "chunk_id": "32c427fb50e2_chunk_3",
+     "raw_chunk_char_range": {
+      "end": 65,
+      "start": 0
+     },
+     "raw_evidence_span": "交互模式下，上次输出的表达式会赋给变量\n```\n_\n```\n。把 Python 当作计算器时，用该变量实现下一步计算更简单，例如：",
+     "source_id": "python-tutorial-zh.md"
+    }
+   ],
+   "follow_up_to": null,
+   "is_refusal_turn": false,
+   "language": "mixed",
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "previous_turns": null,
+   "turn": 1
+  },
+  "multi-031": {
+   "case_id": "multi-031",
+   "chain_id": "multi-028",
+   "construction": "follow_up",
+   "doc_target": "python-tutorial-en",
+   "evidence": [
+    {
+     "chunk_id": "e564a122a7a2_chunk_7",
+     "raw_chunk_char_range": {
+      "end": 238,
+      "start": 174
+     },
+     "raw_evidence_span": "### 3.1.1. Numbers¶\n The interpreter acts as a simple calculator",
+     "source_id": "python-tutorial-en.md"
+    }
+   ],
+   "follow_up_to": "multi-030",
+   "is_refusal_turn": false,
+   "language": "mixed",
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "previous_turns": null,
+   "turn": 2
+  },
+  "multi-032": {
+   "case_id": "multi-032",
+   "chain_id": "multi-030",
+   "construction": "follow_up",
+   "doc_target": "react-learn-zh",
+   "evidence": [
+    {
+     "chunk_id": "993955159403_chunk_0",
+     "raw_chunk_char_range": {
+      "end": 161,
+      "start": 104
+     },
+     "raw_evidence_span": "React 是一个用于构建用户界面（UI）的 JavaScript 库，用户界面由按钮、文本和图像等小单元内容构建",
+     "source_id": "react-learn-zh.md"
+    }
+   ],
+   "follow_up_to": null,
+   "is_refusal_turn": false,
+   "language": "zh",
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "previous_turns": null,
+   "turn": 1
+  },
+  "multi-033": {
+   "case_id": "multi-033",
+   "chain_id": "multi-030",
+   "construction": "follow_up",
+   "doc_target": "react-learn-zh",
+   "evidence": [
+    {
+     "chunk_id": "993955159403_chunk_4",
+     "raw_chunk_char_range": {
+      "end": 49,
+      "start": 0
+     },
+     "raw_evidence_span": "对于数组的每个元素项，你需要指定一个 `key`。通常你需要使用数据库中的 ID 作为 `key`",
+     "source_id": "react-learn-zh.md"
+    }
+   ],
+   "follow_up_to": "multi-032",
+   "is_refusal_turn": false,
+   "language": "zh",
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "previous_turns": null,
+   "turn": 2
+  },
+  "multi-034": {
+   "case_id": "multi-034",
+   "chain_id": "multi-030",
+   "construction": "follow_up",
+   "doc_target": "react-learn-zh",
+   "evidence": [
+    {
+     "chunk_id": "993955159403_chunk_7",
+     "raw_chunk_char_range": {
+      "end": 148,
+      "start": 133
+     },
+     "raw_evidence_span": "## State: 组件的记忆",
+     "source_id": "react-learn-zh.md"
+    }
+   ],
+   "follow_up_to": "multi-033",
+   "is_refusal_turn": false,
+   "language": "zh",
+   "n_answer_points": 1,
+   "n_evidence": 1,
+   "previous_turns": null,
+   "turn": 3
+  }
+ },
+ "chains": {
+  "multi-028": {
+   "members": [
+    "multi-030",
+    "multi-031"
+   ],
+   "remaining_members": [],
+   "retired_members": [
+    "multi-030",
+    "multi-031"
+   ],
+   "status": "fully_retired"
+  },
+  "multi-030": {
+   "members": [
+    "multi-032",
+    "multi-033",
+    "multi-034"
+   ],
+   "remaining_members": [],
+   "retired_members": [
+    "multi-032",
+    "multi-033",
+    "multi-034"
+   ],
+   "status": "fully_retired"
+  }
+ },
+ "cohort": [
+  "multi-030",
+  "multi-031",
+  "multi-032",
+  "multi-033",
+  "multi-034"
+ ],
+ "deferred_reason": "retirement_deferred_due_to_active_follow_up_chain_dependency",
+ "edges": [
+  {
+   "field_path": "metadata.chain_id",
+   "from": "multi-030",
+   "relation": "chain_id",
+   "to": "multi-028"
+  },
+  {
+   "field_path": "metadata.chain_id",
+   "from": "multi-031",
+   "relation": "chain_id",
+   "to": "multi-028"
+  },
+  {
+   "field_path": "metadata.follow_up_to",
+   "from": "multi-031",
+   "relation": "follow_up_to",
+   "to": "multi-030"
+  },
+  {
+   "field_path": "metadata.chain_id",
+   "from": "multi-032",
+   "relation": "chain_id",
+   "to": "multi-030"
+  },
+  {
+   "field_path": "metadata.chain_id",
+   "from": "multi-033",
+   "relation": "chain_id",
+   "to": "multi-030"
+  },
+  {
+   "field_path": "metadata.follow_up_to",
+   "from": "multi-033",
+   "relation": "follow_up_to",
+   "to": "multi-032"
+  },
+  {
+   "field_path": "metadata.chain_id",
+   "from": "multi-034",
+   "relation": "chain_id",
+   "to": "multi-030"
+  },
+  {
+   "field_path": "metadata.follow_up_to",
+   "from": "multi-034",
+   "relation": "follow_up_to",
+   "to": "multi-033"
+  }
+ ],
+ "impact_summary": {
+  "answer_points_removed": 5,
+  "case_count_after": 138,
+  "cases_removed": 5,
+  "chains_fully_retired": [
+   "multi-028",
+   "multi-030"
+  ],
+  "dangling_refs": 0,
+  "downstream_refs_inside_group": 6,
+  "evidence_count_after": 146,
+  "evidence_rows_removed": 5,
+  "external_refs_outside_group": 2,
+  "retire_cohort": [
+   "multi-030",
+   "multi-031",
+   "multi-032",
+   "multi-033",
+   "multi-034"
+  ],
+  "upstream_chains_affected": [
+   "multi-028",
+   "multi-030"
+  ]
+ },
+ "upstream_impact": {
+  "multi-028": {
+   "chain_status": "fully_retired",
+   "lost_chain_members": [
+    "multi-030",
+    "multi-031"
+   ],
+   "note": "chain multi-028 的成员（multi-030/031）随退役组全部移除；chain multi-028 线程清空。case multi-028 本身属于 chain multi-025（成员 multi-027/028/029），不受影响"
+  }
+ }
+}

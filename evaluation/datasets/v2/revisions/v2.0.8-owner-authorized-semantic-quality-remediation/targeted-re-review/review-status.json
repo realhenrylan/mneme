@@ -1,0 +1,7 @@
+{
+ "candidate_unchanged": true,
+ "case_id": "mixed-027",
+ "diagnostic_only": true,
+ "model": "deepseek-v4-pro",
+ "status": "TARGETED_REVIEW_OK"
+}
