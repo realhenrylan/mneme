@@ -18,6 +18,22 @@ from unittest import mock
 import pytest
 
 
+@pytest.fixture(autouse=True)
+def _isolate_data_dir(tmp_path, monkeypatch):
+    """观测 trace/consent 是本机全局态（~/.mneme/traces）。
+
+    本组测试会驱动 answer_query 全链路：owner 开启观测后，真实 consent 会
+    让 rag 接线进入 tracing 激活路径（检索多收 `_channel_sink` kwarg、并向
+    真实采集库写测试流量）。这里把数据目录沙箱化到空目录——consent 缺失 ⇒
+    观测 Off ⇒ 与本文件旧 fake 桩签名的兼容契约成立，且绝不触碰真实库。
+    """
+    monkeypatch.setenv("MNEME_DATA_DIR", str(tmp_path / "data"))
+    from src.config import reset_settings
+    reset_settings()
+    yield
+    reset_settings()
+
+
 def _sha256(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 

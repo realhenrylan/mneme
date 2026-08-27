@@ -24,6 +24,21 @@ from rich.console import Console
 
 import src.rag as rag
 from src import citations
+
+
+@pytest.fixture(autouse=True)
+def _isolate_data_dir(tmp_path, monkeypatch):
+    """观测 trace/consent 是本机全局态（~/.mneme/traces）。
+
+    本组测试驱动 answer_query/stream 全链路：owner 开启观测后，rag 接线会
+    进入 tracing 激活路径（检索多收 `_channel_sink` kwarg、向真实采集库写
+    测试流量）。数据目录沙箱化 ⇒ consent 缺失 ⇒ 观测 Off，兼容既有桩签名。
+    """
+    monkeypatch.setenv("MNEME_DATA_DIR", str(tmp_path / "data"))
+    from src.config import reset_settings
+    reset_settings()
+    yield
+    reset_settings()
 from src.domain import (
     CITATION_NOT_REQUIRED,
     CITATION_UNVERIFIED,
