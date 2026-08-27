@@ -1,0 +1,12 @@
+{
+ "counts": {
+  "case_count": 3,
+  "confirmed": 2,
+  "errors": 0,
+  "needs_followup": 0,
+  "rejected": 1
+ },
+ "gate_verdict": "RESTORED_VERIFICATION_BLOCKED",
+ "rule_version": "v2.1-restored-focus-review-1",
+ "run_at": "2026-08-27T00:00:00+00:00"
+}

@@ -1,0 +1,33 @@
+{
+ "actor": "OWNER_AUTHORIZED_V21_RESTORED_FOCUS_REVIEW",
+ "counts": {
+  "case_count": 3,
+  "confirmed": 2,
+  "errors": 0,
+  "needs_followup": 0,
+  "rejected": 1
+ },
+ "declarations": {
+  "candidate_bytes_unchanged": true,
+  "expectation_blind": true,
+  "llm_called": true,
+  "network_used": true,
+  "no_fallback": true,
+  "overlay_generated": false,
+  "results_not_auto_applied": true,
+  "v20_frozen_revision_touched": false
+ },
+ "expected_target_count": 3,
+ "frozen_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "gate_verdict": "RESTORED_VERIFICATION_BLOCKED",
+ "input_shas": {
+  "candidate-manifest.json": "066b0f7fad1f0be619a8baed615d19ec75df3428956706b5b608b34fdae7ed7f",
+  "rulings-ledger.jsonl": "b5eeefe7cd2fbcddf90f5e7e547c4231999cc90e149a8c993a635688afa92b08"
+ },
+ "manifest_sha256": "57f7fa7a1b725b13e398369d5c4dcc6292d7962bfcece88b16e46f9028f03634",
+ "preregistration": "plans/V21-RESTORED-CASES-VERIFICATION-PREREGISTRATION-2026-08-27.md",
+ "rule_version": "v2.1-restored-focus-review-1",
+ "run_at": "2026-08-27T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用；已实施等价确定性检查（目标集推导校验/双构建字节一致/payload 泄露扫描），全部为机械复算，无额外 LLM 参与。",
+ "task": "v2.1-restored-focus-review"
+}

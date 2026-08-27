@@ -1,0 +1,33 @@
+{
+ "actor": "OWNER_AUTHORIZED_V21_FINAL_RULINGS_APPLY",
+ "counts": {
+  "retired_ambiguous_phrasing": 1,
+  "retired_persistent_contract_error": 3,
+  "verified_active": 2
+ },
+ "declarations": {
+  "candidate_bytes_unchanged": true,
+  "governance_ledger_only_no_data_rewrite": true,
+  "llm_called": false,
+  "network_used": false,
+  "overlay_generated": false,
+  "pending_pool_after_batch": [
+   "zh-023",
+   "multi-012"
+  ]
+ },
+ "gate_verdict": "V21_FINAL_RULINGS_APPLY_OK",
+ "input_shas": {
+  "contract-review-results.jsonl": "5eadd053b27a7cd24d07d819b7b03e3ddb6c14523664f6407f8bd301c7f951cf",
+  "owner-decision-template.jsonl": "bf056ab25e58399635016ba21002c1222eb31f43811ec8079ae63b35c4001044",
+  "restored-review-results.jsonl": "b350f6c0d8367f9cfbcde862041119724765236cc53e985add9b4277db7bfc53",
+  "rulings-ledger.jsonl": "b5eeefe7cd2fbcddf90f5e7e547c4231999cc90e149a8c993a635688afa92b08"
+ },
+ "manifest_sha256": "db85da379c5cd79203514b0bc5268f29c89b2b57b860a1f051ce56e63e092c54",
+ "preregistration": [
+  "plans/V21-RESTORED-CASES-VERIFICATION-PREREGISTRATION-2026-08-27.md"
+ ],
+ "rule_version": "v2.1-final-rulings-apply-1",
+ "run_at": "2026-08-27T00:00:00+00:00",
+ "task": "v2.1-final-rulings-apply"
+}
