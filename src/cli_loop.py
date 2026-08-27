@@ -42,8 +42,15 @@ def _handle_trace_command(query: str) -> bool:
         print("delete-trace 需要完整的 32 位十六进制 trace ID（拒绝模糊/前缀删除）")
         return True
     from src.production_observability import TraceStore
-    store = TraceStore.from_environment()
-    store.delete_trace(argument)
+    # P1.1-E：构造/删除失败（含 traces root 落入仓库被防泄漏守卫
+    # fail-closed 拒绝）必须给出可读错误，不得让命令崩溃——与 TUI
+    # _handle_delete_trace 的隔离语义一致。
+    try:
+        store = TraceStore.from_environment()
+        store.delete_trace(argument)
+    except Exception as exc:
+        print(f"delete-trace 失败：{exc}")
+        return True
     print(f"已删除 trace {argument}")
     return True
 

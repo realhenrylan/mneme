@@ -25,6 +25,12 @@ Mneme 为本地文档建立索引，并通过 OpenAI 兼容 API 回答问题。�
 
 生产观测默认**关闭**。Minimal 诊断观测必须由用户显式选择，仅在 `${MNEME_DATA_DIR}/traces/`（默认 `~/.mneme/traces/`）写入匿名化哈希字段与检索漏斗元数据。原始问题、历史、改写查询、子查询、模型响应和生成回答正文永不持久化。Exact replay 暂不提供。trace 默认保留 30 天，可使用 `delete-trace <id>`（或 TUI `/delete-trace`）删除；撤回同意会关闭观测并删除当前会话 trace。
 
+**推送前自检（trace 数据绝不进远程）。** trace 文件与 `consent.json` 是 owner 个人本地数据，任何情况下不得被 stage/commit/push。推送前：
+
+1. 运行 `git status`——确认没有 `traces/`、`consent.json`、`.mneme/` 类条目；
+2. 确认观测保持**默认关闭**：不存在自动开启 consent 的代码路径，仓库内零真实 trace 数据；
+3. 纵深防御：运行时守卫（`src/production_observability.py`）会在 traces root 落入工作树时 fail-closed 拒绝，`.gitignore` 也带有对应防御模式——但两者都不能替代上述人工检查。
+
 ## 支持的文件类型
 
 | 类型 | 扩展名 |

@@ -25,6 +25,12 @@ Mneme indexes local documents and answers questions through an OpenAI-compatible
 
 Production observability is **Off by default**. Minimal diagnostic mode is an explicit local opt-in and writes only anonymized, hashed query/history fields and retrieval funnel metadata under `${MNEME_DATA_DIR}/traces/` (default `~/.mneme/traces/`). Raw queries, history, rewritten queries, sub-queries, model responses, and generated answer text are never persisted. Exact replay is not available. Traces are retained for 30 days, can be deleted with `delete-trace <id>` (or TUI `/delete-trace`), and revoking consent disables capture and removes the current session traces.
 
+**Pre-push checklist (trace data never goes to remote).** Trace files and `consent.json` are the owner's personal local data and must never be staged or committed. Before pushing:
+
+1. Run `git status` — confirm no `traces/`, `consent.json`, or `.mneme/` entries appear.
+2. Confirm observability stays **Off by default**: no code path enables consent automatically, and the repository contains zero real trace data.
+3. Defense in depth: a runtime guard (`src/production_observability.py`) fails closed if a traces root resolves inside the working tree, and `.gitignore` carries matching defensive patterns — but neither replaces the manual check above.
+
 ## Supported file types
 
 | Type | Extensions |

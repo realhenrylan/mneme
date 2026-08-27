@@ -66,3 +66,10 @@ docs/.vitepress/cache/
 data/chroma/
 None/
 .codex_course_extract.py
+
+# P1.1-E 观测数据纵深防御：真实 trace/consent 只允许存在于仓库外
+# MNEME_DATA_DIR（默认 ~/.mneme）；代码库内零真实 trace 由
+# src/production_observability.py 的防泄漏守卫在运行时强制。
+.mneme/
+consent.json
+traces/

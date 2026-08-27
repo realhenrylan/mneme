@@ -71,6 +71,28 @@ def _safe_id(value: str) -> bool:
     return bool(re.fullmatch(r"[0-9a-f]{32}", value))
 
 
+def _module_repo_root() -> Path:
+    """仓库工作树根：本模块物理上位于 <repo>/src/ 下，parents[1] 即仓库根。
+
+    刻意不用 Path.cwd() 推导——产品可能从任意目录启动，防泄漏守卫的
+    参照系不能随进程 CWD 漂移。
+    """
+    return Path(__file__).resolve().parents[1]
+
+
+def _is_within(child: Path, ancestor: Path) -> bool:
+    """normcase 后判断 child 是否等于或位于 ancestor 之内。
+
+    Windows 文件系统大小写不敏感且分隔符可混用，比较前必须统一；
+    守卫宁可误拒也不放过任何一个落在仓库内的路径。
+    """
+    child_str = os.path.normcase(str(child))
+    ancestor_str = os.path.normcase(str(ancestor))
+    if child_str == ancestor_str:
+        return True
+    return child_str.startswith(ancestor_str.rstrip("\\/") + os.sep)
+
+
 @dataclass
 class _Consent:
     level: ConsentLevel = ConsentLevel.OFF
@@ -95,6 +117,18 @@ class TraceStore:
     def _validate_root(root: Path) -> None:
         if not root.is_absolute():
             raise ValueError("trace root must be absolute")
+        # P1.1-E 防泄漏守卫（owner PUSH_SAFETY 决策）：trace 数据与
+        # consent.json 属 owner 个人本地数据，任何情况下不得落入 git
+        # 工作树。命中即在任何 mkdir/写盘之前 fail-closed 拒绝启动，
+        # 且不提供绕过开关；旧的四子树检查保留作纵深防御。
+        repo_root = _module_repo_root()
+        if _is_within(root, repo_root):
+            raise ValueError(
+                f"trace root 位于仓库工作树内（{repo_root}），"
+                "观测数据绝不允许写入代码库：请把 MNEME_DATA_DIR 指向"
+                "仓库外的私有数据目录（默认 ~/.mneme），或将该 traces "
+                "目录移出仓库后重试"
+            )
         cwd = Path.cwd().resolve()
         protected = [cwd / "src", cwd / "plans", cwd / "evaluation", cwd / "tests"]
         if root == cwd or any(root == item or item in root.parents for item in protected):
@@ -361,3 +395,74 @@ class TraceStore:
                 self.delete_trace(trace_id)
                 removed += 1
         return removed
+
+    def patrol(self) -> dict[str, Any]:
+        """只读完整性巡检（owner 锁定 PATROL_INTERVAL = every_50_traces）。
+
+        输出 trace 计数、逐条 verify_integrity 结论与磁盘占用；失败条目
+        仅列 trace_id 与原因类别，不读取/回显任何事件内容，不修改任何
+        文件——巡检只看完整性，不看语义、不改策略。
+        """
+        segments = sorted(self.root.glob("*.jsonl")) if self.root.is_dir() else []
+        verified = 0
+        failed: list[dict[str, str]] = []
+        total_bytes = 0
+        for segment in segments:
+            trace_id = segment.stem
+            total_bytes += segment.stat().st_size
+            try:
+                self.verify_integrity(trace_id)
+                verified += 1
+            except FileNotFoundError:
+                failed.append({"trace_id": trace_id, "reason": "manifest_missing"})
+            except ValueError:
+                failed.append({"trace_id": trace_id, "reason": "integrity_failed"})
+        return {
+            "root": str(self.root),
+            "trace_count": len(segments),
+            "verified": verified,
+            "failed": failed,
+            "total_bytes": total_bytes,
+            "integrity": "ok" if not failed else "failed",
+        }
+
+
+def main(argv: list[str] | None = None) -> int:
+    """``python -m src.production_observability`` 入口；唯一子命令 ``patrol``。
+
+    退出码约定：0 = 全部通过（含零 trace 的空库）；1 = 存在完整性失败；
+    2 = 用法/路径非法（含仓库内 root 被防泄漏守卫拒绝）。输出为 JSON
+    摘要，绝不包含事件正文。
+    """
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        prog="python -m src.production_observability",
+        description="本地 Minimal 观测 trace 的只读巡检工具",
+    )
+    subparsers = parser.add_subparsers(dest="command", required=True)
+    patrol_parser = subparsers.add_parser(
+        "patrol", help="只读完整性巡检：trace 计数 / 完整性结论 / 磁盘占用")
+    patrol_parser.add_argument(
+        "--root", default="",
+        help="traces 根目录（默认 MNEME_DATA_DIR/traces，未设时 ~/.mneme/traces）")
+    args = parser.parse_args(argv)
+
+    if args.root:
+        root = Path(args.root).expanduser().resolve()
+    else:
+        data_dir = os.getenv("MNEME_DATA_DIR", "").strip()
+        base = Path(data_dir).expanduser() if data_dir else Path.home() / ".mneme"
+        root = (base / "traces").resolve()
+    try:
+        store = TraceStore(root)
+    except ValueError as exc:
+        print(json.dumps({"error": str(exc)}, ensure_ascii=False))
+        return 2
+    report = store.patrol()
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+    return 1 if report["failed"] else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

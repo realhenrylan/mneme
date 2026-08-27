@@ -874,6 +874,16 @@ C 线 manifest v5 门控**回退三处接线**（`src/rag.py`/`src/cli_loop.py`/
 **重新接线**——manifest v5 保持入口冻结证据不重新生成，接线后行为中性
 偏离由 Off 零效应契约测试单独验证（详见 CHANGELOG 2026-08-25 条目与
 `results/config-contract-acceptance/p11-m-final-acceptance-report.md`）。
+**P1.1-E 启用落地（2026-08-25，owner-only 采集期待启动）：** owner 已锁定
+启用决策单（`ENABLED_FOR = owner_only`，决策原文见 replay 契约 §6.1），本阶段
+仅固化守卫与治理，不改变任何检索策略：①防泄漏守卫——traces root 解析到仓库
+工作树内即在写盘前 fail-closed 拒绝 capture 启动；②只读巡检命令
+`python -m src.production_observability patrol`；③`.gitignore` 纵深防御 +
+README 推送前自检清单；④采集与分析计划见
+`plans/P1.1-COLLECTION-AND-ANALYSIS-PLAN-2026-08-25.md`。截至回填时未开启
+consent、未采集任何真实 trace；实际开启是 owner 手工 `/consent` 动作，样本
+达标（200 条 / 跨文档 ≥30 / 4 周，先到为准）后的聚合分析与预注册实验为
+后续独立任务。
 
 **P1.0 回填（诊断已完成，结论固定）：** `[x] P1.0 生产检索—证据漏斗只读
 根因诊断` → **`P1.0_DECISION = STOP_EVIDENCE_INSUFFICIENT`**。诊断基于当前
