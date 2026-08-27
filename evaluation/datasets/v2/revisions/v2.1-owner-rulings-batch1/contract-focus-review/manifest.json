@@ -1,0 +1,32 @@
+{
+ "actor": "OWNER_AUTHORIZED_V21_CONTRACT_FOCUS_REVIEW",
+ "counts": {
+  "case_count": 4,
+  "confirmed": 1,
+  "errors": 3,
+  "needs_followup": 0,
+  "rejected": 0
+ },
+ "declarations": {
+  "candidate_bytes_unchanged": true,
+  "expectation_blind": true,
+  "llm_called": true,
+  "network_used": true,
+  "no_fallback": true,
+  "overlay_generated": false,
+  "results_not_auto_applied": true,
+  "v20_frozen_revision_touched": false
+ },
+ "expected_target_count": 4,
+ "frozen_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "gate_verdict": "CONTRACT_BLIND_REVIEW_BLOCKED",
+ "input_shas": {
+  "candidate-manifest.json": "066b0f7fad1f0be619a8baed615d19ec75df3428956706b5b608b34fdae7ed7f",
+  "rulings-ledger.jsonl": "b5eeefe7cd2fbcddf90f5e7e547c4231999cc90e149a8c993a635688afa92b08"
+ },
+ "manifest_sha256": "d5e916d8e545d760ed7d6902652fd2c5aca5e943d8b2c492b8703ce41d7bd32d",
+ "rule_version": "v2.1-contract-focus-review-1",
+ "run_at": "2026-08-27T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用；已实施等价确定性检查（目标集推导校验/双构建字节一致/payload 泄露扫描），全部为机械复算，无额外 LLM 参与。",
+ "task": "v2.1-contract-focus-review"
+}

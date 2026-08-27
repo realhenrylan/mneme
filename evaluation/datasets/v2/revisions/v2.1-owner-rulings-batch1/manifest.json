@@ -1,0 +1,32 @@
+{
+ "actor": "OWNER_AUTHORIZED_V21_RULINGS_APPLY",
+ "counts": {
+  "contract_blind_review_authorized": 4,
+  "maintained_reject_archived": 15,
+  "restored": 3
+ },
+ "declarations": {
+  "candidate_bytes_unchanged": true,
+  "frozen_inputs_read_only": true,
+  "human_approved_by_owner_batch_ruling": true,
+  "llm_called": false,
+  "network_used": false,
+  "overlay_generated": false,
+  "restored_cases_enter_verification_pool": 3,
+  "rulings_only_no_data_rewrite": true,
+  "v20_frozen_revision_touched": false
+ },
+ "frozen_revision": "v2.0.11-owner-authorized-en048-same-source-repair",
+ "gate_verdict": "V21_OWNER_RULINGS_APPLY_OK",
+ "input_shas": {
+  "freeze-summary.json": "17c8ba4f2c5d18a3ff9aa0ca0a6a7a53f32229ffcb5992852aaa4844c627dade",
+  "owner-decision-template.jsonl": "bf056ab25e58399635016ba21002c1222eb31f43811ec8079ae63b35c4001044",
+  "persistent-contract-errors.jsonl": "4b69d2533af56ea78a7fd66c0c30786292aa481de6f3f8bf0a3776f376728cc0",
+  "stable-reject-root-cause-triage.jsonl": "6f0873b47d3414bec5c1f2a303b824c521493ec662ff9730692850a43ccbf240"
+ },
+ "manifest_sha256": "656c3738c90df9c611e27b406d14ed202dbe70e992c8df28c684e3127b3f627c",
+ "rule_version": "v2.1-owner-rulings-apply-1",
+ "run_at": "2026-08-27T00:00:00+00:00",
+ "skill_note": "data-analytics:analyze-data-quality skill 在本环境中不可用；已实施等价确定性检查（SHA 校验/集合一致/kind 交叉校验/双构建字节一致），全部为机械复算，无额外 LLM 参与。",
+ "task": "v2.1-owner-rulings-apply"
+}
