@@ -97,3 +97,56 @@ is_low_quality, chunk_count, parse_degraded, error}`。默认 None → 行为逐
 红线不变：v1 数据集与 v2.0.11 冻结树零改写；实验/验收在沙箱数据目录跑，
 零 trace 写入；不 stage/commit/push 任何 trace 与 consent 数据。
 LLM 成本：2.2 约 71×(1 rewrite + 1 decompose)，零生成调用。
+
+---
+
+## Round-3 预注册修订（2026-08-28，owner 已批准）
+
+### 背景与动机（run-2 机械证据）
+
+run-2 唯一残差案例 en-017 经机械验证为**度量仪器失明**：真值 chunk_15
+（390 字符）全文包含于在场 parent chunk_13（1277 字符），而冻结指标按
+chunk-id 集合交集计算，对 parent 替换（parent-child 特性的设计行为）结构性
+计 0——仪器无法区分「证据在场（更大块）」与「证据丢失」。非门禁的
+containment-corrected 诊断 Δ=+0.1373 / worst=+0.00，两门禁条件在修正仪器下
+均满足。
+
+### owner 批示
+
+「批准」（2026-08-28）：主指标改为 containment-aware 真值匹配——**修仪器
+而非调阈值，阈值冻结不变**（Δ≥0.05、单例恶化≤0.05）；重跑一次即为 2.2 终审。
+
+### 指标精确定义（先于 run-3 重跑冻结）
+
+真值块计入覆盖，当且仅当满足其一：
+
+1. **id 命中**：真值 chunk_id ∈ context chunk id 集（select 直接召回）；
+2. **文本包含**：真值块文本（空白归一：连续空白折叠为单空格）是任一
+   context 块文本（同归一）的连续子串——覆盖 parent 替换/邻接携带的
+   「证据在场」设计行为；**空文本真值不适用本条**（空串是任何串的子串，
+   必须显式排除，否则恒真）。
+
+配套约定：
+
+- 真值文本 = 真值 chunk id 在同一索引快照中的块全文（documents 按
+  chunk_id 反查）；context 文本同法反查；两份文本随密封产物落盘供复核；
+- 拒答无 context 计 0；真值为空属非法状态 fail-closed（不变）；
+- 真值 id/text 元组长度不一致 fail-closed；
+- 判定顺序、门禁三态、密封产物自哈希、输出目录防覆盖全部不变；
+- 密封 manifest 增记 `metric_version = "r3-containment-aware"`，与 run-1/2
+  （chunk-id 口径）产物可区分；
+- run-3 复用 run-2 同一沙箱索引快照（不 force rebuild）——单变量只换仪器，
+  不换数据。
+
+### 终审规则
+
+`results/stage2-parentchild/run-3-2026-08-28/` 机器判定即终审：
+`STAGE2_22_ACCEPTED` → 2.2 `[~]→[x]`；否则以 NOT_PROVEN/REGRESSION 如实
+归档（扩展预算调和修复作为行为改进独立保留，不受门禁影响）。
+
+### 终审结果（2026-08-28 实施）
+
+run-3 机器判定 **`STAGE2_22_ACCEPTED`**（n=71，mean OFF 0.4377 → ON
+0.5680，Δ=+0.1303 ≥ 0.05，worst_case=0.0）——2.2 `[~]→[x]`；en-017 失明
+案例复核 recall 1.0；产物自哈希复算 OK；报告
+`results/stage2-parentchild/report-2026-08-28-run3.md`。

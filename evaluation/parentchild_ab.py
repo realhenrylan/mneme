@@ -9,8 +9,10 @@
 唯一差异是 select 之后的扩展阶段（由 ``RAG_CONTEXT_EXPANSION`` 模块
 开关门控，按臂临时覆盖、finally 恢复——与拒答策略消融同模式）。
 
-指标：chunk 级 context recall（真值来自 ``compare.build_ground_truth_map``
-的 snippet→chunk 匹配）。零 LLM 生成调用（只跑规划，不跑回答）。
+指标（round-3 预注册修订，owner 2026-08-28 批准）：containment-aware 真值
+覆盖——真值块按 id 命中，或其文本（空白归一）被任一 context 块文本包含
+即计覆盖（parent 替换是设计行为，chunk-id 交集对之结构性失明——修仪器
+非调阈值，阈值不变）；密封 manifest 记 ``metric_version`` 区分口径。
 
 门禁（n=预期 71，剔除 multi_turn/should_refuse/无匹配真值）：
 ``STAGE2_22_ACCEPTED`` / ``STAGE2_22_NOT_PROVEN`` / ``STAGE2_22_REGRESSION``。
@@ -40,6 +42,9 @@ GATE_ARM_BASE = "OFF"
 GATE_ARM_TREATMENT = "ON"
 
 PREREG_DOC = "plans/STAGE2-PART2-DESIGN-2026-08-28.md"
+# 主指标口径版本：run-1/2 = chunk-id 集合交集；run-3 起 containment-aware
+# （设计文档 Round-3 节，owner 批准后修订，阈值未动）
+METRIC_VERSION = "r3-containment-aware"
 
 
 class GateError(RuntimeError):
@@ -48,7 +53,11 @@ class GateError(RuntimeError):
 
 @dataclass
 class CaseOutcome:
-    """单臂单 case 的产物（context 侧指标输入；零生成调用）。"""
+    """单臂单 case 的产物（context 侧指标输入；零生成调用）。
+
+    round-3：携带 context/真值块文本（与 id 元组逐位对齐，按 chunk_id
+    从同一索引快照反查），供 containment 主指标与密封产物复核。
+    """
 
     case_id: str
     arm: str
@@ -57,6 +66,8 @@ class CaseOutcome:
     context_k: int
     refused: bool
     plan_fingerprint: str
+    context_chunk_texts: tuple[str, ...] = ()
+    truth_chunk_texts: tuple[str, ...] = ()
 
 
 # ── 真值与目标集 ─────────────────────────────────────────────────
@@ -121,17 +132,29 @@ def run_case_pair(
     plan: Any,
     prepare_arms: Callable,
     truth: set[str] = frozenset(),
+    *,
+    chunk_text_by_id: dict[str, str],
 ) -> tuple[CaseOutcome, CaseOutcome]:
-    """同一计划跑 ON/OFF 两臂，返回 (ON, OFF) 两个 CaseOutcome。"""
+    """同一计划跑 ON/OFF 两臂，返回 (ON, OFF) 两个 CaseOutcome。
+
+    round-3：``chunk_text_by_id``（索引快照的 chunk_id → 块全文）必传——
+    文本与 id 同源同快照，是 containment 主指标的输入与产物复核依据。
+    """
+    # 排序固化：真值集合转元组若依赖 set 迭代序，密封产物将随
+    # PYTHONHASHSEED 逐进程漂移，破坏逐字节可复现性。
+    ordered_truth = tuple(sorted(truth))
+    truth_texts = tuple(chunk_text_by_id.get(tid, "") for tid in ordered_truth)
     outcomes: list[CaseOutcome] = []
     for arm in ARMS:
         evidence = prepare_arms(arm, case.query, plan)
+        context_chunk_ids = tuple(evidence.context_chunk_ids)
         outcomes.append(CaseOutcome(
             case_id=case.id, arm=arm,
-            context_chunk_ids=tuple(evidence.context_chunk_ids),
-            # 排序固化：真值集合转元组若依赖 set 迭代序，密封产物将随
-            # PYTHONHASHSEED 逐进程漂移，破坏逐字节可复现性。
-            truth_chunk_ids=tuple(sorted(truth)),
+            context_chunk_ids=context_chunk_ids,
+            context_chunk_texts=tuple(
+                chunk_text_by_id.get(cid, "") for cid in context_chunk_ids),
+            truth_chunk_ids=ordered_truth,
+            truth_chunk_texts=truth_texts,
             context_k=int(evidence.context_k),
             refused=bool(evidence.refused),
             plan_fingerprint=getattr(evidence, "plan_fingerprint", ""),
@@ -141,16 +164,44 @@ def run_case_pair(
 
 # ── 指标与门禁 ───────────────────────────────────────────────────
 
+def _norm_text(text: str) -> str:
+    """空白归一：连续空白折叠为单空格（parent 拼接/换行差异不破坏包含判定）。"""
+    return " ".join((text or "").split())
+
+
 def chunk_context_recall(outcome: Any) -> float:
-    """主指标：最终 context 对真值 chunk 的覆盖率；拒答无 context 计 0。"""
+    """主指标（round-3 预注册修订）：containment-aware 真值覆盖。
+
+    真值块计入覆盖，当且仅当满足其一（设计文档 Round-3 节冻结定义）：
+    1. id 命中：真值 chunk_id ∈ context chunk id 集（select 直接召回）；
+    2. 文本包含：真值块文本（空白归一）是任一 context 块文本（同归一）
+       的连续子串——parent 替换/邻接携带是「证据在场」的设计行为；
+       空文本真值不适用本条（空串是任何串的子串，必须显式排除）。
+
+    拒答无 context 计 0；真值为空属非法状态 fail-closed（不变）。
+    """
     if getattr(outcome, "refused", False):
         return 0.0
-    truth = set(outcome.truth_chunk_ids)
-    if not truth:
+    truth_ids = tuple(outcome.truth_chunk_ids)
+    truth_texts = tuple(outcome.truth_chunk_texts)
+    if not truth_ids:
         raise GateError(
             f"case {outcome.case_id!r} 真值为空（目标集过滤应已剔除）")
-    covered = set(outcome.context_chunk_ids) & truth
-    return len(covered) / len(truth)
+    if len(truth_texts) != len(truth_ids):
+        raise GateError(
+            f"case {outcome.case_id!r} 真值 id/text 数量不一致"
+            f"（{len(truth_ids)} vs {len(truth_texts)}）")
+    ctx_ids = set(outcome.context_chunk_ids)
+    ctx_norm = [_norm_text(t) for t in outcome.context_chunk_texts]
+    covered = 0
+    for tid, ttext in zip(truth_ids, truth_texts):
+        if tid in ctx_ids:
+            covered += 1
+            continue
+        t_norm = _norm_text(ttext)
+        if t_norm and any(t_norm in c for c in ctx_norm):
+            covered += 1
+    return covered / len(truth_ids)
 
 
 def evaluate_gate(recalls: dict[str, dict[str, float]], case_ids: list[str]) -> dict:
@@ -225,6 +276,8 @@ def write_outputs(
         row = asdict(o)
         row["context_chunk_ids"] = list(o.context_chunk_ids)
         row["truth_chunk_ids"] = list(o.truth_chunk_ids)
+        row["context_chunk_texts"] = list(o.context_chunk_texts)
+        row["truth_chunk_texts"] = list(o.truth_chunk_texts)
         row["chunk_context_recall"] = recalls.get(o.arm, {}).get(o.case_id)
         rows.append(row)
     outcomes_bytes = ("\n".join(
@@ -235,6 +288,7 @@ def write_outputs(
     manifest_body = {
         "lineage": "stage2-parentchild-acceptance",
         "preregistration_doc": prereg_doc,
+        "metric_version": METRIC_VERSION,
         "dataset_sha256": dataset_sha,
         "corpus_files": corpus_files,
         "arms": list(ARMS),
@@ -304,6 +358,12 @@ def main(argv: list[str] | None = None) -> int:
         raise GateError("目标集为空，无法判定门禁")
 
     from evaluation.compare import prepare_query_plan
+    # containment 主指标的文本反查表：与索引同一快照（chunk_id 兜底命名
+    # 约定与 rag._ordered_chunk_ids 一致，保证 context id 必可命中）
+    text_by_chunk_id = {
+        (meta or {}).get("chunk_id", f"chunk_{i}"): documents[i]
+        for i, meta in enumerate(metadatas)
+    }
     prepare_arms = make_prepare_arms(index_bundle)
     outcomes: list[CaseOutcome] = []
     recalls: dict[str, dict[str, float]] = {arm: {} for arm in ARMS}
@@ -312,7 +372,8 @@ def main(argv: list[str] | None = None) -> int:
         plan = prepare_query_plan(
             case, model, collection, bm25, documents, metadatas, history=None)
         on, off = run_case_pair(
-            case, plan, prepare_arms, truth=truth[case.id])
+            case, plan, prepare_arms, truth=truth[case.id],
+            chunk_text_by_id=text_by_chunk_id)
         outcomes.extend([on, off])
         recalls["ON"][case.id] = chunk_context_recall(on)
         recalls["OFF"][case.id] = chunk_context_recall(off)

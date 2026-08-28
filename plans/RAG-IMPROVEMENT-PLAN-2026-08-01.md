@@ -333,8 +333,9 @@
 > **当前进度：** `[~]` 结构化模型、loader、parent/adjacent 和 history-aware
 > rewrite 已有实现。2.3 已于 2026-08-28 通过「失败可见、可回退」端到端验收
 > （`STAGE2_23_ACCEPTED`）；2.4 已于同日通过受控多轮 A/B/C 验收门禁
-> （`STAGE2_24_ACCEPTED`）；2.2 的 A/B 实验判定 `STAGE2_22_NOT_PROVEN`
-> （均值 +11.9pp 但存在单例挤占回退，保持 `[~]`）；2.1 仍保留 `[~]`。
+> （`STAGE2_24_ACCEPTED`）；2.2 于同日通过 round-3 终审
+> （`STAGE2_22_ACCEPTED`，containment-aware 主指标）；2.1 已收口 `[x]`。
+> **阶段 2 四个子项全部完成。**
 
 ### [x] 2.1 标准文档模型
 
@@ -370,7 +371,7 @@
 3. 每个 loader 输出统一的 `Document` 对象
 4. 分格式建立质量等级：原生文本、结构化解析、OCR；TUI 在低质量解析时提示用户
 
-### [~] 2.2 Parent-Child / 邻接扩展
+### [x] 2.2 Parent-Child / 邻接扩展
 
 | 属性 | 内容 |
 | --- | --- |
@@ -401,6 +402,19 @@
 > 下一轮预注册提案（主指标改 containment-aware 匹配，阈值不变）待 owner 批准
 > （`results/stage2-parentchild/report-2026-08-28-run2.md`）。附带登记：
 > 邻接扩展无最小块长守卫（4 字符碎块入 context）、parent 划分质量专项。
+>
+> 2026-08-28 第 3 轮终审：owner 批准 round-3 预注册修订（修仪器非调阈值，
+> 阈值冻结不变）——主指标改 containment-aware 真值匹配（id 命中，或真值
+> 文本空白归一后被任一 context 块文本包含；空文本真值显式排除），密封
+> manifest 记 `metric_version = r3-containment-aware`；复用 run-2 同一沙箱
+> 索引快照（dataset sha 与 corpus 文件逐一一致，单变量只换仪器）。重跑
+> n=71：mean OFF 0.4377 → ON 0.5680（**Δ=+0.1303 ≥ 0.05**），worst_case
+> **0.0**（71 例无一恶化）→ **`STAGE2_22_ACCEPTED`**，2.2 `[~]→[x]`。
+> en-017 复核：ON 臂 context 含 parent chunk_13，真值 chunk_15 文本包含于
+> 其间 → recall 1.0（round-2 失明案例消解）。产物
+> `results/stage2-parentchild/run-3-2026-08-28/`（自哈希复算 OK）、报告
+> `report-2026-08-28-run3.md`。预算调和修复作为行为改进独立于门禁保留；
+> 附带登记两项（邻接最小块长守卫、parent 划分质量）仍留产品线。
 
 **实施步骤**：
 

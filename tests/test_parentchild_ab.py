@@ -4,6 +4,8 @@
 - 目标集过滤：剔除 multi_turn / should_refuse / 无匹配真值；
 - 双臂共享同一 QueryPlan（对象同一性）且扩展开关按臂切换、finally 恢复；
 - chunk 级 context recall 计算（拒答计零）；
+- round-3 预注册修订：containment-aware 真值匹配（id 命中或真值文本空白
+  归一后被任一 context 块文本包含；空文本真值不适用；长度不一致 fail-closed）；
 - 预注册门禁三态与缺结果 fail-closed；
 - 密封产物 manifest 自哈希、输出目录防覆盖。
 """
@@ -98,7 +100,7 @@ class TestRunCasePair:
         plan = SimpleNamespace(rewritten_query="q")
         arms = FakeArms(FakeEvidence())
         case = SimpleNamespace(id="s1", query="q")
-        on, off = pca.run_case_pair(case, plan, arms)
+        on, off = pca.run_case_pair(case, plan, arms, chunk_text_by_id={})
         assert arms.calls[0][0] == "ON" and arms.calls[1][0] == "OFF"
         assert arms.calls[0][1] is plan and arms.calls[1][1] is plan
         assert on.arm == "ON" and off.arm == "OFF"
@@ -107,10 +109,15 @@ class TestRunCasePair:
         import evaluation.parentchild_ab as pca
         case = SimpleNamespace(id="s1", query="q")
         arms = FakeArms(FakeEvidence(context_chunk_ids=("c1", "c2")))
+        texts = {"c1": "text-c1", "c2": "text-c2", "c3": "text-c3"}
         on, off = pca.run_case_pair(
-            case, SimpleNamespace(), arms, truth={"c1", "c3"})
+            case, SimpleNamespace(), arms, truth={"c1", "c3"},
+            chunk_text_by_id=texts)
         assert on.context_chunk_ids == ("c1", "c2")
         assert on.truth_chunk_ids == ("c1", "c3")
+        # round-3：文本按 chunk_id 从同一索引快照反查，与 id 元组对齐
+        assert on.context_chunk_texts == ("text-c1", "text-c2")
+        assert on.truth_chunk_texts == ("text-c1", "text-c3")
 
 
 # ── 指标与门禁 ───────────────────────────────────────────────────
@@ -119,15 +126,91 @@ class TestRecallAndGate:
     def test_chunk_recall_partial(self):
         import evaluation.parentchild_ab as pca
         outcome = SimpleNamespace(
-            context_chunk_ids=("c1", "c2"), truth_chunk_ids=("c1", "c3"),
+            case_id="s1",
+            context_chunk_ids=("c1", "c2"), context_chunk_texts=("t-c1", "t-c2"),
+            truth_chunk_ids=("c1", "c3"), truth_chunk_texts=("t-c1", "t-c3"),
             refused=False)
         assert pca.chunk_context_recall(outcome) == pytest.approx(0.5)
 
     def test_refused_scores_zero(self):
         import evaluation.parentchild_ab as pca
         outcome = SimpleNamespace(
-            context_chunk_ids=(), truth_chunk_ids=("c1",), refused=True)
+            case_id="s1", context_chunk_ids=(), context_chunk_texts=(),
+            truth_chunk_ids=("c1",), truth_chunk_texts=("t-c1",), refused=True)
         assert pca.chunk_context_recall(outcome) == 0.0
+
+
+class TestContainmentAwareRecall:
+    """round-3 预注册修订：containment-aware 真值匹配（owner 2026-08-28 批准）。
+
+    修仪器非调阈值：parent 替换（设计行为）后 child id 不在场，但真值文本
+    完整包含于在场 parent 文本时必须计覆盖；真位移（文本也不在场）仍计 0。
+    """
+
+    def test_truth_text_contained_in_context_counts_as_covered(self):
+        import evaluation.parentchild_ab as pca
+        outcome = SimpleNamespace(
+            case_id="en-017",
+            context_chunk_ids=("chunk_13", "chunk_14"),
+            context_chunk_texts=("header 真值证据全文 tail", "other"),
+            truth_chunk_ids=("chunk_13", "chunk_15"),
+            truth_chunk_texts=("header 真值证据全文 tail", "真值证据全文"),
+            refused=False)
+        # 13 按 id 命中；15 文本包含于 13（parent 替换）→ 双覆盖
+        assert pca.chunk_context_recall(outcome) == 1.0
+
+    def test_true_displacement_still_scores_zero(self):
+        import evaluation.parentchild_ab as pca
+        outcome = SimpleNamespace(
+            case_id="mixed-009",
+            context_chunk_ids=("c9",), context_chunk_texts=("无关内容",),
+            truth_chunk_ids=("c1",), truth_chunk_texts=("独有证据文本",),
+            refused=False)
+        # 文本也不在场 = 真位移，containment 不得把丢失洗成覆盖
+        assert pca.chunk_context_recall(outcome) == 0.0
+
+    def test_mixed_id_and_containment(self):
+        import evaluation.parentchild_ab as pca
+        outcome = SimpleNamespace(
+            case_id="s1",
+            context_chunk_ids=("c1", "c9"),
+            context_chunk_texts=("t-one", "wrap 其他 tail"),
+            truth_chunk_ids=("c1", "c15"),
+            truth_chunk_texts=("t-one", "X中段Y"),
+            refused=False)
+        # c1 按 id 命中；c15 id 与文本均不在场 → 半覆盖
+        assert pca.chunk_context_recall(outcome) == pytest.approx(0.5)
+
+    def test_empty_truth_text_not_trivially_covered(self):
+        import evaluation.parentchild_ab as pca
+        outcome = SimpleNamespace(
+            case_id="s1",
+            context_chunk_ids=("c9",), context_chunk_texts=("anything",),
+            truth_chunk_ids=("c7",), truth_chunk_texts=("",),
+            refused=False)
+        # 空串是任何串的子串，预注册定义显式排除（否则恒真）
+        assert pca.chunk_context_recall(outcome) == 0.0
+
+    def test_whitespace_normalization(self):
+        import evaluation.parentchild_ab as pca
+        outcome = SimpleNamespace(
+            case_id="s1",
+            context_chunk_ids=("c9",),
+            context_chunk_texts=("前文\n第一段  续行\t后文",),
+            truth_chunk_ids=("c1",), truth_chunk_texts=("第一段 续行",),
+            refused=False)
+        # 连续空白折叠为单空格：parent 拼接/换行差异不破坏包含判定
+        assert pca.chunk_context_recall(outcome) == 1.0
+
+    def test_truth_id_text_length_mismatch_fails_closed(self):
+        import evaluation.parentchild_ab as pca
+        outcome = SimpleNamespace(
+            case_id="s1",
+            context_chunk_ids=("c1",), context_chunk_texts=("t",),
+            truth_chunk_ids=("c1", "c2"), truth_chunk_texts=("t1",),
+            refused=False)
+        with pytest.raises(pca.GateError):
+            pca.chunk_context_recall(outcome)
 
     def _recalls(self, off_vals, on_vals):
         ids = [f"s{i}" for i in range(1, len(off_vals) + 1)]
@@ -182,7 +265,9 @@ class TestSealedOutputs:
         import evaluation.parentchild_ab as pca
         rows = [pca.CaseOutcome(
             case_id="s1", arm="ON", context_chunk_ids=("c1",),
-            truth_chunk_ids=("c1", "c2"), context_k=1, refused=False,
+            context_chunk_texts=("text-c1",),
+            truth_chunk_ids=("c1", "c2"), truth_chunk_texts=("text-c1", "text-c2"),
+            context_k=1, refused=False,
             plan_fingerprint="fp")]
         recalls = {"OFF": {"s1": 0.0}, "ON": {"s1": 0.5}}
         gate = pca.evaluate_gate(recalls, ["s1"])
@@ -194,13 +279,18 @@ class TestSealedOutputs:
         return out
 
     def test_manifest_self_hash_verifies(self, tmp_path):
+        import evaluation.parentchild_ab as pca
         out = self._write(tmp_path)
         import hashlib
         rows = [json.loads(l) for l in
                 (out / "outcomes.jsonl").read_text(encoding="utf-8").splitlines()
                 if l.strip()]
         assert rows[0]["chunk_context_recall"] == pytest.approx(0.5)
+        # round-3：文本随密封产物落盘，供 containment 口径复核
+        assert rows[0]["context_chunk_texts"] == ["text-c1"]
+        assert rows[0]["truth_chunk_texts"] == ["text-c1", "text-c2"]
         manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
+        assert manifest["metric_version"] == pca.METRIC_VERSION
         body = {k: v for k, v in manifest.items() if k != "manifest_sha256"}
         expect = hashlib.sha256((json.dumps(
             body, ensure_ascii=False, indent=1, sort_keys=True) + "\n")
