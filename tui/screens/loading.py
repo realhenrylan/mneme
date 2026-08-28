@@ -42,6 +42,9 @@ def render_loading(console: Console, service, files: list[str],
         return False
 
     console.print(f"\n[{THEME['success']}]✓ Index ready![/]")
+    # 2.3 验收：初始建库后呈现解析问题（低质量/降级/零块）
+    from tui.diagnostics import render_parse_diagnostics
+    render_parse_diagnostics(console, stats)
     t = Table(show_header=False, box=None, padding=(0, 2))
     t.add_column("label", style=THEME["text_dim"], width=10)
     t.add_column("value", style=THEME["text"])

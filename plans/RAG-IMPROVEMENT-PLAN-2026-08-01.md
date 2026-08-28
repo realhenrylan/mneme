@@ -331,9 +331,10 @@
 > **前置条件**：阶段 1 完成（Standard RAG 效果闭环已建立）
 >
 > **当前进度：** `[~]` 结构化模型、loader、parent/adjacent 和 history-aware
-> rewrite 已有实现。2.4 已于 2026-08-28 通过受控多轮 A/B/C 验收门禁
-> （`STAGE2_24_ACCEPTED`，`results/stage2-multiturn/report-2026-08-28.md`）
-> 标记完成；2.1/2.2/2.3 的效果验收尚未整体成立，保留 `[~]`。
+> rewrite 已有实现。2.3 已于 2026-08-28 通过「失败可见、可回退」端到端验收
+> （`STAGE2_23_ACCEPTED`）；2.4 已于同日通过受控多轮 A/B/C 验收门禁
+> （`STAGE2_24_ACCEPTED`）；2.2 的 A/B 实验判定 `STAGE2_22_NOT_PROVEN`
+> （均值 +11.9pp 但存在单例挤占回退，保持 `[~]`）；2.1 仍保留 `[~]`。
 
 ### [~] 2.1 标准文档模型
 
@@ -372,6 +373,14 @@
 > **当前回填：** parent-child、邻接扩展、anchor 与 context budget 已在
 > `src/chunking.py`/`src.rag` 实现并受回归测试保护；尚无满足本项标准的
 > context recall 净收益结论，故不标为效果完成。
+>
+> 2026-08-28 A/B 实验（`evaluation/parentchild_ab.py`，n=71，单因子由
+> 共享 QueryPlan 构造保证）：chunk 级 context recall 均值 OFF 0.434 →
+> ON 0.553（+11.9pp ≥ 预注册 0.05），但 mixed-009 出现 1.00 → 0.00 的
+> 扩展挤占回退（3 例恶化 / 13 例改善 / 55 例不变），单例护栏拦截 →
+> `STAGE2_22_NOT_PROVEN`（`results/stage2-parentchild/report-2026-08-28.md`）。
+> 产品线登记：扩展预算策略（高分原始块保留槽位 / parent 与同级 child 去重 /
+> 扩展时放大 context_k）；`RAG_CONTEXT_EXPANSION=off` 保留为生产逃生阀。
 
 **实施步骤**：
 
@@ -381,7 +390,7 @@
 4. PDF 首页 anchor 在索引阶段持久化，不再查询时重读源 PDF
 5. 在评测集 v1 上对比有/无 parent-child 的 context recall
 
-### [~] 2.3 PDF/DOCX 重点解析
+### [x] 2.3 PDF/DOCX 重点解析
 
 | 属性 | 内容 |
 | --- | --- |
@@ -393,6 +402,14 @@
 > **当前回填：** PDF/DOCX loaders 已支持标题层级、表格、解析质量与回退路径；
 > 真实用户主要格式的低质量率、失败可见性与 TUI 回退验收仍未形成完整门禁，故
 > 保留 `[~]`。
+>
+> 2026-08-28 验收闭环：`[~]` → `[x]`（`STAGE2_23_ACCEPTED`）。fitz 程序化
+> 夹具矩阵（原生 PDF / 仿真扫描件 / 空 txt / loader 异常 / 正常 docx+txt）
+> 证明三条可见性通道（CLI 警告、结构化诊断 sink、TUI warning_panel 于初始
+> 建库与 /files add 呈现）同时成立且降级可回退
+> （`results/stage2-parsing-acceptance/report-2026-08-28.md`）。边界如实
+> 入档：降级路径非无条件兜底（旧路径同样失败时显式跳过该文件）；
+> `prepare_graph_index` 未接诊断 sink（standard 路径专属）。
 
 **实施步骤**：
 

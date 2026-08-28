@@ -78,8 +78,11 @@ class LocalRagService:
 
     def _build_standard_index(self, file_paths, collection_name, force_rebuild, progress_callback=None):
         self._ensure_model()
+        # 2.3 验收：诊断旁路通道——loader 的低质量/降级/零块信号带回 TUI 渲染
+        diagnostics: list = []
         model, collection, bm25, docs, metadatas = prepare_index(
-            file_paths, collection_name, force_rebuild, progress_callback=progress_callback,
+            file_paths, collection_name, force_rebuild,
+            progress_callback=progress_callback, diagnostics_sink=diagnostics,
         )
         self._model = model
         self._collection = collection
@@ -87,7 +90,9 @@ class LocalRagService:
         self._docs = docs
         self._metadatas = metadatas
         self._refresh_snapshot()
-        return self.get_stats()
+        stats = self.get_stats()
+        stats["parse_diagnostics"] = diagnostics
+        return stats
 
     def _build_graph_index(self, file_paths, collection_name, force_rebuild, progress_callback=None):
         self._ensure_model()
@@ -101,7 +106,10 @@ class LocalRagService:
         self._metadatas = metadatas
         self._kg = kg
         self._refresh_snapshot()
-        return self.get_stats()
+        stats = self.get_stats()
+        # Graph 入口暂无诊断 sink（parse_graph 路径未接线）；统一 stats 形状
+        stats["parse_diagnostics"] = []
+        return stats
 
     def _llm_model(self) -> str:
         # 统一配置契约：LLM 模型从已解析 Settings 读取（不再原始 os.getenv）
@@ -173,8 +181,11 @@ class LocalRagService:
 
     def _add_files_sync(self, file_paths: list[str]) -> dict:
         self._ensure_model()
+        # 2.3 验收：与 prepare_index 同一诊断旁路通道
+        diagnostics: list = []
         bm25, docs, metadatas = add_files_to_index(
             file_paths, self._model, self._collection,
+            diagnostics_sink=diagnostics,
         )
         self._bm25 = bm25
         self._docs = docs
@@ -196,7 +207,9 @@ class LocalRagService:
                 manifest.get("manifest_version") if manifest else None,
             )
         self._refresh_snapshot()
-        return self.get_stats()
+        stats = self.get_stats()
+        stats["parse_diagnostics"] = diagnostics
+        return stats
 
     def remove_file(self, filename: str) -> int:
         return self._index_queue.run(self._remove_file_sync, filename)

@@ -14,6 +14,7 @@ from src.config import (
 )  # 统一配置契约
 from tui.theme import THEME
 from tui.components.message import user_message, assistant_message, source_reference, error_panel, warning_panel
+from tui.diagnostics import parse_diagnostics_warnings, render_parse_diagnostics
 from tui.components.prompt import match_command
 from tui.components.sidebar import render_sidebar
 from tui.keys import COMMANDS
@@ -425,6 +426,8 @@ def _handle_files(console: Console, service, user_input: str):
             return
         result = service.add_files([path])
         console.print(f"[{THEME['success']}]Added {result.get('chunk_count', 0)} chunk(s).[/]")
+        # 2.3 验收：解析问题（低质量/降级/零块）即时呈现
+        render_parse_diagnostics(console, result)
         return
 
     console.print(warning_panel("Usage: /files [watch <dir> | stop | list | remove <file> | add <path>]", "Files"))

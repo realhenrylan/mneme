@@ -323,6 +323,31 @@ RAG_REFUSAL_POLICY = validate_refusal_policy(
     os.getenv("RAG_REFUSAL_POLICY", REFUSAL_POLICY_BASELINE).lower().strip(),
 )
 
+# ── 上下文扩展开关（RAG_CONTEXT_EXPANSION） ──────────────────────────
+# on（默认）：parent-child 替换 + 邻接扩展照常执行（历史行为不变）。
+# off：select 之后跳过两个扩展阶段——parent-child 效果验收（2.2 A/B）的
+# OFF 臂即此生产配置；也为「扩展挤占 context 预算」类回退提供逃生阀。
+# 与 RAG_REFUSAL_POLICY 同模式：导入期 fail-fast，评测框架按臂临时覆盖
+# 模块属性并在 finally 恢复；两处调用点调用期读取（不冻结副本）。
+CONTEXT_EXPANSION_ON = "on"
+CONTEXT_EXPANSION_OFF = "off"
+CONTEXT_EXPANSION_MODES = (CONTEXT_EXPANSION_ON, CONTEXT_EXPANSION_OFF)
+
+
+def validate_context_expansion(value: str) -> str:
+    """校验扩展开关取值；非法值抛 ValueError（导入期 fail-fast 与锁定共用）。"""
+    if value not in CONTEXT_EXPANSION_MODES:
+        raise ValueError(
+            f"invalid RAG_CONTEXT_EXPANSION {value!r}; must be one of "
+            f"{CONTEXT_EXPANSION_MODES}",
+        )
+    return value
+
+
+RAG_CONTEXT_EXPANSION = validate_context_expansion(
+    os.getenv("RAG_CONTEXT_EXPANSION", CONTEXT_EXPANSION_ON).lower().strip(),
+)
+
 # Retrieval scores are intentionally configurable because score calibration
 # depends on the embedding model and collection size.  The default rejects
 # only very weak/no-evidence retrievals and can be tightened in production.
@@ -1265,6 +1290,7 @@ def prepare_index(
         collection_name: str,
         force_rebuild: bool = False,
         progress_callback=None,
+        diagnostics_sink: list | None = None,
         snapshot=None,
         chroma_path: str | None = None,
 ) -> tuple:
@@ -1337,6 +1363,7 @@ def prepare_index(
             file_paths, collection_name, client,
             force_rebuild=force_rebuild or config_mismatch,
             progress_callback=progress_callback,
+            diagnostics_sink=diagnostics_sink,
             model=model,
             snapshot=snapshot,
             chroma_path=chroma_path,
@@ -1374,7 +1401,31 @@ def _degraded_summary(exc: Exception, limit: int = 200) -> str:
     return summary
 
 
-def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str], str, str, dict]:
+def _emit_parse_diagnostic(sink, *, source_name, file_type, parse_quality,
+                           is_low_quality, chunk_count, parse_degraded,
+                           error=None) -> None:
+    """2.3 验收：按文件收集结构化解析诊断，供 TUI/上游渲染。
+
+    sink=None 时零开销跳过——诊断是旁路通道，不改变任何索引行为。
+    """
+    if sink is None:
+        return
+    sink.append({
+        "source_name": source_name,
+        "file_type": file_type,
+        "parse_quality": parse_quality,
+        "is_low_quality": is_low_quality,
+        "chunk_count": chunk_count,
+        "parse_degraded": parse_degraded,
+        "error": error,
+    })
+
+
+def _load_index_chunks(
+    filepath: str,
+    *,
+    diagnostics_sink: list | None = None,
+) -> tuple[list[str], list[dict], list[str], str, str, dict]:
     """Load one source and return chunks plus its manifest source record.
 
     使用 src/loaders/ 解析文档为 Document 对象，再用 src/chunking.py
@@ -1417,6 +1468,15 @@ def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str],
 
         print(f" -> {file_type}, {len(document.chunks)} 个切片"
               f" (sections={len(document.sections)}, quality={document.parse_quality.value})")
+        if not texts:
+            # 2.3 验收：零块文件不得静默入索引
+            print(f"  [警告] 解析产出 0 块: {document.source_name}")
+        _emit_parse_diagnostic(
+            diagnostics_sink, source_name=document.source_name,
+            file_type=document.file_type,
+            parse_quality=document.parse_quality.value,
+            is_low_quality=bool(document.is_low_quality),
+            chunk_count=len(texts), parse_degraded=False)
         return texts, metadatas, ids, file_type, document.source_id, source
 
     except Exception as exc:
@@ -1484,6 +1544,15 @@ def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str],
             chunk_metadatas.append(metadata)
             chunk_ids.append(chunk_id)
 
+    source_label = source.get("source_name") or source.get("source", "")
+    if not chunks:
+        # 2.3 验收：零块文件不得静默入索引（旧路径同样适用）
+        print(f"  [警告] 解析产出 0 块: {source_label}")
+    _emit_parse_diagnostic(
+        diagnostics_sink, source_name=source_label, file_type=file_type,
+        parse_quality="unknown", is_low_quality=None,
+        chunk_count=len(chunks), parse_degraded=bool(degraded_info),
+        error=degraded_info.get("parse_degraded_reason"))
     return chunks, chunk_metadatas, chunk_ids, file_type, source_id, source
 
 
@@ -1511,6 +1580,7 @@ def build_index(
     client = None,
     force_rebuild: bool = False,
     progress_callback=None,
+    diagnostics_sink: list | None = None,
     model: SentenceTransformer | None = None,
     snapshot=None,
     chroma_path: str | None = None,
@@ -1598,7 +1668,8 @@ def build_index(
                 continue
             print(f"加载: {filepath}")
             try:
-                chunks, metadatas, ids, _, source_id, source = _load_index_chunks(filepath)
+                chunks, metadatas, ids, _, source_id, source = _load_index_chunks(
+                    filepath, diagnostics_sink=diagnostics_sink)
             except (OSError, ValueError) as exc:
                 print(f"  [跳过] {exc}")
                 continue
@@ -1638,6 +1709,7 @@ def add_files_to_index(
     model: SentenceTransformer,
     collection: chromadb.Collection,
     chroma_path: str | None = None,
+    diagnostics_sink: list | None = None,
 ) -> tuple[BM25Okapi, list[str], list[dict]]:
     # Phase 6-B0.2：snapshot 索引只读（fail-closed，先于任何解析/encode/
     # commit/sidecar 写入）
@@ -1656,7 +1728,8 @@ def add_files_to_index(
             continue
         try:
             print(f"加载: {filepath}")
-            chunks, metadatas, ids, _, source_id, source = _load_index_chunks(filepath)
+            chunks, metadatas, ids, _, source_id, source = _load_index_chunks(
+                filepath, diagnostics_sink=diagnostics_sink)
         except (OSError, ValueError) as exc:
             print(f"  [跳过] {exc}")
             continue
@@ -2637,17 +2710,17 @@ def prepare_answer_evidence(
 
     select_indices = tuple(top_indices)  # select 后、扩展前（generate 重建 enriched 用）
     enriched_docs = enrich_context(top_indices, documents, metadatas)
-    # ── Parent-Child 扩展：child chunk → 用 parent chunk 替换 ──
-    context_k = compute_context_k(
-        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
-         for i in top_indices],
-    )
-    top_indices, _ = expand_with_parent(
-        top_indices, enriched_docs, metadatas, context_k,
-    )
-    # ── 邻接扩展：召回 chunk 时自动包含前后相邻 chunk ──
-    top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
-    # 扩展后重新计算 context_k
+    # ── Parent-Child / 邻接扩展（RAG_CONTEXT_EXPANSION 门控，默认 on；
+    #    off 时跳过两阶段——2.2 验收 OFF 臂即此生产配置） ──
+    if RAG_CONTEXT_EXPANSION == CONTEXT_EXPANSION_ON:
+        context_k = compute_context_k(
+            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+             for i in top_indices],
+        )
+        top_indices, _ = expand_with_parent(
+            top_indices, enriched_docs, metadatas, context_k,
+        )
+        top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
     context_k = compute_context_k(
         [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
          for i in top_indices],
@@ -3224,17 +3297,17 @@ def answer_query_stream(
         top_indices = [c.index for c in selected]
 
     enriched_docs = enrich_context(top_indices, documents, metadatas)
-    # ── Parent-Child 扩展：child chunk → 用 parent chunk 替换 ──
-    context_k = compute_context_k(
-        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
-         for i in top_indices],
-    )
-    top_indices, _ = expand_with_parent(
-        top_indices, enriched_docs, metadatas, context_k,
-    )
-    # ── 邻接扩展：召回 chunk 时自动包含前后相邻 chunk ──
-    top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
-    # 扩展后重新计算 context_k
+    # ── Parent-Child / 邻接扩展（RAG_CONTEXT_EXPANSION 门控，默认 on；
+    #    off 时跳过两阶段——2.2 验收 OFF 臂即此生产配置） ──
+    if RAG_CONTEXT_EXPANSION == CONTEXT_EXPANSION_ON:
+        context_k = compute_context_k(
+            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+             for i in top_indices],
+        )
+        top_indices, _ = expand_with_parent(
+            top_indices, enriched_docs, metadatas, context_k,
+        )
+        top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
     context_k = compute_context_k(
         [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
          for i in top_indices],
