@@ -77,9 +77,10 @@ def _context_ids(monkeypatch, mode) -> set[str]:
     monkeypatch.setattr(rag, "RAG_CONTEXT_EXPANSION", mode)
     documents = [f"doc {i}" for i in range(5)]
     metadatas = [{"chunk_id": f"c{i}", "chunk_index": i} for i in range(5)]
+    # select 2 块 → 预算下限 k=3，为扩展留 1 个空位
     evidence = rag.prepare_answer_evidence(
         "q", None, None, None, documents, metadatas,
-        query_plan=_plan_stub({0: 1.0, 1: 0.9, 2: 0.8}),
+        query_plan=_plan_stub({0: 1.0, 1: 0.9}),
     )
     return set(evidence.context_chunk_ids)
 
@@ -90,16 +91,18 @@ class TestPreparePathGating:
         ids = _context_ids(monkeypatch, "off")
         assert expansion_recorders["parent"] == 0
         assert expansion_recorders["adjacent"] == 0
-        assert ids and ids <= {"c0", "c1", "c2"}
+        assert ids and ids <= {"c0", "c1"}
 
     def test_on_context_includes_expanded_chunks(
             self, monkeypatch, expansion_recorders):
+        # select 2 块 → 预算下限 k=3 留出 1 个空位：fake parent 注入的 c3
+        # 应入 context（调和后邻居殿后、预算有空位则填充）。
         off = _context_ids(monkeypatch, "off")
         on = _context_ids(monkeypatch, "on")
         assert expansion_recorders["parent"] == 1
         assert expansion_recorders["adjacent"] == 1
         added = on - off
-        assert added and added <= {"c3", "c4"}
+        assert added == {"c3", "c4"}
 
 
 # ── 防回归 tripwire：两处调用点都必须在门控块内 ──────────────────

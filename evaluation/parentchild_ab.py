@@ -129,7 +129,9 @@ def run_case_pair(
         outcomes.append(CaseOutcome(
             case_id=case.id, arm=arm,
             context_chunk_ids=tuple(evidence.context_chunk_ids),
-            truth_chunk_ids=tuple(truth),
+            # 排序固化：真值集合转元组若依赖 set 迭代序，密封产物将随
+            # PYTHONHASHSEED 逐进程漂移，破坏逐字节可复现性。
+            truth_chunk_ids=tuple(sorted(truth)),
             context_k=int(evidence.context_k),
             refused=bool(evidence.refused),
             plan_fingerprint=getattr(evidence, "plan_fingerprint", ""),

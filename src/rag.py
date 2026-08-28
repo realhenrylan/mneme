@@ -43,7 +43,7 @@ from src.retrieval import (
     apply_source_diversity,
     select_context_candidates,
 )
-from src.chunking import expand_with_parent, expand_with_adjacent
+from src.chunking import expand_with_parent, expand_with_adjacent, reconcile_expansion_budget
 from src.metrics import GLOBAL_METRICS, QueryMetric, elapsed_ms
 from src.security import (
     remote_context_limit,
@@ -593,6 +593,9 @@ def _source_metadata(filepath: str, file_type: str) -> dict:
         "content_sha256": _sha256_file(path),
         "source_size": stat.st_size,
         "source_mtime_ns": stat.st_mtime_ns,
+        # 2.1 可追溯口径：旧路径（含降级）产出的账本统一标注解析器代次，
+        # 与 loader 路径的 document.parser_version（pdf 2.0 / 其余 1.0）区分。
+        "parser_version": "legacy-1.0",
     }
 
 
@@ -1460,6 +1463,8 @@ def _load_index_chunks(
             "content_sha256": document.content_sha256,
             "source_size": document.source_size,
             "source_mtime_ns": document.source_mtime_ns,
+            # 2.1 可追溯口径：解析器代次随账本持久化
+            "parser_version": document.parser_version,
         }
 
         # 低质量解析警告
@@ -2717,14 +2722,25 @@ def prepare_answer_evidence(
             [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
              for i in top_indices],
         )
+        select_pre = tuple(top_indices)
         top_indices, _ = expand_with_parent(
             top_indices, enriched_docs, metadatas, context_k,
         )
         top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
-    context_k = compute_context_k(
-        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
-         for i in top_indices],
-    )
+        # 2.2 修复：扩展预算调和——动态预算按扩展后列表计算（保留邻居填充
+        # 预算的收益），调和保证下限 ≥ 代表块数：select 召回证据永不被挤占，
+        # 截断只可能裁掉扩展尾部。
+        context_k = compute_context_k(
+            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+             for i in top_indices],
+        )
+        top_indices, context_k = reconcile_expansion_budget(
+            select_pre, top_indices, metadatas, context_k)
+    else:
+        context_k = compute_context_k(
+            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+             for i in top_indices],
+        )
     context = _build_context(top_indices, enriched_docs, metadatas, context_k=context_k)
 
     # ── 组装证据（含指纹） ──
@@ -3304,14 +3320,25 @@ def answer_query_stream(
             [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
              for i in top_indices],
         )
+        select_pre = tuple(top_indices)
         top_indices, _ = expand_with_parent(
             top_indices, enriched_docs, metadatas, context_k,
         )
         top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
-    context_k = compute_context_k(
-        [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
-         for i in top_indices],
-    )
+        # 2.2 修复：扩展预算调和——动态预算按扩展后列表计算（保留邻居填充
+        # 预算的收益），调和保证下限 ≥ 代表块数：select 召回证据永不被挤占，
+        # 截断只可能裁掉扩展尾部。
+        context_k = compute_context_k(
+            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+             for i in top_indices],
+        )
+        top_indices, context_k = reconcile_expansion_budget(
+            select_pre, top_indices, metadatas, context_k)
+    else:
+        context_k = compute_context_k(
+            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+             for i in top_indices],
+        )
     context = _build_context(top_indices, enriched_docs, metadatas, context_k=context_k)
     sources = format_sources(top_indices, enriched_docs, metadatas, context_k=context_k)
     _record_query_metric(

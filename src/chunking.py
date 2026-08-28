@@ -289,6 +289,59 @@ def expand_with_adjacent(
     return expanded_ordered
 
 
+def reconcile_expansion_budget(
+    select_indices: list[int] | tuple[int, ...],
+    expanded: list[int],
+    metadatas: list[dict],
+    context_k: int,
+) -> tuple[list[int], int]:
+    """扩展预算调和：select 召回证据保留槽位（2.2 验收修复策略）。
+
+    扩展的两个挤占源——``expand_with_parent`` 预算 break 丢弃尾部 select
+    块、邻接邻居插队把 select 块推出预算窗口——统一在此调和：
+
+    1. 代表块：按 select 顺序收集；每个 select 块由「自身或其在场 parent」
+       代表（child 已被 parent 替换时不重复入列，避免内容重复；parent 也
+       缺席时 child 自身回插，召回证据不可失）；
+    2. 扩展块：expanded 中不属于代表集的（邻接邻居、parent 去重腾出者）
+       按扩展顺序殿后；
+    3. ``effective_k = max(context_k, len(reps))``——预算放大到恰好容纳
+       全部代表块，后续按 k 取前缀的截断只可能裁掉扩展尾部。
+
+    Returns:
+        (调和后索引列表, 有效 context_k)
+    """
+    chunk_id_to_idx: dict[str, int] = {}
+    for i, meta in enumerate(metadatas):
+        cid = meta.get("chunk_id", "")
+        if cid:
+            chunk_id_to_idx[cid] = i
+
+    present = set(expanded)
+    reps: list[int] = []
+    seen: set[int] = set()
+    for idx in select_indices:
+        meta = metadatas[idx] if idx < len(metadatas) else {}
+        if idx in present:
+            rep = idx
+        else:
+            parent_id = meta.get("parent_chunk_id", "")
+            parent_idx = chunk_id_to_idx.get(parent_id) if parent_id else None
+            if (meta.get("chunk_type") == "child" and parent_id
+                    and parent_idx is not None and parent_idx in present):
+                rep = parent_idx
+            else:
+                rep = idx
+        if rep not in seen:
+            seen.add(rep)
+            reps.append(rep)
+
+    expansion_only = [i for i in expanded if i not in seen]
+    final = reps + expansion_only
+    effective_k = max(context_k, len(reps))
+    return final, effective_k
+
+
 def chunks_to_index_data(
     document: Document,
 ) -> tuple[list[str], list[dict], list[str]]:
@@ -317,6 +370,8 @@ def chunks_to_index_data(
             "chunk_index": chunk.chunk_index,
             "section_heading": chunk.section_heading,
             "section_type": chunk.section_type.value,
+            # 2.1 可追溯口径：解析器代次随 chunk 持久化（chroma 可查）
+            "parser_version": document.parser_version,
         }
         if chunk.page is not None:
             metadata["page"] = chunk.page

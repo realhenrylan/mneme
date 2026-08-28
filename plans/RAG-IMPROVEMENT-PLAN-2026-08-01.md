@@ -336,7 +336,7 @@
 > （`STAGE2_24_ACCEPTED`）；2.2 的 A/B 实验判定 `STAGE2_22_NOT_PROVEN`
 > （均值 +11.9pp 但存在单例挤占回退，保持 `[~]`）；2.1 仍保留 `[~]`。
 
-### [~] 2.1 标准文档模型
+### [x] 2.1 标准文档模型
 
 | 属性 | 内容 |
 | --- | --- |
@@ -351,8 +351,17 @@
 > `[~]`。
 >
 > 2026-08-28：旧降级路径已显式化（结构化警告 + source record `parse_degraded`
-> 标记随 index manifest 可追溯，移除调试堆栈残留）；格式/质量提示端到端产品
-> 验收仍未完成，维持 `[~]`。
+> 标记随 index manifest 可追溯，移除调试堆栈残留）。
+>
+> 2026-08-28 收口：`[~]` → `[x]`。完成标准「section、page、type、parser
+> version 均可追溯」由端到端验收锁定
+> （`tests/test_document_model_traceability.py`）：chunk metadata 与 manifest
+> source record 均携带四项字段——parser_version 落库（pdf 2.0 / docx、text
+> 1.0 / 旧路径 legacy-1.0）；section 追溯口径 = 字段在场 + section_type
+> 非空（无标题节 heading 合法为空，标题路径以至少一块非空 heading 可证）。
+> 格式/质量提示端到端产品验收由同日 2.3 验收（`STAGE2_23_ACCEPTED`）覆盖；
+> 旧兼容路径处置遵 owner 批示「保留但显式可见」（降级警告 + `legacy-1.0`
+> 代次标注 + manifest 可追溯）。
 
 **实施步骤**：
 
@@ -381,6 +390,17 @@
 > `STAGE2_22_NOT_PROVEN`（`results/stage2-parentchild/report-2026-08-28.md`）。
 > 产品线登记：扩展预算策略（高分原始块保留槽位 / parent 与同级 child 去重 /
 > 扩展时放大 context_k）；`RAG_CONTEXT_EXPANSION=off` 保留为生产逃生阀。
+>
+> 2026-08-28 第 2 轮（预算调和修复后重跑）：新增
+> `reconcile_expansion_budget`（select 代表块保序优先 + 预算下限 ≥ 代表块数，
+> 扩展结构上不可能再挤占召回证据）——真挤占案例 3→0（mixed-009 型修复证实），
+> 唯一残差 en-017 为**度量仪器失明**：真值 child 块全文包含于在场 parent 块
+> （机械验证 15⊆13），chunk-id 集合交集对 parent 替换结构性计 0；
+> containment-corrected 诊断 Δ=+0.1373 / worst=+0.00（非门禁量）。
+> 冻结门禁仍判 `STAGE2_22_NOT_PROVEN`，保持 `[~]`；
+> 下一轮预注册提案（主指标改 containment-aware 匹配，阈值不变）待 owner 批准
+> （`results/stage2-parentchild/report-2026-08-28-run2.md`）。附带登记：
+> 邻接扩展无最小块长守卫（4 字符碎块入 context）、parent 划分质量专项。
 
 **实施步骤**：
 
