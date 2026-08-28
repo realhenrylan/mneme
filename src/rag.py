@@ -1362,6 +1362,18 @@ def prepare_index(
 
     return model, collection, bm25, all_docs, all_metadatas
 
+def _degraded_summary(exc: Exception, limit: int = 200) -> str:
+    """降级日志的单行异常摘要：类型名 + 消息，截断防日志爆行。
+
+    不含堆栈——堆栈对「哪个文件、为什么降级」这一排查诉求没有增量
+    信息，却会在批量索引时淹没警告流。
+    """
+    summary = f"{type(exc).__name__}: {exc}"
+    if len(summary) > limit:
+        summary = summary[:limit - 3] + "..."
+    return summary
+
+
 def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str], str, str, dict]:
     """Load one source and return chunks plus its manifest source record.
 
@@ -1369,6 +1381,9 @@ def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str],
     基于 Section 边界结构化分块。保留旧路径作为降级。
     """
     file_type = detect_file_type(filepath)
+
+    # 成功路径直接 return，不携带标记；只有落入旧路径才可能有降级标记
+    degraded_info: dict = {}
 
     # 尝试使用新的 loader + chunking 模块
     try:
@@ -1405,13 +1420,19 @@ def _load_index_chunks(filepath: str) -> tuple[list[str], list[dict], list[str],
         return texts, metadatas, ids, file_type, document.source_id, source
 
     except Exception as exc:
-        # 降级到旧路径（保持向后兼容）
-        import traceback
-        traceback.print_exc()  # 调试信息，生产环境可移除
-        print(f"  [降级] 新 loader 失败，使用旧路径: {exc}")
+        # 降级路径（2.1 验收口径：显式可见、可追溯、不 fail-fast）：
+        # 只输出异常类型+单行摘要，不打印堆栈；降级标记随 source record
+        # 落入 index manifest，供低质量解析率统计。
+        summary = _degraded_summary(exc)
+        print(f"  [降级] {file_type} 新 loader 失败，使用旧路径解析: {summary}")
+        degraded_info = {
+            "parse_degraded": True,
+            "parse_degraded_reason": summary,
+        }
 
     # 旧路径：直接使用 rag.py 内置的解析和分块逻辑
     source = _source_metadata(filepath, file_type)
+    source.update(degraded_info)
     splitter = get_splitter(file_type)
     chunks: list[str] = []
     chunk_metadatas: list[dict] = []

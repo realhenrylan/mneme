@@ -331,8 +331,9 @@
 > **前置条件**：阶段 1 完成（Standard RAG 效果闭环已建立）
 >
 > **当前进度：** `[~]` 结构化模型、loader、parent/adjacent 和 history-aware
-> rewrite 已有实现，但它们的原始“效果显著提升”验收尚未整体成立。尤其生产
-> query-plan trace 不可复放，不能用冻结集替代真实多轮 rewrite/decompose 效果。
+> rewrite 已有实现。2.4 已于 2026-08-28 通过受控多轮 A/B/C 验收门禁
+> （`STAGE2_24_ACCEPTED`，`results/stage2-multiturn/report-2026-08-28.md`）
+> 标记完成；2.1/2.2/2.3 的效果验收尚未整体成立，保留 `[~]`。
 
 ### [~] 2.1 标准文档模型
 
@@ -347,6 +348,10 @@
 > PDF/DOCX/text loader 与 `src/chunking.py` 已实现并进入当前 parser 路径。旧
 > 兼容解析函数仍存在，且所有格式/质量提示的端到端产品验收尚未完成，故保留
 > `[~]`。
+>
+> 2026-08-28：旧降级路径已显式化（结构化警告 + source record `parse_degraded`
+> 标记随 index manifest 可追溯，移除调试堆栈残留）；格式/质量提示端到端产品
+> 验收仍未完成，维持 `[~]`。
 
 **实施步骤**：
 
@@ -397,7 +402,7 @@
 4. 解析失败必须可见，不能静默建立空索引
 5. 优先支持真实使用最多的 2-3 种格式，不继续扩大"纯文本兼容"扩展名列表
 
-### [~] 2.4 多轮检索改写
+### [x] 2.4 多轮检索改写
 
 | 属性 | 内容 |
 | --- | --- |
@@ -406,10 +411,13 @@
 | **工作量** | M |
 | **涉及文件** | 修改 `src/rag.py` 的检索入口；新增 `src/rag_query_rewriter.py` |
 
-> **当前回填：** history-aware rewrite、decompose 与原 query 保底召回已在
-> 生产代码中实现；但 Phase 6-F0 已确认当前没有 immutable production
-> query-plan trace，冻结数据也缺少真实会话历史。因此不得声称此项已证明提升，
-> 只能保留为已实现、待真实观测/离线 replay 条件满足后再评估的 `[~]`。
+> **当前回填（2026-08-28 验收闭环）：** 受控 A/B/C 回放（`evaluation/multiturn_replay.py`，
+> 走生产 prepare/generate 拆分路径；canonical history 臂内自洽）在 v1 多轮子集
+> 3 链 10 例上执行：追问 7 例 source recall 均值 A 0.857 → C 1.000
+> （Δ=+0.143 ≥ 预注册 0.10，无单例恶化），门禁 `STAGE2_24_ACCEPTED`；
+> 拒答翻转（multi-010：无历史裸查被检索前哨拒答，rewrite 注入历史后证据入场）
+> 完整复现本项设计目标现象。天花板效应与 n=7 方向性局限见
+> `results/stage2-multiturn/report-2026-08-28.md` 披露。`[~]` → `[x]`。
 
 **实施步骤**：
 

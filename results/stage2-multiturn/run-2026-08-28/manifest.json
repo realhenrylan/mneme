@@ -1,0 +1,44 @@
+{
+ "arms": [
+  "A",
+  "B",
+  "C"
+ ],
+ "corpus_files": [
+  "DSpark_paper.pdf",
+  "OneDrive 入门.pdf",
+  "南京城市地理环境.docx"
+ ],
+ "dataset_sha256": "8ce1b46b9eeaa54323c9533663088a222ed5e816d04335da1a23dd2a20ff7bb8",
+ "gate": {
+  "mean_a": 0.8571428571428571,
+  "mean_b": 0.8571428571428571,
+  "mean_c": 1.0,
+  "mean_delta": 0.1428571428571429,
+  "per_case_delta": {
+   "multi-002": 0.0,
+   "multi-003": 0.0,
+   "multi-005": 0.0,
+   "multi-006": 0.0,
+   "multi-008": 0.0,
+   "multi-009": 0.0,
+   "multi-010": 1.0
+  },
+  "thresholds": {
+   "max_case_regression": 0.05,
+   "min_mean_delta": 0.1,
+   "n_followups": 7
+  },
+  "verdict": "STAGE2_24_ACCEPTED",
+  "worst_case_delta": 0.0
+ },
+ "gate_thresholds": {
+  "max_case_regression": 0.05,
+  "min_mean_delta": 0.1
+ },
+ "lineage": "stage2-multiturn-acceptance",
+ "manifest_sha256": "1084352a877edcbeb7beb8bb6bf8e765ae35e439ed0a229acdb94c94144fa626",
+ "preregistration_doc": "plans/STAGE2-MULTITURN-ACCEPTANCE-DESIGN-2026-08-28.md",
+ "row_count": 30,
+ "turns_sha256": "3b49851fc0c1f4f69debf586da3d1e8d713f29031750259d4537c3c270b682f8"
+}
