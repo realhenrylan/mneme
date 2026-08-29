@@ -1,0 +1,2217 @@
+{
+ "overlay_version": 1,
+ "status": "HUMAN_REVIEWED",
+ "n_cases": 150,
+ "cases": [
+  {
+   "case_id": "en-021",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "word[-1]",
+    "negative indices count from the right"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_11"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-022",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "match statement"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_26"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-023",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "4 spaces",
+    "no tabs"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_44"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-024",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "SQLite 的标语/特点（Choose any three）"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_21"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-025",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "SELECT"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_24"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-026",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "INSERT INTO table VALUES(...)"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_66"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-027",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "become the postgres OS user",
+    "create the first user account under the installation user"
+   ],
+   "relevant_source_ids": [
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "761b22915b5e_chunk_4"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-028",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "updates are logged to permanent storage (disk) before the transaction completes"
+   ],
+   "relevant_source_ids": [
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "761b22915b5e_chunk_12"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-029",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "每条值有唯一所有者",
+    "所有者离开作用域时值被丢弃"
+   ],
+   "relevant_source_ids": [
+    "rust-book-core.md"
+   ],
+   "relevant_chunk_ids": [
+    "4f9001ca8c15_chunk_37"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-030",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "String 类型"
+   ],
+   "relevant_source_ids": [
+    "rust-book-core.md"
+   ],
+   "relevant_chunk_ids": [
+    "4f9001ca8c15_chunk_38"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-031",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "RFC 3986"
+   ],
+   "relevant_source_ids": [
+    "rfc3986.txt"
+   ],
+   "relevant_chunk_ids": [
+    "86ef1bf559c5_chunk_6"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-032",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "FileHandle"
+   ],
+   "relevant_source_ids": [
+    "nodejs-fs.md"
+   ],
+   "relevant_chunk_ids": [
+    "b9c22720dc84_chunk_15"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-033",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "section 2.1 Percent-Encoding"
+   ],
+   "relevant_source_ids": [
+    "rfc3986.txt"
+   ],
+   "relevant_chunk_ids": [
+    "86ef1bf559c5_chunk_19"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-034",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "T. Berners-Lee",
+    "R. Fielding"
+   ],
+   "relevant_source_ids": [
+    "rfc3986.txt"
+   ],
+   "relevant_chunk_ids": [
+    "86ef1bf559c5_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-035",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "v10.0.0"
+   ],
+   "relevant_source_ids": [
+    "nodejs-fs.md"
+   ],
+   "relevant_chunk_ids": [
+    "b9c22720dc84_chunk_15"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-036",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "64 * 1024 (64 KiB)"
+   ],
+   "relevant_source_ids": [
+    "nodejs-fs.md"
+   ],
+   "relevant_chunk_ids": [
+    "b9c22720dc84_chunk_17"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-037",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "3.1 Column Data Types"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_13"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-038",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Chapter 3 Advanced Features"
+   ],
+   "relevant_source_ids": [
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "761b22915b5e_chunk_0",
+    "761b22915b5e_chunk_9"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-039",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "4.2 References and Borrowing"
+   ],
+   "relevant_source_ids": [
+    "rust-book-core.md"
+   ],
+   "relevant_chunk_ids": [
+    "4f9001ca8c15_chunk_48"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-040",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "SQLite 语法清单列出 begin-stmt / commit-stmt / rollback-stmt 等事务语句",
+    "PostgreSQL 教程有专门的 Transactions 小节，事务用 BEGIN/COMMIT 包围，可用 ROLLBACK 回滚"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md",
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_1",
+    "761b22915b5e_chunk_10",
+    "761b22915b5e_chunk_12"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-041",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Python: assignment references the same object",
+    "Rust: ownership rules govern memory (each value has one owner)"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md",
+    "rust-book-core.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_14",
+    "4f9001ca8c15_chunk_37"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-042",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "RFC 3986 defines generic URI syntax",
+    "Node.js fs accepts file URL paths"
+   ],
+   "relevant_source_ids": [
+    "rfc3986.txt",
+    "nodejs-fs.md"
+   ],
+   "relevant_chunk_ids": [
+    "86ef1bf559c5_chunk_0",
+    "b9c22720dc84_chunk_13"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-043",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "SQLite 文档明确说明不限制列数据类型（Unlike most SQL databases, SQLite does not restrict the type of data that may be inserted into a column）"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md",
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_13"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-044",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Rust: assigning or passing a heap value moves ownership and invalidates the source variable (move semantics)",
+    "Node.js: buffers passed by reference"
+   ],
+   "relevant_source_ids": [
+    "rust-book-core.md",
+    "nodejs-fs.md"
+   ],
+   "relevant_chunk_ids": [
+    "4f9001ca8c15_chunk_43",
+    "b9c22720dc84_chunk_22"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-045",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Python tutorial: backslash escaping for quotes",
+    "RFC 3986: percent-encoding for data octets"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md",
+    "rfc3986.txt"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_8",
+    "86ef1bf559c5_chunk_19"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-046",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Python 教程 7.2.1：f.write(string) 将字符串写入文件并返回写入的字符数",
+    "Node.js fs：filehandle.write(buffer[, options]) 将 buffer 写入文件",
+    "Node.js fs：fsPromises.writeFile(file, data[, options]) 异步写入数据到文件"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md",
+    "nodejs-fs.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_87",
+    "b9c22720dc84_chunk_26",
+    "b9c22720dc84_chunk_47",
+    "b9c22720dc84_chunk_48"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-047",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "SQLite SELECT 页有 JOIN 专门小节（LEFT/RIGHT/FULL/INNER/CROSS JOIN 操作符）",
+    "PG 教程目录包含 2.6 Joins Between Tables 小节（第 2 章）"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md",
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_39",
+    "8b191b241b93_chunk_40",
+    "761b22915b5e_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-048",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "PG 教程：window functions 无需显式参数，行为完全由 OVER 子句决定",
+    "SQLite 语言文档定义 over-clause 语法图：OVER window-name ( base-window-name PARTITION BY expr, ORDER BY ordering-term, frame-spec )"
+   ],
+   "relevant_source_ids": [
+    "postgresql-tutorial.md",
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "761b22915b5e_chunk_16",
+    "8b191b241b93_chunk_8"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-049",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Rust: String type owns heap memory",
+    "SQLite: TEXT affinity for string columns"
+   ],
+   "relevant_source_ids": [
+    "rust-book-core.md",
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "4f9001ca8c15_chunk_38",
+    "8b191b241b93_chunk_12"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-050",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "RFC 3986 defines URI generic syntax (file URLs follow it)"
+   ],
+   "relevant_source_ids": [
+    "nodejs-fs.md",
+    "rfc3986.txt"
+   ],
+   "relevant_chunk_ids": [
+    "b9c22720dc84_chunk_13",
+    "86ef1bf559c5_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-051",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Python: lists as mutable sequences",
+    "SQLite: SELECT returns rows with a fixed number of columns"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md",
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_14",
+    "8b191b241b93_chunk_24"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-052",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "PostgreSQL: transactional durability — all updates of a transaction are logged to permanent storage before it is reported complete",
+    "Rust: memory-safety guarantees — the compiler guarantees references are never dangling, and ownership prevents double-free"
+   ],
+   "relevant_source_ids": [
+    "postgresql-tutorial.md",
+    "rust-book-core.md"
+   ],
+   "relevant_chunk_ids": [
+    "761b22915b5e_chunk_12",
+    "4f9001ca8c15_chunk_53",
+    "4f9001ca8c15_chunk_43"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-053",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Art of War: 兵形象水（tactics are like water）",
+    "SQLite: 不限制列数据类型"
+   ],
+   "relevant_source_ids": [
+    "art-of-war.txt",
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "293d777c429b_chunk_94",
+    "8b191b241b93_chunk_13"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-054",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "WITHOUT ROWID tables"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_19"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-055",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "The `&` operator creates a reference (e.g., `&s1`)"
+   ],
+   "relevant_source_ids": [
+    "rust-book-core.md"
+   ],
+   "relevant_chunk_ids": [
+    "4f9001ca8c15_chunk_48",
+    "4f9001ca8c15_chunk_49"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-056",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "v22.3.0"
+   ],
+   "relevant_source_ids": [
+    "nodejs-fs.md"
+   ],
+   "relevant_chunk_ids": [
+    "b9c22720dc84_chunk_31"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "en-057",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "gen-delims"
+   ],
+   "relevant_source_ids": [
+    "rfc3986.txt"
+   ],
+   "relevant_chunk_ids": [
+    "86ef1bf559c5_chunk_20"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-016",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "argument — 参数",
+    "parameter — 形参"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_1",
+    "c9fd20815ea8_chunk_14"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-017",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "原子化操作"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_2"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-018",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "创建新数组（或复制现有数组）",
+    "用新数组更新状态"
+   ],
+   "relevant_source_ids": [
+    "react-learn-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "993955159403_chunk_15"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-019",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "ref 传入函数后仍保留最新值与响应性"
+   ],
+   "relevant_source_ids": [
+    "vue-guide-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "5927c70d0f8e_chunk_12"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-020",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "根据 SELECT 结果创建并填充表"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_11"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-021",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "read-eval-print loop（读取-求值-打印循环）"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_17"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-022",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "英文定义（A function returning another function, usually applied as a function transformation using the @wrapper syntax）",
+    "并有中文正文解释（装饰器语法只是一种语法糖…同样的概念也适用于类）——条目为中英混合，并非仅术语名为中文"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_5"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-023",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "TaskApp"
+   ],
+   "relevant_source_ids": [
+    "react-learn-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "993955159403_chunk_23"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-024",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "自由线程构建版"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_7"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-025",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "文档开头（编者栏）列出：Adam Turner 和 Thomas Wouters"
+   ],
+   "relevant_source_ids": [
+    "python-whatsnew313-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "81544765752f_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-026",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "对应：同一章，标题翻译不同"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md",
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_2",
+    "e564a122a7a2_chunk_5"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-027",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "术语表：原子化操作不可再分",
+    "SQLite 语法页仅列出 begin-stmt，未展开事务原子性说明"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md",
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_2",
+    "8b191b241b93_chunk_1"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-028",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "两者都让数据变化驱动界面更新",
+    "Vue 用 Proxy 实现响应式，React 用 state 记忆组件"
+   ],
+   "relevant_source_ids": [
+    "vue-guide-zh.md",
+    "react-learn-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "5927c70d0f8e_chunk_9",
+    "993955159403_chunk_7"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-029",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "一致：都指 --disable-gil/禁用 GIL 的自由线程构建"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md",
+    "python-whatsnew313-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_7",
+    "81544765752f_chunk_3"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-030",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Python 教程 9. 类：类把数据和功能绑定在一起",
+    "React 文档：组件是可重用、可嵌套的 UI 单元"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md",
+    "react-learn-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_56",
+    "993955159403_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-031",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "一致：datetime 对象是不可变的，不属于 mutable"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md",
+    "python-datetime-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_13",
+    "2e79918eccf4_chunk_10"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-032",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "SQLite SELECT 页有 JOIN 讲解（LEFT/RIGHT/FULL/INNER/CROSS 等操作符）",
+    "PG 教程目录列出 2.6 Joins Between Tables 小节"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md",
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_39",
+    "8b191b241b93_chunk_40",
+    "761b22915b5e_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-033",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "static type checker 是查找类型问题的外部工具",
+    "stdlib 是标准库（standard library）的缩写"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_18",
+    "c9fd20815ea8_chunk_18"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-034",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "REPL：多行编辑、命令历史、help/exit/quit 直接支持",
+    "JIT：可用 PYTHON_JIT 环境变量控制"
+   ],
+   "relevant_source_ids": [
+    "python-whatsnew313-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "81544765752f_chunk_2",
+    "81544765752f_chunk_4"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "mixed-035",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "生成器迭代器",
+    "字节码"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_8",
+    "c9fd20815ea8_chunk_3"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-011",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "都支持索引和切片操作",
+    "两者都是序列类型"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_25"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-012",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "数量应相等"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_26"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-013",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "使用 import fibo as fib",
+    "用 as 后的名称绑定导入模块"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_31"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-014",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "尽量不要使用 from ... import *",
+    "建议使用 from package import specific_submodule"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_31",
+    "32c427fb50e2_chunk_38"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-015",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "simple assignment never copies data",
+    "both names reference the same object"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_14"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-016",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "rgb also changes because it is the same list object"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_14"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-017",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "freely available",
+    "from the Python web site https://www.python.org/"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_1"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-018",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "可附加到列定义或表约束",
+    "用于约束列值（如 x>3）"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_17"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-019",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "可以（示例演示直接写数据库文件绕过约束）"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_17"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-020",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "createdb"
+   ],
+   "relevant_source_ids": [
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "761b22915b5e_chunk_6"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-021",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "psql"
+   ],
+   "relevant_source_ids": [
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "761b22915b5e_chunk_7"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-022",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "值被丢弃（drop）"
+   ],
+   "relevant_source_ids": [
+    "rust-book-core.md"
+   ],
+   "relevant_chunk_ids": [
+    "4f9001ca8c15_chunk_37"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-023",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "请求（分配）它需要的内存"
+   ],
+   "relevant_source_ids": [
+    "rust-book-core.md"
+   ],
+   "relevant_chunk_ids": [
+    "4f9001ca8c15_chunk_40"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-024",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "文本插值（text interpolation）{{ }}"
+   ],
+   "relevant_source_ids": [
+    "vue-guide-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "5927c70d0f8e_chunk_1"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-025",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "冒号简写 :id（即 : 前缀）"
+   ],
+   "relevant_source_ids": [
+    "vue-guide-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "5927c70d0f8e_chunk_2"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-026",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "JavaScript Proxies（Proxy 代理）"
+   ],
+   "relevant_source_ids": [
+    "vue-guide-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "5927c70d0f8e_chunk_9"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-027",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "BEGIN TRANSACTION（begin-stmt）"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_1"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-028",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "BEGIN / COMMIT（以及 ROLLBACK）"
+   ],
+   "relevant_source_ids": [
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "761b22915b5e_chunk_13"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-029",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-030",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "数字（把 Python 当作计算器）"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_3"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-031",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Numbers"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "e564a122a7a2_chunk_7"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-032",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "构建用户界面（UI）"
+   ],
+   "relevant_source_ids": [
+    "react-learn-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "993955159403_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-033",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "key（通常用数据库 ID）"
+   ],
+   "relevant_source_ids": [
+    "react-learn-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "993955159403_chunk_4"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "multi-034",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "组件的记忆"
+   ],
+   "relevant_source_ids": [
+    "react-learn-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "993955159403_chunk_7"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-026",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-027",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-028",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-029",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-030",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-031",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-032",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-033",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-034",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-035",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-036",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-037",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-038",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-039",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Yes — the doc names the per-platform backing mechanism for fs.watch: Linux uses inotify(7)",
+    "Other platforms likewise named: BSD kqueue(2), macOS kqueue(2) for files and FSEvents for directories, Windows ReadDirectoryChangesW, AIX AHAFS, IBM i unsupported"
+   ],
+   "relevant_source_ids": [
+    "nodejs-fs.md"
+   ],
+   "relevant_chunk_ids": [
+    "b9c22720dc84_chunk_101"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-040",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Yes — the included chapters substantively cover the Copy and Drop traits: Copy types are trivially copied instead of moved, and a type (or any of its parts) implementing Drop cannot implement Copy",
+    "Honest scope note: the dedicated traits chapter (Chapter 10) is outside the included chapters — the corpus itself points to Chapter 10 for more on traits"
+   ],
+   "relevant_source_ids": [
+    "rust-book-core.md"
+   ],
+   "relevant_chunk_ids": [
+    "4f9001ca8c15_chunk_46"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-041",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-042",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-043",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-044",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-045",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-046",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-047",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-048",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-049",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-050",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Yes — section 10.11 (Quality Control) introduces the unittest module: it allows a more comprehensive set of tests to be maintained in a separate file, with a full unittest.TestCase example (import unittest / assertEqual / assertRaises)"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md",
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_69",
+    "e564a122a7a2_chunk_136"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-051",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-052",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-053",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-054",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "noanswer-055",
+   "should_refuse": true,
+   "relevance_level": "none",
+   "acceptable_answer_points": [],
+   "relevant_source_ids": [],
+   "relevant_chunk_ids": [],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-021",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "下划线 _"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_3"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-022",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "j 或 J"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_3"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-023",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "10 个值"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_10"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-024",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "循环未执行 break 就结束时执行"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_11"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-025",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "set() 函数"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_26"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-026",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "del 语句"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_25"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-027",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "海象运算符 :="
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_29"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-028",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "utf-8"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_43"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-029",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "json 模块"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_45"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-030",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "语法错误",
+    "异常"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_46"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-031",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "匹配该类本身实例或其派生类实例",
+    "反过来（列出派生类去匹配基类）不可以"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_47"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-032",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "打包异常实例列表",
+    "让多个异常一起被引发"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_52"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-033",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "定义所有情况下都必须执行的清理操作"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_50"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-034",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "新的命名空间"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_59"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-035",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "fibo.py"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_30"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-036",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "__pycache__ 目录"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_32"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-037",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "经过排序的字符串列表"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_33"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-038",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "新入门 Python 语言的程序员",
+    "不是新入门编程的初学者"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-039",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Python 官网 https://www.python.org/"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-040",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "模块",
+    "输入与输出",
+    "错误和异常"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_1"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-041",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "带点号模块名（如 A.B）"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_36"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-042",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "word（示例为 'Python' 的切片）"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_5"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-043",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "局部名称"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_58"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-044",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "集合（set）"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_26"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-045",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "3.13 新特性文档在自由线程模式语境下提到 GIL",
+    "教程正文中未讨论 GIL（仅代码示例可能含英文术语）"
+   ],
+   "relevant_source_ids": [
+    "python-whatsnew313-zh.md",
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "81544765752f_chunk_3",
+    "32c427fb50e2_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-046",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "PG 用 createdb 且数据库名有限制（字母开头、63 字节）",
+    "SQLite 文档侧重表可建在 main/temp/attached 数据库"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md",
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "761b22915b5e_chunk_6",
+    "8b191b241b93_chunk_9"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-047",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "一致：两版第 3 章标题不同但编号相同（中文为「Python 速览」，英文为「An Informal Introduction to Python」）"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md",
+    "python-tutorial-en.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_2",
+    "e564a122a7a2_chunk_5"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-048",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "mutable 指运行期间允许修改状态的对象",
+    "datetime 对象（date/datetime）不可变"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md",
+    "python-datetime-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_13",
+    "2e79918eccf4_chunk_10"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-049",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Vue 文档称「组件」（Components Basics）",
+    "React 文档称「组件」（可复用的小单元）"
+   ],
+   "relevant_source_ids": [
+    "vue-guide-zh.md",
+    "react-learn-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "5927c70d0f8e_chunk_19",
+    "993955159403_chunk_0"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-050",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "3.13 新特性文档在弃用章节列出 datetime 变更：utcnow() 改用 datetime.datetime.now(tz=datetime.UTC)，utcfromtimestamp() 改用 datetime.datetime.fromtimestamp(timestamp, tz=datetime.UTC)",
+    "copy.replace() 现在支持 datetime.datetime / datetime.date / datetime.time 对象"
+   ],
+   "relevant_source_ids": [
+    "python-whatsnew313-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "81544765752f_chunk_29",
+    "81544765752f_chunk_9"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-051",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "read-eval-print loop（读取-求值-打印循环）"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md",
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_17",
+    "32c427fb50e2_chunk_2"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-052",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "SQLite 语法页仅以 begin-stmt 出现在语法清单",
+    "PG 教程第 3 章有专门 Transactions 小节"
+   ],
+   "relevant_source_ids": [
+    "sqlite-lang.md",
+    "postgresql-tutorial.md"
+   ],
+   "relevant_chunk_ids": [
+    "8b191b241b93_chunk_1",
+    "761b22915b5e_chunk_11"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-053",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "Python 教程用 open() 返回 file object",
+    "Node.js 文档用 fs/promises 的 open() 返回 FileHandle"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md",
+    "nodejs-fs.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_43",
+    "b9c22720dc84_chunk_18"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-054",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "一致：都以 --disable-gil/禁用 GIL 描述自由线程构建"
+   ],
+   "relevant_source_ids": [
+    "python-glossary-zh.md",
+    "python-whatsnew313-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "c9fd20815ea8_chunk_7",
+    "81544765752f_chunk_3"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-055",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "格式化字符串字面值（f-string）"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_39"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-056",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "str() 返回可读形式",
+    "repr() 返回带引号/反斜杠的表示形式"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_40"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-057",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "先求值右边所有表达式",
+    "赋值前完成求值，顺序从左到右"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_7"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-058",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "列表内容可以改变（如 cubes[3] = 64）",
+    "字符串内容不可变"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_6"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  },
+  {
+   "case_id": "zh-059",
+   "should_refuse": false,
+   "relevance_level": "chunk",
+   "acceptable_answer_points": [
+    "模块（第 6 章）"
+   ],
+   "relevant_source_ids": [
+    "python-tutorial-zh.md"
+   ],
+   "relevant_chunk_ids": [
+    "32c427fb50e2_chunk_30"
+   ],
+   "reviewer": "zcode-agent-2026-08-29"
+  }
+ ],
+ "created_by": "corpus_v2_human_review_apply.py"
+}

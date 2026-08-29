@@ -6,13 +6,13 @@
 ## 全量计数
 
 - 条数：150
-- relevance_level：chunk 119；source 0；none 31
-- should_refuse：true 31；false 119
+- relevance_level：chunk 122；source 0；none 28
+- should_refuse：true 28；false 122
 - language：en 60；mixed 30；zh 60
 - query_type：cross_document 31；metadata 19；mixed_intent 12；multi_turn 24；no_answer 30；single_fact 34
 - 多轮行数（previous_turns 非空）：15
-- 带证据行数：119
-- 证据条目总数：161
+- 带证据行数：122
+- 证据条目总数：166
 
 ## 字段说明
 
@@ -33,11 +33,11 @@
 
 ## 输入 SHA-256
 
-- draft：3c4fd10ad581cba478266efc02a7c6e57b899254b4e2fc7912f66eb5dba4efcc（D:\GitHub\mneme\evaluation\datasets\v2\annotations\v2-cases-draft.jsonl）
+- draft：08d0d917e9ea06a3c8758ad1bc8e4fcfc14fb98f0cf4ada0e8cc8eaeaa67e730（D:\GitHub\mneme\evaluation\datasets\v2\annotations\v2-cases-draft.jsonl）
 - chunks：a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772（D:\GitHub\mneme\data\v2-corpus\chunks\chunks.jsonl）
 - chunk_manifest：de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a（D:\GitHub\mneme\data\v2-corpus\chunks\chunk-manifest.json）
 - corpus_manifest：84f04699c07ff1a7a8d13caabba3e377569b217816bb39db73f65df842037943（D:\GitHub\mneme\evaluation\datasets\v2\corpus-manifest.json）
-- repair_ledger：c13235dfa65d78d9c98a8937ce0ad99532d31dddc50fd5303df16fa190f8c9f0（D:\GitHub\mneme\evaluation\datasets\v2\review\repair-ledger.jsonl）
+- repair_ledger：24c1bf97c2aac1147165a22779c2882df7f79a118b9539d7df43dc5d5fe3cf7e（D:\GitHub\mneme\evaluation\datasets\v2\review\repair-ledger.jsonl）
 
 ## fail-closed 校验
 

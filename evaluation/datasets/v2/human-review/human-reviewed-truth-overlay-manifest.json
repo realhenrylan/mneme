@@ -1,11 +1,24 @@
 {
- "pack_version": 1,
+ "overlay_version": 1,
+ "status": "HUMAN_REVIEWED",
  "n_cases": 150,
+ "decision_counts": {
+  "confirmed": 150,
+  "reject": 0,
+  "needs_followup": 0
+ },
+ "reviewers": [
+  "zcode-agent-2026-08-29"
+ ],
  "inputs": {
+  "human_review_pack": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\human-review\\human-review-pack-filled.jsonl",
+   "sha256": "841468a24f6ca8b2148dae8ee5c26d4bade2447e50790fe91471b06b55de3105"
+  },
+  "original_pack_sha256": "e9f9c0c03a1f4193f45ede088940ba1129dd3910dde484e7d29a7ad97dd2ff5e",
   "draft": {
    "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\annotations\\v2-cases-draft.jsonl",
-   "sha256": "08d0d917e9ea06a3c8758ad1bc8e4fcfc14fb98f0cf4ada0e8cc8eaeaa67e730",
-   "rows": 150
+   "sha256": "08d0d917e9ea06a3c8758ad1bc8e4fcfc14fb98f0cf4ada0e8cc8eaeaa67e730"
   },
   "chunks": {
    "path": "D:\\GitHub\\mneme\\data\\v2-corpus\\chunks\\chunks.jsonl",
@@ -24,6 +37,6 @@
    "sha256": "24c1bf97c2aac1147165a22779c2882df7f79a118b9539d7df43dc5d5fe3cf7e"
   }
  },
- "pack_sha256": "e9f9c0c03a1f4193f45ede088940ba1129dd3910dde484e7d29a7ad97dd2ff5e",
- "created_by": "corpus_v2_human_review_pack.py build"
+ "overlay_sha256": "7d9bceb16a41b3b48914e2d5593e3d09057312062a3cdb1cac07f60840a37e75",
+ "created_by": "corpus_v2_human_review_apply.py"
 }
