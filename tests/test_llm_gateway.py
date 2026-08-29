@@ -307,3 +307,65 @@ class TestLLMCallExtraBody:
         monkeypatch.setattr("src.llm_gateway._get_client", lambda *a, **k: FakeClient())
         llm_call("t", [{"role": "user", "content": "x"}], model="m")
         assert "extra_body" not in captured
+
+
+# ═══════════════════════════════════════════════════════════════
+# D2 并发上限可配置（RAG_LLM_MAX_CONCURRENCY，1–32，导入期 fail-fast）
+# ═══════════════════════════════════════════════════════════════
+
+class TestMaxConcurrencyConfig:
+    """并发上限读取环境变量；非法值导入期 fail-fast（默认 4 行为不变）。
+
+    模块级常量在 pytest 进程导入期已冻结，跨进程验证（沿用
+    test_tui_config_boundary_round7 的 subprocess 模式）。
+    """
+
+    def _run_import(self, env_value: str | None) -> tuple[int, str]:
+        script = (
+            "import sys; "
+            "sys.path.insert(0, r'{root}'); "
+            "from src.llm_gateway import MAX_CONCURRENT; "
+            "print(MAX_CONCURRENT)")
+        if env_value is not None:
+            script = (
+                f"import os; os.environ['RAG_LLM_MAX_CONCURRENCY'] = "
+                f"{env_value!r}; " + script)
+        import subprocess, sys
+        result = subprocess.run(
+            [sys.executable, "-c", script],
+            cwd=__import__("pathlib").Path(__file__).resolve().parents[1],
+            capture_output=True, text=True, timeout=60,
+        )
+        return result.returncode, (result.stdout + result.stderr).strip()
+
+    def test_default_is_four(self):
+        """未配置时默认 4（行为不变）。"""
+        code, out = self._run_import(None)
+        assert code == 0, out
+        assert out == "4"
+
+    def test_configured_value_accepted(self):
+        code, out = self._run_import("8")
+        assert code == 0, out
+        assert out == "8"
+
+    def test_boundary_32_accepted(self):
+        code, out = self._run_import("32")
+        assert code == 0, out
+        assert out == "32"
+
+    def test_zero_rejected_at_import(self):
+        code, out = self._run_import("0")
+        assert code != 0
+        assert "RAG_LLM_MAX_CONCURRENCY" in out
+        assert "ValueError" in out
+
+    def test_above_32_rejected_at_import(self):
+        code, out = self._run_import("33")
+        assert code != 0
+        assert "RAG_LLM_MAX_CONCURRENCY" in out
+
+    def test_non_integer_rejected_at_import(self):
+        code, out = self._run_import("abc")
+        assert code != 0
+        assert "RAG_LLM_MAX_CONCURRENCY" in out

@@ -851,6 +851,8 @@ def graph_query_stream(
     temperature: float | None = None,
     top_k_range=None,
     llm_model: str | None = None,
+    *,
+    cancel_event=None,
 ) -> tuple[Generator[str, None, None], str]:
     from src.rag import StreamResult
     # 统一配置契约：未显式传入时从当前 Settings 解析（调用期）。
@@ -913,6 +915,7 @@ def graph_query_stream(
     )
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,
+        cancel_event=cancel_event,
     )
     # StreamResult：合法 ID 集与上方 format_sources 严格同口径
     return StreamResult(chunks=stream, valid_ids=valid_ids), sources

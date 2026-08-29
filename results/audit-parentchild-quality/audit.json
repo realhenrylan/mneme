@@ -1,0 +1,66 @@
+{
+ "method": "v1: chunk_document 内存重建（与 prepare_index 同路径，零写入）；按 chunk_type=child / parent_chunk_id 重建 parent-child 关系。v2: sealed chunks.jsonl 无关系字段，仅 tiny 分布。",
+ "tiny_child_threshold_chars": 30,
+ "v1": {
+  "containment_checked": 201,
+  "containment_violation_count": 0,
+  "containment_violations": [],
+  "has_relation_data": true,
+  "parent_by_source": {
+   "2405.02357v2.pdf": 9,
+   "DSpark_paper.pdf": 40,
+   "prevent-url-data-exfil.pdf": 6
+  },
+  "parent_count": 55,
+  "parent_length_stats": {
+   "max": 1982,
+   "median": 1141,
+   "min": 412
+  },
+  "tiny_child_by_source": {
+   "DSpark_paper.pdf": 1,
+   "prevent-url-data-exfil.pdf": 2
+  },
+  "tiny_child_count": 3,
+  "tiny_child_samples": [
+   {
+    "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_24",
+    "length": 1,
+    "preview": "4",
+    "shape": "body_fragment",
+    "source": "prevent-url-data-exfil.pdf"
+   },
+   {
+    "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_12",
+    "length": 4,
+    "preview": "1.\\n2",
+    "shape": "heading_fragment",
+    "source": "prevent-url-data-exfil.pdf"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_360",
+    "length": 25,
+    "preview": "losslessness argument.\\n33",
+    "shape": "body_fragment",
+    "source": "DSpark_paper.pdf"
+   }
+  ],
+  "tiny_child_shapes": {
+   "body_fragment": 2,
+   "heading_fragment": 1
+  }
+ },
+ "v2": {
+  "note": "sealed 行无 chunk_type/parent_chunk_id 字段，关系维度不适用",
+  "tiny_chunk_count": 1,
+  "tiny_chunk_samples": [
+   {
+    "chunk_id": "761b22915b5e_chunk_8",
+    "length": 22,
+    "preview": "# 3. Advanced Features",
+    "shape": "heading_fragment",
+    "source": "postgresql-tutorial.md"
+   }
+  ]
+ }
+}

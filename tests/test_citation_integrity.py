@@ -412,7 +412,8 @@ class _FakeService:
         self._sources = sources
         self.history_seen: list[list] = []
 
-    def query(self, query, history, temperature=0.1, top_k_range=(3, 20)):
+    def query(self, query, history, temperature=0.1, top_k_range=(3, 20),
+              **kwargs):
         self.history_seen.append(list(history))
         return self._stream, self._sources
 

@@ -59,7 +59,7 @@ def expansion_recorders(monkeypatch):
             out.append(3)
         return out, None
 
-    def _fake_adjacent(indices, metadatas, max_expand=2):
+    def _fake_adjacent(indices, metadatas, max_expand=2, texts=None):
         calls["adjacent"] += 1
         out = list(indices)
         if 4 not in out:

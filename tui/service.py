@@ -121,10 +121,13 @@ class LocalRagService:
         history: list[tuple[str, str]],
         temperature: float | None = None,
         top_k_range=None,
+        *,
+        cancel_event=None,
     ) -> tuple:
         return self._index_queue.run(
             self._query_from_snapshot,
             query, history, temperature, top_k_range,
+            cancel_event=cancel_event,
         )
 
     def _query_from_snapshot(
@@ -133,6 +136,7 @@ class LocalRagService:
         history: list[tuple[str, str]],
         temperature: float,
         top_k_range: tuple,
+        cancel_event=None,
     ) -> tuple:
         snapshot = self._snapshot
         if snapshot is None:
@@ -142,6 +146,7 @@ class LocalRagService:
             list(snapshot.documents), list(snapshot.metadatas), history,
             top_k_range=top_k_range, temperature=temperature,
             llm_model=self._llm_model(),
+            cancel_event=cancel_event,
         )
 
     def graph_query(
@@ -151,10 +156,13 @@ class LocalRagService:
         alpha: float | None = None,
         temperature: float | None = None,
         top_k_range=None,
+        *,
+        cancel_event=None,
     ) -> tuple:
         return self._index_queue.run(
             self._graph_query_from_snapshot,
             query, history, alpha, temperature, top_k_range,
+            cancel_event=cancel_event,
         )
 
     def _graph_query_from_snapshot(
@@ -164,6 +172,7 @@ class LocalRagService:
         alpha: float,
         temperature: float,
         top_k_range: tuple,
+        cancel_event=None,
     ) -> tuple:
         snapshot = self._snapshot
         if snapshot is None:
@@ -174,6 +183,7 @@ class LocalRagService:
             history=history, alpha=alpha,
             temperature=temperature, top_k_range=top_k_range,
             llm_model=self._llm_model(),
+            cancel_event=cancel_event,
         )
 
     def add_files(self, file_paths: list[str]) -> dict:
@@ -269,6 +279,11 @@ class LocalRagService:
         )
         stats["index_queue"] = self._index_queue.status()
         stats["metrics"] = GLOBAL_METRICS.summary()
+        # D3：gateway 调用摘要（调用数 / 错误率 / 分类分布 / token 合计）
+        # 落入 /status 渲染入口；无调用记录时摘要为 {"total_calls": 0}，
+        # 渲染侧零噪音（不显示该行）。
+        from src.llm_gateway import get_call_summary
+        stats["llm_gateway"] = get_call_summary()
         if self._metadatas:
             seen = set()
             for meta in self._metadatas:

@@ -1,0 +1,341 @@
+{
+ "candidate_thresholds": [
+  10,
+  15,
+  20,
+  25,
+  30,
+  40,
+  50
+ ],
+ "method": "v1: src.loaders.LoaderRegistry -> chunk_document（与 prepare_index 同路径，内存重建零写入）；v2: 只读 data/v2-corpus/chunks/chunks.jsonl",
+ "v1": {
+  "by_chunk_type": {
+   "": {
+    "below_20_ratio": 0.14705882352941177,
+    "below_counts": {
+     "10": 3,
+     "15": 8,
+     "20": 10,
+     "25": 12,
+     "30": 13,
+     "40": 14,
+     "50": 17
+    },
+    "count": 68
+   },
+   "anchor": {
+    "below_20_ratio": 0.0,
+    "below_counts": {
+     "10": 0,
+     "15": 0,
+     "20": 0,
+     "25": 0,
+     "30": 0,
+     "40": 0,
+     "50": 0
+    },
+    "count": 4
+   },
+   "child": {
+    "below_20_ratio": 0.003284072249589491,
+    "below_counts": {
+     "10": 2,
+     "15": 2,
+     "20": 2,
+     "25": 2,
+     "30": 3,
+     "40": 3,
+     "50": 4
+    },
+    "count": 609
+   },
+   "parent": {
+    "below_20_ratio": 0.0,
+    "below_counts": {
+     "10": 0,
+     "15": 0,
+     "20": 0,
+     "25": 0,
+     "30": 0,
+     "40": 0,
+     "50": 0
+    },
+    "count": 55
+   }
+  },
+  "shape_distribution": {
+   "body_fragment": 616,
+   "heading_fragment": 119,
+   "list_fragment": 1
+  },
+  "short_samples": [
+   {
+    "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_24",
+    "chunk_type": "child",
+    "length": 1,
+    "preview": "4",
+    "shape": "body_fragment",
+    "source": "prevent-url-data-exfil.pdf"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_113",
+    "chunk_type": "",
+    "length": 4,
+    "preview": "(12)",
+    "shape": "body_fragment",
+    "source": "DSpark_paper.pdf"
+   },
+   {
+    "chunk_id": "e4230571adaf0b872ac0b456f53a9095124f88c72e7949d0fb33c8ba0c13610f_chunk_12",
+    "chunk_type": "child",
+    "length": 4,
+    "preview": "1.\\n2",
+    "shape": "heading_fragment",
+    "source": "prevent-url-data-exfil.pdf"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_111",
+    "chunk_type": "",
+    "length": 6,
+    "preview": "(11)\\n9",
+    "shape": "body_fragment",
+    "source": "DSpark_paper.pdf"
+   },
+   {
+    "chunk_id": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_0",
+    "chunk_type": "",
+    "length": 8,
+    "preview": "南京城市地理环境",
+    "shape": "body_fragment",
+    "source": "南京城市地理环境.docx"
+   },
+   {
+    "chunk_id": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_1",
+    "chunk_type": "",
+    "length": 10,
+    "preview": "1.1南京市地理概况",
+    "shape": "heading_fragment",
+    "source": "南京城市地理环境.docx"
+   },
+   {
+    "chunk_id": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_4",
+    "chunk_type": "",
+    "length": 12,
+    "preview": "1.2南京市自然资源概况",
+    "shape": "heading_fragment",
+    "source": "南京城市地理环境.docx"
+   },
+   {
+    "chunk_id": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_8",
+    "chunk_type": "",
+    "length": 12,
+    "preview": "1.3南京市人文资源概况",
+    "shape": "heading_fragment",
+    "source": "南京城市地理环境.docx"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_26",
+    "chunk_type": "",
+    "length": 13,
+    "preview": "2. Background",
+    "shape": "heading_fragment",
+    "source": "DSpark_paper.pdf"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_68",
+    "chunk_type": "",
+    "length": 13,
+    "preview": "2 tanh(𝑊𝑜𝑧𝑘),",
+    "shape": "heading_fragment",
+    "source": "DSpark_paper.pdf"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_82",
+    "chunk_type": "",
+    "length": 15,
+    "preview": "2 ∥𝑝𝑑\\n𝑘−𝑝𝑡\\n𝑘∥1.",
+    "shape": "heading_fragment",
+    "source": "DSpark_paper.pdf"
+   },
+   {
+    "chunk_id": "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_6",
+    "chunk_type": "",
+    "length": 16,
+    "preview": "## 2. Background",
+    "shape": "heading_fragment",
+    "source": "LLMs_for_Mobility_Analysis_Survey.md"
+   },
+   {
+    "chunk_id": "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_16",
+    "chunk_type": "",
+    "length": 23,
+    "preview": "### 3.1 Data Processing",
+    "shape": "heading_fragment",
+    "source": "LLMs_for_Mobility_Analysis_Survey.md"
+   },
+   {
+    "chunk_id": "e9bb35155eb071a21fa61163eb98029349dfdc279d5e48de21a9e10a8faa1d39_chunk_22",
+    "chunk_type": "",
+    "length": 23,
+    "preview": "### 3.2 Model Framework",
+    "shape": "heading_fragment",
+    "source": "LLMs_for_Mobility_Analysis_Survey.md"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_360",
+    "chunk_type": "child",
+    "length": 25,
+    "preview": "losslessness argument.\\n33",
+    "shape": "body_fragment",
+    "source": "DSpark_paper.pdf"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_136",
+    "chunk_type": "",
+    "length": 26,
+    "preview": "4.3. Experimental Analysis",
+    "shape": "heading_fragment",
+    "source": "DSpark_paper.pdf"
+   },
+   {
+    "chunk_id": "092e01b197eea9690e1a6c34c48bbc01d58b4e65f9b39bdfdf77357746412b09_chunk_5",
+    "chunk_type": "",
+    "length": 35,
+    "preview": "更具创造性、更井然有序且更安全，这都得益于\\nMicrosoft 365",
+    "shape": "body_fragment",
+    "source": "OneDrive 入门.pdf"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_88",
+    "chunk_type": "",
+    "length": 40,
+    "preview": "3.2.2. Hardware-Aware Prefix Scheduler\\n7",
+    "shape": "heading_fragment",
+    "source": "DSpark_paper.pdf"
+   },
+   {
+    "chunk_id": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_6",
+    "chunk_type": "",
+    "length": 40,
+    "preview": "南京市地下水资源同样丰富，且水质优良，拥有汤山温泉、珍珠泉等著名的温泉旅游资源。",
+    "shape": "body_fragment",
+    "source": "南京城市地理环境.docx"
+   },
+   {
+    "chunk_id": "3be83454b2997f53c90577babbcb77dd5293a7d789b803c10bebfdd3ec5b3f06_chunk_135",
+    "chunk_type": "child",
+    "length": 41,
+    "preview": "draft block based on expected acceptance.",
+    "shape": "body_fragment",
+    "source": "DSpark_paper.pdf"
+   },
+   {
+    "chunk_id": "d8fa2a45c99677a0ed0440cc3bfed8eb270589e4b1c31821526505e0dcbe7e9b_chunk_5",
+    "chunk_type": "",
+    "length": 47,
+    "preview": "南京市境内水网密布，河湖水系主要属于长江水系，长江、秦淮河、玄武湖与莫愁湖均是南京重要的河湖。",
+    "shape": "body_fragment",
+    "source": "南京城市地理环境.docx"
+   }
+  ],
+  "summary": {
+   "below_ratio": {
+    "10": 0.006793478260869565,
+    "15": 0.01358695652173913,
+    "20": 0.016304347826086956,
+    "25": 0.019021739130434784,
+    "30": 0.021739130434782608,
+    "40": 0.02309782608695652,
+    "50": 0.028532608695652172
+   },
+   "below_threshold_counts": {
+    "10": 5,
+    "15": 10,
+    "20": 12,
+    "25": 14,
+    "30": 16,
+    "40": 17,
+    "50": 21
+   },
+   "max": 1982,
+   "median": 363.0,
+   "min": 1,
+   "percentiles": {
+    "p0": 1,
+    "p10": 178,
+    "p25": 323,
+    "p50": 363,
+    "p75": 388,
+    "p90": 668,
+    "p99": 1894
+   },
+   "total": 736
+  }
+ },
+ "v2": {
+  "by_source": {
+   "pending": {
+    "below_20_ratio": 0.0,
+    "below_counts": {
+     "10": 0,
+     "15": 0,
+     "20": 0,
+     "25": 1,
+     "30": 1,
+     "40": 1,
+     "50": 1
+    },
+    "count": 1006
+   }
+  },
+  "shape_distribution": {
+   "body_fragment": 631,
+   "heading_fragment": 243,
+   "list_fragment": 132
+  },
+  "short_samples": [
+   {
+    "chunk_id": "761b22915b5e_chunk_8",
+    "chunk_type": "pending",
+    "length": 22,
+    "preview": "# 3. Advanced Features",
+    "shape": "heading_fragment",
+    "source": "postgresql-tutorial.md"
+   }
+  ],
+  "summary": {
+   "below_ratio": {
+    "10": 0.0,
+    "15": 0.0,
+    "20": 0.0,
+    "25": 0.0009940357852882703,
+    "30": 0.0009940357852882703,
+    "40": 0.0009940357852882703,
+    "50": 0.0009940357852882703
+   },
+   "below_threshold_counts": {
+    "10": 0,
+    "15": 0,
+    "20": 0,
+    "25": 1,
+    "30": 1,
+    "40": 1,
+    "50": 1
+   },
+   "max": 1998,
+   "median": 1872.5,
+   "min": 22,
+   "percentiles": {
+    "p0": 22,
+    "p10": 1300,
+    "p25": 1658,
+    "p50": 1873,
+    "p75": 1951,
+    "p90": 1985,
+    "p99": 1998
+   },
+   "total": 1006
+  }
+ }
+}

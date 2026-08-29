@@ -42,6 +42,13 @@ CHUNKING_CONFIG_V3 = {
 # 避免 parent chunk 过大导致 embedding 质量下降
 MAX_PARENT_CHUNK_CHARS = 2000
 
+# 邻接扩展最小块长守卫（A1 审计冻结，22-SMALL-ITEMS 计划 Part 1-A）：
+# 阈值 20 依据 ``results/audit-chunk-size/`` 冻结——v1 736 块中 <20 字符的
+# 12 块全部是标题残片/页码残片（run-2 实测 chunk_12 = "1. 2"，4 字符），
+# 正文短节最小 25 字符不受影响；v2 1006 块 min=22，<20 零命中零误伤。
+# 低于此长度的邻接候选携带的是页面号/标题残片噪声而非语义内容。
+MIN_ADJACENT_CHUNK_CHARS = 20
+
 
 def _get_splitter(file_type: str) -> RecursiveCharacterTextSplitter:
     """按文件类型获取分块器。"""
@@ -220,10 +227,25 @@ def expand_with_parent(
     return expanded, expansion_info
 
 
+def _below_min_adjacent(texts: list[str] | None, idx: int) -> bool:
+    """邻接候选是否低于 ``MIN_ADJACENT_CHUNK_CHARS``（A1 守卫）。
+
+    仅当 ``texts`` 非 None 且候选索引有文本可查时判定；texts 缺项无法
+    判定 → 保守不跳过（保持既有行为，向后兼容）。
+    """
+    if texts is None:
+        return False
+    if idx < 0 or idx >= len(texts):
+        return False
+    return len(texts[idx].strip()) < MIN_ADJACENT_CHUNK_CHARS
+
+
 def expand_with_adjacent(
     top_indices: list[int],
     metadatas: list[dict],
     max_expand: int = 2,
+    *,
+    texts: list[str] | None = None,
 ) -> list[int]:
     """邻接扩展：召回某个 chunk 时，自动包含其前后相邻 chunk。
 
@@ -231,11 +253,16 @@ def expand_with_adjacent(
     1. 对每个召回的 chunk，查找同一 source 内 chunk_index 相邻的 chunk
     2. 最多扩展 max_expand 个相邻 chunk（前后各 1 个）
     3. 去重并保持顺序
+    4. 守卫（``texts`` 非 None 时）：邻接候选 strip 后长度低于
+       ``MIN_ADJACENT_CHUNK_CHARS`` 的跳过——碎块（标题/页码残片）只携带
+       噪声；守卫只过滤邻接候选，select 召回块永不被过滤。跳过的一侧
+       不占用 ``max_expand`` 配额，另一侧正常邻居仍可扩展。
 
     Args:
         top_indices: 排序后的 chunk 索引列表
         metadatas: 全量元数据列表
         max_expand: 最大扩展数量
+        texts: 全量块文本（调用方索引快照）；None 时无守卫（行为逐字节不变）
 
     Returns:
         扩展后的索引列表（去重，保持原顺序优先）
@@ -272,7 +299,8 @@ def expand_with_adjacent(
         prev_key = (source_id, chunk_index - 1)
         if prev_key in source_chunk_map and added < max_expand:
             prev_idx = source_chunk_map[prev_key]
-            if prev_idx not in expanded_set:
+            if (prev_idx not in expanded_set
+                    and not _below_min_adjacent(texts, prev_idx)):
                 expanded_set.add(prev_idx)
                 expanded_ordered.append(prev_idx)
                 added += 1
@@ -281,7 +309,8 @@ def expand_with_adjacent(
         next_key = (source_id, chunk_index + 1)
         if next_key in source_chunk_map and added < max_expand:
             next_idx = source_chunk_map[next_key]
-            if next_idx not in expanded_set:
+            if (next_idx not in expanded_set
+                    and not _below_min_adjacent(texts, next_idx)):
                 expanded_set.add(next_idx)
                 expanded_ordered.append(next_idx)
                 added += 1

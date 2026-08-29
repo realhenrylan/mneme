@@ -1,5 +1,6 @@
 import os
 import re
+import threading
 from typing import Optional
 from rich.console import Console
 from rich.panel import Panel
@@ -233,6 +234,9 @@ def run_chat_loop(console: Console, service, mode: str, alpha: float,
         history.append((user_input, ""))
 
         full_text = ""
+        # D1 取消机制：生成期间 Ctrl+C 不再逸出主循环终止会话——置位事件
+        # 让退避/流消费即时退出，打印提示后回到输入提示；半截答案不入 history。
+        cancel_event = threading.Event()
         try:
             label = "Graph RAG" if mode == "graph" else "Standard RAG"
             with console.status(
@@ -244,15 +248,27 @@ def run_chat_loop(console: Console, service, mode: str, alpha: float,
                         user_input, history[:-1],
                         alpha=alpha, temperature=temperature,
                         top_k_range=top_k_range,
+                        cancel_event=cancel_event,
                     )
                 else:
                     stream, sources = service.query(
                         user_input, history[:-1],
                         temperature=temperature, top_k_range=top_k_range,
+                        cancel_event=cancel_event,
                     )
                 for chunk in stream:
                     full_text += chunk
+        except KeyboardInterrupt:
+            cancel_event.set()
+            history.pop()  # 半截答案不入 history（回滚）
+            console.print(error_panel("已取消当前回答"))
+            continue
         except Exception as e:
+            from src.llm_gateway import LLMCancelledError
+            if isinstance(e, LLMCancelledError):
+                history.pop()
+                console.print(error_panel("已取消当前回答"))
+                continue
             console.print(error_panel(f"Query failed: {e}"))
             history.pop()
             continue

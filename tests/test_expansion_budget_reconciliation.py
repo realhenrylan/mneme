@@ -105,7 +105,7 @@ class TestPipelineDisplacementFixed:
         def _fake_parent(indices, enriched_docs, metadatas, budget):
             return list(indices), [(i, i) for i in indices]
 
-        def _fake_adjacent(indices, metadatas, max_expand=2):
+        def _fake_adjacent(indices, metadatas, max_expand=2, texts=None):
             # 第一个块后插入邻居 5 —— 旧代码下把尾部 select 块推出预算窗
             out = list(indices)
             out.insert(1, 5)

@@ -40,10 +40,23 @@ class LLMErrorCategory(str, Enum):
     UNKNOWN = "unknown"
 
 
+class LLMCancelledError(Exception):
+    """LLM 调用被用户取消（``cancel_event`` 置位，D1 取消机制）。
+
+    取消是系统性的可恢复操作：不重试、不作为错误消息产出文本，由调用方
+    （TUI 生成块）捕获后回输入提示。与 ``KeyboardInterrupt`` 分离——后者
+    会逸出主循环终止会话，取消则保持会话存活。
+    """
+
+
 def classify_error(exc: Exception) -> LLMErrorCategory:
     """将异常分类为 LLMErrorCategory。"""
     exc_name = type(exc).__name__
     exc_module = type(exc).__module__ or ""
+
+    # 取消（D1）：显式类型识别优先于名称匹配（asyncio/threading CancelledError）
+    if isinstance(exc, LLMCancelledError):
+        return LLMErrorCategory.CANCELLED
 
     # OpenAI SDK 异常
     if "RateLimitError" in exc_name:
@@ -151,14 +164,43 @@ def clear_model_cache():
 DEFAULT_TIMEOUT = 60          # 秒
 DEFAULT_MAX_RETRIES = 2
 DEFAULT_RETRY_BACKOFF = 1.0   # 秒，指数退避基数
-DEFAULT_MAX_CONCURRENT = 4    # 并发上限
+DEFAULT_MAX_CONCURRENT = 4    # 并发上限（默认；RAG_LLM_MAX_CONCURRENCY 覆盖）
+MAX_CONCURRENT_CEILING = 32   # 并发上限的最大允许值（D2 设计冻结 1–32）
+
+
+def validate_max_concurrency(value: str) -> int:
+    """校验 ``RAG_LLM_MAX_CONCURRENCY``：1–32 整数，非法值导入期 fail-fast。
+
+    与 ``RAG_CONTEXT_EXPANSION`` 同模式：错误信息含配置名，非法 env 在
+    模块导入时直接拒绝启动（不可静默回退默认）。
+    """
+    try:
+        n = int(value)
+    except (TypeError, ValueError):
+        raise ValueError(
+            f"invalid RAG_LLM_MAX_CONCURRENCY {value!r}; "
+            f"must be an integer in 1..{MAX_CONCURRENT_CEILING}",
+        ) from None
+    if not 1 <= n <= MAX_CONCURRENT_CEILING:
+        raise ValueError(
+            f"invalid RAG_LLM_MAX_CONCURRENCY {value!r}; "
+            f"must be in 1..{MAX_CONCURRENT_CEILING}",
+        )
+    return n
+
+
+# 并发上限（D2 可配置）：导入期 fail-fast（非法 env 拒绝启动）；
+# 默认 4 行为不变。LLM 调用全程基于此值（进程级 semaphore）。
+MAX_CONCURRENT = validate_max_concurrency(
+    os.getenv("RAG_LLM_MAX_CONCURRENCY", str(DEFAULT_MAX_CONCURRENT)),
+)
 
 # 进程级 client 缓存
 _client_cache: dict[tuple[str, str], OpenAI] = {}
 _client_cache_lock = threading.Lock()
 
 # 并发控制
-_concurrent_semaphore = threading.Semaphore(DEFAULT_MAX_CONCURRENT)
+_concurrent_semaphore = threading.Semaphore(MAX_CONCURRENT)
 
 # 调用记录（最近 500 条）
 _call_records: list[LLMCallRecord] = []
@@ -247,6 +289,7 @@ def llm_call(
     max_retries: int = DEFAULT_MAX_RETRIES,
     stream: bool = False,
     extra_body: dict | None = None,
+    cancel_event: threading.Event | None = None,
 ) -> tuple[Any, LLMCallRecord]:
     """统一 LLM 调用网关。
 
@@ -258,6 +301,10 @@ def llm_call(
     - 错误分类
     - Token 使用统计
     - 调用记录
+    - 取消（D1）：``cancel_event`` 置位即时取消——调用前置位 = 零网络
+      零 client（入口检查）；退避等待用 ``cancel_event.wait(backoff)``
+      （置位即时唤醒）；取消抛 ``LLMCancelledError``（分类 CANCELLED、
+      不可重试）。
 
     Args:
         call_type: 调用类型标识（"answer"/"decompose"/"rewrite"/"graph_extract"）
@@ -269,6 +316,7 @@ def llm_call(
         max_retries: 最大重试次数
         stream: 是否流式
         extra_body: 附加请求体字段（如关闭推理模型的 thinking）
+        cancel_event: 可取消事件；置位即取消（不重试）
 
     Returns:
         (response, call_record) 元组
@@ -286,15 +334,25 @@ def llm_call(
     # 经本校验保证非法温度零 client/零网络。
     temperature = validate_llm_temperature(temperature)
 
-    # gateway 边界变量：仅读取进程环境（.env 由 src.config 统一加载）
-    api_key = os.getenv("API_KEY")
-    base_url = os.getenv("BASE_URL")
-
     record = LLMCallRecord(
         call_type=call_type,
         model=model or "unknown",
         latency_ms=0,
     )
+
+    # D1：调用前置位 = 零网络零 client（先于任何 api_key/endpoint 检查——
+    # 取消优先于配置错误）。
+    if cancel_event is not None and cancel_event.is_set():
+        record.error_category = LLMErrorCategory.CANCELLED
+        record.cancelled = True
+        _record_call(record)
+        raise LLMCancelledError(
+            f"LLM call cancelled before start ({call_type})",
+        )
+
+    # gateway 边界变量：仅读取进程环境（.env 由 src.config 统一加载）
+    api_key = os.getenv("API_KEY")
+    base_url = os.getenv("BASE_URL")
 
     if not api_key or not base_url:
         record.error_category = LLMErrorCategory.AUTH
@@ -315,6 +373,17 @@ def llm_call(
     last_error: Exception | None = None
 
     for attempt in range(max_retries + 1):
+        # D1：每个 attempt 前检查取消（重试间无等待点被退避 wait 覆盖，
+        # 此处兜底保证「置位 → 不再发起下一次请求」）。
+        if cancel_event is not None and cancel_event.is_set():
+            record.error_category = LLMErrorCategory.CANCELLED
+            record.cancelled = True
+            record.latency_ms = (time.perf_counter() - start) * 1000
+            record.retries_used = attempt
+            _record_call(record)
+            raise LLMCancelledError(
+                f"LLM call cancelled before attempt {attempt} ({call_type})",
+            )
         try:
             with _concurrent_semaphore:
                 kwargs: dict = {"model": model, "messages": messages,
@@ -354,13 +423,27 @@ def llm_call(
             ):
                 record.latency_ms = (time.perf_counter() - start) * 1000
                 record.retries_used = attempt
+                if record.error_category == LLMErrorCategory.CANCELLED:
+                    record.cancelled = True
                 _record_call(record)
                 raise
 
-            # 可重试：指数退避
+            # 可重试：指数退避（D1：退避等待可被取消即时唤醒）
             if attempt < max_retries:
                 backoff = DEFAULT_RETRY_BACKOFF * (2 ** attempt)
-                time.sleep(backoff)
+                if cancel_event is not None:
+                    if cancel_event.wait(backoff):
+                        record.error_category = LLMErrorCategory.CANCELLED
+                        record.cancelled = True
+                        record.latency_ms = (time.perf_counter() - start) * 1000
+                        record.retries_used = attempt
+                        _record_call(record)
+                        raise LLMCancelledError(
+                            f"LLM call cancelled during backoff "
+                            f"({call_type})",
+                        )
+                else:
+                    time.sleep(backoff)
 
     # 所有重试耗尽
     record.latency_ms = (time.perf_counter() - start) * 1000

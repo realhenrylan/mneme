@@ -490,10 +490,11 @@
 > **预计工作量**：3 个中等工作项 + 1 个大工作项 + 2 个小工作项 ≈ 5-6 周
 > **前置条件**：阶段 2 完成（效果闭环已建立，可以安全优化性能）
 >
-> **当前进度：** `[~]` 配置、模型缓存、LLM gateway、BM25 snapshot 和来源
-> 生命周期 API 已有实装；持久化观测、规模预算与完整用户工作流仍未封闭。
+> **当前进度：** `[x]` 配置、模型缓存、LLM gateway、BM25 snapshot 和来源
+> 生命周期 API 已有实装（3.1 于 2026-08-29 闭环）；持久化观测、规模预算
+> 与完整用户工作流仍未封闭（3.2 及后续子项保持 `[~]`）。
 
-### [~] 3.1 单例模型与统一 LLM Gateway
+### [x] 3.1 单例模型与统一 LLM Gateway
 
 | 属性 | 内容 |
 | --- | --- |
@@ -502,9 +503,28 @@
 | **工作量** | M |
 | **涉及文件** | 新增 `src/llm_gateway.py`；修改 `src/rag.py`、`tui/service.py`、`src/graph_rag.py` |
 
-> **当前回填：** `src.llm_gateway`、进程级 embedding model cache、错误分类和
-> retry/timeout 路径已存在；取消、并发上限、真实成本/延迟目标与拆解收益的完整
-> 观测未完成，故保留 `[~]`。
+> **当前回填（2026-08-29 现状对齐）：** 原型过半——模型缓存（`get_or_load_model`
+> 双检锁）、timeout/有限重试/指数退避（`llm_gateway`）、错误分类（9 类含
+> CANCELLED）、token 统计（`TokenUsage`/`get_call_summary()`）、`should_decompose`
+> 守卫增强（多意图/中英混合/复杂分隔，`rag_query_decomposer.py:40,121`）均已
+> 实装；本轮回填更正三处声明滞后→补齐三项真缺口：**D1 取消机制**
+> （`LLMCancelledError` + `cancel_event`：调用前置位零网络零 client、退避
+> `wait()` 即时唤醒、流消费逐 chunk 关闭响应流并传播；TUI 生成块捕获
+> Ctrl+C → 置位 → 「已取消当前回答」→ 回输入提示，半截答案不入 history）、
+> **D2 并发上限可配置**（`RAG_LLM_MAX_CONCURRENCY` 1–32 导入期 fail-fast，
+> 默认 4 行为不变）、**D3 错误分类可见**（`get_stats()` 附 gateway 摘要 +
+> `/status` 渲染一行，零调用零噪音）、**D5 拆解收益计量**（
+> `RAG_QUERY_DECOMPOSE` on/off 开关 + `evaluation/decompose_ab.py` 诊断性
+> A/B：单因子 decompose、两臂共享同一 rewrite、containment-aware recall +
+> 规划墙钟，报告 `results/stage3-decompose/`）。完成标准逐条对照：
+
+| 完成标准 | 证据 |
+| --- | --- |
+| 无重复加载 | 既有进程级模型缓存（`get_or_load_model`）+ 既有测试 |
+| 错误分类可见 | D3 接线（`get_stats()["llm_gateway"]` + `/status` 一行）+ 测试 |
+| 网络异常不停留 thinking | D1 取消（Ctrl+C 即时退出生成）+ 既有 60s timeout 上界 |
+| 步骤 3 守卫 | 已实现（回填更正；`should_decompose` 多规则 + 测试覆盖） |
+| 步骤 4 计量 | D5 开关 + `decompose_ab` 报告（`results/stage3-decompose/report-2026-08-29.md` —— n=71：Δrecall **−0.0139** / 规划墙钟 **+577ms**；改善 2 / 恶化 3 / 持平 66；58/71 被守卫跳过、13 例实际拆出多子查询。诊断性如实记录，不开门禁） |
 
 **实施步骤**：
 

@@ -36,6 +36,16 @@ def render_sidebar(stats: dict, mode: str, alpha: float,
     t.add_row("Top-K", str(top_k_range))
     t.add_row("Temp", f"{temperature:.1f}")
 
+    # D3：gateway 调用摘要一行（无调用记录时不渲染，零噪音）
+    gw = stats.get("llm_gateway") or {}
+    if gw.get("total_calls"):
+        total_tok = (gw.get("total_prompt_tokens", 0)
+                     + gw.get("total_completion_tokens", 0))
+        tokens_text = f", {total_tok} tok" if total_tok else ""
+        t.add_row("LLM Calls",
+                  f"{gw['total_calls']}"
+                  f" ({gw.get('error_rate', 0.0):.0%} err{tokens_text})")
+
     return Panel(
         t,
         title="[bold " + THEME["accent"] + "]Sidebar[/]",

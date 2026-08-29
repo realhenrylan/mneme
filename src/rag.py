@@ -348,6 +348,31 @@ RAG_CONTEXT_EXPANSION = validate_context_expansion(
     os.getenv("RAG_CONTEXT_EXPANSION", CONTEXT_EXPANSION_ON).lower().strip(),
 )
 
+# ── 查询拆解开关（RAG_QUERY_DECOMPOSE） ──────────────────────────────
+# on（默认）：decompose_query_llm 照常执行（历史行为不变）。
+# off：跳过拆解 LLM 调用，sub_queries = [rewritten_query]（单查询直通）——
+# 拆解收益计量（D5）的 OFF 臂即此配置；也为「拆解成本大于收益」类回退
+# 提供逃生阀。与 RAG_CONTEXT_EXPANSION 同模式：导入期 fail-fast，
+# 评测框架按臂临时覆盖模块属性并在 finally 恢复。
+DECOMPOSE_ON = "on"
+DECOMPOSE_OFF = "off"
+DECOMPOSE_MODES = (DECOMPOSE_ON, DECOMPOSE_OFF)
+
+
+def validate_query_decompose(value: str) -> str:
+    """校验拆解开关取值；非法值抛 ValueError（导入期 fail-fast 与锁定共用）。"""
+    if value not in DECOMPOSE_MODES:
+        raise ValueError(
+            f"invalid RAG_QUERY_DECOMPOSE {value!r}; must be one of "
+            f"{DECOMPOSE_MODES}",
+        )
+    return value
+
+
+RAG_QUERY_DECOMPOSE = validate_query_decompose(
+    os.getenv("RAG_QUERY_DECOMPOSE", DECOMPOSE_ON).lower().strip(),
+)
+
 # Retrieval scores are intentionally configurable because score calibration
 # depends on the embedding model and collection size.  The default rejects
 # only very weak/no-evidence retrievals and can be tightened in production.
@@ -2464,10 +2489,14 @@ def _plan_query_runtime(
         _provenance_sink=rewrite_sink,
     )
     decompose_sink: list = []
-    sub_queries = decompose_query_llm(
-        rewritten_query, model=llm_model, temperature=llm_temperature,
-        _provenance_sink=decompose_sink,
-    )
+    if RAG_QUERY_DECOMPOSE == DECOMPOSE_ON:
+        sub_queries = decompose_query_llm(
+            rewritten_query, model=llm_model, temperature=llm_temperature,
+            _provenance_sink=decompose_sink,
+        )
+    else:
+        # D5：off = 单查询直通（零拆解 LLM 调用；provenance 保持空）
+        sub_queries = []
     if not sub_queries:
         sub_queries = [rewritten_query]
     # P1.1-M：rewrite/decompose 规划事件（原文只以盐化哈希/数量形式出现）
@@ -2726,7 +2755,8 @@ def prepare_answer_evidence(
         top_indices, _ = expand_with_parent(
             top_indices, enriched_docs, metadatas, context_k,
         )
-        top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
+        top_indices = expand_with_adjacent(
+            top_indices, metadatas, max_expand=2, texts=documents)
         # 2.2 修复：扩展预算调和——动态预算按扩展后列表计算（保留邻居填充
         # 预算的收益），调和保证下限 ≥ 代表块数：select 召回证据永不被挤占，
         # 截断只可能裁掉扩展尾部。
@@ -3040,8 +3070,12 @@ def answer_with_llm_history_stream(
     history: list[tuple[str, str]],
     model: str | None = None,
     temperature: float | None = None,
+    *,
+    cancel_event: threading.Event | None = None,
 ) -> Generator[str, None, None]:
-    from src.llm_gateway import llm_call, LLMErrorCategory, classify_error
+    from src.llm_gateway import (
+        llm_call, LLMCancelledError, LLMErrorCategory, classify_error,
+    )
 
     # 统一配置契约：未显式传入时从当前 Settings 解析（调用期，不冻结导入期值）
     if model is None:
@@ -3053,6 +3087,8 @@ def answer_with_llm_history_stream(
     temperature = validate_llm_temperature(temperature)
 
     messages = _build_llm_messages(question, context, history)
+    response = None
+    cancelled = False
     try:
         response, _ = llm_call(
             call_type="answer",
@@ -3061,11 +3097,21 @@ def answer_with_llm_history_stream(
             temperature=temperature,
             max_tokens=2000,
             stream=True,
+            cancel_event=cancel_event,
         )
         for chunk in response:
+            # D1：流消费逐 chunk 检查取消——置位即关闭响应流、传播取消
+            # （不 yield 任何错误文本；TUI 捕获后回输入提示）。
+            if cancel_event is not None and cancel_event.is_set():
+                cancelled = True
+                raise LLMCancelledError(
+                    "LLM stream cancelled while consuming response")
             delta = chunk.choices[0].delta
             if delta.content:
                 yield delta.content
+    except LLMCancelledError:
+        # 取消不是错误：原样传播（不产出固定错误消息、不重试）
+        raise
     except Exception as exc:
         category = classify_error(exc)
         if category == LLMErrorCategory.RATE_LIMIT:
@@ -3076,6 +3122,16 @@ def answer_with_llm_history_stream(
             yield "\n[API 请求超时，请稍后重试]"
         else:
             yield f"\n[API 请求失败: {exc}]"
+    finally:
+        # D1：取消（KeyboardInterrupt 置位后生成器被弃置走 GeneratorExit）
+        # 时释放 HTTP 响应流；close 幂等，失败不外抛。
+        if cancelled or (cancel_event is not None and cancel_event.is_set()):
+            close = getattr(response, "close", None)
+            if close is not None:
+                try:
+                    close()
+                except Exception:
+                    pass
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -3199,6 +3255,7 @@ def answer_query_stream(
     llm_model: str | None = None,
     *,
     trace_store=None,
+    cancel_event: threading.Event | None = None,
 ) -> tuple[Generator[str, None, None], str]:
     # 统一配置契约：未显式传入时从当前 Settings 解析（调用期，不冻结导入期值）
     settings = get_settings()
@@ -3324,7 +3381,8 @@ def answer_query_stream(
         top_indices, _ = expand_with_parent(
             top_indices, enriched_docs, metadatas, context_k,
         )
-        top_indices = expand_with_adjacent(top_indices, metadatas, max_expand=2)
+        top_indices = expand_with_adjacent(
+            top_indices, metadatas, max_expand=2, texts=documents)
         # 2.2 修复：扩展预算调和——动态预算按扩展后列表计算（保留邻居填充
         # 预算的收益），调和保证下限 ≥ 代表块数：select 召回证据永不被挤占，
         # 截断只可能裁掉扩展尾部。
@@ -3359,6 +3417,7 @@ def answer_query_stream(
     )
     stream = answer_with_llm_history_stream(
         query, context, history or [], model=llm_model, temperature=temperature,
+        cancel_event=cancel_event,
     )
     # StreamResult：合法 ID 集与上方 format_sources 严格同口径；
     # 流结束后 TUI 读取 citation_status 决定提示。观测终态封存与中断

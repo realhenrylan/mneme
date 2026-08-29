@@ -4,7 +4,7 @@ import pytest
 from src.domain import Chunk, Document, Section, SectionType
 from src.chunking import (
     chunk_document, expand_with_parent, expand_with_adjacent,
-    MAX_PARENT_CHUNK_CHARS,
+    MAX_PARENT_CHUNK_CHARS, MIN_ADJACENT_CHUNK_CHARS,
 )
 
 
@@ -237,3 +237,80 @@ class TestExpandWithAdjacent:
         result = expand_with_adjacent([0], metas, max_expand=2)
         # anchor (index 0 in list, chunk_index=-1) 不应扩展
         assert result == [0]
+
+
+# ═══════════════════════════════════════════════════════════════
+# A1 邻接扩展最小块长守卫（MIN_ADJACENT_CHUNK_CHARS）测试
+# ═══════════════════════════════════════════════════════════════
+
+class TestExpandWithAdjacentMinLengthGuard:
+    """守卫：texts 非 None 时，邻接候选低于 MIN_ADJACENT_CHUNK_CHARS 被跳过。
+
+    设计（22-SMALL-ITEMS 计划 Part 1-A，阈值经 A1 审计冻结）：
+    1. 守卫只过滤邻接候选——select 召回块（含短文本）永不被过滤；
+    2. 同一召回块的一侧邻居被跳过时，另一侧正常邻居仍可扩展；
+    3. ``texts=None``（既有调用面）行为逐字节不变（向后兼容）。
+    """
+
+    _LONG = "A normal body text paragraph, long enough to survive the guard." * 3
+
+    def test_short_prev_skipped_next_still_expanded(self):
+        """短前置邻居被跳过，但后置长邻居照常扩展（run-2 chunk_12 场景）。"""
+        # 召回 index 1；prev=0 为 4 字符碎块（"1. 2"，run-2 实测碎块），
+        # next=2 为正常长块
+        texts = ["1. 2", self._LONG, "Another long body text paragraph." * 3]
+        metas = _make_metadatas(3)
+        result = expand_with_adjacent([1], metas, max_expand=2, texts=texts)
+        assert 1 in result            # select 块在场
+        assert 0 not in result        # 短 prev 被守卫跳过
+        assert 2 in result            # 另一侧邻居仍扩展
+
+    def test_short_next_skipped_prev_still_expanded(self):
+        """短后置邻居被跳过，但前置长邻居照常扩展。"""
+        texts = [self._LONG, "Another long body text paragraph." * 3, "1. 2"]
+        metas = _make_metadatas(3)
+        result = expand_with_adjacent([1], metas, max_expand=2, texts=texts)
+        assert 0 in result
+        assert 2 not in result
+
+    def test_select_chunk_never_filtered_even_when_short(self):
+        """守卫只过滤邻接候选：召回的短块（如 chunk_12）必须在场。"""
+        texts = [self._LONG, "1. 2", self._LONG]
+        metas = _make_metadatas(3)
+        result = expand_with_adjacent([1], metas, max_expand=2, texts=texts)
+        assert 1 in result
+        assert 0 in result and 2 in result  # 两侧长邻居照常扩展
+
+    def test_min_length_boundary_exact_allowed(self):
+        """len(strip) == MIN_ADJACENT_CHUNK_CHARS 的候选允许加入（边界含）。"""
+        texts = ["x" * MIN_ADJACENT_CHUNK_CHARS, self._LONG, self._LONG]
+        metas = _make_metadatas(3)
+        result = expand_with_adjacent([1], metas, max_expand=2, texts=texts)
+        assert 0 in result
+
+    def test_below_min_length_rejected(self):
+        """len(strip) == MIN_ADJACENT_CHUNK_CHARS - 1 的候选被跳过（边界含）。"""
+        texts = ["x" * (MIN_ADJACENT_CHUNK_CHARS - 1), self._LONG, self._LONG]
+        metas = _make_metadatas(3)
+        result = expand_with_adjacent([1], metas, max_expand=2, texts=texts)
+        assert 0 not in result
+
+    def test_texts_none_behavior_unchanged(self):
+        """texts=None（既有调用面）时短邻居照常加入，无守卫。"""
+        metas = _make_metadatas(3)
+        result = expand_with_adjacent([1], metas, max_expand=2)
+        assert 0 in result and 1 in result and 2 in result
+
+    def test_length_measured_after_strip(self):
+        """长度判定基于 strip 后文本：纯空白碎块同样被拦截。"""
+        texts = ["   ", self._LONG, self._LONG]
+        metas = _make_metadatas(3)
+        result = expand_with_adjacent([1], metas, max_expand=2, texts=texts)
+        assert 0 not in result
+
+    def test_texts_shorter_than_index_conservative_add(self):
+        """texts 对候选索引缺项时无法判定长度，保守加入（行为不变）。"""
+        texts = [self._LONG]  # 只有 index 0，prev/next 无文本可查
+        metas = _make_metadatas(3)
+        result = expand_with_adjacent([1], metas, max_expand=2, texts=texts)
+        assert 0 in result and 2 in result
