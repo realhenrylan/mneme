@@ -1,0 +1,102 @@
+{
+ "activation_date": "2026-08-30",
+ "activation_version": "v2.1.0",
+ "declarations": {
+  "double_build_byte_identical": true,
+  "frozen_assets_read_only": true,
+  "no_llm_api_network_used": true,
+  "no_randomness_no_runtime_timestamp": true,
+  "overlay_is_latest_authoritative_truth_layer": true,
+  "reviewer_is_authorized_agent_review_plus_owner_adjudication": true,
+  "truth_fields_passthrough_unchanged": true
+ },
+ "gate_verdict": "ACTIVATED",
+ "gates": {
+  "gate1_overlay_manifest": {
+   "decision_counts": {
+    "confirmed": 150,
+    "needs_followup": 0,
+    "reject": 0
+   },
+   "inputs_verified": [
+    "human_review_pack",
+    "draft",
+    "chunks",
+    "chunk_manifest",
+    "corpus_manifest",
+    "repair_ledger"
+   ],
+   "overlay_n_cases": 150,
+   "overlay_sha256_recomputed": "7d9bceb16a41b3b48914e2d5593e3d09057312062a3cdb1cac07f60840a37e75",
+   "overlay_sha256_recorded": "7d9bceb16a41b3b48914e2d5593e3d09057312062a3cdb1cac07f60840a37e75",
+   "passed": true,
+   "status": "HUMAN_REVIEWED"
+  },
+  "gate2_id_sets": {
+   "draft_count": 150,
+   "draft_only": [],
+   "overlay_count": 150,
+   "overlay_only": [],
+   "passed": true
+  },
+  "gate3_truth_fields": {
+   "cases_compared": 150,
+   "mismatches": [],
+   "order_only": [],
+   "passed": true
+  },
+  "gate4_final_rulings": {
+   "cases": [
+    "en-052",
+    "mixed-022",
+    "mixed-030",
+    "mixed-033",
+    "multi-012",
+    "zh-023"
+   ],
+   "missing_from_pool": [],
+   "passed": true
+  }
+ },
+ "inputs": {
+  "draft": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\annotations\\v2-cases-draft.jsonl",
+   "sha256": "08d0d917e9ea06a3c8758ad1bc8e4fcfc14fb98f0cf4ada0e8cc8eaeaa67e730"
+  },
+  "final_rulings_batch2": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.1-owner-rulings-batch1\\final-rulings-batch2\\final-rulings-ledger.jsonl",
+   "sha256": "e401853ece8d1e85820ed0c0f5725559471c6312aea60350c8d8829738d55c12"
+  },
+  "overlay": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\human-review\\human-reviewed-truth-overlay.json",
+   "sha256": "7d9bceb16a41b3b48914e2d5593e3d09057312062a3cdb1cac07f60840a37e75"
+  },
+  "overlay_manifest": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\human-review\\human-reviewed-truth-overlay-manifest.json",
+   "sha256": "84a1b2d9f415161ba3b7f77f696b2458e6f30b8e0bc2af4e65a8bafee556f4db"
+  },
+  "rulings_ledger": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2\\revisions\\v2.1-owner-rulings-batch1\\rulings-ledger.jsonl",
+   "sha256": "b5eeefe7cd2fbcddf90f5e7e547c4231999cc90e149a8c993a635688afa92b08"
+  }
+ },
+ "manifest_sha256": "0c65ec4fd0965d6f019fcbffc77d162b0cfd96f033bb760d4c87bb3a017268c4",
+ "n_cases": 150,
+ "owner_adjudication_date": "2026-08-29",
+ "products": {
+  "activation-report.md": {
+   "sha256": "285e28649a47222efe79f7cbc71bf6c42781d0feda6448dd1eeee7cf527e195d"
+  },
+  "published_v2.1.jsonl": {
+   "path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2.1.jsonl",
+   "schema_projection_check": "ok: 150 cases loaded via evaluation.schema.load_dataset, validate_dataset 0 warnings（投影去除 6 个顶层扩展字段与 relevant_chunks[].chunk_id；schema 本身未改动）",
+   "sha256": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9"
+  },
+  "v2.1-dataset.jsonl": {
+   "sha256": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9"
+  }
+ },
+ "review_status": "human_review_confirmed_agent_adjudicated",
+ "reviewer": "zcode-agent-2026-08-29",
+ "task": "corpus-v2-v21-activate"
+}
