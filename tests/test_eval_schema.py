@@ -274,3 +274,76 @@ class TestDatasetValidation:
         warnings = validate_dataset(cases)
         missing_types = [w for w in warnings if "Missing query type" in w]
         assert len(missing_types) > 0  # Not all 8 types covered
+
+
+# ── v2.1 forward compatibility ──────────────────────────────────────
+
+class TestV21ForwardCompatibility:
+    """v2.x 数据集在 v1 schema 上的容错读取。
+
+    v2.x 在 v1 契约外增补了治理/溯源字段（note、annotation、relevance_level、
+    is_refusal_turn、doc_target、relevant_chunks[].chunk_id 等）。加载器必须
+    容忍未知字段，否则评测 runner 无法直接消费发布副本 v2.1.jsonl。
+    """
+
+    def test_from_dict_tolerates_unknown_top_level_keys(self):
+        d = {
+            "id": "en-021",
+            "query": "Q",
+            "query_type": "single_fact",
+            "language": "en",
+            "relevant_source_ids": ["a.md"],
+            "relevant_chunks": [],
+            "acceptable_answer_points": ["A"],
+            "should_refuse": False,
+            # v2.x 治理/溯源字段
+            "note": "...",
+            "annotation": {"review_status": "human_review_confirmed_agent_adjudicated"},
+            "relevance_level": "chunk",
+            "is_refusal_turn": False,
+            "doc_target": "a.md",
+        }
+        case = EvalCase.from_dict(d)
+        assert case.id == "en-021"
+
+    def test_from_dict_parses_relevant_chunk_ids(self):
+        d = {
+            "id": "en-021",
+            "query": "Q",
+            "query_type": "single_fact",
+            "language": "en",
+            "relevant_chunk_ids": ["e564a122a7a2_chunk_11"],
+        }
+        case = EvalCase.from_dict(d)
+        assert case.relevant_chunk_ids == ["e564a122a7a2_chunk_11"]
+
+    def test_relevant_chunk_ids_default_empty(self):
+        case = EvalCase(
+            id="min-002", query="Q",
+            query_type=QueryType.SINGLE_FACT, language=Language.EN,
+        )
+        assert case.relevant_chunk_ids == []
+
+    def test_relevant_chunk_tolerates_unknown_keys(self):
+        d = {
+            "id": "en-021",
+            "query": "Q",
+            "query_type": "single_fact",
+            "language": "en",
+            "relevant_chunks": [
+                {"source_id": "a.md", "chunk_text_snippet": "s",
+                 "chunk_id": "deadbeef_chunk_1"},
+            ],
+        }
+        case = EvalCase.from_dict(d)
+        assert case.relevant_chunks[0].source_id == "a.md"
+
+    def test_load_v21_dataset_end_to_end(self):
+        """发布副本 v2.1.jsonl 必须能被 load_dataset 直接消费（runner 切换前提）。"""
+        v21 = Path(__file__).resolve().parents[1] / "evaluation" / "datasets" / "v2.1.jsonl"
+        cases = load_dataset(v21)
+        assert len(cases) == 150
+        by_id = {c.id: c for c in cases}
+        # 人工终审确认的权威块 ID 必须保留在加载结果里
+        assert by_id["en-021"].relevant_chunk_ids == ["e564a122a7a2_chunk_11"]
+        assert validate_dataset(cases) == []

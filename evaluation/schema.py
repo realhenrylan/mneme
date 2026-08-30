@@ -37,12 +37,21 @@ Each line is a JSON object representing one evaluation case::
 Schema version history
 ----------------------
 - v1: Initial schema with 8 query types and structured annotations.
+- v1 (tolerant reader): v2.x datasets extend the v1 contract with
+  governance/provenance fields (``note``, ``annotation``,
+  ``relevance_level``, ``is_refusal_turn``, ``doc_target``,
+  ``relevant_chunk_ids``, ``relevant_chunks[].chunk_id``).  The loader
+  keeps the contract static ("annotators write, runners read") while
+  ignoring unknown keys, and surfaces ``relevant_chunk_ids`` (the
+  human-confirmed authoritative chunk IDs) as a first-class field.
+  Round-tripping through EvalCase is lossy for those extensions —
+  never write back over an extended dataset file.
 """
 
 from __future__ import annotations
 
 import json
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields
 from enum import Enum
 from pathlib import Path
 from typing import Any
@@ -127,6 +136,10 @@ class EvalCase:
     language: Language
     relevant_source_ids: list[str] = field(default_factory=list)
     relevant_chunks: list[RelevantChunk] = field(default_factory=list)
+    # v2.x 增补：人工终审确认的权威相关块 ID（如 "e564a122a7a2_chunk_11"，
+    # 与索引 metadata 的 chunk_id 同源同约定）。v1 数据集无此字段（加载后
+    # 为空列表，runner 沿用 snippet 匹配回退路径，行为不变）。
+    relevant_chunk_ids: list[str] = field(default_factory=list)
     acceptable_answer_points: list[str] = field(default_factory=list)
     should_refuse: bool = False
     metadata: dict[str, Any] = field(default_factory=dict)
@@ -142,13 +155,26 @@ class EvalCase:
 
     @classmethod
     def from_dict(cls, d: dict[str, Any]) -> EvalCase:
-        """Deserialize from a JSON-compatible dict."""
+        """Deserialize from a JSON-compatible dict.
+
+        容错读取（forward-compatible reader）：数据集演进会在 v1 契约外增补
+        治理/溯源字段（v2.x 的 note/annotation/relevance_level/is_refusal_turn/
+        doc_target 及 relevant_chunks[].chunk_id），加载器对未知字段一律忽略，
+        runner 只消费契约内字段。代价是 load→save **不保真**（扩展字段丢失），
+        因此带扩展字段的发布副本（v2.1.jsonl）禁止经 EvalCase 回写——治理
+        真值以数据集原文件为准。
+        """
         d = dict(d)  # shallow copy
         d.pop("schema_version", None)
+        known = {f.name for f in fields(cls)}
+        for key in [k for k in d if k not in known]:
+            del d[key]
         d["query_type"] = QueryType(d["query_type"])
         d["language"] = Language(d["language"])
+        chunk_fields = {f.name for f in fields(RelevantChunk)}
         d["relevant_chunks"] = [
-            RelevantChunk(**c) for c in d.get("relevant_chunks", [])
+            RelevantChunk(**{k: v for k, v in c.items() if k in chunk_fields})
+            for c in d.get("relevant_chunks", [])
         ]
         return cls(**d)
 
