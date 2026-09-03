@@ -382,6 +382,15 @@ def _extract_key_terms(text: str) -> list[str]:
     return [t.lower() for t in tokens if t.lower() not in stop_words and len(t) > 1]
 
 
+# 拒答消息形态词表（单一事实源：compute_refusal_accuracy 默认值与此同源；
+# 报告层三形态分类复用之，禁止在各处复制飘移）
+REFUSAL_INDICATORS: list[str] = [
+    "未找到", "无法回答", "没有足够", "暂无", "无法提供",
+    "cannot", "unable to", "no information", "not found",
+    "don't have", "does not contain", "not available",
+]
+
+
 def compute_refusal_accuracy(
     answer: str,
     should_refuse: bool,
@@ -399,11 +408,7 @@ def compute_refusal_accuracy(
         False if incorrect, None if should_refuse is not applicable.
     """
     if refusal_indicators is None:
-        refusal_indicators = [
-            "未找到", "无法回答", "没有足够", "暂无", "无法提供",
-            "cannot", "unable to", "no information", "not found",
-            "don't have", "does not contain", "not available",
-        ]
+        refusal_indicators = REFUSAL_INDICATORS
 
     answer_lower = answer.lower()
     is_refused = any(ind in answer_lower for ind in refusal_indicators)
