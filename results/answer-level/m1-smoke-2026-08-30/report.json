@@ -1,0 +1,22 @@
+{
+ "answer_hit_rate_avg": 0.2917,
+ "case_count": 10,
+ "cases_failed": 0,
+ "cases_without_effective_points": 2,
+ "citation_id_validity_avg": 0.6,
+ "citation_precision_avg": 0.0,
+ "citation_recall_avg": 0.0,
+ "completion_tokens_avg": 59.0,
+ "completion_tokens_sum": 590,
+ "faithfulness_avg": 0.6667,
+ "false_refusal_rate": 0.5,
+ "generation_ms_avg": 1749.5,
+ "prompt_tokens_avg": 2804.7,
+ "prompt_tokens_sum": 28047,
+ "refusal_case_count": 2,
+ "refusal_precision": 0.0,
+ "retrieval_ms_avg": 0.0,
+ "total_ms_avg": 1749.5,
+ "total_tokens_avg": 2863.7,
+ "total_tokens_sum": 28637
+}

@@ -1,0 +1,41 @@
+{
+ "aggregates": {
+  "answer_hit_rate_avg": 0.2917,
+  "case_count": 10,
+  "cases_failed": 0,
+  "cases_without_effective_points": 2,
+  "citation_id_validity_avg": 0.6,
+  "citation_precision_avg": 0.025,
+  "citation_recall_avg": 0.05,
+  "completion_tokens_avg": 67.3,
+  "completion_tokens_sum": 673,
+  "faithfulness_avg": 0.6667,
+  "false_refusal_rate": 0.5,
+  "generation_ms_avg": 1667.4,
+  "prompt_tokens_avg": 2804.7,
+  "prompt_tokens_sum": 28047,
+  "refusal_case_count": 2,
+  "refusal_precision": 0.0,
+  "retrieval_ms_avg": 0.0,
+  "total_ms_avg": 1667.4,
+  "total_tokens_avg": 2872.0,
+  "total_tokens_sum": 28720
+ },
+ "case_count": 10,
+ "chunk_id_domain": "12hex-normalized",
+ "corpus_dir": "D:\\GitHub\\mneme\\data\\v2-corpus\\documents\\processed",
+ "dataset_name": "v2.1",
+ "dataset_path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2.1.jsonl",
+ "dataset_sha256": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+ "git_commit": "769501b31246a46bcefa17ebe96d2f627646cdf7",
+ "lineage": "answer-level-baseline",
+ "manifest_sha256": "bdd8ee6536bc29ff0d824009e0005e17b65d2caa31119ee71d8b55a0fc7ce25b",
+ "metric_version": "al1-containment-v1",
+ "outcomes_sha256": "b2350244aa559639affa27cb58f42be7fb19794b6b436ed3481531fefbfacd0c",
+ "report_sha256": "b367408166eac6e26f447eccf9f3feaaa0f8e17156a110b5927ce1cc916d66a5",
+ "sampling": {
+  "dataset_size": 150,
+  "limit": 10,
+  "strategy": "stride"
+ }
+}

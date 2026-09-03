@@ -1,0 +1,69 @@
+[dataset] v2.1 -> D:\GitHub\mneme\evaluation\datasets\v2.1.jsonl (150 cases, selected 10)
+[corpus] D:\GitHub\mneme\data\v2-corpus\documents\processed
+Building index from 13 source files...
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8067.63it/s]
+索引重构中...
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\art-of-war.txt
+ -> text, 1195 个切片 (sections=1181, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\nodejs-fs.md
+ -> text, 190 个切片 (sections=55, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\postgresql-tutorial.md
+ -> text, 22 个切片 (sections=5, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\python-datetime-zh.md
+ -> text, 72 个切片 (sections=37, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\python-glossary-zh.md
+ -> text, 26 个切片 (sections=6, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\python-tutorial-en.md
+ -> text, 258 个切片 (sections=195, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\python-tutorial-zh.md
+ -> text, 212 个切片 (sections=195, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\python-whatsnew313-zh.md
+ -> text, 132 个切片 (sections=112, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\react-learn-zh.md
+ -> text, 44 个切片 (sections=29, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\rfc3986.txt
+ -> text, 554 个切片 (sections=551, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\rust-book-core.md
+ -> text, 98 个切片 (sections=60, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\sqlite-lang.md
+ -> text, 83 个切片 (sections=40, quality=native_text)
+加载: D:\GitHub\mneme\data\v2-corpus\documents\processed\vue-guide-zh.md
+ -> text, 61 个切片 (sections=54, quality=native_text)
+已索引 2947 个文档块
+Index built: 2947 chunks
+  [1/10] multi-011: Python 教程里提到，列表和字符串这两种数据类型有什么共性？...
+  [2/10] multi-026: 响应式基础里说，Vue 3 中数据是通过什么机制变为响应式的？...
+  [3/10] zh-027: 教程中表达式内部赋值必须显式使用哪个运算符，以避免和 C 语言混淆？...
+  [4/10] en-025: Which SQL statement is used to query the database ...
+  [5/10] zh-040: 教程一共包含哪些章节？（说出至少三个章节名）...
+  [6/10] mixed-024: Python 术语表中，free-threaded build 对应的中文是什么？...
+  [7/10] en-043: Which of the two database documents mentions type ...
+  [8/10] mixed-030: Python 教程里介绍类和组件概念，React 文档中的组件概念和它有什么对应？...
+  [9/10] noanswer-026: Python 教程中介绍了 pandas 库的 DataFrame 用法吗？...
+  [10/10] noanswer-041: Does the Python tutorial explain how to use matplo...
+[sealed] results/answer-level/m1-smoke-2026-08-30-fixed
+
+============================================================
+  Mneme Generation Evaluation Report
+============================================================
+
+  Cases: 10 (refusal: 2)
+
+  Citation Quality:
+    ID validity avg           0.6000
+    Precision avg             0.0250
+    Recall avg                0.0500
+
+  Faithfulness:
+    Faithfulness avg          0.6667
+
+  Refusal:
+    Refusal precision         0.0000
+    False refusal rate        0.5000
+
+  Timing:
+    Total avg (ms)            1667.4
+    Retrieval avg (ms)        0.0
+    Generation avg (ms)       1667.4
+
+============================================================
