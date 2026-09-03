@@ -1,3 +1,7 @@
+## 2026-09-03
+
+- **仓库卫生整理** — 移除误纳入版本库的 `.playwright-mcp/` 浏览器预览日志与页面快照，并补充忽略规则；保留 `data/` 语料与 `results/` 评测证据。
+
 ## 2026-08-30
 
 - **答案级评测线 M2 全量 150 例诊断基线（owner 批示开跑；纯诊断无门禁；密封产物落盘；未 push）** — 全量跑在 M1.1 归一修复之上：v2.1 全量 150 例（122 可答 + 28 拒答探针），产物 `results/answer-level/m2-baseline-2026-08-30/`（outcomes.jsonl + report.json + manifest.json 自哈希 MATCH + report.md 五维度报告，生成器 `scripts/answer_level_m2_report.py`，分类器 `evaluation/answer_level_report.py` + tests 5 项）。**数字（只陈述不判定）**：①answer_hit——要点级 **20/174=0.1149**、例级宏平均 **0.1380**（全中 15/部分 4/全零 103）；②token 实耗——合计 **441,496**（prompt 429,709 + completion 11,787，completion 占 2.7%），平均 2,943/例，11 例零 token（纯本地快速拒答无 LLM 调用）；③refusal——28 探针正确拒答 **11/28=0.3929**，122 可答误拒答 **48/122=0.3934**；三形态分列：前哨拒答 6 / 生成后拒答 5 / **语义式陈述 17**（输出「语料未覆盖/没有介绍 X」中性陈述，拒答词表未命中，如实披露不裁决）；④citation v2（12-hex 归一域）——validity 0.6067 / precision 0.0300 / recall 0.0322 / faithfulness 0.5411；有引用例 91/150，**122 可答例中检索缺口（context∩truth=∅）99/122**——答案引用质量主要受检索未召回真值块制约而非引用错位；⑤逐例遗漏——要点 miss 154 条（覆盖 107 例），context 含真值但引用 precision=0 15 例。成本与预估：实耗 44.1 万 token，较 M1 外推（53–57 万）低 ~17%——零 LLM 快速拒答路径（11 例）与批量复用的 token 波动所致，未超预算，不问询直达。执行与卫生：沙箱 MNEME_DATA_DIR+m2 专用目录、traces 零写入、v2.1.jsonl 与冻结资产零触碰、step 4.a/4.b 口径全部按主对话验收结论呈现。

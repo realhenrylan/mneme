@@ -61,6 +61,7 @@ docs/.vitepress/cache/
 *.png
 !docs/public/*.png
 !docs/public/*.svg
+.playwright-mcp/
 
 # Runtime artifacts & local-only files (never commit)
 data/chroma/
