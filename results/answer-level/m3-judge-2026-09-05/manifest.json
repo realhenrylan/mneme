@@ -1,0 +1,120 @@
+{
+ "aggregates": {
+  "by_query_type": {
+   "cross_document": {
+    "contract_error": 4,
+    "hit": 11,
+    "miss": 34,
+    "partial": 6
+   },
+   "metadata": {
+    "contract_error": 0,
+    "hit": 8,
+    "miss": 11,
+    "partial": 0
+   },
+   "mixed_intent": {
+    "contract_error": 1,
+    "hit": 5,
+    "miss": 8,
+    "partial": 0
+   },
+   "multi_turn": {
+    "contract_error": 0,
+    "hit": 10,
+    "miss": 16,
+    "partial": 1
+   },
+   "no_answer": {
+    "contract_error": 1,
+    "hit": 2,
+    "miss": 2,
+    "partial": 0
+   },
+   "single_fact": {
+    "contract_error": 0,
+    "hit": 17,
+    "miss": 17,
+    "partial": 0
+   }
+  },
+  "contract_error_rate": 0.03896103896103896,
+  "corrected_rate_partial_0": 0.41954022988505746,
+  "corrected_rate_partial_05": 0.4396551724137931,
+  "count_contract_error": 6,
+  "count_hit": 53,
+  "count_miss": 88,
+  "count_partial": 7,
+  "divergence_count": 60,
+  "divergence_rate": 0.38961038961038963,
+  "judge_tokens": {
+   "calls": 178,
+   "completion_tokens": 5786,
+   "models": [
+    "deepseek-chat"
+   ],
+   "prompt_tokens": 60304,
+   "total_tokens": 66090
+  },
+  "judged_count": 154,
+  "mechanical_hit_count": 20,
+  "mechanical_rate": 0.11494252873563218,
+  "no_answer_required": [
+   {
+    "case_id": "noanswer-039",
+    "contract_error": false,
+    "evidence": "文档描述了在Linux系统上`fs.watch`使用`inotify(7)`作为底层机制来通知文件系统变化",
+    "judge_verdict": "hit",
+    "point_text": "Yes — the doc names the per-platform backing mechanism for fs.watch: Linux uses inotify(7)"
+   },
+   {
+    "case_id": "noanswer-039",
+    "contract_error": false,
+    "evidence": "是的，文档描述了在Linux系统上`fs.watch`使用`inotify(7)`作为底层机制来通知文件系统变化[S2]。",
+    "judge_verdict": "miss",
+    "point_text": "Other platforms likewise named: BSD kqueue(2), macOS kqueue(2) for files and FSEvents for directories, Windows ReadDirectoryChangesW, AIX AHAFS, IBM i unsupported"
+   },
+   {
+    "case_id": "noanswer-040",
+    "contract_error": false,
+    "evidence": "无法确认Rust book（本语料库包含的章节）是否涵盖traits",
+    "judge_verdict": "miss",
+    "point_text": "Yes — the included chapters substantively cover the Copy and Drop traits: Copy types are trivially copied instead of moved, and a type (or any of its parts) implementing Drop cannot implement Copy"
+   },
+   {
+    "case_id": "noanswer-040",
+    "contract_error": false,
+    "evidence": "文档中仅在[S2]和[S7]中提及traits，但均未提供具体内容，仅说明将在第10章讨论",
+    "judge_verdict": "hit",
+    "point_text": "Honest scope note: the dedicated traits chapter (Chapter 10) is outside the included chapters — the corpus itself points to Chapter 10 for more on traits"
+   },
+   {
+    "case_id": "noanswer-050",
+    "contract_error": true,
+    "evidence": null,
+    "judge_verdict": null,
+    "point_text": "Yes — section 10.11 (Quality Control) introduces the unittest module: it allows a more comprehensive set of tests to be maintained in a separate file, with a full unittest.TestCase example (import unittest / assertEqual / assertRaises)"
+   }
+  ],
+  "total_points": 174
+ },
+ "dataset_name": "v2.1",
+ "dataset_path": "D:\\GitHub\\mneme\\evaluation\\datasets\\v2.1.jsonl",
+ "dataset_sha256": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+ "git_commit": "26d081fd1cb39472b9639cc63d0cbe709fe4aef2",
+ "judge_max_attempts": 3,
+ "judge_max_tokens": 500,
+ "judge_model": "deepseek-chat",
+ "judge_protocol_version": "al2-judge-v1",
+ "judge_verdicts": [
+  "hit",
+  "miss",
+  "partial"
+ ],
+ "lineage": "answer-level-judge",
+ "m2_dir": "results\\answer-level\\m2-baseline-2026-08-30",
+ "m2_outcomes_sha256": "6e4d59e1c7a6a9f1bdc3c8d909a131077370cfc31f002c6b3ddbd44ef9b68f41",
+ "manifest_sha256": "3fb2d1ec1a3148aae40f1a68f56c4e54cacdf61f13d2ba8b0893d95da12c2072",
+ "outcomes_sha256": "87f4f1cccd331d7a895201da7c36f7201f92ecbf35c17d2f159eb73c009c57e7",
+ "report_sha256": "1b2f29d73fc6d0c89fbc008b0ffc08d1c78e642cb1d13a72f0f8c0fdc27a30f2"
+}

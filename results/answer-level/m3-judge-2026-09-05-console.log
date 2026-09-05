@@ -1,0 +1,161 @@
+[M3] M2 miss 要点共 154 条（覆盖 107 例）
+  [1/154] multi-011 :: 都支持索引和切片操作
+  [2/154] multi-011 :: 两者都是序列类型
+  [3/154] multi-012 :: 数量应相等
+  [4/154] multi-013 :: 使用 import fibo as fib
+  [5/154] multi-013 :: 用 as 后的名称绑定导入模块
+  [6/154] multi-014 :: 尽量不要使用 from ... import *
+  [7/154] multi-014 :: 建议使用 from package import specific_submod
+  [8/154] multi-015 :: simple assignment never copies data
+  [9/154] multi-015 :: both names reference the same object
+  [10/154] multi-016 :: rgb also changes because it is the same 
+  [11/154] multi-017 :: freely available
+  [12/154] multi-017 :: from the Python web site https://www.pyt
+  [13/154] multi-018 :: 可附加到列定义或表约束
+  [14/154] multi-018 :: 用于约束列值（如 x>3）
+  [15/154] multi-019 :: 可以（示例演示直接写数据库文件绕过约束）
+  [16/154] multi-022 :: 值被丢弃（drop）
+  [17/154] multi-023 :: 请求（分配）它需要的内存
+  [18/154] multi-024 :: 文本插值（text interpolation）{{ }}
+  [19/154] multi-025 :: 冒号简写 :id（即 : 前缀）
+  [20/154] multi-026 :: JavaScript Proxies（Proxy 代理）
+  [21/154] multi-027 :: BEGIN TRANSACTION（begin-stmt）
+  [22/154] multi-028 :: BEGIN / COMMIT（以及 ROLLBACK）
+  [23/154] multi-030 :: 数字（把 Python 当作计算器）
+  [24/154] multi-031 :: Numbers
+  [25/154] multi-032 :: 构建用户界面（UI）
+  [26/154] multi-033 :: key（通常用数据库 ID）
+  [27/154] multi-034 :: 组件的记忆
+  [28/154] zh-021 :: 下划线 _
+  [29/154] zh-022 :: j 或 J
+  [30/154] zh-024 :: 循环未执行 break 就结束时执行
+  [31/154] zh-025 :: set() 函数
+  [32/154] zh-026 :: del 语句
+  [33/154] zh-027 :: 海象运算符 :=
+  [34/154] zh-029 :: json 模块
+  [35/154] zh-031 :: 匹配该类本身实例或其派生类实例
+  [36/154] zh-031 :: 反过来（列出派生类去匹配基类）不可以
+  [37/154] zh-032 :: 打包异常实例列表
+  [38/154] zh-032 :: 让多个异常一起被引发
+  [39/154] zh-033 :: 定义所有情况下都必须执行的清理操作
+  [40/154] zh-034 :: 新的命名空间
+  [41/154] zh-035 :: fibo.py
+  [42/154] zh-036 :: __pycache__ 目录
+  [43/154] en-021 :: negative indices count from the right
+  [44/154] en-022 :: match statement
+  [45/154] en-023 :: 4 spaces
+  [46/154] en-023 :: no tabs
+  [47/154] en-024 :: SQLite 的标语/特点（Choose any three）
+  [48/154] en-027 :: become the postgres OS user
+  [49/154] en-027 :: create the first user account under the 
+  [50/154] en-028 :: updates are logged to permanent storage 
+  [51/154] en-029 :: 每条值有唯一所有者
+  [52/154] en-029 :: 所有者离开作用域时值被丢弃
+  [53/154] en-030 :: String 类型
+  [54/154] en-031 :: RFC 3986
+  [55/154] mixed-016 :: argument — 参数
+  [56/154] mixed-016 :: parameter — 形参
+  [57/154] mixed-017 :: 原子化操作
+  [58/154] mixed-018 :: 创建新数组（或复制现有数组）
+  [59/154] mixed-018 :: 用新数组更新状态
+  [60/154] mixed-019 :: ref 传入函数后仍保留最新值与响应性
+  [61/154] mixed-020 :: 根据 SELECT 结果创建并填充表
+  [62/154] zh-038 :: 不是新入门编程的初学者
+  [63/154] zh-039 :: Python 官网 https://www.python.org/
+  [64/154] zh-040 :: 模块
+  [65/154] zh-040 :: 错误和异常
+  [66/154] zh-041 :: 带点号模块名（如 A.B）
+  [67/154] zh-042 :: word（示例为 'Python' 的切片）
+  [68/154] zh-044 :: 集合（set）
+  [69/154] en-033 :: section 2.1 Percent-Encoding
+  [70/154] en-034 :: T. Berners-Lee
+  [71/154] en-034 :: R. Fielding
+  [72/154] en-036 :: 64 * 1024 (64 KiB)
+  [73/154] en-037 :: 3.1 Column Data Types
+  [74/154] en-038 :: Chapter 3 Advanced Features
+  [75/154] en-039 :: 4.2 References and Borrowing
+  [76/154] mixed-021 :: read-eval-print loop（读取-求值-打印循环）
+  [77/154] mixed-022 :: 英文定义（A function returning another functi
+  [78/154] mixed-022 :: 并有中文正文解释（装饰器语法只是一种语法糖…同样的概念也适用于类）——条目为中英
+  [79/154] mixed-023 :: TaskApp
+  [80/154] mixed-025 :: 文档开头（编者栏）列出：Adam Turner 和 Thomas Wouters
+  [81/154] zh-045 :: 3.13 新特性文档在自由线程模式语境下提到 GIL
+  [82/154] zh-045 :: 教程正文中未讨论 GIL（仅代码示例可能含英文术语）
+  [83/154] zh-046 :: PG 用 createdb 且数据库名有限制（字母开头、63 字节）
+  [84/154] zh-046 :: SQLite 文档侧重表可建在 main/temp/attached 数据库
+  [85/154] zh-047 :: 一致：两版第 3 章标题不同但编号相同（中文为「Python 速览」，英文为「A
+  [86/154] zh-048 :: mutable 指运行期间允许修改状态的对象
+  [87/154] zh-048 :: datetime 对象（date/datetime）不可变
+  [88/154] zh-049 :: Vue 文档称「组件」（Components Basics）
+  [89/154] zh-049 :: React 文档称「组件」（可复用的小单元）
+  [90/154] zh-050 :: 3.13 新特性文档在弃用章节列出 datetime 变更：utcnow() 改
+  [91/154] zh-050 :: copy.replace() 现在支持 datetime.datetime / 
+  [92/154] zh-051 :: read-eval-print loop（读取-求值-打印循环）
+  [93/154] zh-052 :: SQLite 语法页仅以 begin-stmt 出现在语法清单
+  [94/154] zh-052 :: PG 教程第 3 章有专门 Transactions 小节
+  [95/154] zh-053 :: Python 教程用 open() 返回 file object
+  [96/154] zh-053 :: Node.js 文档用 fs/promises 的 open() 返回 File
+  [97/154] zh-054 :: 一致：都以 --disable-gil/禁用 GIL 描述自由线程构建
+  [98/154] en-040 :: SQLite 语法清单列出 begin-stmt / commit-stmt /
+  [99/154] en-040 :: PostgreSQL 教程有专门的 Transactions 小节，事务用 BE
+  [100/154] en-041 :: Python: assignment references the same o
+  [101/154] en-041 :: Rust: ownership rules govern memory (eac
+  [102/154] en-042 :: RFC 3986 defines generic URI syntax
+  [103/154] en-042 :: Node.js fs accepts file URL paths
+  [104/154] en-043 :: SQLite 文档明确说明不限制列数据类型（Unlike most SQL da
+  [105/154] en-044 :: Rust: assigning or passing a heap value 
+  [106/154] en-044 :: Node.js: buffers passed by reference
+  [107/154] en-045 :: Python tutorial: backslash escaping for 
+  [108/154] en-045 :: RFC 3986: percent-encoding for data octe
+  [109/154] en-046 :: Python 教程 7.2.1：f.write(string) 将字符串写入文件
+  [110/154] en-046 :: Node.js fs：filehandle.write(buffer[, opt
+  [111/154] en-046 :: Node.js fs：fsPromises.writeFile(file, da
+  [112/154] en-047 :: SQLite SELECT 页有 JOIN 专门小节（LEFT/RIGHT/FU
+  [113/154] en-047 :: PG 教程目录包含 2.6 Joins Between Tables 小节（第 
+  [114/154] en-048 :: PG 教程：window functions 无需显式参数，行为完全由 OVER
+  [115/154] en-048 :: SQLite 语言文档定义 over-clause 语法图：OVER windo
+  [116/154] en-049 :: Rust: String type owns heap memory
+  [117/154] en-049 :: SQLite: TEXT affinity for string columns
+  [118/154] en-050 :: RFC 3986 defines URI generic syntax (fil
+  [119/154] en-051 :: Python: lists as mutable sequences
+  [120/154] en-051 :: SQLite: SELECT returns rows with a fixed
+  [121/154] en-052 :: PostgreSQL: transactional durability — a
+  [122/154] en-052 :: Rust: memory-safety guarantees — the com
+  [123/154] en-053 :: Art of War: 兵形象水（tactics are like water）
+  [124/154] en-053 :: SQLite: 不限制列数据类型
+  [125/154] mixed-026 :: 对应：同一章，标题翻译不同
+  [126/154] mixed-027 :: 术语表：原子化操作不可再分
+  [127/154] mixed-027 :: SQLite 语法页仅列出 begin-stmt，未展开事务原子性说明
+  [128/154] mixed-028 :: 两者都让数据变化驱动界面更新
+  [129/154] mixed-028 :: Vue 用 Proxy 实现响应式，React 用 state 记忆组件
+  [130/154] mixed-029 :: 一致：都指 --disable-gil/禁用 GIL 的自由线程构建
+  [131/154] mixed-030 :: Python 教程 9. 类：类把数据和功能绑定在一起
+  [132/154] mixed-030 :: React 文档：组件是可重用、可嵌套的 UI 单元
+  [133/154] mixed-031 :: 一致：datetime 对象是不可变的，不属于 mutable
+  [134/154] mixed-032 :: SQLite SELECT 页有 JOIN 讲解（LEFT/RIGHT/FULL
+  [135/154] mixed-032 :: PG 教程目录列出 2.6 Joins Between Tables 小节
+  [136/154] zh-055 :: 格式化字符串字面值（f-string）
+  [137/154] zh-056 :: str() 返回可读形式
+  [138/154] zh-056 :: repr() 返回带引号/反斜杠的表示形式
+  [139/154] zh-057 :: 先求值右边所有表达式
+  [140/154] zh-057 :: 赋值前完成求值，顺序从左到右
+  [141/154] zh-058 :: 列表内容可以改变（如 cubes[3] = 64）
+  [142/154] zh-058 :: 字符串内容不可变
+  [143/154] zh-059 :: 模块（第 6 章）
+  [144/154] en-055 :: The `&` operator creates a reference (e.
+  [145/154] mixed-033 :: static type checker 是查找类型问题的外部工具
+  [146/154] mixed-033 :: stdlib 是标准库（standard library）的缩写
+  [147/154] mixed-034 :: REPL：多行编辑、命令历史、help/exit/quit 直接支持
+  [148/154] mixed-034 :: JIT：可用 PYTHON_JIT 环境变量控制
+  [149/154] mixed-035 :: 字节码
+  [150/154] noanswer-039 :: Yes — the doc names the per-platform bac
+  [151/154] noanswer-039 :: Other platforms likewise named: BSD kque
+  [152/154] noanswer-040 :: Yes — the included chapters substantivel
+  [153/154] noanswer-040 :: Honest scope note: the dedicated traits 
+  [154/154] noanswer-050 :: Yes — section 10.11 (Quality Control) in
+
+[M3] 完成 154 条，耗时 117s
+[M3] judge token: prompt=60,304 (预算 250,000-300,000), completion=5,786 (预算 20,000)
+[M3] 三态: hit=53 partial=7 miss=88 contract_error=6
+[M3] 修正0.5=0.4397 保守=0.4195 分歧率=0.3896 契约错误率=0.0390
+[M3] 密封产物: results\answer-level\m3-judge-2026-09-05
