@@ -1889,6 +1889,21 @@ def dynamic_top_k(scores: list[float], min_k: int = DEFAULT_MIN_K, max_k: int = 
     return cut
 
 
+def _env_int_override(name: str, default: int) -> int:
+    """整数环境覆盖（G1-S 语义：逐调用读取；未设/非法/非正回退默认）。
+
+    M4c 臂2 选择器档位（V3）即经此通道注入——未设时行为与部署默认一致。
+    """
+    raw = os.getenv(name, "").strip()
+    if not raw:
+        return default
+    try:
+        value = int(raw)
+    except ValueError:
+        return default
+    return value if value > 0 else default
+
+
 def _build_context(
     top_indices: list[int],
     docs: list[str],
@@ -2672,7 +2687,12 @@ def prepare_answer_evidence(
         scores_flat = sorted(best_score.values(), reverse=True)
     else:
         scores_flat = runtime_plan.scores_flat
-    k = dynamic_top_k(scores_flat)
+    # M4c 臂2 选择器档位（V3）：环境逐调用读取，未设时保持部署默认。
+    dynamic_min_k = _env_int_override("RAG_DYNAMIC_MIN_K", DEFAULT_MIN_K)
+    dynamic_max_k = _env_int_override("RAG_DYNAMIC_MAX_K", DEFAULT_MAX_K)
+    ctx_max_k = _env_int_override("RAG_CONTEXT_MAX_K", 10)
+    ctx_token_budget = _env_int_override("RAG_CONTEXT_TOKEN_BUDGET", 3000)
+    k = dynamic_top_k(scores_flat, min_k=dynamic_min_k, max_k=dynamic_max_k)
     top_indices = merged[:k]
     candidate_chunk_ids = _ordered_chunk_ids(top_indices, metadatas)
     # P1.1-M：dynamic top-k 截断事件（如实记录 k、候选总数、产生路径与
@@ -2750,6 +2770,7 @@ def prepare_answer_evidence(
         context_k = compute_context_k(
             [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
              for i in top_indices],
+            token_budget=ctx_token_budget, max_k=ctx_max_k,
         )
         select_pre = tuple(top_indices)
         top_indices, _ = expand_with_parent(
@@ -2763,6 +2784,7 @@ def prepare_answer_evidence(
         context_k = compute_context_k(
             [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
              for i in top_indices],
+            token_budget=ctx_token_budget, max_k=ctx_max_k,
         )
         top_indices, context_k = reconcile_expansion_budget(
             select_pre, top_indices, metadatas, context_k)
@@ -2770,6 +2792,7 @@ def prepare_answer_evidence(
         context_k = compute_context_k(
             [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
              for i in top_indices],
+            token_budget=ctx_token_budget, max_k=ctx_max_k,
         )
     context = _build_context(top_indices, enriched_docs, metadatas, context_k=context_k)
 

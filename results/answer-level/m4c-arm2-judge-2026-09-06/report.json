@@ -1,0 +1,99 @@
+{
+ "by_query_type": {
+  "cross_document": {
+   "contract_error": 6,
+   "hit": 13,
+   "miss": 31,
+   "partial": 5
+  },
+  "metadata": {
+   "contract_error": 0,
+   "hit": 10,
+   "miss": 10,
+   "partial": 0
+  },
+  "mixed_intent": {
+   "contract_error": 2,
+   "hit": 9,
+   "miss": 4,
+   "partial": 0
+  },
+  "multi_turn": {
+   "contract_error": 0,
+   "hit": 16,
+   "miss": 11,
+   "partial": 0
+  },
+  "no_answer": {
+   "contract_error": 0,
+   "hit": 2,
+   "miss": 2,
+   "partial": 1
+  },
+  "single_fact": {
+   "contract_error": 0,
+   "hit": 24,
+   "miss": 8,
+   "partial": 0
+  }
+ },
+ "contract_error_rate": 0.05194805194805195,
+ "corrected_rate_partial_0": 0.5402298850574713,
+ "corrected_rate_partial_05": 0.5574712643678161,
+ "count_contract_error": 8,
+ "count_hit": 74,
+ "count_miss": 66,
+ "count_partial": 6,
+ "divergence_count": 80,
+ "divergence_rate": 0.5194805194805194,
+ "judge_tokens": {
+  "calls": 180,
+  "completion_tokens": 6102,
+  "models": [
+   "deepseek-chat"
+  ],
+  "prompt_tokens": 66419,
+  "total_tokens": 72521
+ },
+ "judged_count": 154,
+ "mechanical_hit_count": 20,
+ "mechanical_rate": 0.11494252873563218,
+ "no_answer_required": [
+  {
+   "case_id": "noanswer-039",
+   "contract_error": false,
+   "evidence": "文档描述了在Linux系统上`fs.watch`使用`inotify(7)`作为底层机制来通知文件系统变化",
+   "judge_verdict": "hit",
+   "point_text": "Yes — the doc names the per-platform backing mechanism for fs.watch: Linux uses inotify(7)"
+  },
+  {
+   "case_id": "noanswer-039",
+   "contract_error": false,
+   "evidence": "是的，文档描述了在Linux系统上`fs.watch`使用`inotify(7)`作为底层机制来通知文件系统变化[S2]。",
+   "judge_verdict": "miss",
+   "point_text": "Other platforms likewise named: BSD kqueue(2), macOS kqueue(2) for files and FSEvents for directories, Windows ReadDirectoryChangesW, AIX AHAFS, IBM i unsupported"
+  },
+  {
+   "case_id": "noanswer-040",
+   "contract_error": false,
+   "evidence": "无法确认Rust书籍（本语料库包含的章节）是否涵盖traits",
+   "judge_verdict": "miss",
+   "point_text": "Yes — the included chapters substantively cover the Copy and Drop traits: Copy types are trivially copied instead of moved, and a type (or any of its parts) implementing Drop cannot implement Copy"
+  },
+  {
+   "case_id": "noanswer-040",
+   "contract_error": false,
+   "evidence": "文档中仅在[S2]和[S7]中提及traits，但均指出将在第10章讨论，而本语料库未包含第10章内容",
+   "judge_verdict": "hit",
+   "point_text": "Honest scope note: the dedicated traits chapter (Chapter 10) is outside the included chapters — the corpus itself points to Chapter 10 for more on traits"
+  },
+  {
+   "case_id": "noanswer-050",
+   "contract_error": false,
+   "evidence": "是的，Python 教程介绍了 `unittest` 框架。文档中提到 `unittest` 模块允许在单独的文件中维护更全面的测试集，并提供了示例代码展示如何使用 `unittest` 编写和运行测试 [S1]。",
+   "judge_verdict": "partial",
+   "point_text": "Yes — section 10.11 (Quality Control) introduces the unittest module: it allows a more comprehensive set of tests to be maintained in a separate file, with a full unittest.TestCase example (import unittest / assertEqual / assertRaises)"
+  }
+ ],
+ "total_points": 174
+}
