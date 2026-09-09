@@ -2687,11 +2687,12 @@ def prepare_answer_evidence(
         scores_flat = sorted(best_score.values(), reverse=True)
     else:
         scores_flat = runtime_plan.scores_flat
-    # M4c 臂2 选择器档位（V3）：环境逐调用读取，未设时保持部署默认。
+    # M4c 臂2 选择器档位（V3）：环境逐调用读取，未设时保持产品默认
+    # （M5d PASS 后 owner 批准：min 25 / context 上限 25 / 预算 7000）。
     dynamic_min_k = _env_int_override("RAG_DYNAMIC_MIN_K", DEFAULT_MIN_K)
     dynamic_max_k = _env_int_override("RAG_DYNAMIC_MAX_K", DEFAULT_MAX_K)
-    ctx_max_k = _env_int_override("RAG_CONTEXT_MAX_K", 10)
-    ctx_token_budget = _env_int_override("RAG_CONTEXT_TOKEN_BUDGET", 3000)
+    ctx_max_k = _env_int_override("RAG_CONTEXT_MAX_K", 25)
+    ctx_token_budget = _env_int_override("RAG_CONTEXT_TOKEN_BUDGET", 7000)
     k = dynamic_top_k(scores_flat, min_k=dynamic_min_k, max_k=dynamic_max_k)
     top_indices = merged[:k]
     candidate_chunk_ids = _ordered_chunk_ids(top_indices, metadatas)

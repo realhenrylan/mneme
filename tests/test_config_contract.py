@@ -64,7 +64,7 @@ class TestDefaultsAndOverrides:
         assert s.llm_temperature == 0.1
         assert (s.llm_top_k_min, s.llm_top_k_max) == (3, 20)
         assert s.alpha == 0.7
-        assert s.refusal_threshold == 0.03
+        assert s.refusal_threshold == 0.015
         assert s.embedding_model_name == "all-MiniLM-L6-v2"
         assert s.reranker_mode == "none"
         assert s.reranker_model_name == "cross-encoder/ms-marco-MiniLM-L-6-v2"
@@ -143,11 +143,11 @@ class TestDefaultsAndOverrides:
         assert rag.EMBEDDING_MODEL_NAME == s.embedding_model_name
         assert rag.DEFAULT_LLM_MODEL == s.llm_model == "deepseek-chat"
         assert rag.DEFAULT_TEMPERATURE == s.llm_temperature == 0.1
-        assert rag.DEFAULT_REFUSAL_THRESHOLD == s.refusal_threshold == 0.03
+        assert rag.DEFAULT_REFUSAL_THRESHOLD == s.refusal_threshold == 0.015
         assert rag.RAG_RERANKER_MODE == s.reranker_mode == "none"
         assert rag.RERANKER_MODEL_NAME == s.reranker_model_name
         assert rag.DEFAULT_TOP_K == s.retrieval_candidate_k == 70
-        assert rag.DEFAULT_MIN_K == s.retrieval_dynamic_min_k == 12
+        assert rag.DEFAULT_MIN_K == s.retrieval_dynamic_min_k == 25
         assert rag.DEFAULT_MAX_K == s.retrieval_dynamic_max_k == 70
         assert rag.CHROMA_DB_PATH == str(s.chroma_db_path)
 
@@ -165,11 +165,11 @@ class TestDefaultsAndOverrides:
         assert stream_sig.parameters["top_k_range"].default is None
         assert stream_sig.parameters["temperature"].default is None
         assert (s.llm_top_k_min, s.llm_top_k_max) == (3, 20)
-        # 内部检索宽度：同步路径 dynamic_top_k 默认 (12, 70)
+        # 内部检索宽度：同步路径 dynamic_top_k 默认 (25, 70)（M5d PASS 后产品默认）
         dynamic_sig = inspect.signature(rag.dynamic_top_k)
-        assert dynamic_sig.parameters["min_k"].default == 12
+        assert dynamic_sig.parameters["min_k"].default == 25
         assert dynamic_sig.parameters["max_k"].default == 70
-        assert (s.retrieval_dynamic_min_k, s.retrieval_dynamic_max_k) == (12, 70)
+        assert (s.retrieval_dynamic_min_k, s.retrieval_dynamic_max_k) == (25, 70)
         # 两者明确不同，不得被文档或实现绑定
         assert s.llm_top_k_min != s.retrieval_dynamic_min_k
         assert s.llm_top_k_max != s.retrieval_dynamic_max_k
@@ -513,7 +513,7 @@ class TestDocumentationConsistency:
             "# LLM_TOP_K_MIN=3",
             "# LLM_TOP_K_MAX=20",
             "# ALPHA=0.7",
-            "# RAG_REFUSAL_THRESHOLD=0.03",
+            "# RAG_REFUSAL_THRESHOLD=0.015",
             "# MNEME_DATA_DIR=~/.mneme",
             "# MNEME_OFFLINE=1",
             "# RAG_RERANKER=none",
@@ -536,7 +536,7 @@ class TestDocumentationConsistency:
             "| `LLM_TOP_K_MAX` | `20` |",
             "| `ALPHA` | `0.7` |",
             "| `MNEME_DATA_DIR` | `~/.mneme` |",
-            "| `RAG_REFUSAL_THRESHOLD` | `0.03` |",
+            "| `RAG_REFUSAL_THRESHOLD` | `0.015` |",
             "| `RAG_RERANKER` | `none` |",
             "| `MNEME_OFFLINE` |",
             "| `EMBEDDING_MODEL_NAME` | `all-MiniLM-L6-v2` |",
@@ -548,7 +548,7 @@ class TestDocumentationConsistency:
             "| `LLM_TOP_K_MAX` | `20` |",
             "| `ALPHA` | `0.7` |",
             "| `MNEME_DATA_DIR` | `~/.mneme` |",
-            "| `RAG_REFUSAL_THRESHOLD` | `0.03` |",
+            "| `RAG_REFUSAL_THRESHOLD` | `0.015` |",
             "| `RAG_RERANKER` | `none` |",
             "| `MNEME_OFFLINE` |",
             "| `EMBEDDING_MODEL_NAME` | `all-MiniLM-L6-v2` |",

@@ -52,10 +52,10 @@ class TestSettings:
         assert s.llm_top_k_max == 20
 
     def test_default_refusal_threshold(self, monkeypatch):
-        """默认拒答阈值为 0.03。"""
+        """默认拒答阈值为 0.015（M5d PASS 后 owner 批准的产品默认，臂2 配置）。"""
         monkeypatch.delenv("RAG_REFUSAL_THRESHOLD", raising=False)
         s = Settings()
-        assert s.refusal_threshold == 0.03
+        assert s.refusal_threshold == 0.015
 
     def test_offline_mode_default_off(self, monkeypatch):
         """默认离线模式关闭。"""

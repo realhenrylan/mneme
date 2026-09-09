@@ -119,7 +119,7 @@ class TestStartupDotenvEntry:
         assert payload["rag_llm_model"] == "dotenv-model"
         assert payload["rag_temperature"] == 0.91
         assert payload["rag_reranker"] == "cross-encoder"
-        assert payload["rag_refusal"] == 0.03
+        assert payload["rag_refusal"] == 0.015  # 产品默认（M5d PASS 后臂2 配置）
         assert payload["rag_embedding"] == "all-MiniLM-L6-v2"
         assert payload["chroma"] == str(tmp_path / "relative-data" / "chroma_db")
         assert payload["data_dir"] == str(tmp_path / "relative-data")

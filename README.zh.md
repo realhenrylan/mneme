@@ -211,7 +211,10 @@ python -m src.graph_rag \
 | `MNEME_MAX_PDF_PAGES` | `2000` | 单个 PDF 页数上限；必须为正整数 |
 | `MNEME_MAX_REMOTE_CONTEXT_CHARS` | `60000` | 发送到 LLM 端点的检索上下文上限 |
 | `MNEME_ALLOW_INSECURE_HTTP` | 未设置 | 显式允许非本机 HTTP，仅建议受控开发环境使用 |
-| `RAG_REFUSAL_THRESHOLD` | `0.03` | 检索拒答阈值；必须 ≥ 0 |
+| `RAG_REFUSAL_THRESHOLD` | `0.015` | 检索拒答阈值；必须 ≥ 0。默认值为 M5d 门禁通过后的臂2 配置；设 `0.03` 可复现 M2 基线 |
+| `RAG_DYNAMIC_MIN_K` | `25` | 内部动态 Top-K 截断下界（默认 = 臂2 配置；`12` 复现 M2 基线） |
+| `RAG_CONTEXT_MAX_K` | `25` | 进入 LLM context 的候选数上限（默认 = 臂2 配置；`10` 复现 M2 基线） |
+| `RAG_CONTEXT_TOKEN_BUDGET` | `7000` | LLM context 中检索证据的 token 预算（默认 = 臂2 配置；`3000` 复现 M2 基线） |
 | `RAG_RERANKER` | `none` | Reranker 模式：`none` 或 `cross-encoder` |
 | `RAG_RERANKER_MODEL` | `cross-encoder/ms-marco-MiniLM-L-6-v2` | `RAG_RERANKER=cross-encoder` 时使用的 reranker 模型 |
 | `MNEME_OFFLINE` | 未设置 | 离线模式。精确承诺：**仅禁止隐式远程 ModelScope 下载**；本地模型照常加载、LLM API 调用不受影响。本地模型缺失时给出明确的纯本地错误。 |
@@ -219,7 +222,7 @@ python -m src.graph_rag \
 
 配置优先级：**真实环境变量 > `.env` > 内置默认值**。`.env` 在进程启动时从启动目录（当前工作目录，即命令所在目录）读取，且早于任何 Settings 构造——CLI、TUI、RAG 一致生效；真实环境变量始终优先。若进程环境中已存在 `API_KEY` 与 `BASE_URL`，TUI 不会进入首次引导，即使没有 `.env`。TUI/onboarding 保存配置后经 `reset_settings()` 刷新：设置界面只持久化到 `.env`，绝不覆盖进程环境变量；进程值继续生效，`.env` 修改须在没有该进程覆盖的重启后生效。所有数值与范围在启动时校验：非法数值或矛盾范围会带配置名直接失败（fail-fast），发生在任何索引构建、模型加载、网络访问或目录写入之前。路径支持 `~` 展开（Windows 下展开为 `%USERPROFILE%`），相对路径按进程启动目录解释。
 
-用户 Top-K 区间（`LLM_TOP_K_MIN`/`LLM_TOP_K_MAX`，默认 3–20，TUI/流式路径使用）与同步路径使用的内部检索宽度（`retrieve` 宽度 70、动态 Top-K 边界 12–70）是两个独立概念；内部检索宽度不提供环境变量覆盖。Graph RAG 的内部动态 Top-K 截断同样固定为 3–50（`GRAPH_DYNAMIC_MIN_K`/`GRAPH_DYNAMIC_MAX_K`），不与用户 Top-K 3–20 区间绑定。
+用户 Top-K 区间（`LLM_TOP_K_MIN`/`LLM_TOP_K_MAX`，默认 3–20，TUI/流式路径使用）与同步路径使用的内部检索宽度（`retrieve` 宽度 70、动态 Top-K 边界 25–70）是两个独立概念；内部宽度采用 M5d 门禁通过后的臂2 配置（可经 `RAG_DYNAMIC_MIN_K`/`RAG_CONTEXT_MAX_K`/`RAG_CONTEXT_TOKEN_BUDGET` 回退到 M2 基线）。Graph RAG 的内部动态 Top-K 截断同样固定为 3–50（`GRAPH_DYNAMIC_MIN_K`/`GRAPH_DYNAMIC_MAX_K`），不与用户 Top-K 3–20 区间绑定。
 
 Embedding 模型会优先从配置的本地路径或缓存加载；不可用时，ModelScope 回退使用用户配置的模型标识，默认是 `all-MiniLM-L6-v2`（`MNEME_OFFLINE=1` 时禁用该回退），自动下载缓存到 `<MNEME_DATA_DIR>/models`。
 

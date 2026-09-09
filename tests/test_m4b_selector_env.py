@@ -77,12 +77,13 @@ class TestEnvIntOverrideSemantics:
 
 
 class TestPrepareSelectorEnv:
-    def test_default_context_bounded_by_dynamic_cut(
+    def test_default_context_bounded_by_selector_hard_cap(
             self, monkeypatch, clean_selector_env, flat_expansion):
-        # 生产语义：reconcile 把预算抬高到 select 数（select 证据不挤占），
-        # 默认刀口=12 → context=12（而非 compute_context_k 的 10）。
+        # 生产语义：reconcile 把预算抬高到 select 数（select 证据不挤占）；
+        # 产品默认（M5d PASS 后）= 臂2 配置，净容量受 select 侧 min(k,20)
+        # 硬顶约束 → context=20（26 候选中刀口 25，select 取 20）。
         ev = _run_prepare(monkeypatch)
-        assert ev.context_k == 12, "默认刀口 12 全进（reconcile 抬高预算）"
+        assert ev.context_k == 20, "产品默认净容量 = select 硬顶 20"
 
     def test_arm2_selector_range_expands_context_to_20(
             self, monkeypatch, clean_selector_env, flat_expansion):
@@ -93,15 +94,24 @@ class TestPrepareSelectorEnv:
         # select 侧 min(k, 20) 硬顶：臂2 净容量 = 20（预算 25 被 20 抵消）。
         assert ev.context_k == 20, "臂2 档位净容量 = select 硬顶 20"
 
+    def test_m2_legacy_config_override_still_works(
+            self, monkeypatch, clean_selector_env, flat_expansion):
+        """回退通道：显式设回 M2 基线档位（12/10/3000）仍生效。"""
+        monkeypatch.setenv("RAG_DYNAMIC_MIN_K", "12")
+        monkeypatch.setenv("RAG_CONTEXT_MAX_K", "10")
+        monkeypatch.setenv("RAG_CONTEXT_TOKEN_BUDGET", "3000")
+        ev = _run_prepare(monkeypatch)
+        assert ev.context_k == 12, "M2 基线档位：刀口 12 全进"
+
     def test_invalid_env_falls_back_to_default(
             self, monkeypatch, clean_selector_env, flat_expansion):
         monkeypatch.setenv("RAG_DYNAMIC_MIN_K", "abc")
         monkeypatch.setenv("RAG_CONTEXT_MAX_K", "-1")
         ev = _run_prepare(monkeypatch)
-        assert ev.context_k == 12, "非法值应回退默认行为（刀口 12 全进）"
+        assert ev.context_k == 20, "非法值应回退产品默认（净容量 20）"
 
     def test_default_behavior_unchanged_when_unset(
             self, monkeypatch, clean_selector_env, flat_expansion):
         ev_default = _run_prepare(monkeypatch)
-        assert ev_default.context_k == 12
+        assert ev_default.context_k == 20
         assert ev_default.top_indices[:3] == (0, 1, 2)

@@ -78,18 +78,18 @@ class TestComputeContextK:
             for i in range(n)
         ]
 
-    def test_default_budget_fits_15_candidates(self):
-        # 默认 budget=3000, avg_chunk_tokens=200 → 3000//200=15, clamped to max_k=10
-        candidates = self._make_candidates(20)
-        assert compute_context_k(candidates) == 10
+    def test_default_budget_caps_at_max_k_25(self):
+        # 产品默认（M5d PASS 后）：budget=7000, avg=200 → 35, clamped to max_k=25
+        candidates = self._make_candidates(40)
+        assert compute_context_k(candidates) == 25
 
     def test_candidates_fewer_than_budget(self):
-        # 只有 3 个候选，budget 允许 15，但受 min(len, budget_k) 限制
+        # 只有 3 个候选，budget 允许 35，但受 min(len, budget_k) 限制
         candidates = self._make_candidates(3)
         assert compute_context_k(candidates) == 3
 
     def test_custom_budget(self):
-        # budget=1000, avg=200 → 5, min_k=3, max_k=10 → 5
+        # budget=1000, avg=200 → 5, min_k=3, max_k=25 → 5
         candidates = self._make_candidates(20)
         assert compute_context_k(candidates, token_budget=1000) == 5
 
@@ -99,9 +99,9 @@ class TestComputeContextK:
         assert compute_context_k(candidates, token_budget=200) == 3
 
     def test_max_k_ceiling(self):
-        # budget=10000, avg=200 → 50, 但 max_k=10 → 10
-        candidates = self._make_candidates(20)
-        assert compute_context_k(candidates, token_budget=10000) == 10
+        # budget=10000, avg=200 → 50, 但 max_k 默认 25 → 25
+        candidates = self._make_candidates(40)
+        assert compute_context_k(candidates, token_budget=10000) == 25
 
     def test_empty_candidates(self):
         assert compute_context_k([]) == 0

@@ -328,15 +328,20 @@ class CapturedEvidenceReceipt:
 
 def compute_context_k(
     candidates: list[RetrievalCandidate],
-    token_budget: int = 3000,
+    token_budget: int = 7000,
     avg_chunk_tokens: int = 200,
     min_k: int = 3,
-    max_k: int = 10,
+    max_k: int = 25,
 ) -> int:
     """基于 token budget 计算实际进入 prompt 的候选数。
 
-    token_budget: LLM context 中分配给检索证据的 token 预算（默认 3000，约 4K 字符）
+    token_budget: LLM context 中分配给检索证据的 token 预算（默认 7000）
     avg_chunk_tokens: 每个 chunk 的平均 token 数（默认 200，基于 DEFAULT_CHUNK_SIZE=500 字符 ÷ ~2.5 字符/token）
+    max_k: 进入 context 的候选上限（默认 25）
+
+    默认值为 M5d 门禁 PASS 后 owner 批准的产品默认（臂2 配置：token 预算
+    7000 / 上限 25）；旧值（3000 / 10）对应 M2 基线，评测/回退经
+    RAG_CONTEXT_TOKEN_BUDGET / RAG_CONTEXT_MAX_K 显式设回。
     """
     budget_k = max(min_k, min(max_k, token_budget // avg_chunk_tokens))
     return min(len(candidates), budget_k)

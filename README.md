@@ -211,7 +211,10 @@ Copy `.env.example` as the starting point. The main settings are:
 | `MNEME_MAX_PDF_PAGES` | `2000` | Maximum pages accepted from one PDF; positive integer |
 | `MNEME_MAX_REMOTE_CONTEXT_CHARS` | `60000` | Maximum retrieved context sent to an LLM endpoint |
 | `MNEME_ALLOW_INSECURE_HTTP` | unset | Explicitly allow non-local HTTP endpoints; use only for controlled development |
-| `RAG_REFUSAL_THRESHOLD` | `0.03` | Retrieval refusal threshold; must be ≥ 0 |
+| `RAG_REFUSAL_THRESHOLD` | `0.015` | Retrieval refusal threshold; must be ≥ 0. Default is the M5d-gated arm-2 configuration; set `0.03` to reproduce the M2 baseline |
+| `RAG_DYNAMIC_MIN_K` | `25` | Lower bound of the internal dynamic Top-K cut (default = arm-2 configuration; `12` reproduces the M2 baseline) |
+| `RAG_CONTEXT_MAX_K` | `25` | Upper bound on chunks entering the LLM context (default = arm-2 configuration; `10` reproduces the M2 baseline) |
+| `RAG_CONTEXT_TOKEN_BUDGET` | `7000` | Token budget for retrieved evidence in the LLM context (default = arm-2 configuration; `3000` reproduces the M2 baseline) |
 | `RAG_RERANKER` | `none` | Reranker mode: `none` or `cross-encoder` |
 | `RAG_RERANKER_MODEL` | `cross-encoder/ms-marco-MiniLM-L-6-v2` | Reranker model used when `RAG_RERANKER=cross-encoder` |
 | `MNEME_OFFLINE` | unset | Offline mode. Its exact promise: it **only blocks implicit remote ModelScope downloads**; local models still load and LLM API calls are unaffected. A missing local model produces a clear local-only error. |
@@ -219,7 +222,7 @@ Copy `.env.example` as the starting point. The main settings are:
 
 Configuration precedence is **real environment variables > `.env` > built-in defaults**. The `.env` file is read at startup from the process working directory (the directory the command is started from), before any `Settings` construction, so its values apply to the CLI, TUI, and RAG alike; real environment variables always win. The TUI onboarding wizard does not start when both `API_KEY` and `BASE_URL` already exist in the process environment, even if no `.env` file exists. TUI settings persist edits to `.env` and refresh through `reset_settings()`; they never overwrite process environment variables, so a process value remains effective and a `.env` edit takes effect only after restart without that process override. Values are validated at startup: an invalid number or an inconsistent range fails fast with the variable name, before any indexing, model loading, network access, or directory write. Path values expand `~` (to `%USERPROFILE%` on Windows), and relative paths resolve against the process working directory at startup.
 
-The user-facing Top-K range (`LLM_TOP_K_MIN`/`LLM_TOP_K_MAX`, default 3–20, used by the TUI/streaming path) and the internal retrieval width used by the synchronous path (`retrieve` width 70, dynamic Top-K bounds 12–70) are two separate concepts; the internal width is not configurable via environment variables. Graph RAG's internal dynamic Top-K cutoff is likewise fixed at 3–50 (`GRAPH_DYNAMIC_MIN_K`/`GRAPH_DYNAMIC_MAX_K`) and is not bound to the user-facing 3–20 range.
+The user-facing Top-K range (`LLM_TOP_K_MIN`/`LLM_TOP_K_MAX`, default 3–20, used by the TUI/streaming path) and the internal retrieval width used by the synchronous path (`retrieve` width 70, dynamic Top-K bounds 25–70) are two separate concepts; the internal width follows the M5d-gated arm-2 configuration (`RAG_DYNAMIC_MIN_K`/`RAG_CONTEXT_MAX_K`/`RAG_CONTEXT_TOKEN_BUDGET` revert to the M2 baseline). Graph RAG's internal dynamic Top-K cutoff is likewise fixed at 3–50 (`GRAPH_DYNAMIC_MIN_K`/`GRAPH_DYNAMIC_MAX_K`) and is not bound to the user-facing 3–20 range.
 
 Embedding models are first loaded from the configured local path or cache. If unavailable, Mneme uses the configured model identifier for the ModelScope fallback (disabled by `MNEME_OFFLINE=1`); the default is `all-MiniLM-L6-v2`, and automatic downloads are cached under `<MNEME_DATA_DIR>/models`.
 

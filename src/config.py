@@ -32,7 +32,9 @@ DEFAULT_LLM_TEMPERATURE = 0.1
 DEFAULT_LLM_TOP_K_MIN = 3          # 用户 Top-K 区间下界（TUI/流式路径）
 DEFAULT_LLM_TOP_K_MAX = 20         # 用户 Top-K 区间上界（TUI/流式路径）
 DEFAULT_ALPHA = 0.7
-DEFAULT_REFUSAL_THRESHOLD = 0.03
+# 检索拒答阈值：0.015 为 M5d 门禁 PASS 后 owner 批准的产品默认（臂2 配置）；
+# 旧值 0.03 对应 M2 基线，评测/回退可经 RAG_REFUSAL_THRESHOLD 显式设回。
+DEFAULT_REFUSAL_THRESHOLD = 0.015
 DEFAULT_RERANKER_MODE = "none"
 DEFAULT_RERANKER_MODEL_NAME = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 DEFAULT_MAX_DOCUMENT_BYTES = 52428800
@@ -42,8 +44,10 @@ DEFAULT_MAX_REMOTE_CONTEXT_CHARS = 60000
 # ── 内部检索宽度（与用户 Top-K 是不同概念；固定常量，不提供环境变量覆盖）──
 # 同步路径（answer_query）：retrieve k=RETRIEVAL_CANDIDATE_K，
 # dynamic_top_k 的默认边界为 RETRIEVAL_DYNAMIC_MIN_K/MAX_K。
+# RETRIEVAL_DYNAMIC_MIN_K=25 为 M5d PASS 后 owner 批准的产品默认（臂2 配置）；
+# 旧值 12 对应 M2 基线，评测/回退可经 RAG_DYNAMIC_MIN_K 显式设回。
 RETRIEVAL_CANDIDATE_K = 70
-RETRIEVAL_DYNAMIC_MIN_K = 12
+RETRIEVAL_DYNAMIC_MIN_K = 25
 RETRIEVAL_DYNAMIC_MAX_K = 70
 
 # ── Graph 内部动态 Top-K 边界（Graph 增强检索的内部截断策略；固定常量，
