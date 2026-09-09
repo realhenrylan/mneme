@@ -1,0 +1,37 @@
+{
+ "aggregates": {
+  "contract_error_count": 0,
+  "contract_error_rate": 0.0,
+  "disagreement_count": 19,
+  "judged_count": 28,
+  "lexical_correct": 7,
+  "lexical_refusal_accuracy": 0.25,
+  "probe_count": 28,
+  "refusal_judge_tokens": {
+   "calls": 30,
+   "completion_tokens": 1146,
+   "models": [
+    "deepseek-chat"
+   ],
+   "prompt_tokens": 15245,
+   "total_tokens": 16391
+  },
+  "semantic_correct": 26,
+  "semantic_refusal_accuracy": 0.9286
+ },
+ "git_commit": "e0aebfecff4fd7f1aca94de45b0bf970cd03e96e",
+ "judge_max_attempts": 3,
+ "judge_max_tokens": 500,
+ "judge_model": "deepseek-chat",
+ "judge_protocol_version": "al3-refusal-judge-v1.1",
+ "judge_verdicts": [
+  "refused",
+  "answered"
+ ],
+ "lineage": "answer-level-refusal-judge",
+ "manifest_sha256": "faffd57263c1fcfbc25cd13221814994b438c725f00fdef4de4ddf19b6c25390",
+ "outcomes_sha256": "e22373d86a9c1cde117b6c42a0a956e6c81b19c65de41c1c64b4454365800e67",
+ "report_sha256": "26fcd7111b4a948ee41a37d45bdaeb753c3ef0d733624e8b1ca0655396da16ea",
+ "source_dir": "results\\answer-level\\m4c-arm1-2026-09-06",
+ "source_outcomes_sha256": "bd107f91a1ed3578aee3667d5b54ac84f30ce16471811b458c20a8fe87ec9e94"
+}

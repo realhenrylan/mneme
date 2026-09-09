@@ -1,0 +1,29 @@
+{
+ "date": "2026-09-06",
+ "g1": {
+  "contract_error": 8,
+  "expected_judged": 154,
+  "face_consistent": true,
+  "g1_conservative_rate": 0.5402,
+  "g1_corrected_rate": 0.5575,
+  "g1_pass": true,
+  "g1_threshold": 0.55,
+  "hit": 74,
+  "judged": 154,
+  "partial": 6
+ },
+ "g2prime": {
+  "contract_error": 0,
+  "g2prime_pass": true,
+  "g2prime_rate": 1.0,
+  "g2prime_threshold": 0.9,
+  "probes": 28,
+  "semantic_refused": 28
+ },
+ "gate": {
+  "G1_threshold": 0.55,
+  "G2prime_threshold": 0.9
+ },
+ "rule": "G1 ∧ G2' 同时满足 ⇒ PASS；互不抵扣",
+ "verdict": "PASS"
+}

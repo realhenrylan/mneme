@@ -1,0 +1,20 @@
+{
+ "contract_error_count": 0,
+ "contract_error_rate": 0.0,
+ "disagreement_count": 19,
+ "judged_count": 28,
+ "lexical_correct": 7,
+ "lexical_refusal_accuracy": 0.25,
+ "probe_count": 28,
+ "refusal_judge_tokens": {
+  "calls": 30,
+  "completion_tokens": 1146,
+  "models": [
+   "deepseek-chat"
+  ],
+  "prompt_tokens": 15245,
+  "total_tokens": 16391
+ },
+ "semantic_correct": 26,
+ "semantic_refusal_accuracy": 0.9286
+}
