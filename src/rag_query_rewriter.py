@@ -86,6 +86,7 @@ def _rewrite_query_provenanced(
     model: str | None = None,
     temperature: float | None = None,
     max_retries: int = 2,
+    usage_sink=None,
 ) -> tuple[str, dict, "StageProvenance"]:
     """改写单一实现：返回 (rewritten_query, rewrite_log, stage provenance)。
 
@@ -145,6 +146,9 @@ def _rewrite_query_provenanced(
         history_text += f"Q: {q}\nA: {a}\n"
 
     from src.llm_gateway import llm_call_safe
+    call_kwargs = {}
+    if usage_sink is not None:
+        call_kwargs["usage_sink"] = usage_sink
     content, record = llm_call_safe(
         call_type="rewrite",
         messages=[
@@ -159,6 +163,7 @@ def _rewrite_query_provenanced(
         max_tokens=200,
         timeout=15,
         max_retries=max_retries,
+        **call_kwargs,
     )
     retries_used = int(getattr(record, "retries_used", 0) or 0)
 
@@ -191,6 +196,7 @@ def rewrite_query_llm(
     max_retries: int = 2,
     *,
     _provenance_sink: list | None = None,
+    _usage_sink=None,
 ) -> tuple[str, dict]:
     """History-aware standalone query rewrite（公开 API，薄包装）。
 
@@ -198,9 +204,12 @@ def rewrite_query_llm(
     从统一配置 Settings 调用期解析（显式参数优先）。``_provenance_sink``
     为 G1-S 内部侧信道：传入列表时追加本次调用的 StageProvenance（供共享
     planning helper 收集），对公开调用方不可见、不影响既有行为。
+    ``_usage_sink`` 为 P2-1 内部侧信道：透传给 ``llm_call_safe`` 的
+    provider usage 回调（默认 None 行为不变）。
     """
     rewritten_query, rewrite_log, stage = _rewrite_query_provenanced(
         query, history, model, temperature, max_retries,
+        usage_sink=_usage_sink,
     )
     if _provenance_sink is not None:
         _provenance_sink.append(stage)

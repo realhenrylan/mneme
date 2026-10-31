@@ -2280,6 +2280,8 @@ def answer_with_llm_history(
     history: list[tuple[str, str]],
     model: str | None = None,
     temperature: float | None = None,
+    *,
+    usage_sink=None,
 ) -> str:
     from src.llm_gateway import llm_call, LLMErrorCategory, classify_error
 
@@ -2294,12 +2296,16 @@ def answer_with_llm_history(
 
     messages = _build_llm_messages(question, context, history)
     try:
+        call_kwargs = {}
+        if usage_sink is not None:
+            call_kwargs["usage_sink"] = usage_sink
         response, _ = llm_call(
             call_type="answer",
             messages=messages,
             model=model,
             temperature=temperature,
             max_tokens=2000,
+            **call_kwargs,
         )
         return response.choices[0].message.content
     except Exception as exc:
@@ -2359,6 +2365,68 @@ def _resolve_trace_store(trace_store):
         return TraceStore.from_environment()
     except Exception:
         return None
+
+
+# ── P2-1 Option A：查询级 usage 台账接线（默认 off，写入失败静默）──
+
+def _usage_consent_minimal(trace_store) -> bool:
+    """trace consent = minimal 才允许写台账；无 trace store 时 fail-closed。
+
+    与 ``RAG_USAGE_LEDGER`` 开关双重门控；读取异常 fail-closed（不写），
+    绝不向回答路径抛出。
+    """
+    if trace_store is None:
+        return False
+    try:
+        level = trace_store.consent.level
+        return getattr(level, "value", None) == "minimal"
+    except Exception:
+        return False
+
+
+def _usage_collector_for(trace_store, *, route: str, origin: str, query: str):
+    """仅当开关开启且 consent 允许时创建 collector；默认零开销返回 None。"""
+    try:
+        from src import usage_ledger
+        if not usage_ledger.is_enabled():
+            return None
+        if not _usage_consent_minimal(trace_store):
+            return None
+        return usage_ledger.QueryUsageCollector(
+            origin=origin,
+            route=route,
+            language_bucket_value=usage_ledger.language_bucket(query),
+        )
+    except Exception:
+        return None
+
+
+def _usage_collector_for_env(*, route: str, origin: str, query: str):
+    """同上，但自行解析 trace store（用于 generate_answer 独立调用）。"""
+    try:
+        from src import usage_ledger
+        if not usage_ledger.is_enabled():
+            return None
+    except Exception:
+        return None
+    return _usage_collector_for(
+        _resolve_trace_store(None), route=route, origin=origin, query=query)
+
+
+def _usage_outcome(evidence, answer: str) -> tuple[str, str]:
+    """(outcome, refusal_stage)：pre/post 拒答、API 错误消息、正常回答。"""
+    if getattr(evidence, "refused", False):
+        return "refused_pre_llm", "pre_llm"
+    return _usage_outcome_text(answer)
+
+
+def _usage_outcome_text(answer: str) -> tuple[str, str]:
+    """流式终态文本的 (outcome, refusal_stage)（无 evidence 上下文）。"""
+    if answer == REFUSAL_MESSAGE:
+        return "refused_post_llm", "post_llm"
+    if _is_api_error_text(answer):
+        return "error", "none"
+    return "answered", "none"
 
 
 def _trace_begin(trace_store, planning_profile: str, retrieval_k: int | None) -> str:
@@ -2461,6 +2529,7 @@ def _plan_query_runtime(
         *,
         trace_store=None,
         trace_id: str = "",
+        usage_sink=None,
 ) -> _RuntimeQueryPlan:
     """共享 planning helper：同步（prepare 普通分支）与流式路径共用。
 
@@ -2498,16 +2567,24 @@ def _plan_query_runtime(
     llm_temperature = validate_llm_temperature(llm_temperature)
 
     # ── 多轮改写 + 查询拆解（经薄包装，带 provenance 侧信道）──
+    # P2-1：usage_sink 仅在台账激活时附加——Off 时调用面与未接线一致
+    # （兼容既有测试 fake 的旧签名）。
     rewrite_sink: list = []
+    rewrite_kwargs = {}
+    if usage_sink is not None:
+        rewrite_kwargs["_usage_sink"] = usage_sink
     rewritten_query, rewrite_log = rewrite_query_llm(
         query, history=history, model=llm_model, temperature=llm_temperature,
-        _provenance_sink=rewrite_sink,
+        _provenance_sink=rewrite_sink, **rewrite_kwargs,
     )
     decompose_sink: list = []
     if RAG_QUERY_DECOMPOSE == DECOMPOSE_ON:
+        decompose_kwargs = {}
+        if usage_sink is not None:
+            decompose_kwargs["_usage_sink"] = usage_sink
         sub_queries = decompose_query_llm(
             rewritten_query, model=llm_model, temperature=llm_temperature,
-            _provenance_sink=decompose_sink,
+            _provenance_sink=decompose_sink, **decompose_kwargs,
         )
     else:
         # D5：off = 单查询直通（零拆解 LLM 调用；provenance 保持空）
@@ -2629,6 +2706,7 @@ def prepare_answer_evidence(
         *,
         trace_store=None,
         trace_id: str = "",
+        usage_sink=None,
 ):
     """构建可复用的生成证据（生产与评测共用，无副作用）。
 
@@ -2669,6 +2747,9 @@ def prepare_answer_evidence(
         if trace_store is not None and trace_id:
             plan_kwargs["trace_store"] = trace_store
             plan_kwargs["trace_id"] = trace_id
+        # P2-1：仅台账激活时向规划器附加 usage sink（Off 调用面不变）。
+        if usage_sink is not None:
+            plan_kwargs["usage_sink"] = usage_sink
         runtime_plan = _plan_query_runtime(
             query, model, collection, bm25, documents, metadatas,
             **plan_kwargs,
@@ -2885,11 +2966,17 @@ def generate_answer(
         metadatas: list[dict],
         temperature: float | None = None,
         history=None,
+        *,
+        usage_sink=None,
+        usage_origin: str = "user",
 ):
     """从 PreparedAnswerEvidence 生成回答（仅生成步骤，不检索不规划）。
 
     检索前哨拒答（evidence.refused）直接返回拒答消息——与生成策略无关，
     baseline / evidence_calibrated 两臂结果一致。
+    P2-1：生产 ``answer_query`` 传入查询级 collector 的 sink（避免重复
+    计数）；直接调用（评测）且未传 sink 时，开关+consent 允许则按本次
+    生成独立记一行（``usage_origin`` 默认 user，评测显式传 evaluation）。
     """
     # 统一配置契约：未显式传入时从当前 Settings 解析（调用期）
     if temperature is None:
@@ -2898,28 +2985,54 @@ def generate_answer(
     # 统一校验（与 Settings 同一规则；错误信息含 LLM_TEMPERATURE）。
     temperature = validate_llm_temperature(temperature)
 
-    if evidence.refused:
-        return REFUSAL_MESSAGE, ""
+    standalone = None
+    if usage_sink is None:
+        standalone = _usage_collector_for_env(
+            route="sync", origin=usage_origin,
+            query=getattr(evidence, "query", ""),
+        )
+        if standalone is not None:
+            usage_sink = standalone.on_call
+    try:
+        if evidence.refused:
+            if standalone is not None:
+                standalone.finish(
+                    "refused_pre_llm", refusal_stage="pre_llm",
+                    context_chunks=getattr(evidence, "context_k", 0),
+                )
+            return REFUSAL_MESSAGE, ""
 
-    answer = answer_with_llm_history(
-        evidence.query, evidence.context, history or [], temperature=temperature,
-    )
+        answer = answer_with_llm_history(
+            evidence.query, evidence.context, history or [],
+            temperature=temperature,
+            **({"usage_sink": usage_sink} if usage_sink is not None else {}),
+        )
 
-    # ── 引用闭环：校验引用 ID 合法性 ──
-    # enriched_docs 用 select_indices（扩展前）重建——与 prepare 时
-    # enrich_context 的输入一致（确定性），保证与重构前行为等价。
-    top_indices = list(evidence.top_indices)
-    enriched_docs = enrich_context(
-        list(evidence.select_indices), documents, metadatas,
-    )
-    answer, _ = _validate_and_repair_citations(
-        answer, top_indices, enriched_docs, metadatas, evidence.context_k,
-    )
+        # ── 引用闭环：校验引用 ID 合法性 ──
+        # enriched_docs 用 select_indices（扩展前）重建——与 prepare 时
+        # enrich_context 的输入一致（确定性），保证与重构前行为等价。
+        top_indices = list(evidence.top_indices)
+        enriched_docs = enrich_context(
+            list(evidence.select_indices), documents, metadatas,
+        )
+        answer, _ = _validate_and_repair_citations(
+            answer, top_indices, enriched_docs, metadatas, evidence.context_k,
+        )
 
-    sources = format_sources(
-        top_indices, enriched_docs, metadatas, context_k=evidence.context_k,
-    )
-    return answer, sources
+        sources = format_sources(
+            top_indices, enriched_docs, metadatas, context_k=evidence.context_k,
+        )
+        if standalone is not None:
+            outcome, refusal_stage = _usage_outcome(evidence, answer)
+            standalone.finish(
+                outcome, refusal_stage=refusal_stage,
+                context_chunks=getattr(evidence, "context_k", 0),
+            )
+        return answer, sources
+    except Exception:
+        if standalone is not None:
+            standalone.finish("error")
+        raise
 
 
 def answer_query(
@@ -2934,6 +3047,7 @@ def answer_query(
         *,
         _citation_status_sink: list | None = None,
         trace_store=None,
+        usage_origin: str = "user",
 ):
     """生产问答入口：prepare（检索规划）→ generate（生成），同一证据路径。
 
@@ -2946,6 +3060,10 @@ def answer_query(
     时记录 Minimal 观测 trace——begin 在进入规划前、异常路径 discard 后
     原样重抛、正常路径在 citation 终态确定后发射 generation.completed 并
     finish 封存；Off 时全程 no-op，回答字节不变。
+    P2-1：``RAG_USAGE_LEDGER`` 开且 trace consent=minimal 时创建查询级
+    collector，汇总 rewrite/decompose/answer 的 provider usage 后只写一行
+    本地台账；``usage_origin`` 区分 user/evaluation（评测必须显式传
+    evaluation）；异常路径记 outcome=error 后原样重抛。
     """
     # 统一配置契约：未显式传入时从当前 Settings 解析（调用期）。
     # 已解析温度同时传入规划路径（rewrite/decompose 使用同一温度）。
@@ -2956,13 +3074,20 @@ def answer_query(
     temperature = validate_llm_temperature(temperature)
 
     store = _resolve_trace_store(trace_store)
+    usage = _usage_collector_for(
+        store, route="sync", origin=usage_origin, query=query)
+    usage_sink = usage.on_call if usage is not None else None
     trace_id = _trace_begin(store, "sync", None)
     retrieval_start = perf_counter()
     try:
+        prepare_kwargs = {}
+        if usage_sink is not None:
+            prepare_kwargs["usage_sink"] = usage_sink
         evidence = prepare_answer_evidence(
             query, model, collection, bm25, documents, metadatas,
             history=history, llm_temperature=temperature,
             trace_store=store, trace_id=trace_id,
+            **prepare_kwargs,
         )
         if evidence.refused:
             _record_query_metric(
@@ -2975,12 +3100,18 @@ def answer_query(
                 list(evidence.top_scores), metadatas, bm25,
                 context_k=evidence.context_k,
             )
+        generate_kwargs = {}
+        if usage_sink is not None:
+            generate_kwargs["usage_sink"] = usage_sink
         answer, sources = generate_answer(
-            evidence, documents, metadatas, temperature=temperature, history=history,
+            evidence, documents, metadatas, temperature=temperature,
+            history=history, **generate_kwargs,
         )
     except Exception:
         # 异常路径：丢弃未封存 trace 后原样重抛（观测不吞错也不改错）。
         _trace_discard(store, trace_id)
+        if usage is not None:
+            usage.finish("error")
         raise
     citation_state = "not_required" if evidence.refused else "unknown"
     if _citation_status_sink is not None:
@@ -2996,6 +3127,12 @@ def answer_query(
     _trace_generation_completed(store, trace_id, answer, citation_state,
                                 latency_ms)
     _trace_finish(store, trace_id)
+    if usage is not None:
+        outcome, refusal_stage = _usage_outcome(evidence, answer)
+        usage.finish(
+            outcome, refusal_stage=refusal_stage,
+            context_chunks=evidence.context_k,
+        )
     return answer, sources
 
 
@@ -3096,6 +3233,7 @@ def answer_with_llm_history_stream(
     temperature: float | None = None,
     *,
     cancel_event: threading.Event | None = None,
+    usage_sink=None,
 ) -> Generator[str, None, None]:
     from src.llm_gateway import (
         llm_call, LLMCancelledError, LLMErrorCategory, classify_error,
@@ -3114,6 +3252,9 @@ def answer_with_llm_history_stream(
     response = None
     cancelled = False
     try:
+        call_kwargs = {}
+        if usage_sink is not None:
+            call_kwargs["usage_sink"] = usage_sink
         response, _ = llm_call(
             call_type="answer",
             messages=messages,
@@ -3122,6 +3263,7 @@ def answer_with_llm_history_stream(
             max_tokens=2000,
             stream=True,
             cancel_event=cancel_event,
+            **call_kwargs,
         )
         for chunk in response:
             # D1：流消费逐 chunk 检查取消——置位即关闭响应流、传播取消
@@ -3130,7 +3272,12 @@ def answer_with_llm_history_stream(
                 cancelled = True
                 raise LLMCancelledError(
                     "LLM stream cancelled while consuming response")
-            delta = chunk.choices[0].delta
+            # P2-1：include_usage 的 usage-only 尾块 choices 为空，必须先
+            # 判空再取 delta（否则 IndexError）；usage 由网关流包装器采集。
+            choices = getattr(chunk, "choices", None) or ()
+            if not choices:
+                continue
+            delta = choices[0].delta
             if delta.content:
                 yield delta.content
     except LLMCancelledError:
@@ -3154,6 +3301,15 @@ def answer_with_llm_history_stream(
             if close is not None:
                 try:
                     close()
+                except Exception:
+                    pass
+        elif response is not None:
+            # P2-1：流正常耗尽或消费方提前放弃时结算 usage（幂等；无
+            # 额外网络调用），不改变既有 close 语义。
+            settle = getattr(response, "settle", None)
+            if settle is not None:
+                try:
+                    settle()
                 except Exception:
                     pass
 
@@ -3280,6 +3436,7 @@ def answer_query_stream(
     *,
     trace_store=None,
     cancel_event: threading.Event | None = None,
+    usage_origin: str = "user",
 ) -> tuple[Generator[str, None, None], str]:
     # 统一配置契约：未显式传入时从当前 Settings 解析（调用期，不冻结导入期值）
     settings = get_settings()
@@ -3303,6 +3460,9 @@ def answer_query_stream(
     # （现状 20，不改检索宽度）；终态封存经 StreamResult 回调在流完整
     # 消费后触发，GeneratorExit 经 capture_discard 清理。
     store = _resolve_trace_store(trace_store)
+    usage = _usage_collector_for(
+        store, route="stream", origin=usage_origin, query=query)
+    usage_sink = usage.on_call if usage is not None else None
     trace_id = _trace_begin(store, "stream", max(top_k_range))
 
     retrieval_start = perf_counter()
@@ -3322,134 +3482,183 @@ def answer_query_stream(
     if store is not None and trace_id:
         stream_plan_kwargs["trace_store"] = store
         stream_plan_kwargs["trace_id"] = trace_id
-    runtime_plan = _plan_query_runtime(
-        query, model, collection, bm25, documents, metadatas,
-        **stream_plan_kwargs,
-    )
-    best_score = runtime_plan.best_score
-    merged = runtime_plan.merged
-    scores_flat = runtime_plan.scores_flat
-    k = dynamic_top_k(scores_flat, min_k=top_k_range[0], max_k=top_k_range[1])
-    top_indices = merged[:k]
-    _trace_emit(store, trace_id, "cutoff.dynamic_top_k", {
-        "k": k,
-        "candidate_count": len(scores_flat),
-        "planning_profile": "stream",
-        "retrieval_k": max(top_k_range),
-    })
-
-    finalize_stream_trace, discard_stream_trace = _stream_trace_callbacks(
-        store, trace_id, retrieval_start,
-    )
-
-    if retrieval_refused(scores_flat):
-        _record_query_metric(
-            retrieval_start, [], scores_flat, metadatas, bm25, refused=True,
+    if usage_sink is not None:
+        stream_plan_kwargs["usage_sink"] = usage_sink
+    try:
+        runtime_plan = _plan_query_runtime(
+            query, model, collection, bm25, documents, metadatas,
+            **stream_plan_kwargs,
         )
-        _trace_emit(store, trace_id, "refusal.decided", {
-            "refused": True, "reason": "retrieval",
+    except Exception:
+        # P2-1：规划期异常也落一行 error（随后原样重抛，不吞错）。
+        if usage is not None:
+            usage.finish("error")
+        raise
+    try:
+        best_score = runtime_plan.best_score
+        merged = runtime_plan.merged
+        scores_flat = runtime_plan.scores_flat
+        k = dynamic_top_k(scores_flat, min_k=top_k_range[0], max_k=top_k_range[1])
+        top_indices = merged[:k]
+        _trace_emit(store, trace_id, "cutoff.dynamic_top_k", {
+            "k": k,
+            "candidate_count": len(scores_flat),
+            "planning_profile": "stream",
+            "retrieval_k": max(top_k_range),
         })
-        def refusal_stream():
-            yield REFUSAL_MESSAGE
-        # 拒答无引用要求：终态 not_required(refused)；trace 终态在拒答
-        # 文本被完整消费后封存（回调触发），提前关闭则 discard 清理。
-        return StreamResult(
-            chunks=refusal_stream(), refused=True,
-            capture_callback=finalize_stream_trace,
-            capture_discard=discard_stream_trace,
-        ), ""
 
-    # ── Reranker（chunk-aware）+ 统一 context selector（与 answer_query 一致）──
-    reranker = _get_reranker()
-    if reranker is not None:
-        candidates = [
-            RetrievalCandidate(
-                index=i,
-                chunk_id=(metadatas[i] or {}).get("chunk_id", f"chunk_{i}"),
-                source_id=(metadatas[i] or {}).get("source_id", ""),
-                source_name=(metadatas[i] or {}).get("source_name", "")
-                    or (metadatas[i] or {}).get("source", ""),
-                text=documents[i] if i < len(documents) else "",
-                rrf_score=best_score.get(i),
-            )
-            for i in top_indices
-        ]
-        reranked = reranker.rerank(query, candidates, top_k=min(k, 20))
-        selected = select_context_candidates(reranked, top_k=min(k, 20), max_per_source=SELECTOR_MAX_PER_SOURCE)
-        top_indices = [c.index for c in selected]
-    else:
-        candidates = [
-            RetrievalCandidate(
-                index=i,
-                chunk_id=(metadatas[i] or {}).get("chunk_id", f"chunk_{i}"),
-                source_id=(metadatas[i] or {}).get("source_id", ""),
-                source_name=(metadatas[i] or {}).get("source_name", "")
-                    or (metadatas[i] or {}).get("source", ""),
-                text=documents[i] if i < len(documents) else "",
-                rrf_score=best_score.get(i),
-            )
-            for i in top_indices
-        ]
-        selected = select_context_candidates(candidates, top_k=min(k, 20), max_per_source=SELECTOR_MAX_PER_SOURCE)
-        top_indices = [c.index for c in selected]
-
-    enriched_docs = enrich_context(top_indices, documents, metadatas)
-    # ── Parent-Child / 邻接扩展（RAG_CONTEXT_EXPANSION 门控，默认 on；
-    #    off 时跳过两阶段——2.2 验收 OFF 臂即此生产配置） ──
-    if RAG_CONTEXT_EXPANSION == CONTEXT_EXPANSION_ON:
-        context_k = compute_context_k(
-            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
-             for i in top_indices],
+        finalize_stream_trace, discard_stream_trace = _stream_trace_callbacks(
+            store, trace_id, retrieval_start,
         )
-        select_pre = tuple(top_indices)
-        top_indices, _ = expand_with_parent(
+
+        if retrieval_refused(scores_flat):
+            _record_query_metric(
+                retrieval_start, [], scores_flat, metadatas, bm25, refused=True,
+            )
+            _trace_emit(store, trace_id, "refusal.decided", {
+                "refused": True, "reason": "retrieval",
+            })
+            # P2-1：pre-LLM 拒答也记一行（无生成调用、token 为 null）。
+            if usage is not None:
+                usage.finish(
+                    "refused_pre_llm", refusal_stage="pre_llm",
+                    retrieval_k=max(top_k_range), context_chunks=0,
+                )
+            def refusal_stream():
+                yield REFUSAL_MESSAGE
+            # 拒答无引用要求：终态 not_required(refused)；trace 终态在拒答
+            # 文本被完整消费后封存（回调触发），提前关闭则 discard 清理。
+            return StreamResult(
+                chunks=refusal_stream(), refused=True,
+                capture_callback=finalize_stream_trace,
+                capture_discard=discard_stream_trace,
+            ), ""
+
+        # ── Reranker（chunk-aware）+ 统一 context selector（与 answer_query 一致）──
+        reranker = _get_reranker()
+        if reranker is not None:
+            candidates = [
+                RetrievalCandidate(
+                    index=i,
+                    chunk_id=(metadatas[i] or {}).get("chunk_id", f"chunk_{i}"),
+                    source_id=(metadatas[i] or {}).get("source_id", ""),
+                    source_name=(metadatas[i] or {}).get("source_name", "")
+                        or (metadatas[i] or {}).get("source", ""),
+                    text=documents[i] if i < len(documents) else "",
+                    rrf_score=best_score.get(i),
+                )
+                for i in top_indices
+            ]
+            reranked = reranker.rerank(query, candidates, top_k=min(k, 20))
+            selected = select_context_candidates(reranked, top_k=min(k, 20), max_per_source=SELECTOR_MAX_PER_SOURCE)
+            top_indices = [c.index for c in selected]
+        else:
+            candidates = [
+                RetrievalCandidate(
+                    index=i,
+                    chunk_id=(metadatas[i] or {}).get("chunk_id", f"chunk_{i}"),
+                    source_id=(metadatas[i] or {}).get("source_id", ""),
+                    source_name=(metadatas[i] or {}).get("source_name", "")
+                        or (metadatas[i] or {}).get("source", ""),
+                    text=documents[i] if i < len(documents) else "",
+                    rrf_score=best_score.get(i),
+                )
+                for i in top_indices
+            ]
+            selected = select_context_candidates(candidates, top_k=min(k, 20), max_per_source=SELECTOR_MAX_PER_SOURCE)
+            top_indices = [c.index for c in selected]
+
+        enriched_docs = enrich_context(top_indices, documents, metadatas)
+        # ── Parent-Child / 邻接扩展（RAG_CONTEXT_EXPANSION 门控，默认 on；
+        #    off 时跳过两阶段——2.2 验收 OFF 臂即此生产配置） ──
+        if RAG_CONTEXT_EXPANSION == CONTEXT_EXPANSION_ON:
+            context_k = compute_context_k(
+                [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+                 for i in top_indices],
+            )
+            select_pre = tuple(top_indices)
+            top_indices, _ = expand_with_parent(
+                top_indices, enriched_docs, metadatas, context_k,
+            )
+            top_indices = expand_with_adjacent(
+                top_indices, metadatas, max_expand=2, texts=documents)
+            # 2.2 修复：扩展预算调和——动态预算按扩展后列表计算（保留邻居填充
+            # 预算的收益），调和保证下限 ≥ 代表块数：select 召回证据永不被挤占，
+            # 截断只可能裁掉扩展尾部。
+            context_k = compute_context_k(
+                [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+                 for i in top_indices],
+            )
+            top_indices, context_k = reconcile_expansion_budget(
+                select_pre, top_indices, metadatas, context_k)
+        else:
+            context_k = compute_context_k(
+                [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
+                 for i in top_indices],
+            )
+        context = _build_context(top_indices, enriched_docs, metadatas, context_k=context_k)
+        sources = format_sources(top_indices, enriched_docs, metadatas, context_k=context_k)
+        _record_query_metric(
+            retrieval_start, top_indices, scores_flat, metadatas, bm25,
+            context_k=context_k,
+        )
+        # P1.1-M：context 构建事件（仅 chunk_id 标签与预算，无正文）
+        _trace_emit(store, trace_id, "context.built", {
+            "context_k": context_k,
+            "chunk_ids": [
+                (metadatas[i] or {}).get("chunk_id", f"chunk_{i}")
+                for i in top_indices[:context_k]
+            ],
+        })
+        from src.citations import valid_citation_ids_for_context
+        valid_ids = valid_citation_ids_for_context(
             top_indices, enriched_docs, metadatas, context_k,
         )
-        top_indices = expand_with_adjacent(
-            top_indices, metadatas, max_expand=2, texts=documents)
-        # 2.2 修复：扩展预算调和——动态预算按扩展后列表计算（保留邻居填充
-        # 预算的收益），调和保证下限 ≥ 代表块数：select 召回证据永不被挤占，
-        # 截断只可能裁掉扩展尾部。
-        context_k = compute_context_k(
-            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
-             for i in top_indices],
+        stream = answer_with_llm_history_stream(
+            query, context, history or [], model=llm_model, temperature=temperature,
+            cancel_event=cancel_event,
+            **({"usage_sink": usage_sink} if usage_sink is not None else {}),
         )
-        top_indices, context_k = reconcile_expansion_budget(
-            select_pre, top_indices, metadatas, context_k)
-    else:
-        context_k = compute_context_k(
-            [RetrievalCandidate(index=i, chunk_id="", source_id="", source_name="")
-             for i in top_indices],
+    except Exception:
+        if usage is not None:
+            usage.finish("error")
+        raise
+
+    # P2-1：查询级台账在流终态落一行——完整消费按文本判 answered /
+    # refused_post_llm / error；GeneratorExit 先关闭内层生成器结算 partial
+    # usage，再记 outcome=error（finish 幂等，不重复写）。
+    def _usage_finalize(text: str, citation_state: str) -> None:
+        finalize_stream_trace(text, citation_state)
+        if usage is None:
+            return
+        outcome, refusal_stage = _usage_outcome_text(text)
+        usage.finish(
+            outcome, refusal_stage=refusal_stage,
+            retrieval_k=max(top_k_range), context_chunks=context_k,
         )
-    context = _build_context(top_indices, enriched_docs, metadatas, context_k=context_k)
-    sources = format_sources(top_indices, enriched_docs, metadatas, context_k=context_k)
-    _record_query_metric(
-        retrieval_start, top_indices, scores_flat, metadatas, bm25,
-        context_k=context_k,
-    )
-    # P1.1-M：context 构建事件（仅 chunk_id 标签与预算，无正文）
-    _trace_emit(store, trace_id, "context.built", {
-        "context_k": context_k,
-        "chunk_ids": [
-            (metadatas[i] or {}).get("chunk_id", f"chunk_{i}")
-            for i in top_indices[:context_k]
-        ],
-    })
-    from src.citations import valid_citation_ids_for_context
-    valid_ids = valid_citation_ids_for_context(
-        top_indices, enriched_docs, metadatas, context_k,
-    )
-    stream = answer_with_llm_history_stream(
-        query, context, history or [], model=llm_model, temperature=temperature,
-        cancel_event=cancel_event,
-    )
+
+    def _usage_discard() -> None:
+        try:
+            stream.close()
+        except Exception:
+            pass
+        discard_stream_trace()
+        if usage is not None:
+            usage.finish(
+                "error", retrieval_k=max(top_k_range),
+                context_chunks=context_k, partial=True,
+            )
+
     # StreamResult：合法 ID 集与上方 format_sources 严格同口径；
     # 流结束后 TUI 读取 citation_status 决定提示。观测终态封存与中断
     # 清理经回调挂接，不改变任何产出字节。
+    # 台账 off 时保留原回调，避免改变默认清理行为（例如提前 close）。
+    capture_callback = _usage_finalize if usage is not None else finalize_stream_trace
+    capture_discard = _usage_discard if usage is not None else discard_stream_trace
     return StreamResult(
         chunks=stream, valid_ids=valid_ids,
-        capture_callback=finalize_stream_trace,
-        capture_discard=discard_stream_trace,
+        capture_callback=capture_callback,
+        capture_discard=capture_discard,
     ), sources
 
 

@@ -1573,15 +1573,18 @@ def _run_generation_arm(
                     )
                     evidence_cache[evidence_key] = evidence
                 if evidence is not None:
+                    # P2-1：直接生成步骤也必须标 evaluation，避免污染真实台账。
                     answer, sources = rag_module.generate_answer(
                         evidence, all_docs, all_metadatas,
                         history=history,
+                        usage_origin="evaluation",
                     )
                 else:
                     answer, sources = answer_query(
                         case.query, model, collection, bm25,
                         all_docs, all_metadatas,
                         history=history,
+                        usage_origin="evaluation",
                     )
             finally:
                 rag_module.RAG_RERANKER_MODE = original_reranker_mode
@@ -1599,6 +1602,7 @@ def _run_generation_arm(
                     case.query, model, collection, bm25,
                     all_docs, all_metadatas,
                     history=history,
+                    usage_origin="evaluation",
                 )
             finally:
                 rag_module.RAG_RERANKER_MODE = original_reranker_mode
