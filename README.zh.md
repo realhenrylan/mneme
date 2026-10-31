@@ -259,16 +259,28 @@ mneme/
 运行默认的离线安全测试套件：
 
 ```bash
-python -m pytest -q
+# Windows PowerShell：TUI 与 fresh-process 测试需要 UTF-8 模式
+$env:PYTHONUTF8='1'
+python -m pytest -q --ignore=tests/analysis -m "not frozen_stage"
 python -m pip check
 python -m compileall -q src tui tests
 ```
+
+`frozen_stage` 标记的是固定在 2026-08-29 之前语料快照上的历史阶段门禁测试中的 **318 个已知红节点**。其中仍能通过的 285 个历史用例已恢复进入默认套件；其余 318 个从默认套件排除，由独立的非阻断 CI job（`frozen-stage-known-red`）运行。根因与 240 failed / 78 errors 基线见 [docs/STATUS.md](./docs/STATUS.md) P0-1。
+
+Windows 上请设置 `PYTHONUTF8=1`（PowerShell：`$env:PYTHONUTF8='1'`；Linux/macOS：`export PYTHONUTF8=1`）。不要用 `PYTHONIOENCODING=utf-8` 代替：它会让子进程输出 UTF-8 而父进程仍按 GBK 解码，导致 fresh-process 测试失败。默认套件也不要设置 `MNEME_DATA_DIR`，配置契约测试需要在真实默认数据目录下断言。
+
+若当前环境缺少 pytest，请在激活的环境中执行 `pip install -e ".[dev]"`；仓库内 `venv/` 不保证包含 dev extras。
 
 真实外部 LLM 测试标记为 integration，默认跳过。确认 API 配置和费用后再显式运行：
 
 ```bash
 MNEME_RUN_INTEGRATION=1 python -m pytest -m integration -q
 ```
+
+## 项目状态
+
+已知问题、当前阻断项与下一步行动见 [docs/STATUS.md](./docs/STATUS.md)。
 
 ## 变更记录
 

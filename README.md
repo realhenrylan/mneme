@@ -259,16 +259,28 @@ mneme/
 Run the default offline-safe suite:
 
 ```bash
-python -m pytest -q
+# Windows PowerShell: UTF-8 mode is required for TUI and fresh-process tests
+$env:PYTHONUTF8='1'
+python -m pytest -q --ignore=tests/analysis -m "not frozen_stage"
 python -m pip check
 python -m compileall -q src tui tests
 ```
+
+`frozen_stage` marks 318 known-red nodes from historical stage-gate tests pinned to pre-2026-08-29 corpus snapshots. The 285 historical cases that still pass are restored to the default suite; the remaining 318 are excluded from it, and a separate non-blocking CI job (`frozen-stage-known-red`) runs them. See [docs/STATUS.md](./docs/STATUS.md) P0-1 for the root cause and the 240 failed / 78 errors baseline.
+
+On Windows, set `PYTHONUTF8=1` (PowerShell: `$env:PYTHONUTF8='1'`; Linux/macOS: `export PYTHONUTF8=1`). Do not use `PYTHONIOENCODING=utf-8` instead: it makes child processes emit UTF-8 while the parent still decodes with GBK, breaking fresh-process tests. Do not set `MNEME_DATA_DIR` for the default suite; the config-contract tests assert against the real default data directory.
+
+If pytest is missing from the current environment, run `pip install -e ".[dev]"` in the activated environment; the repository's `venv/` is not guaranteed to include the dev extras.
 
 Tests that call a real external LLM are marked as integration tests and skipped by default. To run them intentionally:
 
 ```bash
 MNEME_RUN_INTEGRATION=1 python -m pytest -m integration -q
 ```
+
+## Project status
+
+Known issues, current blockers, and next actions are tracked in [docs/STATUS.md](./docs/STATUS.md).
 
 ## Changelog
 

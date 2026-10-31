@@ -74,3 +74,6 @@ None/
 .mneme/
 consent.json
 traces/
+
+# 本地工具会话状态（Mimosa），不随仓库分发
+.mimosa/

@@ -5,6 +5,23 @@
 > 关联：`plans/RAG-IMPROVEMENT-PLAN-2026-08-01.md` 阶段 1.5（拒答校准）的
 > 前置受控实验；基于 `refusal-guardrail-audit-20260805T113849/` 的审计结论。
 
+> **2026-10-31 处置注记（owner 裁决）：** `CLOSED` — 与 M5b 语义口径的关系：
+> 本设计 G1「dev false_refusal 减少 ≥4」与 G4 answer_rate 均取自**生成侧拒答消息
+> 判定**，与 M5b 升级前的 12 短语 `REFUSAL_INDICATORS` 同族；M5b（2026-09-06）已证
+> 该族在 28 例中漏判 23 例（词表口径 0.39/0.25/0.18 为测量伪影），故本设计的
+> **绝对计数**不可再作判据；但**方向性判定不变**——B 臂反而更差（G1 16/73 →
+> 18/73、G4 answer_rate 0.8767 → 0.8219，双 FAIL），口径升级不会翻转 NO_GO。
+> **裁决：关闭（2026-10-31 owner 确认）。** 理由：①该设计**已被执行并结案**——
+> `results/graph-gate/refusal-ablation-20260805T133209/` 判
+> `AUTOMATED_DIAGNOSTIC_NO_GO`（不提升为生产默认、不批准 guardrail），本行上方
+> 「待审批」属历史遗留陈述，原文不改；②其目标缺陷（检索前哨误拒 5 例）已由
+> 另一条杠杆在答案级验收下覆盖——臂2 的 V1 阈值 0.015 + V3 容量使误拒率
+> 0.3934 → **0.1393**、语义拒答 **1.0**（[m5d](../results/answer-level/m5d-decision-2026-09-06/report.md) §2/§3、
+> [m4c](../results/answer-level/m4c-decision-2026-09-06/report.md) §2），
+> 「提示词变体」不再是必要手段；③如未来仍要评估 `evidence_calibrated`，须以
+> al3 语义口径重写判据，属**新立项**，不得复活本条待批状态。
+> 本注记不修改上方状态行，不删除原文；关闭裁决见 [docs/STATUS.md](../docs/STATUS.md) P1-3。
+
 ---
 
 ## 一、背景与问题

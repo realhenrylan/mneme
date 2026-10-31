@@ -1,0 +1,362 @@
+........................................................................ [  2%]
+........................................................................ [  4%]
+........................................................................ [  7%]
+........................................................................ [  9%]
+........................................................................ [ 12%]
+........................................................................ [ 14%]
+........................................................................ [ 16%]
+.....................................s....................F............. [ 19%]
+..F....................F...F............................................ [ 21%]
+........................................................................ [ 24%]
+........................................................................ [ 26%]
+........................................................................ [ 29%]
+........................................................................ [ 31%]
+............F............EEEEEEEEEEEEEEF....EEEEEEEEEEEE.EEE............ [ 33%]
+.............F........................FF............................FFFF [ 36%]
+FFFFEEEEEEEEEEEF.EEEEEEEEEEEEEEEEF.F.EEEEFFFFFEEEE.EFE...EEEEEEEEE..FEEE [ 38%]
+.F.....FFFFFFFFFFFFFFFFFFFFFFFFFFFF...F...FFFFFFFFFFFFFFFFF..FFFFFF..... [ 41%]
+........................................................................ [ 43%]
+.................................................F..........FFFFFFFF.... [ 45%]
+.....FF.FFFFFFF..F.F...................................................F [ 48%]
+..........................................FFFFFFFFFFFFF.....F..FF...F... [ 50%]
+....FFFFFFFFF.........FF.FFFFFFFF..FFF.FFFFFFFFF..FF......F......FFFFFFF [ 53%]
+FFFFFFFFFFFFFFF.FFFF....F..........FFFFFFFF.FFFFFFFF....FFFFFFFFFFFFFFFF [ 55%]
+.F........................F...........FFFFFFFFFF...............FFFFFF... [ 58%]
+...........FFFFFF....................................................... [ 60%]
+........................................................................ [ 62%]
+........................................................................ [ 65%]
+........F...................................F.........................F. [ 67%]
+...............F.............F.......................................... [ 70%]
+........................ss.............................................. [ 72%]
+........................................................................ [ 74%]
+.............................s.......................................... [ 77%]
+........................................................................ [ 79%]
+........................................................................ [ 82%]
+........................................................................ [ 84%]
+.....................................ssss............................... [ 87%]
+........................................................................ [ 89%]
+........................................................................ [ 91%]
+........................................................................ [ 94%]
+........................................................................ [ 96%]
+........................................................................ [ 99%]
+...........................                                              [100%]
+=========================== short test summary info ===========================
+FAILED tests/test_corpus_v2_coordinate_resolution_proposals.py::test_real_candidate_gate_and_thirteen_rows_without_llm
+FAILED tests/test_corpus_v2_coordinate_resolution_proposals.py::test_run_uses_triage_category_mapping
+FAILED tests/test_corpus_v2_evidence_unresolved_triage.py::test_real_input_has_exactly_thirteen_rows_and_five_categories
+FAILED tests/test_corpus_v2_evidence_unresolved_triage.py::test_manifest_self_hash_and_no_activation
+FAILED tests/test_corpus_v2_persistent_reject_repair.py::TestRealCorpus::test_real_transform_idempotent_on_repaired_draft
+FAILED tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_deterministic_rebuild_byte_identical
+FAILED tests/test_corpus_v2_repair.py::test_real_corpus_repair_validates - as...
+FAILED tests/test_corpus_v2_same_source_rescue_audit.py::test_real_audit_has_ten_rows_and_read_only_outputs
+FAILED tests/test_corpus_v2_same_source_rescue_audit.py::test_audit_is_deterministic
+FAILED tests/test_corpus_v2_v205_scope_repair.py::test_case_count_150_to_149_and_retired_ledger
+FAILED tests/test_corpus_v2_v205_scope_repair.py::test_narrowed_answer_points_equal_raw_span
+FAILED tests/test_corpus_v2_v205_scope_repair.py::test_zh037_answer_point_unchanged_and_new_evidence_added
+FAILED tests/test_corpus_v2_v205_scope_repair.py::test_no_cross_source_and_ranges_rebuild
+FAILED tests/test_corpus_v2_v205_scope_repair.py::test_orphan_evidence_removed_and_evidence_count
+FAILED tests/test_corpus_v2_v205_scope_repair.py::test_non_target_rows_byte_identical_and_blockers_listed
+FAILED tests/test_corpus_v2_v205_scope_repair.py::test_activation_blocked_and_no_overlay_or_split
+FAILED tests/test_corpus_v2_v205_scope_repair.py::test_input_sha_unchanged_and_deterministic
+FAILED tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_deterministic_rebuild_byte_identical
+FAILED tests/test_corpus_v2_v206_final_blocker_closure.py::test_deterministic_rebuild_byte_identical
+FAILED tests/test_corpus_v2_v207_fresh_automated_review.py::test_preflight_passes_on_real_candidate
+FAILED tests/test_corpus_v2_v207_fresh_automated_review.py::test_any_reject_blocks_overlay
+FAILED tests/test_corpus_v2_v207_fresh_automated_review.py::test_transport_failure_fail_closed_zero_output
+FAILED tests/test_corpus_v2_v207_fresh_automated_review.py::test_garbage_and_bad_schema_fail_closed
+FAILED tests/test_corpus_v2_v207_fresh_automated_review.py::test_wrong_model_identity_fail_closed
+FAILED tests/test_corpus_v2_v207_fresh_automated_review.py::test_corrective_retry_carries_specific_error_and_recovers
+FAILED tests/test_corpus_v2_v207_fresh_automated_review.py::test_determinism_two_runs_byte_identical
+FAILED tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_determinism_two_builds_byte_identical
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_preflight_real_inputs
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_run_outputs_22_rows_unique_sorted
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_batch_conservation_and_mapping
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_expected_batch_composition
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_category_conservation
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_options_per_category
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_removal_zero_risk
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_semantic_quality_insufficient_flag
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_mixed027_contract_proof
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_zh040_expand_scope_with_exact_toc_candidates
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_zh023_self_contained_range_sentence
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_mixed028_self_contained_state_sentence
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_multi030_isolated_heading_only_retire
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_translation_cases_default_policy
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_remove_unsupported_points_cases
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_zh042_retire_single_unsupported_point
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_no_repairable_no_auto_apply
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_all_candidates_raw_provable
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_scope_expansion_required_consistency
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_pack_rows_reference_candidate_file
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_input_shas_unchanged
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_candidate_review_triage_outputs_unchanged
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_deterministic_two_runs_byte_identical
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_manifest_self_hash_matches_disk
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_exact_output_file_set
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_manifest_declarations
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_data_quality_report_five_dimensions
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_guide_contains_vocabulary_and_no_auto_apply
+FAILED tests/test_corpus_v2_v207_reject_semantic_quality_decision_pack.py::test_report_lists_all_22_with_actions
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_preflight_real_candidate
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_run_outputs_22_rows_unique_sorted
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_category_conservation
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_mixed027_model_contract_contradiction
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_touched_by_v205_v206_marked_only
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_zero_answer_point_risk_recorded
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_no_repairable_no_auto_fix
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_owner_template_contains_only_allowlisted_keys
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_all_spans_raw_provable
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_evidence_span_in_chunk_text
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_input_shas_unchanged
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_candidate_and_review_outputs_unchanged
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_deterministic_two_runs_byte_identical
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_manifest_self_hash_matches_disk
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_exact_output_file_set
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_manifest_declarations
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_data_quality_report_five_dimensions
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_report_lists_all_22_with_rationale_and_facts
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_en042_same_source_candidate_present
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_zh040_other_answer_points_in_same_chunk
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_exact_evidence_cases_classified_semantic_disagreement
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_language_mismatch_cases
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_mixed026_no_direct_support
+FAILED tests/test_corpus_v2_v207_review_reject_triage.py::test_rationale_never_treated_as_fact
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_preflight_real_inputs_pass
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_coherence_errors_all_classified_contract_inconsistency
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_coherence_errors_not_rewritten
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_coherence_errors_expected_decision_derived
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_reject_triage_22_rows_exactly_once
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_reject_rows_have_valid_classification_and_action
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_reject_verbatim_cases_classified_exact
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_reject_multi019_no_direct
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_reject_each_ap_has_evidence_relation
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_mixed033_duplicate_check
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_owner_template_structure
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_output_manifest_self_hash
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_output_manifest_outputs_sha_match_disk
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_summary_counts_conservation
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_input_sha_unchanged_after_build
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_review_inputs_unchanged_after_build
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_two_builds_byte_identical
+FAILED tests/test_corpus_v2_v209_coherence_reject_triage.py::test_no_forbidden_outputs
+FAILED tests/test_corpus_v2_v209_final_dependency_closed_retirement.py::test_preflight_real_inputs
+FAILED tests/test_corpus_v2_v209_final_dependency_closed_retirement.py::test_pack_input_shas_match_disk
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_preflight_passes_real_inputs
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_success_all_confirmed
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_success_pack_rows
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_success_evidence_and_review_rows
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_success_overlay
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_success_summary_and_manifest
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_success_data_quality_five_dims
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_success_statistics_conservation
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_success_gate_report_and_report
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_candidate_unchanged
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_twice_byte_identical
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_blocked_single_reject
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_blocked_no_overlay_after_success
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_build_blocked_schema_error
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_cli_build_with_stub
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_no_forbidden_outputs_success
+FAILED tests/test_corpus_v2_v209_fresh_blind_automated_review.py::test_no_forbidden_outputs_blocked
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_preflight_real_inputs_pass
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_conservation_counts_real
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_reject_case_set_no_overlap_with_errors
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_coherence_errors_all_classified_contract_inconsistency
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_coherence_errors_not_rewritten
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_coherence_errors_expected_decision_derived
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_reject_triage_19_rows_exactly_once
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_reject_rows_have_valid_classification_and_action
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_reject_each_ap_has_evidence_relation
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_same_source_candidates_have_full_provenance
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_owner_template_structure
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_data_quality_report_five_dims
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_output_manifest_self_hash
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_output_manifest_outputs_sha_match_disk
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_output_manifest_inputs_sha_match_sources
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_summary_counts_conservation
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_input_sha_unchanged_after_build
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_review_inputs_unchanged_after_build
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_two_builds_byte_identical
+FAILED tests/test_corpus_v2_v210_coherence_reject_triage.py::test_no_forbidden_outputs
+FAILED tests/test_corpus_v2_v210_fresh_blind_automated_review.py::test_preflight_accepts_v210_without_reading_v209_review_content
+FAILED tests/test_corpus_v2_v210_fresh_blind_automated_review.py::test_all_confirmed_writes_v210_overlay_and_136_case_manifest
+FAILED tests/test_corpus_v2_v210_fresh_blind_automated_review.py::test_one_reject_blocks_gate_and_never_writes_overlay
+FAILED tests/test_corpus_v2_v210_fresh_blind_automated_review.py::test_base_v209_runtime_state_is_restored_after_v210_run
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_preflight_accepts_exact_v209_authorized_inputs
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_builds_the_authorized_v210_candidate_with_exact_counts
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_manifest_self_hash_and_every_output_sha_are_valid
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_only_authorized_draft_row_is_removed_and_others_are_byte_identical
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_evidence_changes_are_only_retirement_deduplication_and_six_fixed_spans
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_added_evidence_is_raw_codepoint_strict_and_same_source
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_multi019_retirement_ledger_preserves_original_and_dependency_proof
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_data_quality_report_records_five_quality_dimensions_and_no_duplicate_rows
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_two_builds_are_byte_identical_and_no_review_or_activation_artifacts_exist
+FAILED tests/test_corpus_v2_v210_owner_authorized_coherence_remediation.py::test_cli_build_succeeds
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_preflight_passes
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_run_all_confirmed
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_raw_attempts_record_everything
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_contract_conflict_persists
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_invalid_json_first_then_valid
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_schema_error_recorded
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_identity_mismatch_blocked
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_transport_failure_blocked
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_does_not_call_other_18_cases
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_manual_reject_recorded_not_rewritten
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_double_build_byte_identical
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_manifest_self_hash_and_outputs
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_manifest_inputs_match_disk
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_inputs_unchanged_after_diag
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_declarations_not_acceptance
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_data_quality_five_dims
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_deferred_18_rows
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_does_not_modify_owner_template
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_frozen_baseline_md
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_summary
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_manifest_closure
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_inputs_unchanged
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_double_build_byte_identical
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_fail_closed_diag_manifest_tampered
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_fail_closed_deferred_set_drift
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_fail_closed_out_dir_exists
+FAILED tests/test_corpus_v2_v211_contract_error_diagnostic.py::test_freeze_no_forbidden_artifacts
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_preflight_real_inputs_pass
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_run_builds_v211_candidate
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_evidence_after_adds_exactly_one_row
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_draft_after_byte_identical_to_v210
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_new_evidence_passes_strict_validation
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_no_evidence_span_overlap
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_added_ledger_single_row
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_field_level_diff_single_row
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_data_quality_report_five_dims
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_output_manifest_self_hash
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_output_manifest_outputs_sha_match_disk
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_output_manifest_inputs_sha_match_sources
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_manifest_counts_and_metadata
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_input_sha_unchanged_after_build
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_two_builds_byte_identical
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_no_forbidden_outputs
+FAILED tests/test_corpus_v2_v211_owner_authorized_en048_repair.py::test_v210_inputs_unchanged_by_build
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_preflight_passes_on_real_inputs
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_run_builds_8_files
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_manifest_self_hash_and_output_shas
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_manifest_inputs_match_disk
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_persistent_contract_errors_rows
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_error_rows_do_not_fabricate_missing_content
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_stable_reject_rows
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_reject_rows_mechanical_relation_fields
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_reject_classification_distribution
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_answer_point_classification_counts
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_owner_template_rows_empty_owner_fields
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_data_quality_report_five_dims
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_manifest_counts_and_metadata
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_reports_exist_and_reference_boundaries
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_inputs_unchanged_after_build
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_double_build_byte_identical
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_decision_pack.py::test_no_forbidden_artifacts_in_output
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_preflight_real_inputs_pass
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_stub_all_confirmed_gate_ok
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_stub_rejects_gate_blocked
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_stub_contract_error_gate_blocked
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_results_ledger_covers_all_22
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_manifest_self_hash_and_outputs_sha
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_manifest_inputs_sha_match_sources
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_manifest_counts_and_metadata
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_input_sha_unchanged_after_run
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_two_builds_byte_identical
+FAILED tests/test_corpus_v2_v211_targeted_remaining22_review.py::test_no_forbidden_outputs_ok_and_blocked
+FAILED tests/test_corpus_v2_v21_contract_focus_review.py::test_payload_is_blind_against_expectation
+FAILED tests/test_corpus_v2_v21_contract_focus_review.py::test_happy_path_all_confirmed_gates_ok
+FAILED tests/test_corpus_v2_v21_contract_focus_review.py::test_any_reject_blocks_and_keeps_records
+FAILED tests/test_corpus_v2_v21_contract_focus_review.py::test_manifest_self_hash
+FAILED tests/test_corpus_v2_v21_contract_focus_review.py::test_double_build_byte_identical
+FAILED tests/test_corpus_v2_v21_contract_focus_review.py::test_frozen_assets_byte_untouched
+FAILED tests/test_corpus_v2_v21_restored_focus_review.py::test_payload_blind
+FAILED tests/test_corpus_v2_v21_restored_focus_review.py::test_ok_gate_when_all_confirmed
+FAILED tests/test_corpus_v2_v21_restored_focus_review.py::test_blocked_gate_on_any_disagreement[reject]
+FAILED tests/test_corpus_v2_v21_restored_focus_review.py::test_blocked_gate_on_any_disagreement[needs_followup]
+FAILED tests/test_corpus_v2_v21_restored_focus_review.py::test_manifest_self_hash_and_double_build
+FAILED tests/test_corpus_v2_v21_restored_focus_review.py::test_frozen_assets_byte_untouched
+FAILED tests/test_evaluate_v211_cross_document_ablation.py::test_real_hardened_manifest_verifies
+FAILED tests/test_evaluate_v211_frozen_contract_lifecycle_hardened.py::test_real_lifecycle_verification_1006
+FAILED tests/test_evaluate_v211_frozen_product_baseline.py::test_real_frozen_inputs_verify_ok
+FAILED tests/test_evaluate_v211_frozen_product_contract.py::test_real_phase6a_manifest_verifies
+FAILED tests/test_evaluate_v211_frozen_product_contract_hardened.py::test_real_b0_manifest_verifies
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_zh035_all_duplicate_spans_enumerated_and_stable_sorted
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_zh035_actions_and_multi_span_policy_flags
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_zh032_no_full_or_clause_exact_evidence_and_actions_fixed
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_mixed022_point0_narrow_candidate_and_point1_not
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_mixed022_point1_ambiguous_clause_not_labeled_exact
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_mixed028_narrow_candidate_is_state_in_react_chunk
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_zero_answer_point_risk_overall
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_template_rows_only_owner_fields_empty
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_exact_seven_output_files_and_no_forbidden_content
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_manifest_self_hash_matches_disk
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_input_shas_are_unchanged
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_current_evidence_rows_per_case
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_all_raw_spans_prove_equality
+ERROR tests/test_corpus_v2_remaining_blockers_decision_pack.py::test_answer_points_match_draft_after
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_37_rows_exactly_once
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_categories_mutually_exclusive_and_cover
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_expected_distribution_locked
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_mechanically_repairable_only_for_cat1
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_cat1_evidence_specs_are_exact_contiguous_spans
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_out_of_scope_spans_never_repair_basis
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_refusal_cases_subtypes
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_cat3_subtype_zero_points_modeling
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_candidate_spans_validity
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_issue_id_and_decision_fields
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_data_quality_report_sections
+ERROR tests/test_corpus_v2_remediation_triage.py::TestRealTriage::test_manifest_outputs_sha
+ERROR tests/test_corpus_v2_remediation_triage.py::TestDeterminismAndSafety::test_two_runs_byte_identical
+ERROR tests/test_corpus_v2_remediation_triage.py::TestDeterminismAndSafety::test_input_shas_unchanged
+ERROR tests/test_corpus_v2_remediation_triage.py::TestDeterminismAndSafety::test_no_overlay_and_no_input_rewrite
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_evidence_line_counts
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_arithmetic_159_to_162_is_exact
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_partition_is_mutually_exclusive_and_complete
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_strict_validator_coverage_sets
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_every_covered_row_proves_raw_span
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_invalid_rows_listed_precisely
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_target_multi_span_rows_covered_and_passed
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_v206_manifest_sha_verified
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_input_sha_invariance
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_verdict_is_blocked_with_exact_failing_conditions
+ERROR tests/test_corpus_v2_v206_evidence_count_reconciliation.py::test_exact_four_output_files_and_inputs_untouched
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_case_count_149_to_148_and_retired_ledger
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_zh032_retirement_dependency_gate_passes
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_zh035_six_spans_ledger_complete_sorted_and_proved
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_zh035_multi_span_policy_and_scope_expansion
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_mixed022_answer_point_narrowed_and_orphan_removed
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_mixed028_answer_point_narrowed_and_orphan_removed
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_no_zero_answer_point_cases
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_non_target_rows_byte_identical
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_evidence_counts
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_strict_validation_all_raw_rows
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_no_legacy_rows_for_targets
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_all_answerable_cases_have_evidence
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_case_ids_unique
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_input_shas_unchanged
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_manifest_metadata_and_self_hash
+ERROR tests/test_corpus_v2_v206_final_blocker_closure.py::test_exact_output_file_set_and_no_forbidden
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_pack_148_rows_sorted_unique_and_sha_locked
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_payload_blind_no_case_id_no_leaks_no_chain_refs
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_payload_evidence_correct_and_chunk_texts_present
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_all_confirmed_generates_overlay
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_stub_calls_assert_pro_only_params
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_stats_conservation_and_issues_set
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_reviewer_identity_and_contract_fields_every_row
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_raw_model_responses_file
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_input_shas_unchanged_and_manifest_self_hash
+ERROR tests/test_corpus_v2_v207_fresh_automated_review.py::test_no_human_identity_or_v2_1_claims
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_draft_unchanged_148_and_byte_identical_to_v206
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_evidence_162_to_161_exactly_one_line_removed
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_retired_legacy_ledger_records_original_row_reason_and_successor
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_legacy_range_never_reinterpreted_as_raw
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_successor_coverage_proof
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_strict_161_161_acceptance
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_all_answerable_cases_have_strict_legal_evidence
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_zh037_retains_answer_point_and_successor
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_inputs_unchanged_and_manifest_shas
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_exact_file_set_no_forbidden_outputs_manifest_self_hash
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_manifest_metadata_fixed
+ERROR tests/test_corpus_v2_v207_legacy_evidence_retirement.py::test_reannotation_diff_records_single_removal
+240 failed, 2653 passed, 8 skipped, 78 errors in 282.49s (0:04:42)
