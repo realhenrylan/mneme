@@ -18,6 +18,9 @@ import scripts.corpus_v2_v206_evidence_count_reconciliation as rp
 from scripts import corpus_v2_evidence_coordinate_repair as coord
 
 
+pytestmark = pytest.mark.frozen_stage
+
+
 @pytest.fixture(scope="module")
 def rec(tmp_path_factory):
     out = tmp_path_factory.mktemp("evcount")

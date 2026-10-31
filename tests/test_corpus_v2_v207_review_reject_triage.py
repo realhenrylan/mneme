@@ -83,6 +83,7 @@ def test_constants():
     assert t.TOUCHED_BY_V205_V206 == TOUCHED
 
 
+@pytest.mark.frozen_stage
 def test_preflight_real_candidate():
     checks = t.preflight()
     assert checks["canonical_rows"] == 148
@@ -148,6 +149,7 @@ def test_issues_rows_equal_canonical_rows():
 
 # ── run 输出结构 / 分类守恒 ───────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_run_outputs_22_rows_unique_sorted(tmp_path):
     out = tmp_path / "out"
     result = t.run(out_dir=out)
@@ -160,6 +162,7 @@ def test_run_outputs_22_rows_unique_sorted(tmp_path):
     assert result["summary"]["n_rejects"] == 22
 
 
+@pytest.mark.frozen_stage
 def test_category_conservation(tmp_path):
     result = t.run(out_dir=tmp_path / "out")
     triage = result["triage"]
@@ -177,6 +180,7 @@ def test_category_conservation(tmp_path):
     assert all(row["review_decision"] == "reject" for row in triage)
 
 
+@pytest.mark.frozen_stage
 def test_mixed027_model_contract_contradiction(tmp_path):
     """mixed-027 两个答案点均 directly_supported 却 reject → 模型语义矛盾。"""
     result = t.run(out_dir=tmp_path / "out")
@@ -188,6 +192,7 @@ def test_mixed027_model_contract_contradiction(tmp_path):
     assert row["requires_owner_decision"] is True
 
 
+@pytest.mark.frozen_stage
 def test_touched_by_v205_v206_marked_only(tmp_path):
     result = t.run(out_dir=tmp_path / "out")
     touched_in_rejects = TOUCHED & EXPECTED_REJECTS
@@ -201,6 +206,7 @@ def test_touched_by_v205_v206_marked_only(tmp_path):
     assert "zh-055" not in {r["case_id"] for r in result["triage"]}
 
 
+@pytest.mark.frozen_stage
 def test_zero_answer_point_risk_recorded(tmp_path):
     result = t.run(out_dir=tmp_path / "out")
     for row in result["triage"]:
@@ -211,6 +217,7 @@ def test_zero_answer_point_risk_recorded(tmp_path):
         assert row["zero_answer_point_risk"] == all_none
 
 
+@pytest.mark.frozen_stage
 def test_no_repairable_no_auto_fix(tmp_path):
     """只读分流：没有任何机械可修复标记，模板字段必须留空。"""
     result = t.run(out_dir=tmp_path / "out")
@@ -225,6 +232,7 @@ def test_no_repairable_no_auto_fix(tmp_path):
         assert set(t.OWNER_TEMPLATE_KEYS).issubset(row.keys())
 
 
+@pytest.mark.frozen_stage
 def test_owner_template_contains_only_allowlisted_keys(tmp_path):
     """模板行只允许新增三个空字段：owner_decision/owner_reviewer/owner_notes。"""
     result = t.run(out_dir=tmp_path / "out")
@@ -240,6 +248,7 @@ def test_owner_template_contains_only_allowlisted_keys(tmp_path):
 
 # ── span 可重建性 ─────────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_all_spans_raw_provable(tmp_path):
     """candidate-evidence-spans.jsonl 每行 span_text == chunk_text[start:end]。"""
     chunks = {c["chunk_id"]: c for c in _jsonl(t.CHUNKS)}
@@ -259,6 +268,7 @@ def test_all_spans_raw_provable(tmp_path):
     assert set(by_case) == EXPECTED_REJECTS
 
 
+@pytest.mark.frozen_stage
 def test_evidence_span_in_chunk_text(tmp_path):
     """triage 行 evidence_summary 的 raw span 与 chunk 文本一致（可复核）。"""
     chunks = {c["chunk_id"]: c for c in _jsonl(t.CHUNKS)}
@@ -272,6 +282,7 @@ def test_evidence_span_in_chunk_text(tmp_path):
 
 # ── SHA 链 / 确定性 ───────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_input_shas_unchanged(tmp_path):
     inputs = [
         REVIEW_DIR / "automated-review.jsonl",
@@ -290,6 +301,7 @@ def test_input_shas_unchanged(tmp_path):
     assert before == after
 
 
+@pytest.mark.frozen_stage
 def test_candidate_and_review_outputs_unchanged(tmp_path):
     """candidate 11 个输出与 automated-review 9 个输出 SHA 运行前后不变。"""
     cand_manifest = json.loads(
@@ -309,6 +321,7 @@ def test_candidate_and_review_outputs_unchanged(tmp_path):
         assert _sha(REVIEW_DIR / name) == h
 
 
+@pytest.mark.frozen_stage
 def test_deterministic_two_runs_byte_identical(tmp_path):
     out1, out2 = tmp_path / "out1", tmp_path / "out2"
     t.run(out_dir=out1)
@@ -317,6 +330,7 @@ def test_deterministic_two_runs_byte_identical(tmp_path):
         assert _sha(out1 / name) == _sha(out2 / name), name
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash_matches_disk(tmp_path):
     out = tmp_path / "out"
     t.run(out_dir=out)
@@ -329,6 +343,7 @@ def test_manifest_self_hash_matches_disk(tmp_path):
 
 # ── 产物约束 ──────────────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_exact_output_file_set(tmp_path):
     out = tmp_path / "out"
     t.run(out_dir=out)
@@ -344,6 +359,7 @@ def test_exact_output_file_set(tmp_path):
         assert "split" not in name.lower()
 
 
+@pytest.mark.frozen_stage
 def test_manifest_declarations(tmp_path):
     out = tmp_path / "out"
     result = t.run(out_dir=out)
@@ -362,6 +378,7 @@ def test_manifest_declarations(tmp_path):
         "locked config", "evaluation results"]
 
 
+@pytest.mark.frozen_stage
 def test_data_quality_report_five_dimensions(tmp_path):
     out = tmp_path / "out"
     t.run(out_dir=out)
@@ -382,6 +399,7 @@ def test_data_quality_report_five_dimensions(tmp_path):
     assert checks["consistency"]["issues_set_matches_rejects"] is True
 
 
+@pytest.mark.frozen_stage
 def test_report_lists_all_22_with_rationale_and_facts(tmp_path):
     out = tmp_path / "out"
     result = t.run(out_dir=out)
@@ -432,6 +450,7 @@ def test_cli_main_fail_closed(tmp_path, monkeypatch, capsys):
 
 # ── 分类细节可复核性 ──────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_en042_same_source_candidate_present(tmp_path):
     """en-042：'generic URI syntax' 存在于 rfc3986 同 source，evidence 未覆盖。"""
     result = t.run(out_dir=tmp_path / "out")
@@ -447,6 +466,7 @@ def test_en042_same_source_candidate_present(tmp_path):
         assert chunks[c["chunk_id"]]["text"][rng["start"]:rng["end"]] == c["span_text"]
 
 
+@pytest.mark.frozen_stage
 def test_zh040_other_answer_points_in_same_chunk(tmp_path):
     """zh-040：'输入与输出'/'错误和异常' 在 chunk_1 内、evidence span 之外。"""
     result = t.run(out_dir=tmp_path / "out")
@@ -457,6 +477,7 @@ def test_zh040_other_answer_points_in_same_chunk(tmp_path):
     assert any("错误和异常" in txt for txt in texts)
 
 
+@pytest.mark.frozen_stage
 def test_exact_evidence_cases_classified_semantic_disagreement(tmp_path):
     """逐字答案点（孤立 token）在 evidence 中可重建但模型语义拒绝。"""
     result = t.run(out_dir=tmp_path / "out")
@@ -470,6 +491,7 @@ def test_exact_evidence_cases_classified_semantic_disagreement(tmp_path):
         assert all(p["in_evidence"] == "exact" for p in row["answer_points"])
 
 
+@pytest.mark.frozen_stage
 def test_language_mismatch_cases(tmp_path):
     """中文答案点对英文源 → 逐字不适用 → partial_or_paraphrase_only。"""
     result = t.run(out_dir=tmp_path / "out")
@@ -481,12 +503,14 @@ def test_language_mismatch_cases(tmp_path):
         assert any(p["language_mismatch"] for p in row["answer_points"])
 
 
+@pytest.mark.frozen_stage
 def test_mixed026_no_direct_support(tmp_path):
     result = t.run(out_dir=tmp_path / "out")
     row = next(r for r in result["triage"] if r["case_id"] == "mixed-026")
     assert row["category"] == "no_direct_support_in_declared_source"
 
 
+@pytest.mark.frozen_stage
 def test_rationale_never_treated_as_fact(tmp_path):
     """分类依据本地文本事实：每行记录模型 assessment 与本地事实分离。"""
     result = t.run(out_dir=tmp_path / "out")

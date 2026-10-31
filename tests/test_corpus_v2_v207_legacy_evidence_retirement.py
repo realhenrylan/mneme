@@ -17,6 +17,7 @@ import scripts.corpus_v2_v207_legacy_evidence_retirement as rp
 from scripts import corpus_v2_evidence_coordinate_repair as coord
 
 
+
 @pytest.fixture(scope="module")
 def pack(tmp_path_factory):
     out = tmp_path_factory.mktemp("v207")
@@ -77,6 +78,7 @@ def test_reconciliation_only_blocker_is_the_target_row():
     assert sv["uncovered_count"] == 1 and sv["invalid_count"] == 1
 
 
+@pytest.mark.frozen_stage
 def test_draft_unchanged_148_and_byte_identical_to_v206(pack):
     _, out = pack
     v206_draft = (rp.V206 / "draft-after.jsonl").read_text(encoding="utf-8")
@@ -87,6 +89,7 @@ def test_draft_unchanged_148_and_byte_identical_to_v206(pack):
     assert len({row["id"] for row in rows}) == 148
 
 
+@pytest.mark.frozen_stage
 def test_evidence_162_to_161_exactly_one_line_removed(pack):
     _, out = pack
     before = _lines(out / "evidence-before.jsonl")
@@ -101,6 +104,7 @@ def test_evidence_162_to_161_exactly_one_line_removed(pack):
     assert after == [line for line in before if line != legacy_line]
 
 
+@pytest.mark.frozen_stage
 def test_retired_legacy_ledger_records_original_row_reason_and_successor(pack):
     _, out = pack
     ledger = _jsonl(out / "retired-legacy-evidence.jsonl")
@@ -126,6 +130,7 @@ def test_retired_legacy_ledger_records_original_row_reason_and_successor(pack):
     assert row["successor_raw_evidence_span"] == "经过排序的字符串列表"
 
 
+@pytest.mark.frozen_stage
 def test_legacy_range_never_reinterpreted_as_raw(pack):
     """The legacy char_range must be carried verbatim, never converted."""
     _, out = pack
@@ -140,6 +145,7 @@ def test_legacy_range_never_reinterpreted_as_raw(pack):
     assert ledger["successor_raw_chunk_char_range"] == {"start": 1921, "end": 1931}
 
 
+@pytest.mark.frozen_stage
 def test_successor_coverage_proof(pack):
     """Gates 3/4: zh-037 has a strict successor covering the retained answer point."""
     chunks = coord.load_chunks(rp.CHUNKS)
@@ -166,6 +172,7 @@ def test_successor_coverage_proof(pack):
     assert raw_lines(_jsonl(rp.V206 / "evidence-after.jsonl")) == {json.dumps(successor, ensure_ascii=False, sort_keys=True)}
 
 
+@pytest.mark.frozen_stage
 def test_strict_161_161_acceptance(pack):
     chunks = coord.load_chunks(rp.CHUNKS)
     _, out = pack
@@ -187,6 +194,7 @@ def test_strict_161_161_acceptance(pack):
     assert report["invalid_count"] == 0
 
 
+@pytest.mark.frozen_stage
 def test_all_answerable_cases_have_strict_legal_evidence(pack):
     _, out = pack
     after = _jsonl(out / "evidence-after.jsonl")
@@ -197,6 +205,7 @@ def test_all_answerable_cases_have_strict_legal_evidence(pack):
     assert missing == []
 
 
+@pytest.mark.frozen_stage
 def test_zh037_retains_answer_point_and_successor(pack):
     _, out = pack
     for source in (rp.V205 / "draft-after.jsonl", rp.V206 / "draft-after.jsonl", out / "draft-after.jsonl"):
@@ -208,6 +217,7 @@ def test_zh037_retains_answer_point_and_successor(pack):
     assert len(raw) >= 1
 
 
+@pytest.mark.frozen_stage
 def test_inputs_unchanged_and_manifest_shas(pack):
     _, out = pack
     v206 = json.loads((rp.V206 / "manifest.json").read_text(encoding="utf-8"))
@@ -241,6 +251,7 @@ def test_fail_closed_zero_output_on_gate_failure(tmp_path, monkeypatch):
     assert not out.exists()
 
 
+@pytest.mark.frozen_stage
 def test_determinism_two_builds_byte_identical(tmp_path_factory):
     out1 = tmp_path_factory.mktemp("v207a")
     out2 = tmp_path_factory.mktemp("v207b")
@@ -250,6 +261,7 @@ def test_determinism_two_builds_byte_identical(tmp_path_factory):
         assert (out1 / name).read_bytes() == (out2 / name).read_bytes()
 
 
+@pytest.mark.frozen_stage
 def test_exact_file_set_no_forbidden_outputs_manifest_self_hash(pack):
     _, out = pack
     assert {p.name for p in out.iterdir()} == EXPECTED_FILES
@@ -263,6 +275,7 @@ def test_exact_file_set_no_forbidden_outputs_manifest_self_hash(pack):
     # (REVIEW_AND_SPLIT_REBUILD_REQUIRED.md is a required advisory document).
 
 
+@pytest.mark.frozen_stage
 def test_manifest_metadata_fixed(pack):
     _, out = pack
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -281,6 +294,7 @@ def test_manifest_metadata_fixed(pack):
     assert manifest["counts"]["case_after"] == 148
 
 
+@pytest.mark.frozen_stage
 def test_reannotation_diff_records_single_removal(pack):
     _, out = pack
     diff = _jsonl(out / "reannotation-diff.jsonl")

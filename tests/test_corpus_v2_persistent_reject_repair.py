@@ -734,6 +734,8 @@ class TestRealCorpus:
         lock = json.loads(lock_path.read_text(encoding="utf-8"))
         assert verify_lock(lock, frozen) is True
 
+    # 历史修复流水线不变量：v2.1 draft 已改写，非 SHA 根因（STATUS P0-1）
+    @pytest.mark.frozen_stage
     def test_real_transform_idempotent_on_repaired_draft(self, tmp_path):
         """已修复草稿上重跑 transform：0 变更、字节一致（安全重跑）。"""
         p = _real_paths()

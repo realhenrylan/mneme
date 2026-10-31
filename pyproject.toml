@@ -40,6 +40,7 @@ dev = [
 testpaths = ["tests"]
 markers = [
     "integration: tests that require an external LLM or other external service",
+    "frozen_stage: historical corpus-governance stage gate pinned to sealed truth; known red against the live v2 draft and isolated to a non-blocking job (P0-1)",
 ]
 
 [tool.setuptools.packages.find]

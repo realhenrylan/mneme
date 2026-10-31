@@ -180,6 +180,7 @@ class TestRealTriage:
         return rt.run(review_dir=REVIEW_DIR, draft_path=DRAFT_PATH,
                       chunks_path=CHUNKS_PATH, out_dir=out)
 
+    @pytest.mark.frozen_stage
     def test_37_rows_exactly_once(self, run_result):
         rows = run_result["triage"]
         assert len(rows) == 37
@@ -189,15 +190,18 @@ class TestRealTriage:
                     if r["review_decision"] != "confirmed"}
         assert {r["case_id"] for r in rows} == expected
 
+    @pytest.mark.frozen_stage
     def test_categories_mutually_exclusive_and_cover(self, run_result):
         for r in run_result["triage"]:
             assert r["category"] in CATEGORIES
         assert len(run_result["triage"]) == 37
 
+    @pytest.mark.frozen_stage
     def test_expected_distribution_locked(self, run_result):
         got = {r["case_id"]: r["category"] for r in run_result["triage"]}
         assert got == EXPECTED_CATEGORY
 
+    @pytest.mark.frozen_stage
     def test_mechanically_repairable_only_for_cat1(self, run_result):
         for r in run_result["triage"]:
             if r["category"] == "exact_local_evidence_available":
@@ -207,6 +211,7 @@ class TestRealTriage:
                 assert r["mechanically_repairable"] is False
                 assert r["requires_owner_policy"] is True
 
+    @pytest.mark.frozen_stage
     def test_cat1_evidence_specs_are_exact_contiguous_spans(self, run_result):
         chunks = {c["chunk_id"]: c
                   for c in _load_jsonl(CHUNKS_PATH)}
@@ -230,6 +235,7 @@ class TestRealTriage:
                 span_norm = rt._norm_with_map(spec["span_text"])[0]
                 assert span_norm in ap_norm
 
+    @pytest.mark.frozen_stage
     def test_out_of_scope_spans_never_repair_basis(self, run_result):
         for r in run_result["triage"]:
             for spec in r.get("evidence_specs") or []:
@@ -238,6 +244,7 @@ class TestRealTriage:
             if sp.get("out_of_scope_only"):
                 assert sp.get("repair_basis") is False
 
+    @pytest.mark.frozen_stage
     def test_refusal_cases_subtypes(self, run_result):
         got = {r["case_id"]: r for r in run_result["triage"]}
         for cid in ("noanswer-026", "noanswer-054"):
@@ -249,12 +256,14 @@ class TestRealTriage:
         assert got["en-052"]["sub_type"] == "refusal_assessment_conflict"
         assert got["mixed-027"]["sub_type"] == "refusal_assessment_conflict"
 
+    @pytest.mark.frozen_stage
     def test_cat3_subtype_zero_points_modeling(self, run_result):
         got = {r["case_id"]: r for r in run_result["triage"]}
         for cid in ("zh-045", "zh-056"):
             assert got[cid]["category"] == "no_local_evidence_found"
             assert got[cid]["sub_type"] == "zero_answer_points_modeling"
 
+    @pytest.mark.frozen_stage
     def test_candidate_spans_validity(self, run_result):
         chunks = {c["chunk_id"]: c for c in _load_jsonl(CHUNKS_PATH)}
         for sp in run_result["spans"]:
@@ -268,6 +277,7 @@ class TestRealTriage:
             assert sp["norm_match_len"] >= min(rt.MIN_SPAN_LEN, len(ap_norm))
             assert sp["in_scope"] in (True, False)
 
+    @pytest.mark.frozen_stage
     def test_issue_id_and_decision_fields(self, run_result):
         canon = {r["case_id"]: r for r in
                  _load_jsonl(REVIEW_DIR / "automated-review.jsonl")}
@@ -276,6 +286,7 @@ class TestRealTriage:
             assert r["decision"] in ("reject", "needs_followup")
             assert r["issue_id"] == r["case_id"]
 
+    @pytest.mark.frozen_stage
     def test_data_quality_report_sections(self, run_result):
         dq = run_result["data_quality"]
         for section in ("completeness", "uniqueness", "snippet_continuity",
@@ -286,6 +297,7 @@ class TestRealTriage:
         assert dq["snippet_continuity"]["snippet_sha256_self_consistent"] == 161
         assert dq["source_consistency"]["evidence_source_matches_chunk"] is True
 
+    @pytest.mark.frozen_stage
     def test_manifest_outputs_sha(self, run_result):
         out = Path(run_result["out_dir"])
         for name in rt.OUTPUT_FILES:
@@ -336,15 +348,18 @@ class TestDeterminismAndSafety:
         shas_after = {p.name: _sha256_file(p) for p in inputs}
         return r1, r2, shas_before, shas_after, out1, out2
 
+    @pytest.mark.frozen_stage
     def test_two_runs_byte_identical(self, two_runs):
         r1, r2, _, _, out1, out2 = two_runs
         for name in rt.OUTPUT_FILES:
             assert (out1 / name).read_bytes() == (out2 / name).read_bytes()
 
+    @pytest.mark.frozen_stage
     def test_input_shas_unchanged(self, two_runs):
         _, _, before, after, _, _ = two_runs
         assert before == after
 
+    @pytest.mark.frozen_stage
     def test_no_overlay_and_no_input_rewrite(self, two_runs):
         r1, _, _, _, out1, _ = two_runs
         # 输出只出现在 out_dir，且文件名恰为 OUTPUT_FILES

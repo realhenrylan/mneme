@@ -171,6 +171,7 @@ def test_template_is_union_of_rejects_and_errors(inputs):
 
 # ── successful build ────────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_preflight_passes_on_real_inputs(inputs):
     checks = dp.preflight(
         candidate_dir=inputs / "v211",
@@ -187,6 +188,7 @@ def test_preflight_passes_on_real_inputs(inputs):
     assert checks["target_set"] == EXPECTED_TARGET_IDS
 
 
+@pytest.mark.frozen_stage
 def test_run_builds_8_files(inputs):
     result, out = _run(inputs)
     assert result["gate"] == dp.GATE_OK
@@ -195,6 +197,7 @@ def test_run_builds_8_files(inputs):
         assert (out / name).stat().st_size > 0
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash_and_output_shas(inputs):
     result, out = _run(inputs)
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -203,6 +206,7 @@ def test_manifest_self_hash_and_output_shas(inputs):
         assert _sha256(out / name) == digest
 
 
+@pytest.mark.frozen_stage
 def test_manifest_inputs_match_disk(inputs):
     _, out = _run(inputs)
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -222,6 +226,7 @@ def test_manifest_inputs_match_disk(inputs):
         assert manifest["inputs"][name] == _sha256(path), name
 
 
+@pytest.mark.frozen_stage
 def test_persistent_contract_errors_rows(inputs):
     _, out = _run(inputs)
     rows = [json.loads(l) for l in
@@ -241,6 +246,7 @@ def test_persistent_contract_errors_rows(inputs):
         assert row["case_id"] in ("en-052", "mixed-030", "mixed-033", "zh-040")
 
 
+@pytest.mark.frozen_stage
 def test_error_rows_do_not_fabricate_missing_content(inputs):
     """Missing original response/payload SHAs stay absent (no fabrication)."""
     _, out = _run(inputs)
@@ -255,6 +261,7 @@ def test_error_rows_do_not_fabricate_missing_content(inputs):
             assert row["kind"] == "persistent_model_output_contract_inconsistency"
 
 
+@pytest.mark.frozen_stage
 def test_stable_reject_rows(inputs):
     _, out = _run(inputs)
     rows = [json.loads(l) for l in
@@ -276,6 +283,7 @@ def test_stable_reject_rows(inputs):
         assert row["multi_turn_or_ref_dependency"] is not None
 
 
+@pytest.mark.frozen_stage
 def test_reject_rows_mechanical_relation_fields(inputs):
     _, out = _run(inputs)
     rows = {json.loads(l)["case_id"]: json.loads(l) for l in
@@ -296,6 +304,7 @@ def test_reject_rows_mechanical_relation_fields(inputs):
                 assert cand["overlaps_existing"] is False
 
 
+@pytest.mark.frozen_stage
 def test_reject_classification_distribution(inputs):
     _, out = _run(inputs)
     rows = {json.loads(l)["case_id"]: json.loads(l) for l in
@@ -309,6 +318,7 @@ def test_reject_classification_distribution(inputs):
     assert counter["same_source"] == 0 and counter["no_direct"] == 0
 
 
+@pytest.mark.frozen_stage
 def test_answer_point_classification_counts(inputs):
     _, out = _run(inputs)
     from collections import Counter
@@ -324,6 +334,7 @@ def test_answer_point_classification_counts(inputs):
     assert sum(counts.values()) == 27
 
 
+@pytest.mark.frozen_stage
 def test_owner_template_rows_empty_owner_fields(inputs):
     _, out = _run(inputs)
     rows = [json.loads(l) for l in
@@ -343,6 +354,7 @@ def test_owner_template_rows_empty_owner_fields(inputs):
                                "persistent_model_output_contract_inconsistency")
 
 
+@pytest.mark.frozen_stage
 def test_data_quality_report_five_dims(inputs):
     _, out = _run(inputs)
     dq = json.loads((out / "data-quality-report.json").read_text(
@@ -354,6 +366,7 @@ def test_data_quality_report_five_dims(inputs):
     assert dq["skill_note"]
 
 
+@pytest.mark.frozen_stage
 def test_manifest_counts_and_metadata(inputs):
     _, out = _run(inputs)
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -386,6 +399,7 @@ def test_manifest_counts_and_metadata(inputs):
         inputs / "v211" / "targeted-re-review" / "manifest.json")
 
 
+@pytest.mark.frozen_stage
 def test_reports_exist_and_reference_boundaries(inputs):
     _, out = _run(inputs)
     report = (out / "decision-pack-report.md").read_text(encoding="utf-8")
@@ -398,6 +412,7 @@ def test_reports_exist_and_reference_boundaries(inputs):
     assert "read-only" in guide or "只读" in guide
 
 
+@pytest.mark.frozen_stage
 def test_inputs_unchanged_after_build(inputs):
     before = {str(p.relative_to(inputs)): _sha256(p) for p in
               inputs.rglob("*") if p.is_file()}
@@ -407,6 +422,7 @@ def test_inputs_unchanged_after_build(inputs):
     assert before == after
 
 
+@pytest.mark.frozen_stage
 def test_double_build_byte_identical(inputs):
     _, out1 = _run(inputs, out_name="out1")
     _, out2 = _run(inputs, out_name="out2")
@@ -421,6 +437,7 @@ def test_out_dir_exists_fails(inputs):
         _run(inputs)
 
 
+@pytest.mark.frozen_stage
 def test_no_forbidden_artifacts_in_output(inputs):
     _, out = _run(inputs)
     for name in dp.OUTPUT_FILES:

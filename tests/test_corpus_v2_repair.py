@@ -286,6 +286,8 @@ def test_changed_to_refusal_requires_refusal_semantics(
 
 # ── real corpus (offline, no LLM) ─────────────────────────────────────
 
+# 历史修复流水线不变量：Round-2 ledger 扩项后失效，非 SHA 根因（STATUS P0-1）
+@pytest.mark.frozen_stage
 def test_real_corpus_repair_validates() -> None:
     """真实语料：修复后的草稿 + ledger 通过验证（150 条、10 条目标）。"""
     draft = rp.ROOT / "evaluation" / "datasets" / "v2" / "annotations" / \

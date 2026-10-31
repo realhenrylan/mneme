@@ -274,6 +274,7 @@ def test_derive_fail_closed_on_extra(inputs):
 
 # ── 3. 预检与 fail-closed ──────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_preflight_passes(inputs):
     checks = dg.preflight_diagnose(
         candidate_dir=inputs / "v211",
@@ -356,6 +357,7 @@ def _all_confirmed_sequences():
     return {cid: [("ok", "confirmed")] for cid in ERROR_CASES}
 
 
+@pytest.mark.frozen_stage
 def test_run_all_confirmed(inputs):
     stub, counters = make_stub(inputs / "v211", _all_confirmed_sequences())
     result, out = _run_diag(inputs, stub)
@@ -378,6 +380,7 @@ def test_run_all_confirmed(inputs):
         len(_jsonl(out / "contract-error-diagnostic-issues.jsonl")) == 0
 
 
+@pytest.mark.frozen_stage
 def test_raw_attempts_record_everything(inputs):
     stub, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _, out = _run_diag(inputs, stub)
@@ -400,6 +403,7 @@ def test_raw_attempts_record_everything(inputs):
         assert "usage" in row
 
 
+@pytest.mark.frozen_stage
 def test_contract_conflict_persists(inputs):
     sequences = {cid: [("conflict", "reject")] * 4 for cid in ERROR_CASES}
     stub, counters = make_stub(inputs / "v211", sequences)
@@ -420,6 +424,7 @@ def test_contract_conflict_persists(inputs):
     assert [i["case_id"] for i in issues] == ERROR_CASES
 
 
+@pytest.mark.frozen_stage
 def test_invalid_json_first_then_valid(inputs):
     sequences = {cid: [("bad_json",), ("ok", "confirmed")]
                  for cid in ERROR_CASES}
@@ -437,6 +442,7 @@ def test_invalid_json_first_then_valid(inputs):
     assert raw[0]["raw_response_text"] == "{not valid json"
 
 
+@pytest.mark.frozen_stage
 def test_schema_error_recorded(inputs):
     sequences = {cid: [("schema",), ("ok", "confirmed")]
                  for cid in ERROR_CASES}
@@ -448,6 +454,7 @@ def test_schema_error_recorded(inputs):
     assert raw[0]["parse_error"]
 
 
+@pytest.mark.frozen_stage
 def test_identity_mismatch_blocked(inputs):
     sequences = {cid: [("wrong_model", "confirmed")] * 4
                  for cid in ERROR_CASES}
@@ -463,6 +470,7 @@ def test_identity_mismatch_blocked(inputs):
     assert all(r["parse_result"] == "identity_mismatch" for r in raw)
 
 
+@pytest.mark.frozen_stage
 def test_transport_failure_blocked(inputs):
     sequences = {cid: [("raise", TimeoutError("stub timeout"))] * 4
                  for cid in ERROR_CASES}
@@ -477,6 +485,7 @@ def test_transport_failure_blocked(inputs):
     assert all(i["status"] == "transport_blocked" for i in issues)
 
 
+@pytest.mark.frozen_stage
 def test_does_not_call_other_18_cases(inputs):
     sequences = _all_confirmed_sequences()
     stub, counters = make_stub(inputs / "v211", sequences)
@@ -487,6 +496,7 @@ def test_does_not_call_other_18_cases(inputs):
         encoding="utf-8").count("en-040")
 
 
+@pytest.mark.frozen_stage
 def test_manual_reject_recorded_not_rewritten(inputs):
     """合法 reject（有分歧）被如实记录，不自动改成 confirmed。"""
     sequences = {cid: [("ok", "confirmed")] for cid in ERROR_CASES}
@@ -500,6 +510,7 @@ def test_manual_reject_recorded_not_rewritten(inputs):
     assert result["counts"]["resolved"] == 4
 
 
+@pytest.mark.frozen_stage
 def test_double_build_byte_identical(inputs):
     stub1, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _, out1 = _run_diag(inputs, stub1, out_name="diag1")
@@ -509,6 +520,7 @@ def test_double_build_byte_identical(inputs):
         assert (out1 / name).read_bytes() == (out2 / name).read_bytes(), name
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash_and_outputs(inputs):
     stub, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _, out = _run_diag(inputs, stub)
@@ -518,6 +530,7 @@ def test_manifest_self_hash_and_outputs(inputs):
         assert _sha(out / name) == digest
 
 
+@pytest.mark.frozen_stage
 def test_manifest_inputs_match_disk(inputs):
     stub, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _, out = _run_diag(inputs, stub)
@@ -534,6 +547,7 @@ def test_manifest_inputs_match_disk(inputs):
         assert manifest["inputs"][name] == _sha(path), name
 
 
+@pytest.mark.frozen_stage
 def test_inputs_unchanged_after_diag(inputs):
     before = {str(p.relative_to(inputs)): _sha(p)
               for p in inputs.rglob("*") if p.is_file()}
@@ -544,6 +558,7 @@ def test_inputs_unchanged_after_diag(inputs):
     assert before == after
 
 
+@pytest.mark.frozen_stage
 def test_declarations_not_acceptance(inputs):
     stub, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _, out = _run_diag(inputs, stub)
@@ -562,6 +577,7 @@ def test_declarations_not_acceptance(inputs):
         "not review acceptance" in report.lower()
 
 
+@pytest.mark.frozen_stage
 def test_data_quality_five_dims(inputs):
     stub, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _, out = _run_diag(inputs, stub)
@@ -582,6 +598,7 @@ def _freeze_inputs(tmp_path):
     return _run_freeze(tmp_path)
 
 
+@pytest.mark.frozen_stage
 def test_freeze_deferred_18_rows(inputs):
     _, out = _freeze_inputs(inputs)
     rows = _jsonl(out / "deferred-owner-decisions.jsonl")
@@ -595,6 +612,7 @@ def test_freeze_deferred_18_rows(inputs):
     assert not any(r["case_id"] in ERROR_CASES for r in rows)
 
 
+@pytest.mark.frozen_stage
 def test_freeze_does_not_modify_owner_template(inputs):
     pack_tpl = inputs / "v211" / "targeted-re-review" / "owner-decision-pack" / \
         "owner-decision-template.jsonl"
@@ -606,6 +624,7 @@ def test_freeze_does_not_modify_owner_template(inputs):
                r["owner_notes"] == "" for r in rows)
 
 
+@pytest.mark.frozen_stage
 def test_frozen_baseline_md(inputs):
     _, out = _freeze_inputs(inputs)
     md = (out / "FROZEN_EVALUATION_BASELINE.md").read_text(encoding="utf-8")
@@ -615,6 +634,7 @@ def test_frozen_baseline_md(inputs):
         "仅允许新建 v2.1" in md
 
 
+@pytest.mark.frozen_stage
 def test_freeze_summary(inputs):
     _, out = _freeze_inputs(inputs)
     summary = json.loads((out / "freeze-summary.json").read_text(
@@ -629,6 +649,7 @@ def test_freeze_summary(inputs):
     assert summary["invariants"]["no_v2_1"] is True
 
 
+@pytest.mark.frozen_stage
 def test_freeze_manifest_closure(inputs):
     _, out = _freeze_inputs(inputs)
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -642,6 +663,7 @@ def test_freeze_manifest_closure(inputs):
         assert name in manifest["inputs"]
 
 
+@pytest.mark.frozen_stage
 def test_freeze_inputs_unchanged(inputs):
     before = {str(p.relative_to(inputs)): _sha(p)
               for p in inputs.rglob("*") if p.is_file()}
@@ -652,6 +674,7 @@ def test_freeze_inputs_unchanged(inputs):
     assert before == after
 
 
+@pytest.mark.frozen_stage
 def test_freeze_double_build_byte_identical(inputs):
     stub, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _run_diag(inputs, stub, out_name="diag")
@@ -667,6 +690,7 @@ def test_freeze_fail_closed_diagnostic_missing(inputs):
     assert not (inputs / "freeze").exists()
 
 
+@pytest.mark.frozen_stage
 def test_freeze_fail_closed_diag_manifest_tampered(inputs):
     stub, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _run_diag(inputs, stub, out_name="diag")
@@ -677,6 +701,7 @@ def test_freeze_fail_closed_diag_manifest_tampered(inputs):
     assert not (inputs / "freeze").exists()
 
 
+@pytest.mark.frozen_stage
 def test_freeze_fail_closed_deferred_set_drift(inputs):
     stub, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _run_diag(inputs, stub, out_name="diag")
@@ -690,6 +715,7 @@ def test_freeze_fail_closed_deferred_set_drift(inputs):
     assert not (inputs / "freeze").exists()
 
 
+@pytest.mark.frozen_stage
 def test_freeze_fail_closed_out_dir_exists(inputs):
     stub, _ = make_stub(inputs / "v211", _all_confirmed_sequences())
     _run_diag(inputs, stub, out_name="diag")
@@ -698,6 +724,7 @@ def test_freeze_fail_closed_out_dir_exists(inputs):
         _run_freeze(inputs)
 
 
+@pytest.mark.frozen_stage
 def test_freeze_no_forbidden_artifacts(inputs):
     _, out = _freeze_inputs(inputs)
     for name in dg.FREEZE_OUTPUT_FILES:

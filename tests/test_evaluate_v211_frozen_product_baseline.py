@@ -928,6 +928,7 @@ pytestmark_real = pytest.mark.skipif(
 )
 
 
+@pytest.mark.frozen_stage
 @pytestmark_real
 def test_real_frozen_inputs_verify_ok():
     report = bl.verify_frozen_inputs(

@@ -19,6 +19,7 @@ import pytest
 import scripts.corpus_v2_v209_fresh_blind_automated_review as ar
 
 
+
 # ── helpers ─────────────────────────────────────────────────────────────
 
 def _sha(path):
@@ -193,6 +194,7 @@ def test_leak_words_are_high_signal_and_spec_verified():
 
 # ── 2. 预检（fail-closed，真实输入）────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_preflight_passes_real_inputs():
     checks = ar.preflight(ar.CANDIDATE, ar.CHUNKS_PATH, ar.CHUNK_MANIFEST_PATH,
                           ar.CURRENT_DRAFT_PATH, ar.TRANS_POLICY_PATH,
@@ -682,6 +684,7 @@ def _run_build(tmp_path, client, out_name="out"):
     return out, result
 
 
+@pytest.mark.frozen_stage
 def test_build_success_all_confirmed(tmp_path):
     client, calls = _make_stub()
     out, result = _run_build(tmp_path, client)
@@ -703,6 +706,7 @@ def test_build_success_all_confirmed(tmp_path):
     assert "automated-review-issues.jsonl" not in files
 
 
+@pytest.mark.frozen_stage
 def test_build_success_pack_rows(tmp_path):
     client, _ = _make_stub()
     out, _ = _run_build(tmp_path, client)
@@ -715,6 +719,7 @@ def test_build_success_pack_rows(tmp_path):
     assert all(p["payload_sha256"] for p in pack)
 
 
+@pytest.mark.frozen_stage
 def test_build_success_evidence_and_review_rows(tmp_path):
     client, _ = _make_stub()
     out, _ = _run_build(tmp_path, client)
@@ -729,6 +734,7 @@ def test_build_success_evidence_and_review_rows(tmp_path):
     assert all(r["model"] == ar.MODEL for r in raw)
 
 
+@pytest.mark.frozen_stage
 def test_build_success_overlay(tmp_path):
     client, _ = _make_stub()
     out, _ = _run_build(tmp_path, client)
@@ -748,6 +754,7 @@ def test_build_success_overlay(tmp_path):
     assert len(overlay["confirmed_case_ids"]) == 137
 
 
+@pytest.mark.frozen_stage
 def test_build_success_summary_and_manifest(tmp_path):
     client, _ = _make_stub()
     out, result = _run_build(tmp_path, client)
@@ -785,6 +792,7 @@ def test_build_success_summary_and_manifest(tmp_path):
     assert m["metadata"]["activation_blocked"] is True
 
 
+@pytest.mark.frozen_stage
 def test_build_success_data_quality_five_dims(tmp_path):
     client, _ = _make_stub()
     out, _ = _run_build(tmp_path, client)
@@ -797,6 +805,7 @@ def test_build_success_data_quality_five_dims(tmp_path):
     assert "skill_note" in summary
 
 
+@pytest.mark.frozen_stage
 def test_build_success_statistics_conservation(tmp_path):
     client, _ = _make_stub()
     out, _ = _run_build(tmp_path, client)
@@ -806,6 +815,7 @@ def test_build_success_statistics_conservation(tmp_path):
     assert summary["evidence_per_case_distribution"] == {"1": 78, "2": 22, "3": 4, "4": 1, "6": 1}
 
 
+@pytest.mark.frozen_stage
 def test_build_success_gate_report_and_report(tmp_path):
     client, _ = _make_stub()
     out, _ = _run_build(tmp_path, client)
@@ -819,6 +829,7 @@ def test_build_success_gate_report_and_report(tmp_path):
         assert frag in report
 
 
+@pytest.mark.frozen_stage
 def test_build_candidate_unchanged(tmp_path):
     before = {p.name: _sha(ar.CANDIDATE / p.name)
               for p in ar.CANDIDATE.iterdir() if p.is_file()}
@@ -829,6 +840,7 @@ def test_build_candidate_unchanged(tmp_path):
     assert before == after
 
 
+@pytest.mark.frozen_stage
 def test_build_twice_byte_identical(tmp_path):
     client, _ = _make_stub()
     out, _ = _run_build(tmp_path, client)
@@ -879,6 +891,7 @@ def _first_case_blocked_responder(decision="reject"):
     return responder
 
 
+@pytest.mark.frozen_stage
 def test_build_blocked_single_reject(tmp_path):
     client, _ = _make_stub(responder=_first_case_blocked_responder("reject"))
     out, result = _run_build(tmp_path, client)
@@ -901,6 +914,7 @@ def test_build_blocked_single_reject(tmp_path):
     assert ar.GATE_BLOCKED in gate
 
 
+@pytest.mark.frozen_stage
 def test_build_blocked_no_overlay_after_success(tmp_path):
     # 先成功构建，再 blocked 构建到同一目录：残留 overlay 必须被清理
     out = tmp_path / "out"
@@ -925,6 +939,7 @@ def test_build_blocked_no_overlay_after_success(tmp_path):
     assert not (out / "automated-review-pack.jsonl").exists()
 
 
+@pytest.mark.frozen_stage
 def test_build_blocked_schema_error(tmp_path):
     calls = []
 
@@ -999,6 +1014,7 @@ def test_probe_bad_content_fail():
 
 # ── 9. CLI ──────────────────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_cli_build_with_stub(monkeypatch, tmp_path):
     client, _ = _make_stub()
     monkeypatch.setattr(ar, "_DEFAULT_CLIENT", client)
@@ -1030,6 +1046,7 @@ def test_cli_probe_json_fail(monkeypatch, capsys):
 
 # ── 10. 禁止产物 ────────────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_no_forbidden_outputs_success(tmp_path):
     client, _ = _make_stub()
     out, _ = _run_build(tmp_path, client)
@@ -1038,6 +1055,7 @@ def test_no_forbidden_outputs_success(tmp_path):
         assert not any(n == bad or n.startswith(bad) for n in names)
 
 
+@pytest.mark.frozen_stage
 def test_no_forbidden_outputs_blocked(tmp_path):
     client, _ = _make_stub(responder=_first_case_blocked_responder("reject"))
     out, result = _run_build(tmp_path, client)

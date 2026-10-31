@@ -12,6 +12,7 @@ import pytest
 import scripts.corpus_v2_v210_owner_authorized_coherence_remediation as p
 
 
+
 ROOT = Path(__file__).resolve().parents[1]
 V209 = ROOT / "evaluation/datasets/v2/revisions" / \
     "v2.0.9-owner-authorized-final-dependency-closed-retirement"
@@ -46,6 +47,7 @@ def _build(tmp_path: Path):
     return candidate, out, result
 
 
+@pytest.mark.frozen_stage
 def test_preflight_accepts_exact_v209_authorized_inputs(tmp_path):
     candidate = _copy_candidate(tmp_path)
 
@@ -59,6 +61,7 @@ def test_preflight_accepts_exact_v209_authorized_inputs(tmp_path):
     assert checks["mixed_033"]["byte_identical"] is True
 
 
+@pytest.mark.frozen_stage
 def test_builds_the_authorized_v210_candidate_with_exact_counts(tmp_path):
     _, out, result = _build(tmp_path)
 
@@ -84,6 +87,7 @@ def test_builds_the_authorized_v210_candidate_with_exact_counts(tmp_path):
     assert {path.name for path in out.iterdir()} == set(p.OUTPUT_FILES)
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash_and_every_output_sha_are_valid(tmp_path):
     _, out, _ = _build(tmp_path)
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -93,6 +97,7 @@ def test_manifest_self_hash_and_every_output_sha_are_valid(tmp_path):
                for name, digest in manifest["outputs"].items())
 
 
+@pytest.mark.frozen_stage
 def test_only_authorized_draft_row_is_removed_and_others_are_byte_identical(tmp_path):
     candidate, out, _ = _build(tmp_path)
     before = {json.loads(line)["id"]: line
@@ -107,6 +112,7 @@ def test_only_authorized_draft_row_is_removed_and_others_are_byte_identical(tmp_
                if cid != "multi-019")
 
 
+@pytest.mark.frozen_stage
 def test_evidence_changes_are_only_retirement_deduplication_and_six_fixed_spans(tmp_path):
     candidate, out, _ = _build(tmp_path)
     before_lines = (candidate / "evidence-after.jsonl").read_text(
@@ -139,6 +145,7 @@ def test_evidence_changes_are_only_retirement_deduplication_and_six_fixed_spans(
                             separators=(",", ":")) for row in after}) == len(after)
 
 
+@pytest.mark.frozen_stage
 def test_added_evidence_is_raw_codepoint_strict_and_same_source(tmp_path):
     _, out, _ = _build(tmp_path)
     added = _jsonl(out / "added-same-source-evidence.jsonl")
@@ -153,6 +160,7 @@ def test_added_evidence_is_raw_codepoint_strict_and_same_source(tmp_path):
         assert chunks[row["chunk_id"]]["text"][start:end] == row["raw_evidence_span"]
 
 
+@pytest.mark.frozen_stage
 def test_multi019_retirement_ledger_preserves_original_and_dependency_proof(tmp_path):
     candidate, out, _ = _build(tmp_path)
     retired = _jsonl(out / "retired-cases.jsonl")
@@ -168,6 +176,7 @@ def test_multi019_retirement_ledger_preserves_original_and_dependency_proof(tmp_
     assert (candidate / "draft-after.jsonl").exists()
 
 
+@pytest.mark.frozen_stage
 def test_data_quality_report_records_five_quality_dimensions_and_no_duplicate_rows(tmp_path):
     _, out, _ = _build(tmp_path)
     report = json.loads((out / "data-quality-report.json").read_text(
@@ -219,6 +228,7 @@ def test_unexpected_dependency_on_multi019_fails_closed(tmp_path):
     assert not out.exists()
 
 
+@pytest.mark.frozen_stage
 def test_two_builds_are_byte_identical_and_no_review_or_activation_artifacts_exist(tmp_path):
     candidate = _copy_candidate(tmp_path)
     first = tmp_path / "first"
@@ -233,6 +243,7 @@ def test_two_builds_are_byte_identical_and_no_review_or_activation_artifacts_exi
     assert not ({path.name for path in first.iterdir()} & forbidden)
 
 
+@pytest.mark.frozen_stage
 def test_cli_build_succeeds(tmp_path):
     out = tmp_path / "out"
 

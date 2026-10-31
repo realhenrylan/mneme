@@ -87,6 +87,7 @@ def test_target_set_from_rulings_ledger():
     assert len(ids) == 4
 
 
+@pytest.mark.frozen_stage
 def test_payload_is_blind_against_expectation():
     """payload 中不得出现「预期结论」类治理信息。
 
@@ -107,6 +108,7 @@ def test_payload_is_blind_against_expectation():
     cfr.base.scan_payload(payload)
 
 
+@pytest.mark.frozen_stage
 def test_happy_path_all_confirmed_gates_ok(tmp_path, monkeypatch):
     _patch_case_responses(monkeypatch)
     out_dir = tmp_path / "contract-focus-review"
@@ -119,6 +121,7 @@ def test_happy_path_all_confirmed_gates_ok(tmp_path, monkeypatch):
     assert all(r["rewritten"] is False for r in results)
 
 
+@pytest.mark.frozen_stage
 def test_any_reject_blocks_and_keeps_records(tmp_path, monkeypatch):
     def force_reject(resp):
         resp["decision"] = "reject"
@@ -131,6 +134,7 @@ def test_any_reject_blocks_and_keeps_records(tmp_path, monkeypatch):
     assert summary["counts"]["rejected"] >= 1
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash(tmp_path, monkeypatch):
     _patch_case_responses(monkeypatch)
     out_dir = tmp_path / "out"
@@ -143,6 +147,7 @@ def test_manifest_self_hash(tmp_path, monkeypatch):
     assert recorded == hashlib.sha256(canonical.encode()).hexdigest()
 
 
+@pytest.mark.frozen_stage
 def test_double_build_byte_identical(tmp_path, monkeypatch):
     _patch_case_responses(monkeypatch)
     d1, d2 = tmp_path / "a", tmp_path / "b"
@@ -153,6 +158,7 @@ def test_double_build_byte_identical(tmp_path, monkeypatch):
         assert (d1 / name).read_bytes() == (d2 / name).read_bytes()
 
 
+@pytest.mark.frozen_stage
 def test_frozen_assets_byte_untouched(tmp_path, monkeypatch):
     watched = [
         V21_RULINGS / "rulings-ledger.jsonl",

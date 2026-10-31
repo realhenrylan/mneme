@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "evaluation/datasets/v2/revisions/v2.0.2-evidence-coordinate-repair"
 
 
+@pytest.mark.frozen_stage
 def test_real_input_has_exactly_thirteen_rows_and_five_categories():
     result = triage.run(out_dir=ROOT / "evaluation/datasets/v2/revisions/v2.0.2-evidence-coordinate-repair/unresolved-triage-test")
     rows = result["rows"]
@@ -42,6 +43,7 @@ def test_format_and_semantic_never_auto_resolve():
     assert semantic[1] is False
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash_and_no_activation():
     out = ROOT / "evaluation/datasets/v2/revisions/v2.0.2-evidence-coordinate-repair/unresolved-triage-test"
     result = triage.run(out_dir=out)

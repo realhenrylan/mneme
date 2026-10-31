@@ -16,6 +16,7 @@ import scripts.corpus_v2_v206_final_blocker_closure as rp
 from scripts import corpus_v2_evidence_coordinate_repair as coord
 
 
+
 @pytest.fixture(scope="module")
 def pack(tmp_path_factory):
     out = tmp_path_factory.mktemp("v206")
@@ -36,6 +37,7 @@ def test_target_set_is_exact_four():
     assert len(rp.TARGETS) == 4
 
 
+@pytest.mark.frozen_stage
 def test_case_count_149_to_148_and_retired_ledger(pack):
     _, out = pack
     before = _jsonl(out / "draft-before.jsonl")
@@ -51,6 +53,7 @@ def test_case_count_149_to_148_and_retired_ledger(pack):
     assert len(retired_evidence) == 1
 
 
+@pytest.mark.frozen_stage
 def test_zh032_retirement_dependency_gate_passes(pack):
     _, out = pack
     before = _jsonl(out / "draft-before.jsonl")
@@ -66,6 +69,7 @@ def test_zh032_retirement_dependency_gate_passes(pack):
     assert zh032["metadata"]["chain_id"] is None
 
 
+@pytest.mark.frozen_stage
 def test_zh035_six_spans_ledger_complete_sorted_and_proved(pack):
     chunks = coord.load_chunks(rp.CHUNKS)
     _, out = pack
@@ -96,6 +100,7 @@ def test_zh035_six_spans_ledger_complete_sorted_and_proved(pack):
     }
 
 
+@pytest.mark.frozen_stage
 def test_zh035_multi_span_policy_and_scope_expansion(pack):
     _, out = pack
     assert (out / "multi-span-evidence-policy.md").exists()
@@ -118,6 +123,7 @@ def test_zh035_multi_span_policy_and_scope_expansion(pack):
     assert all(row["scope_expansion"] == "OWNER_AUTHORIZED_MULTI_SOURCE_EXACT_EVIDENCE_SCOPE_EXPANSION" for row in en_adds)
 
 
+@pytest.mark.frozen_stage
 def test_mixed022_answer_point_narrowed_and_orphan_removed(pack):
     chunks = coord.load_chunks(rp.CHUNKS)
     _, out = pack
@@ -138,6 +144,7 @@ def test_mixed022_answer_point_narrowed_and_orphan_removed(pack):
     assert ("mixed-022", "evidence_added") in kinds
 
 
+@pytest.mark.frozen_stage
 def test_mixed028_answer_point_narrowed_and_orphan_removed(pack):
     chunks = coord.load_chunks(rp.CHUNKS)
     _, out = pack
@@ -152,6 +159,7 @@ def test_mixed028_answer_point_narrowed_and_orphan_removed(pack):
     assert chunks["993955159403_chunk_7"]["text"][152:157] == evidence[0]["raw_evidence_span"] == "state"
 
 
+@pytest.mark.frozen_stage
 def test_no_zero_answer_point_cases(pack):
     _, out = pack
     after = _jsonl(out / "draft-after.jsonl")
@@ -161,6 +169,7 @@ def test_no_zero_answer_point_cases(pack):
         assert row.get("should_refuse") is not True
 
 
+@pytest.mark.frozen_stage
 def test_non_target_rows_byte_identical(pack):
     _, out = pack
     before_draft = [l for l in (out / "draft-before.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
@@ -175,6 +184,7 @@ def test_non_target_rows_byte_identical(pack):
     assert kept_ev == expected_ev
 
 
+@pytest.mark.frozen_stage
 def test_evidence_counts(pack):
     _, out = pack
     before = _jsonl(out / "evidence-before.jsonl")
@@ -186,6 +196,7 @@ def test_evidence_counts(pack):
     assert all(r["case_id"] != "zh-032" for r in after)
 
 
+@pytest.mark.frozen_stage
 def test_strict_validation_all_raw_rows(pack):
     chunks = coord.load_chunks(rp.CHUNKS)
     _, out = pack
@@ -195,6 +206,7 @@ def test_strict_validation_all_raw_rows(pack):
     coord.strict_validate(raw_rows, chunks)
 
 
+@pytest.mark.frozen_stage
 def test_no_legacy_rows_for_targets(pack):
     _, out = pack
     evidence = _jsonl(out / "evidence-after.jsonl")
@@ -204,6 +216,7 @@ def test_no_legacy_rows_for_targets(pack):
     assert all(r["case_id"] != "zh-032" for r in evidence)
 
 
+@pytest.mark.frozen_stage
 def test_all_answerable_cases_have_evidence(pack):
     _, out = pack
     draft = _jsonl(out / "draft-after.jsonl")
@@ -213,6 +226,7 @@ def test_all_answerable_cases_have_evidence(pack):
     assert missing == []
 
 
+@pytest.mark.frozen_stage
 def test_case_ids_unique(pack):
     _, out = pack
     after = _jsonl(out / "draft-after.jsonl")
@@ -220,6 +234,7 @@ def test_case_ids_unique(pack):
     assert len({r["id"] for r in after}) == 148
 
 
+@pytest.mark.frozen_stage
 def test_input_shas_unchanged(pack):
     _, out = pack
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -235,6 +250,7 @@ def test_input_shas_unchanged(pack):
     assert inputs["v205_manifest"] == hashlib.sha256(rp.V205_MANIFEST.read_bytes()).hexdigest()
 
 
+@pytest.mark.frozen_stage
 def test_manifest_metadata_and_self_hash(pack):
     _, out = pack
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -253,6 +269,7 @@ def test_manifest_metadata_and_self_hash(pack):
         assert hashlib.sha256((out / name).read_bytes()).hexdigest() == sha
 
 
+@pytest.mark.frozen_stage
 def test_exact_output_file_set_and_no_forbidden(pack):
     _, out = pack
     assert sorted(p.name for p in out.iterdir()) == [
@@ -275,6 +292,7 @@ def test_exact_output_file_set_and_no_forbidden(pack):
         assert not any(name in p.name.lower() for p in out.iterdir() if p.name != "REVIEW_AND_SPLIT_REBUILD_REQUIRED.md")
 
 
+@pytest.mark.frozen_stage
 def test_deterministic_rebuild_byte_identical(tmp_path):
     a, b = tmp_path / "a", tmp_path / "b"
     rp.run(out_dir=a)

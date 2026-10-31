@@ -555,6 +555,7 @@ pytestmark_real = pytest.mark.skipif(
 )
 
 
+@pytest.mark.frozen_stage
 @pytestmark_real
 def test_real_hardened_manifest_verifies():
     report = abl.verify_hardened_manifest(abl.HARDENED_DIR, abl.PHASE6A_DIR)

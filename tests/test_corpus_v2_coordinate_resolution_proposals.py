@@ -18,6 +18,7 @@ DRAFT = ROOT / "evaluation/datasets/v2/annotations/v2-cases-draft.jsonl"
 CHUNKS = ROOT / "data/v2-corpus/chunks/chunks.jsonl"
 
 
+@pytest.mark.frozen_stage
 def test_real_candidate_gate_and_thirteen_rows_without_llm(tmp_path):
     with pytest.raises(rp.ProposalError, match="LLM"):  # no implicit fallback
         rp.run(out_dir=tmp_path / "out", llm_fn=lambda **_: None)
@@ -155,6 +156,7 @@ def test_call_forwards_extra_body_to_gateway(monkeypatch):
     assert content == "{}"
 
 
+@pytest.mark.frozen_stage
 def test_run_uses_triage_category_mapping(tmp_path):
     """proposals 的 root_cause_category 必须来自 triage 产物，而非空字符串。"""
     import scripts.corpus_v2_coordinate_resolution_proposals as rp_mod

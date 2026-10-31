@@ -198,6 +198,7 @@ def test_constants_conservation():
 
 # ── 2. 前置门禁（真实输入全部通过）───────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_preflight_real_inputs():
     checks = p.preflight()
     assert checks["case_count"] == 143
@@ -235,6 +236,7 @@ def test_chain_facts_exact():
     assert n028["follow_up_to"] == "multi-027"
 
 
+@pytest.mark.frozen_stage
 def test_pack_input_shas_match_disk():
     """两个 decision pack manifest 记录的 input SHA 与当前磁盘一致。"""
     checks = p.preflight()

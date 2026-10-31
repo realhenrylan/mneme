@@ -11,6 +11,7 @@ import pytest
 import scripts.corpus_v2_v210_fresh_blind_automated_review as review
 
 
+
 ROOT = Path(__file__).resolve().parents[1]
 V210 = ROOT / "evaluation/datasets/v2/revisions" / \
     "v2.0.10-owner-authorized-coherence-remediation"
@@ -71,6 +72,7 @@ def test_profile_is_explicitly_v210_and_pro_only():
     assert review.THINKING_DISABLED == {"thinking": {"type": "disabled"}}
 
 
+@pytest.mark.frozen_stage
 def test_preflight_accepts_v210_without_reading_v209_review_content(tmp_path):
     candidate = _copy_candidate(tmp_path)
 
@@ -83,6 +85,7 @@ def test_preflight_accepts_v210_without_reading_v209_review_content(tmp_path):
     assert checks["refusal_cases"] == 31
 
 
+@pytest.mark.frozen_stage
 def test_all_confirmed_writes_v210_overlay_and_136_case_manifest(tmp_path):
     candidate = _copy_candidate(tmp_path)
     out = tmp_path / "review"
@@ -105,6 +108,7 @@ def test_all_confirmed_writes_v210_overlay_and_136_case_manifest(tmp_path):
     assert overlay["case_count"] == overlay["confirmed_count"] == 136
 
 
+@pytest.mark.frozen_stage
 def test_one_reject_blocks_gate_and_never_writes_overlay(tmp_path):
     candidate = _copy_candidate(tmp_path)
     out = tmp_path / "review"
@@ -132,6 +136,7 @@ def test_candidate_sha_drift_stops_before_probe_or_case_call(tmp_path):
     assert not out.exists()
 
 
+@pytest.mark.frozen_stage
 def test_base_v209_runtime_state_is_restored_after_v210_run(tmp_path):
     candidate = _copy_candidate(tmp_path)
     out = tmp_path / "review"

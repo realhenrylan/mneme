@@ -19,6 +19,7 @@ import pytest
 import scripts.corpus_v2_v209_coherence_reject_triage as tr
 
 
+
 # ── helpers ─────────────────────────────────────────────────────────────
 
 def _sha(path):
@@ -98,6 +99,7 @@ def test_expected_counts_constants():
 
 # ── 2. 预检 fail-closed ─────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_preflight_real_inputs_pass(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -216,6 +218,7 @@ def test_reject_case_set_no_overlap_with_errors():
 
 # ── 4. 分流一：4 条 model-output coherence errors ───────────────────────
 
+@pytest.mark.frozen_stage
 def test_coherence_errors_all_classified_contract_inconsistency(tmp_path):
     out = tmp_path / "out1"
     _run_build(out)
@@ -229,6 +232,7 @@ def test_coherence_errors_all_classified_contract_inconsistency(tmp_path):
         assert r["refusal_conflict"] is False
 
 
+@pytest.mark.frozen_stage
 def test_coherence_errors_not_rewritten(tmp_path):
     """error 不得被自动改写：无 decision 改写、无 confirmed 输出。"""
     out = tmp_path / "out2"
@@ -242,6 +246,7 @@ def test_coherence_errors_not_rewritten(tmp_path):
                for r in rows)
 
 
+@pytest.mark.frozen_stage
 def test_coherence_errors_expected_decision_derived(tmp_path):
     """本地证据关系核验：4 个 error 的答案点均有直接 evidence（非 no_direct）。"""
     out = tmp_path / "out3"
@@ -253,6 +258,7 @@ def test_coherence_errors_expected_decision_derived(tmp_path):
 
 # ── 5. 分流二：22 条 reject 恰好一次分类 ───────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_reject_triage_22_rows_exactly_once(tmp_path):
     out = tmp_path / "out4"
     _run_build(out)
@@ -264,6 +270,7 @@ def test_reject_triage_22_rows_exactly_once(tmp_path):
     assert set(ids) == {r["case_id"] for r in rejects}
 
 
+@pytest.mark.frozen_stage
 def test_reject_rows_have_valid_classification_and_action(tmp_path):
     out = tmp_path / "out5"
     _run_build(out)
@@ -275,6 +282,7 @@ def test_reject_rows_have_valid_classification_and_action(tmp_path):
         assert r["answer_point_relations"], "每个 reject 至少有 1 条答案点明细"
 
 
+@pytest.mark.frozen_stage
 def test_reject_verbatim_cases_classified_exact(tmp_path):
     """逐字证据支撑的 case 必须归 exact（模型语义分歧）。"""
     out = tmp_path / "out6"
@@ -285,6 +293,7 @@ def test_reject_verbatim_cases_classified_exact(tmp_path):
         assert rows[cid]["case_classification"] == tr.CLASS_EXACT
 
 
+@pytest.mark.frozen_stage
 def test_reject_multi019_no_direct(tmp_path):
     """multi-019 声明 source 无机械可证候选 → no_direct → retire_case。"""
     out = tmp_path / "out7"
@@ -294,6 +303,7 @@ def test_reject_multi019_no_direct(tmp_path):
     assert rows["multi-019"]["suggested_action"] == tr.ACTION_RETIRE
 
 
+@pytest.mark.frozen_stage
 def test_reject_each_ap_has_evidence_relation(tmp_path):
     out = tmp_path / "out8"
     _run_build(out)
@@ -416,6 +426,7 @@ def test_classify_candidate_must_not_overlap_existing_span():
 
 # ── 7. mixed-033 重复 evidence 检查 ─────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_mixed033_duplicate_check(tmp_path):
     out = tmp_path / "out9"
     _run_build(out)
@@ -434,6 +445,7 @@ def test_mixed033_duplicate_check(tmp_path):
 
 # ── 8. owner-decision-template ──────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_owner_template_structure(tmp_path):
     out = tmp_path / "out10"
     _run_build(out)
@@ -458,6 +470,7 @@ def test_manifest_self_hash_roundtrip():
     assert not tr._verify_manifest(m2)
 
 
+@pytest.mark.frozen_stage
 def test_output_manifest_self_hash(tmp_path):
     out = tmp_path / "out11"
     _run_build(out)
@@ -470,6 +483,7 @@ def test_output_manifest_self_hash(tmp_path):
     assert m["metadata"]["activation_blocked"] is True
 
 
+@pytest.mark.frozen_stage
 def test_output_manifest_outputs_sha_match_disk(tmp_path):
     out = tmp_path / "out12"
     _run_build(out)
@@ -478,6 +492,7 @@ def test_output_manifest_outputs_sha_match_disk(tmp_path):
         assert _sha(out / name) == sha
 
 
+@pytest.mark.frozen_stage
 def test_summary_counts_conservation(tmp_path):
     out = tmp_path / "out13"
     _run_build(out)
@@ -493,6 +508,7 @@ def test_summary_counts_conservation(tmp_path):
 
 # ── 10. 输入 SHA 任务前后不变 ───────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_input_sha_unchanged_after_build(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -514,6 +530,7 @@ def test_input_sha_unchanged_after_build(tmp_path):
     assert not (review / "coherence-reject-triage").exists()
 
 
+@pytest.mark.frozen_stage
 def test_review_inputs_unchanged_after_build(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -525,6 +542,7 @@ def test_review_inputs_unchanged_after_build(tmp_path):
 
 # ── 11. 两次构建逐字节一致 ─────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_two_builds_byte_identical(tmp_path):
     tr.run(out_dir=tmp_path / "A")
     tr.run(out_dir=tmp_path / "B")
@@ -534,6 +552,7 @@ def test_two_builds_byte_identical(tmp_path):
 
 # ── 12. 禁止生成 after/overlay/active/split/v2.1 文件 ──────────────────
 
+@pytest.mark.frozen_stage
 def test_no_forbidden_outputs(tmp_path):
     out = tmp_path / "out16"
     _run_build(out)

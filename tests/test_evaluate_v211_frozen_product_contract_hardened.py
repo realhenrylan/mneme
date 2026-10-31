@@ -343,6 +343,7 @@ pytestmark_real = pytest.mark.skipif(
 )
 
 
+@pytest.mark.frozen_stage
 @pytestmark_real
 def test_real_b0_manifest_verifies():
     report = hbl.verify_b0_manifest(hbl.PHASE6B0_DIR)

@@ -17,6 +17,7 @@ import scripts.corpus_v2_remaining_blockers_decision_pack as rp
 from scripts import corpus_v2_evidence_coordinate_repair as coord
 
 
+
 @pytest.fixture(scope="module")
 def pack(tmp_path_factory):
     out = tmp_path_factory.mktemp("rb-pack")
@@ -51,6 +52,7 @@ def test_fixed_action_sets_are_exact():
     }
 
 
+@pytest.mark.frozen_stage
 def test_zh035_all_duplicate_spans_enumerated_and_stable_sorted(pack):
     _, out = pack
     row = _row(out, "zh-035")
@@ -68,6 +70,7 @@ def test_zh035_all_duplicate_spans_enumerated_and_stable_sorted(pack):
     assert sum(1 for s in spans if s["in_declared_source"]) == 3
 
 
+@pytest.mark.frozen_stage
 def test_zh035_actions_and_multi_span_policy_flags(pack):
     _, out = pack
     row = _row(out, "zh-035")
@@ -83,6 +86,7 @@ def test_zh035_actions_and_multi_span_policy_flags(pack):
     assert all(a["zero_answer_point_risk"] is False for a in actions)
 
 
+@pytest.mark.frozen_stage
 def test_zh032_no_full_or_clause_exact_evidence_and_actions_fixed(pack):
     _, out = pack
     row = _row(out, "zh-032")
@@ -105,6 +109,7 @@ def test_zh032_no_full_or_clause_exact_evidence_and_actions_fixed(pack):
     assert remove["zero_answer_point_risk"] is True
 
 
+@pytest.mark.frozen_stage
 def test_mixed022_point0_narrow_candidate_and_point1_not(pack):
     _, out = pack
     row = _row(out, "mixed-022")
@@ -124,6 +129,7 @@ def test_mixed022_point0_narrow_candidate_and_point1_not(pack):
     assert remove["zero_answer_point_risk"] is False
 
 
+@pytest.mark.frozen_stage
 def test_mixed022_point1_ambiguous_clause_not_labeled_exact(pack):
     _, out = pack
     row = _row(out, "mixed-022")
@@ -133,6 +139,7 @@ def test_mixed022_point1_ambiguous_clause_not_labeled_exact(pack):
     assert dec[0]["occurrence_count"] == 3
 
 
+@pytest.mark.frozen_stage
 def test_mixed028_narrow_candidate_is_state_in_react_chunk(pack):
     _, out = pack
     row = _row(out, "mixed-028")
@@ -149,12 +156,14 @@ def test_mixed028_narrow_candidate_is_state_in_react_chunk(pack):
     assert remove["zero_answer_point_risk"] is False
 
 
+@pytest.mark.frozen_stage
 def test_zero_answer_point_risk_overall(pack):
     _, out = pack
     risks = {row["case_id"]: row["zero_answer_point_risk_overall"] for row in _rows(out)}
     assert risks == {"zh-035": False, "zh-032": True, "mixed-022": False, "mixed-028": False}
 
 
+@pytest.mark.frozen_stage
 def test_template_rows_only_owner_fields_empty(pack):
     _, out = pack
     rows = [json.loads(line) for line in (out / "candidate-patch-template.jsonl").read_text(encoding="utf-8").splitlines()]
@@ -168,6 +177,7 @@ def test_template_rows_only_owner_fields_empty(pack):
         assert all(value not in (None, "") for value in others.values())
 
 
+@pytest.mark.frozen_stage
 def test_exact_seven_output_files_and_no_forbidden_content(pack):
     _, out = pack
     assert sorted(p.name for p in out.iterdir()) == [
@@ -189,6 +199,7 @@ def test_exact_seven_output_files_and_no_forbidden_content(pack):
         assert not forbidden.search(path.read_text(encoding="utf-8")), path.name
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash_matches_disk(pack):
     _, out = pack
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -203,6 +214,7 @@ def test_manifest_self_hash_matches_disk(pack):
         assert hashlib.sha256((out / name).read_bytes()).hexdigest() == sha
 
 
+@pytest.mark.frozen_stage
 def test_input_shas_are_unchanged(pack):
     _, out = pack
     manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
@@ -219,6 +231,7 @@ def test_input_shas_are_unchanged(pack):
     assert inputs["rescue_results"] == rescue_manifest["outputs"]["same-source-rescue-results.jsonl"]
 
 
+@pytest.mark.frozen_stage
 def test_current_evidence_rows_per_case(pack):
     _, out = pack
     expected = {"zh-035": 1, "zh-032": 1, "mixed-022": 1, "mixed-028": 2}
@@ -230,6 +243,7 @@ def test_current_evidence_rows_per_case(pack):
             assert chunk["source"] == evidence["source_id"]
 
 
+@pytest.mark.frozen_stage
 def test_all_raw_spans_prove_equality(pack):
     chunks = coord.load_chunks(rp.CHUNKS)
     _, out = pack
@@ -253,6 +267,7 @@ def test_all_raw_spans_prove_equality(pack):
                 prove(span)
 
 
+@pytest.mark.frozen_stage
 def test_answer_points_match_draft_after(pack):
     draft_after = {row["id"]: row for row in coord.load_jsonl(rp.DRAFT_AFTER)}
     draft_now = {row["id"]: row for row in coord.load_jsonl(rp.DRAFT)}
@@ -263,6 +278,7 @@ def test_answer_points_match_draft_after(pack):
         assert row["answer_points"] == draft_after[row["case_id"]]["acceptable_answer_points"]
 
 
+@pytest.mark.frozen_stage
 def test_deterministic_rebuild_byte_identical(tmp_path):
     a, b = tmp_path / "a", tmp_path / "b"
     rp.run(out_dir=a)

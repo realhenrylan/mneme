@@ -9,6 +9,7 @@ import pytest
 import scripts.corpus_v2_v205_scope_repair as rp
 
 
+
 RETIRED = {"zh-033"}
 EXPANDED = {"zh-037"}
 NARROWED = {"mixed-029", "zh-023", "zh-026", "zh-029", "zh-036", "zh-054", "zh-055"}
@@ -20,6 +21,7 @@ def test_action_partition_is_exact():
     assert len(RETIRED) == 1 and len(EXPANDED) == 1 and len(NARROWED) == 7 and len(UNRESOLVED) == 4
 
 
+@pytest.mark.frozen_stage
 def test_case_count_150_to_149_and_retired_ledger(tmp_path):
     result = rp.run(out_dir=tmp_path / "out")
     before = [json.loads(line) for line in (tmp_path / "out" / "draft-before.jsonl").read_text(encoding="utf-8").splitlines()]
@@ -32,6 +34,7 @@ def test_case_count_150_to_149_and_retired_ledger(tmp_path):
     assert result["counts"]["case_before"] == 150 and result["counts"]["case_after"] == 149
 
 
+@pytest.mark.frozen_stage
 def test_narrowed_answer_points_equal_raw_span(tmp_path):
     rp.run(out_dir=tmp_path / "out")
     after = [json.loads(line) for line in (tmp_path / "out" / "draft-after.jsonl").read_text(encoding="utf-8").splitlines()]
@@ -43,6 +46,7 @@ def test_narrowed_answer_points_equal_raw_span(tmp_path):
         assert by_case[case_id]["acceptable_answer_points"][0] == add["raw_span"].replace("\r\n", "\n").replace("\r", "\n")
 
 
+@pytest.mark.frozen_stage
 def test_zh037_answer_point_unchanged_and_new_evidence_added(tmp_path):
     rp.run(out_dir=tmp_path / "out")
     before = {json.loads(line)["id"]: json.loads(line) for line in (tmp_path / "out" / "draft-before.jsonl").read_text(encoding="utf-8").splitlines()}
@@ -54,6 +58,7 @@ def test_zh037_answer_point_unchanged_and_new_evidence_added(tmp_path):
     assert zh037_adds[0]["candidate_type"] == "full"
 
 
+@pytest.mark.frozen_stage
 def test_no_cross_source_and_ranges_rebuild(tmp_path):
     rp.run(out_dir=tmp_path / "out")
     additions = [json.loads(line) for line in (tmp_path / "out" / "raw-scope-additions.jsonl").read_text(encoding="utf-8").splitlines()]
@@ -66,6 +71,7 @@ def test_no_cross_source_and_ranges_rebuild(tmp_path):
         assert rp.coord.strict_validate_row(add["evidence"], chunks) is None
 
 
+@pytest.mark.frozen_stage
 def test_orphan_evidence_removed_and_evidence_count(tmp_path):
     result = rp.run(out_dir=tmp_path / "out")
     before = [json.loads(line) for line in (tmp_path / "out" / "evidence-before.jsonl").read_text(encoding="utf-8").splitlines()]
@@ -77,6 +83,7 @@ def test_orphan_evidence_removed_and_evidence_count(tmp_path):
         assert all(r["case_id"] != case_id or r["chunk_id"] != rp.old_declared_chunk(case_id) for r in after)
 
 
+@pytest.mark.frozen_stage
 def test_non_target_rows_byte_identical_and_blockers_listed(tmp_path):
     rp.run(out_dir=tmp_path / "out")
     before = [json.loads(line) for line in (tmp_path / "out" / "draft-before.jsonl").read_text(encoding="utf-8").splitlines()]
@@ -92,6 +99,7 @@ def test_non_target_rows_byte_identical_and_blockers_listed(tmp_path):
         assert case_id in remaining
 
 
+@pytest.mark.frozen_stage
 def test_activation_blocked_and_no_overlay_or_split(tmp_path):
     result = rp.run(out_dir=tmp_path / "out")
     manifest = result["manifest"]
@@ -106,6 +114,7 @@ def test_activation_blocked_and_no_overlay_or_split(tmp_path):
     assert "SPLIT_RESEAL_REQUIRED.md" in [p.name for p in out.iterdir()]
 
 
+@pytest.mark.frozen_stage
 def test_input_sha_unchanged_and_deterministic(tmp_path):
     a, b = tmp_path / "a", tmp_path / "b"
     r1 = rp.run(out_dir=a)

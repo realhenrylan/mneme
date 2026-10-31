@@ -9,6 +9,7 @@ import pytest
 import scripts.corpus_v2_same_source_rescue_audit as rp
 
 
+
 def test_risk_case_ids_dynamic_export_is_exactly_ten():
     rows = rp.load_pack_rows()
     ids = rp.risk_case_ids(rows)
@@ -57,6 +58,7 @@ def test_scan_only_declared_source_and_out_of_scope_excluded():
     assert all(c["scope"] == "out_of_scope" for c in result["out_of_scope_hits"])
 
 
+@pytest.mark.frozen_stage
 def test_real_audit_has_ten_rows_and_read_only_outputs(tmp_path):
     result = rp.run(out_dir=tmp_path / "audit")
     assert result["status"] == "AUDIT_OK"
@@ -67,6 +69,7 @@ def test_real_audit_has_ten_rows_and_read_only_outputs(tmp_path):
     assert not (tmp_path / "audit" / "active").exists()
 
 
+@pytest.mark.frozen_stage
 def test_audit_is_deterministic(tmp_path):
     a, b = tmp_path / "a", tmp_path / "b"
     rp.run(out_dir=a)

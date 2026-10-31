@@ -589,6 +589,7 @@ pytestmark_real = pytest.mark.skipif(
 )
 
 
+@pytest.mark.frozen_stage
 @pytestmark_real
 def test_real_lifecycle_verification_1006(tmp_path):
     """真实冻结 snapshot（1006 chunks / 13 sources）：四类 mutation 拒绝、

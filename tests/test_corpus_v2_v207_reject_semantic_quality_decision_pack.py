@@ -185,6 +185,7 @@ def test_constants():
     }
 
 
+@pytest.mark.frozen_stage
 def test_preflight_real_inputs():
     checks = p.preflight()
     assert set(checks["reject_ids"]) == EXPECTED_REJECTS
@@ -253,6 +254,7 @@ def test_triage_rows_match_canonical_rejects():
 
 # ── run 输出结构 / 守恒 ───────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_run_outputs_22_rows_unique_sorted(tmp_path):
     out = tmp_path / "out"
     result = p.run(out_dir=out)
@@ -265,6 +267,7 @@ def test_run_outputs_22_rows_unique_sorted(tmp_path):
     assert result["summary"]["n_rejects"] == 22
 
 
+@pytest.mark.frozen_stage
 def test_batch_conservation_and_mapping(tmp_path):
     result = p.run(out_dir=tmp_path / "out")
     rows = result["rows"]
@@ -279,6 +282,7 @@ def test_batch_conservation_and_mapping(tmp_path):
         assert len(result["summary"]["by_batch"][b]["case_ids"]) == by_batch[b]
 
 
+@pytest.mark.frozen_stage
 def test_expected_batch_composition(tmp_path):
     """五批次 case 集合与预测完全一致。"""
     result = p.run(out_dir=tmp_path / "out")
@@ -291,6 +295,7 @@ def test_expected_batch_composition(tmp_path):
             assert by_id[cid]["recommended_action"] == action, cid
 
 
+@pytest.mark.frozen_stage
 def test_category_conservation(tmp_path):
     result = p.run(out_dir=tmp_path / "out")
     counts = {}
@@ -299,6 +304,7 @@ def test_category_conservation(tmp_path):
     assert counts == EXPECTED_DISTRIBUTION
 
 
+@pytest.mark.frozen_stage
 def test_options_per_category(tmp_path):
     result = p.run(out_dir=tmp_path / "out")
     by_id = {r["case_id"]: r for r in result["rows"]}
@@ -323,6 +329,7 @@ def test_options_per_category(tmp_path):
             assert "relax" not in " ".join(row["owner_options"])
 
 
+@pytest.mark.frozen_stage
 def test_removal_zero_risk(tmp_path):
     result = p.run(out_dir=tmp_path / "out")
     by_id = {r["case_id"]: r for r in result["rows"]}
@@ -336,6 +343,7 @@ def test_removal_zero_risk(tmp_path):
         assert by_id[cid]["removal_zero_risk"] is False
 
 
+@pytest.mark.frozen_stage
 def test_semantic_quality_insufficient_flag(tmp_path):
     result = p.run(out_dir=tmp_path / "out")
     by_id = {r["case_id"]: r for r in result["rows"]}
@@ -350,6 +358,7 @@ def test_semantic_quality_insufficient_flag(tmp_path):
 
 # ── 逐条语义质量分析 ──────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_mixed027_contract_proof(tmp_path):
     """mixed-027：本地契约证明 + 仅 re-review/keep_unresolved。"""
     result = p.run(out_dir=tmp_path / "out")
@@ -367,6 +376,7 @@ def test_mixed027_contract_proof(tmp_path):
     assert "local_verbatim_facts" in proof
 
 
+@pytest.mark.frozen_stage
 def test_zh040_expand_scope_with_exact_toc_candidates(tmp_path):
     """zh-040：三个答案点均有同 source 逐字 TOC 行候选 → 扩 scope。"""
     result = p.run(out_dir=tmp_path / "out")
@@ -394,6 +404,7 @@ def test_zh040_expand_scope_with_exact_toc_candidates(tmp_path):
         assert all(r["scope_expansion_required"] for r in hits)
 
 
+@pytest.mark.frozen_stage
 def test_zh023_self_contained_range_sentence(tmp_path):
     """zh-023：range(10) 完整句候选 → replace 推荐。"""
     result = p.run(out_dir=tmp_path / "out")
@@ -409,6 +420,7 @@ def test_zh023_self_contained_range_sentence(tmp_path):
     assert all(c["unique"] for c in hits)
 
 
+@pytest.mark.frozen_stage
 def test_mixed028_self_contained_state_sentence(tmp_path):
     result = p.run(out_dir=tmp_path / "out")
     row = next(r for r in result["rows"] if r["case_id"] == "mixed-028")
@@ -422,6 +434,7 @@ def test_mixed028_self_contained_state_sentence(tmp_path):
     assert all(c["candidate_type"] == "full_sentence" for c in hits)
 
 
+@pytest.mark.frozen_stage
 def test_multi030_isolated_heading_only_retire(tmp_path):
     """multi-030：仅标题/短标签（无自包含完整句）→ retire_case。"""
     result = p.run(out_dir=tmp_path / "out")
@@ -435,6 +448,7 @@ def test_multi030_isolated_heading_only_retire(tmp_path):
                for r in ap["candidate_refs"])
 
 
+@pytest.mark.frozen_stage
 def test_translation_cases_default_policy(tmp_path):
     """中文答案点 + 英文源（language_mismatch）→ 翻译等价策略批次。"""
     result = p.run(out_dir=tmp_path / "out")
@@ -450,6 +464,7 @@ def test_translation_cases_default_policy(tmp_path):
         assert all(a["n_candidates"] == 0 for a in row["answer_point_analysis"])
 
 
+@pytest.mark.frozen_stage
 def test_remove_unsupported_points_cases(tmp_path):
     """AP0 无证据支撑、AP1 部分支撑 → 仅移除无证据答案点。"""
     result = p.run(out_dir=tmp_path / "out")
@@ -465,6 +480,7 @@ def test_remove_unsupported_points_cases(tmp_path):
         assert 0 in row["removal_targets"]
 
 
+@pytest.mark.frozen_stage
 def test_zh042_retire_single_unsupported_point(tmp_path):
     result = p.run(out_dir=tmp_path / "out")
     row = next(r for r in result["rows"] if r["case_id"] == "zh-042")
@@ -474,6 +490,7 @@ def test_zh042_retire_single_unsupported_point(tmp_path):
     assert row["answer_point_analysis"][0]["n_candidates"] == 0
 
 
+@pytest.mark.frozen_stage
 def test_no_repairable_no_auto_apply(tmp_path):
     result = p.run(out_dir=tmp_path / "out")
     assert all(r["recommended_action"] for r in result["rows"])
@@ -492,6 +509,7 @@ def test_no_repairable_no_auto_apply(tmp_path):
 
 # ── 候选 raw span 可重建性 ────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_all_candidates_raw_provable(tmp_path):
     """self-contained-raw-candidates.jsonl 每行 raw_span == chunk_text[start:end]。"""
     chunks = {c["chunk_id"]: c for c in _jsonl(p.CHUNKS)}
@@ -519,6 +537,7 @@ def test_all_candidates_raw_provable(tmp_path):
     assert by_case <= EXPECTED_REJECTS
 
 
+@pytest.mark.frozen_stage
 def test_scope_expansion_required_consistency(tmp_path):
     """候选不在当前 evidence span 内 → scope_expansion_required=true。"""
     result = p.run(out_dir=tmp_path / "out")
@@ -537,6 +556,7 @@ def test_scope_expansion_required_consistency(tmp_path):
                     row["case_id"], ap["answer_point_index"], ref)
 
 
+@pytest.mark.frozen_stage
 def test_pack_rows_reference_candidate_file(tmp_path):
     """决策包行 candidate_refs 与 candidates 文件一致（chunk/range 双向）。"""
     result = p.run(out_dir=tmp_path / "out")
@@ -557,6 +577,7 @@ def test_pack_rows_reference_candidate_file(tmp_path):
 
 # ── SHA 链 / 确定性 ───────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_input_shas_unchanged(tmp_path):
     inputs = [
         REVIEW_DIR / "automated-review.jsonl",
@@ -582,6 +603,7 @@ def test_input_shas_unchanged(tmp_path):
     assert before == after
 
 
+@pytest.mark.frozen_stage
 def test_candidate_review_triage_outputs_unchanged(tmp_path):
     """candidate 11 输出 / review 9 输出 / triage 6 输出 SHA 运行前后不变。"""
     cand_manifest = json.loads(
@@ -599,6 +621,7 @@ def test_candidate_review_triage_outputs_unchanged(tmp_path):
     assert before == after
 
 
+@pytest.mark.frozen_stage
 def test_deterministic_two_runs_byte_identical(tmp_path):
     out1, out2 = tmp_path / "out1", tmp_path / "out2"
     p.run(out_dir=out1)
@@ -607,6 +630,7 @@ def test_deterministic_two_runs_byte_identical(tmp_path):
         assert _sha(out1 / name) == _sha(out2 / name), name
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash_matches_disk(tmp_path):
     out = tmp_path / "out"
     p.run(out_dir=out)
@@ -618,6 +642,7 @@ def test_manifest_self_hash_matches_disk(tmp_path):
 
 # ── 产物约束 ──────────────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_exact_output_file_set(tmp_path):
     out = tmp_path / "out"
     p.run(out_dir=out)
@@ -632,6 +657,7 @@ def test_exact_output_file_set(tmp_path):
         assert "split" not in name.lower()
 
 
+@pytest.mark.frozen_stage
 def test_manifest_declarations(tmp_path):
     out = tmp_path / "out"
     result = p.run(out_dir=out)
@@ -647,6 +673,7 @@ def test_manifest_declarations(tmp_path):
     assert manifest["n_rejects"] == 22
 
 
+@pytest.mark.frozen_stage
 def test_data_quality_report_five_dimensions(tmp_path):
     out = tmp_path / "out"
     p.run(out_dir=out)
@@ -666,6 +693,7 @@ def test_data_quality_report_five_dimensions(tmp_path):
     assert checks["consistency"]["distribution_exact"] is True
 
 
+@pytest.mark.frozen_stage
 def test_guide_contains_vocabulary_and_no_auto_apply(tmp_path):
     out = tmp_path / "out"
     p.run(out_dir=out)
@@ -683,6 +711,7 @@ def test_guide_contains_vocabulary_and_no_auto_apply(tmp_path):
             assert "不提供" in line or "不得" in line or "不会" in line, line
 
 
+@pytest.mark.frozen_stage
 def test_report_lists_all_22_with_actions(tmp_path):
     out = tmp_path / "out"
     result = p.run(out_dir=out)

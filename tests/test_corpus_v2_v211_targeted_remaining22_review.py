@@ -27,6 +27,7 @@ import pytest
 import scripts.corpus_v2_v211_targeted_remaining22_review as rv
 
 
+
 # ── helpers ─────────────────────────────────────────────────────────────
 
 def _sha(path):
@@ -194,6 +195,7 @@ def test_target_set_template_equals_union(tmp_path):
     assert set(rv.ERROR_CASES) == errors
 
 
+@pytest.mark.frozen_stage
 def test_preflight_real_inputs_pass(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -376,6 +378,7 @@ def test_probe_identity_mismatch_fails_closed(tmp_path):
 
 # ── 4. OK / BLOCKED 构建 ────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_stub_all_confirmed_gate_ok(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -393,6 +396,7 @@ def test_stub_all_confirmed_gate_ok(tmp_path):
     assert names == set(rv.OUTPUT_FILES_OK)
 
 
+@pytest.mark.frozen_stage
 def test_stub_rejects_gate_blocked(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -419,6 +423,7 @@ def test_stub_rejects_gate_blocked(tmp_path):
     assert names == set(rv.OUTPUT_FILES_BLOCKED)
 
 
+@pytest.mark.frozen_stage
 def test_stub_contract_error_gate_blocked(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -443,6 +448,7 @@ def test_stub_contract_error_gate_blocked(tmp_path):
     assert m["validation"]["transport_errors"] == 0
 
 
+@pytest.mark.frozen_stage
 def test_results_ledger_covers_all_22(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -464,6 +470,7 @@ def test_results_ledger_covers_all_22(tmp_path):
         assert r["attempts"] >= 1
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash_and_outputs_sha(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -479,6 +486,7 @@ def test_manifest_self_hash_and_outputs_sha(tmp_path):
         assert rv._sha256_file(out / name) == digest
 
 
+@pytest.mark.frozen_stage
 def test_manifest_inputs_sha_match_sources(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -499,6 +507,7 @@ def test_manifest_inputs_sha_match_sources(tmp_path):
     assert inputs["chunks.jsonl"] == _sha(rv.CHUNKS_PATH)
 
 
+@pytest.mark.frozen_stage
 def test_manifest_counts_and_metadata(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -529,6 +538,7 @@ def test_manifest_counts_and_metadata(tmp_path):
     assert m["validation"]["all_cases_confirmed"] is True
 
 
+@pytest.mark.frozen_stage
 def test_input_sha_unchanged_after_run(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -551,6 +561,7 @@ def test_input_sha_unchanged_after_run(tmp_path):
     assert _sha(rv.CHUNKS_PATH) == before["chunks"]
 
 
+@pytest.mark.frozen_stage
 def test_two_builds_byte_identical(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)
@@ -567,6 +578,7 @@ def test_two_builds_byte_identical(tmp_path):
         assert (out1 / name).read_bytes() == (out2 / name).read_bytes()
 
 
+@pytest.mark.frozen_stage
 def test_no_forbidden_outputs_ok_and_blocked(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review_triage(tmp_path)

@@ -157,6 +157,7 @@ def test_constants_fixed():
     assert "deepseek-v4-flash" in rp.FORBIDDEN_MODELS
 
 
+@pytest.mark.frozen_stage
 def test_preflight_passes_on_real_candidate():
     checks = rp.preflight()
     assert checks["case_count"] == 148
@@ -183,6 +184,7 @@ def test_preflight_fail_closed_on_gate_failure(tmp_path, monkeypatch):
 
 # ── pack / blind payload ──────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_pack_148_rows_sorted_unique_and_sha_locked(reviewed):
     _, out, _ = reviewed
     rows = _jsonl(out / "automated-review-pack.jsonl")
@@ -193,6 +195,7 @@ def test_pack_148_rows_sorted_unique_and_sha_locked(reviewed):
         assert row["payload_sha256"] == rp.canonical_sha(row["payload"])
 
 
+@pytest.mark.frozen_stage
 def test_payload_blind_no_case_id_no_leaks_no_chain_refs(reviewed):
     _, out, _ = reviewed
     rows = _jsonl(out / "automated-review-pack.jsonl")
@@ -219,6 +222,7 @@ def test_payload_blind_no_case_id_no_leaks_no_chain_refs(reviewed):
         assert row["case_id"] not in blob
 
 
+@pytest.mark.frozen_stage
 def test_payload_evidence_correct_and_chunk_texts_present(reviewed):
     _, out, _ = reviewed
     rows = _jsonl(out / "automated-review-pack.jsonl")
@@ -243,6 +247,7 @@ def test_payload_evidence_correct_and_chunk_texts_present(reviewed):
 
 # ── review / overlay ──────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_all_confirmed_generates_overlay(reviewed):
     result, out, stub = reviewed
     assert result["counts"]["confirmed"] == 148
@@ -273,6 +278,7 @@ def test_all_confirmed_generates_overlay(reviewed):
     assert "AUTOMATED_REVIEWED_OWNER_AUTHORIZED" in gate
 
 
+@pytest.mark.frozen_stage
 def test_any_reject_blocks_overlay(tmp_path_factory):
     pack_tmp = tmp_path_factory.mktemp("v207packq")
     rows = rp.build_pack(out_dir=pack_tmp)
@@ -291,6 +297,7 @@ def test_any_reject_blocks_overlay(tmp_path_factory):
     assert "AUTOMATED_REVIEW_GATE_BLOCKED" in gate
 
 
+@pytest.mark.frozen_stage
 def test_transport_failure_fail_closed_zero_output(tmp_path_factory):
     pack_tmp = tmp_path_factory.mktemp("v207packt")
     rows = rp.build_pack(out_dir=pack_tmp)
@@ -302,6 +309,7 @@ def test_transport_failure_fail_closed_zero_output(tmp_path_factory):
     assert not out.exists() or list(out.iterdir()) == []
 
 
+@pytest.mark.frozen_stage
 def test_garbage_and_bad_schema_fail_closed(tmp_path_factory):
     pack_tmp = tmp_path_factory.mktemp("v207packg")
     rows = rp.build_pack(out_dir=pack_tmp)
@@ -314,6 +322,7 @@ def test_garbage_and_bad_schema_fail_closed(tmp_path_factory):
         assert not out.exists() or list(out.iterdir()) == []
 
 
+@pytest.mark.frozen_stage
 def test_wrong_model_identity_fail_closed(tmp_path_factory):
     pack_tmp = tmp_path_factory.mktemp("v207packm")
     rows = rp.build_pack(out_dir=pack_tmp)
@@ -324,6 +333,7 @@ def test_wrong_model_identity_fail_closed(tmp_path_factory):
     assert not out.exists() or list(out.iterdir()) == []
 
 
+@pytest.mark.frozen_stage
 def test_corrective_retry_carries_specific_error_and_recovers(tmp_path_factory):
     pack_tmp = tmp_path_factory.mktemp("v207packc")
     rows = rp.build_pack(out_dir=pack_tmp)
@@ -343,6 +353,7 @@ def test_corrective_retry_carries_specific_error_and_recovers(tmp_path_factory):
     assert "answerable case must use not_applicable" in prompt
 
 
+@pytest.mark.frozen_stage
 def test_stub_calls_assert_pro_only_params(reviewed):
     _, _, stub = reviewed
     assert stub.calls
@@ -354,6 +365,7 @@ def test_stub_calls_assert_pro_only_params(reviewed):
         assert kwargs["extra_body"] == {"thinking": {"type": "disabled"}}
 
 
+@pytest.mark.frozen_stage
 def test_stats_conservation_and_issues_set(reviewed):
     result, out, _ = reviewed
     rows = _jsonl(out / "automated-review.jsonl")
@@ -374,6 +386,7 @@ def test_stats_conservation_and_issues_set(reviewed):
     assert refusal.count("not_applicable") == 117
 
 
+@pytest.mark.frozen_stage
 def test_reviewer_identity_and_contract_fields_every_row(reviewed):
     _, out, _ = reviewed
     rows = _jsonl(out / "automated-review.jsonl")
@@ -391,6 +404,7 @@ def test_reviewer_identity_and_contract_fields_every_row(reviewed):
         assert row["payload_sha256"]
 
 
+@pytest.mark.frozen_stage
 def test_raw_model_responses_file(reviewed):
     _, out, _ = reviewed
     raw = _jsonl(out / "raw-model-responses.jsonl")
@@ -456,6 +470,7 @@ def test_validate_review_contract_rules():
             rp._validate_review(value, refusal_payload)
 
 
+@pytest.mark.frozen_stage
 def test_input_shas_unchanged_and_manifest_self_hash(reviewed):
     _, out, _ = reviewed
     v207 = json.loads(rp.V207_MANIFEST.read_text(encoding="utf-8"))
@@ -471,6 +486,7 @@ def test_input_shas_unchanged_and_manifest_self_hash(reviewed):
         assert manifest["outputs"][name] == _sha(out / name)
 
 
+@pytest.mark.frozen_stage
 def test_determinism_two_runs_byte_identical(tmp_path_factory):
     out1 = tmp_path_factory.mktemp("v207d1")
     out2 = tmp_path_factory.mktemp("v207d2")
@@ -482,6 +498,7 @@ def test_determinism_two_runs_byte_identical(tmp_path_factory):
         assert (out1 / name).read_bytes() == (out2 / name).read_bytes()
 
 
+@pytest.mark.frozen_stage
 def test_no_human_identity_or_v2_1_claims(reviewed):
     _, out, _ = reviewed
     for name in ("automated-review.jsonl", "automated-review-report.md",

@@ -68,6 +68,7 @@ def test_target_set_from_ledger():
     assert set(ids) == RESTORED_IDS and len(ids) == 3
 
 
+@pytest.mark.frozen_stage
 def test_payload_blind(tmp_path, monkeypatch):
     checks = rfr.load_inputs()
     cid = sorted(RESTORED_IDS)[0]
@@ -79,6 +80,7 @@ def test_payload_blind(tmp_path, monkeypatch):
     rfr.base.scan_payload(payload)
 
 
+@pytest.mark.frozen_stage
 def test_ok_gate_when_all_confirmed(tmp_path, monkeypatch):
     _patch_case_responses(monkeypatch, "confirmed")
     out_dir = tmp_path / "out"
@@ -89,6 +91,7 @@ def test_ok_gate_when_all_confirmed(tmp_path, monkeypatch):
     assert all(r["rewritten"] is False for r in results)
 
 
+@pytest.mark.frozen_stage
 @pytest.mark.parametrize("bad", ["reject", "needs_followup"])
 def test_blocked_gate_on_any_disagreement(tmp_path, monkeypatch, bad):
     state = {"flip": True}
@@ -110,6 +113,7 @@ def test_blocked_gate_on_any_disagreement(tmp_path, monkeypatch, bad):
     assert gate["gate_verdict"] == "RESTORED_VERIFICATION_BLOCKED"
 
 
+@pytest.mark.frozen_stage
 def test_manifest_self_hash_and_double_build(tmp_path, monkeypatch):
     _patch_case_responses(monkeypatch, "confirmed")
     d1, d2 = tmp_path / "a", tmp_path / "b"
@@ -126,6 +130,7 @@ def test_manifest_self_hash_and_double_build(tmp_path, monkeypatch):
         assert (d1 / name).read_bytes() == (d2 / name).read_bytes()
 
 
+@pytest.mark.frozen_stage
 def test_frozen_assets_byte_untouched(tmp_path, monkeypatch):
     watched = [
         V21_RULINGS / "rulings-ledger.jsonl",

@@ -600,6 +600,7 @@ pytestmark_real = pytest.mark.skipif(
 )
 
 
+@pytest.mark.frozen_stage
 @pytestmark_real
 def test_real_phase6a_manifest_verifies():
     report = cbl.verify_phase6a_manifest(cbl.PHASE6A_DIR)

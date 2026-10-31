@@ -26,6 +26,7 @@ import pytest
 import scripts.corpus_v2_v211_owner_authorized_en048_repair as rep
 
 
+
 # ── helpers ─────────────────────────────────────────────────────────────
 
 def _sha(path):
@@ -134,6 +135,7 @@ def test_candidate_flags_constants():
 
 # ── 2. 预检 fail-closed ─────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_preflight_real_inputs_pass(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -286,6 +288,7 @@ def test_run_output_dir_exists_fails(tmp_path):
 
 # ── 3. 构建结果 ─────────────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_run_builds_v211_candidate(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -300,6 +303,7 @@ def test_run_builds_v211_candidate(tmp_path):
     assert set(p.name for p in out.iterdir()) == set(rep.OUTPUT_FILES)
 
 
+@pytest.mark.frozen_stage
 def test_evidence_after_adds_exactly_one_row(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -325,6 +329,7 @@ def test_evidence_after_adds_exactly_one_row(tmp_path):
         rep._load_chunks(rep.CHUNKS_PATH)["761b22915b5e_chunk_14"]["text"])
 
 
+@pytest.mark.frozen_stage
 def test_draft_after_byte_identical_to_v210(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -339,6 +344,7 @@ def test_draft_after_byte_identical_to_v210(tmp_path):
         (cand / "evidence-after.jsonl").read_bytes()
 
 
+@pytest.mark.frozen_stage
 def test_new_evidence_passes_strict_validation(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -353,6 +359,7 @@ def test_new_evidence_passes_strict_validation(tmp_path):
     rep.strict_validate_row(new_row, chunks)
 
 
+@pytest.mark.frozen_stage
 def test_no_evidence_span_overlap(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -372,6 +379,7 @@ def test_no_evidence_span_overlap(tmp_path):
     assert (("761b22915b5e_chunk_14", 769, 778)) in spans
 
 
+@pytest.mark.frozen_stage
 def test_added_ledger_single_row(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -388,6 +396,7 @@ def test_added_ledger_single_row(tmp_path):
     assert r["coordinate_contract"] == "raw-codepoint-v1"
 
 
+@pytest.mark.frozen_stage
 def test_field_level_diff_single_row(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -407,6 +416,7 @@ def test_field_level_diff_single_row(tmp_path):
     assert r["overlaps_existing"] is False
 
 
+@pytest.mark.frozen_stage
 def test_data_quality_report_five_dims(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -428,6 +438,7 @@ def test_manifest_self_hash_roundtrip():
     assert rep._verify_self_hash(signed)
 
 
+@pytest.mark.frozen_stage
 def test_output_manifest_self_hash(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -438,6 +449,7 @@ def test_output_manifest_self_hash(tmp_path):
     assert rep._verify_self_hash(m)
 
 
+@pytest.mark.frozen_stage
 def test_output_manifest_outputs_sha_match_disk(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -450,6 +462,7 @@ def test_output_manifest_outputs_sha_match_disk(tmp_path):
         assert rep._sha256_file(out / name) == digest
 
 
+@pytest.mark.frozen_stage
 def test_output_manifest_inputs_sha_match_sources(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -469,6 +482,7 @@ def test_output_manifest_inputs_sha_match_sources(tmp_path):
     assert inputs["chunk-manifest.json"] == _sha(rep.CHUNK_MANIFEST_PATH)
 
 
+@pytest.mark.frozen_stage
 def test_manifest_counts_and_metadata(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -497,6 +511,7 @@ def test_manifest_counts_and_metadata(tmp_path):
     assert m["validation"]["evidence_non_target_rows_byte_identical"] is True
 
 
+@pytest.mark.frozen_stage
 def test_input_sha_unchanged_after_build(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -521,6 +536,7 @@ def test_input_sha_unchanged_after_build(tmp_path):
     assert _sha(rep.CHUNK_MANIFEST_PATH) == before["chunk-manifest"]
 
 
+@pytest.mark.frozen_stage
 def test_two_builds_byte_identical(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -535,6 +551,7 @@ def test_two_builds_byte_identical(tmp_path):
         assert (out1 / name).read_bytes() == (out2 / name).read_bytes()
 
 
+@pytest.mark.frozen_stage
 def test_no_forbidden_outputs(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)
@@ -550,6 +567,7 @@ def test_no_forbidden_outputs(tmp_path):
         assert not name.startswith(".")
 
 
+@pytest.mark.frozen_stage
 def test_v210_inputs_unchanged_by_build(tmp_path):
     cand = _copy_candidate(tmp_path)
     _copy_review(tmp_path, cand)

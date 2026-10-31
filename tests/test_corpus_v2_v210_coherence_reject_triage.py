@@ -24,6 +24,7 @@ import pytest
 import scripts.corpus_v2_v210_coherence_reject_triage as tr
 
 
+
 # ── helpers ─────────────────────────────────────────────────────────────
 
 def _sha(path):
@@ -107,6 +108,7 @@ def test_error_case_set_exact():
 
 # ── 2. 预检 fail-closed ─────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_preflight_real_inputs_pass(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -209,6 +211,7 @@ def test_preflight_chunks_sha_drift_fails(tmp_path):
 
 # ── 3. 守恒与集合 ──────────────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_conservation_counts_real(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -223,6 +226,7 @@ def test_conservation_counts_real(tmp_path):
     assert len({i["case_id"] for i in issues}) == 23
 
 
+@pytest.mark.frozen_stage
 def test_reject_case_set_no_overlap_with_errors(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -239,6 +243,7 @@ def test_reject_case_set_no_overlap_with_errors(tmp_path):
 
 # ── 4. 分流一：coherence errors ────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_coherence_errors_all_classified_contract_inconsistency(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -258,6 +263,7 @@ def test_coherence_errors_all_classified_contract_inconsistency(tmp_path):
         assert r["expected_decision"] == "confirmed"
 
 
+@pytest.mark.frozen_stage
 def test_coherence_errors_not_rewritten(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -273,6 +279,7 @@ def test_coherence_errors_not_rewritten(tmp_path):
         assert r["attempts"] == issue["attempts"]
 
 
+@pytest.mark.frozen_stage
 def test_coherence_errors_expected_decision_derived(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -293,6 +300,7 @@ def test_coherence_errors_expected_decision_derived(tmp_path):
 
 # ── 5. 分流二：substantive rejects ─────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_reject_triage_19_rows_exactly_once(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -308,6 +316,7 @@ def test_reject_triage_19_rows_exactly_once(tmp_path):
     assert {r["case_id"] for r in rows} == reject_ids
 
 
+@pytest.mark.frozen_stage
 def test_reject_rows_have_valid_classification_and_action(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -327,6 +336,7 @@ def test_reject_rows_have_valid_classification_and_action(tmp_path):
             assert "answer_point" in ap
 
 
+@pytest.mark.frozen_stage
 def test_reject_each_ap_has_evidence_relation(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -343,6 +353,7 @@ def test_reject_each_ap_has_evidence_relation(tmp_path):
             list(range(ap_count))
 
 
+@pytest.mark.frozen_stage
 def test_same_source_candidates_have_full_provenance(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -453,6 +464,7 @@ def test_classify_candidate_must_not_overlap_existing_span():
 
 # ── 7. owner-decision-template ─────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_owner_template_structure(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -474,6 +486,7 @@ def test_owner_template_structure(tmp_path):
 
 # ── 8. data-quality-report ─────────────────────────────────────────────
 
+@pytest.mark.frozen_stage
 def test_data_quality_report_five_dims(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -500,6 +513,7 @@ def test_manifest_self_hash_roundtrip():
     assert tr._verify_manifest(signed)
 
 
+@pytest.mark.frozen_stage
 def test_output_manifest_self_hash(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -511,6 +525,7 @@ def test_output_manifest_self_hash(tmp_path):
     assert tr._verify_manifest(m)
 
 
+@pytest.mark.frozen_stage
 def test_output_manifest_outputs_sha_match_disk(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -524,6 +539,7 @@ def test_output_manifest_outputs_sha_match_disk(tmp_path):
         assert tr._sha256_file(out / name) == digest
 
 
+@pytest.mark.frozen_stage
 def test_output_manifest_inputs_sha_match_sources(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -539,6 +555,7 @@ def test_output_manifest_inputs_sha_match_sources(tmp_path):
     assert inputs["chunk-manifest.json"] == _sha(tr.CHUNK_MANIFEST_PATH)
 
 
+@pytest.mark.frozen_stage
 def test_summary_counts_conservation(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -565,6 +582,7 @@ def test_summary_counts_conservation(tmp_path):
     assert summary["declarations"]["overlay_generated"] is False
 
 
+@pytest.mark.frozen_stage
 def test_input_sha_unchanged_after_build(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -584,6 +602,7 @@ def test_input_sha_unchanged_after_build(tmp_path):
     assert _sha(tr.CHUNK_MANIFEST_PATH) == before["chunk-manifest"]
 
 
+@pytest.mark.frozen_stage
 def test_review_inputs_unchanged_after_build(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -597,6 +616,7 @@ def test_review_inputs_unchanged_after_build(tmp_path):
     assert _sha(review / "manifest.json") == manifest
 
 
+@pytest.mark.frozen_stage
 def test_two_builds_byte_identical(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
@@ -614,6 +634,7 @@ def test_two_builds_byte_identical(tmp_path):
         assert (out1 / name).read_bytes() == (out2 / name).read_bytes()
 
 
+@pytest.mark.frozen_stage
 def test_no_forbidden_outputs(tmp_path):
     cand = _copy_candidate(tmp_path)
     review = _copy_review(tmp_path, cand)
