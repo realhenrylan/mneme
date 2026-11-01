@@ -1,0 +1,21 @@
+{
+  "case_count": 150,
+  "cases_fully_resolvable": 150,
+  "example_case": {
+    "case_id": "multi-011",
+    "full_sources_chars": 6066,
+    "ordered_count": 25,
+    "ratio": 0.2724,
+    "resolved_count": 25,
+    "sum_full_chunk_text_chars": 22267
+  },
+  "full_sources_cases_mismatch": 0,
+  "full_sources_cases_snippet_only": 150,
+  "full_sources_cases_with_full_text": 0,
+  "note": "audit only; no C1/C2/C3 adjudication. snippet format evidence: src/citations.py:39 snippet=documents[index].replace(newline, ' ')[:150]; format_sources (src/rag.py:2141-2144) renders record.snippet only.",
+  "ordered_id_resolved": 3108,
+  "ordered_id_total": 3108,
+  "ordered_resolvable_rate": 1.0,
+  "phase": "Phase1-3.4-baseline-audit",
+  "verdict": "IDs fully resolvable in runtime domain, but full_sources holds only 150-char snippets -> context NOT exactly replayable from the record alone (full chunk text must come from runtime map)."
+}

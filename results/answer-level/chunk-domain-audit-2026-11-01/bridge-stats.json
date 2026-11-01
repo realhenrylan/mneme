@@ -1,0 +1,229 @@
+{
+  "ambiguous": 16,
+  "ambiguous_examples": [
+    {
+      "source": "art-of-war.txt",
+      "store_chunk_id": "293d777c429b_chunk_169",
+      "strong_candidates": [
+        "293d777c429bf572b7d18173cb8653b39c0a9af80016431d4bee152457684572_chunk_1007",
+        "293d777c429bf572b7d18173cb8653b39c0a9af80016431d4bee152457684572_chunk_1008"
+      ]
+    },
+    {
+      "source": "nodejs-fs.md",
+      "store_chunk_id": "b9c22720dc84_chunk_16",
+      "strong_candidates": [
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_20",
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_21"
+      ]
+    },
+    {
+      "source": "nodejs-fs.md",
+      "store_chunk_id": "b9c22720dc84_chunk_120",
+      "strong_candidates": [
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_127",
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_128"
+      ]
+    },
+    {
+      "source": "nodejs-fs.md",
+      "store_chunk_id": "b9c22720dc84_chunk_121",
+      "strong_candidates": [
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_128",
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_129"
+      ]
+    },
+    {
+      "source": "nodejs-fs.md",
+      "store_chunk_id": "b9c22720dc84_chunk_123",
+      "strong_candidates": [
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_130",
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_131"
+      ]
+    },
+    {
+      "source": "nodejs-fs.md",
+      "store_chunk_id": "b9c22720dc84_chunk_132",
+      "strong_candidates": [
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_139",
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_140"
+      ]
+    },
+    {
+      "source": "nodejs-fs.md",
+      "store_chunk_id": "b9c22720dc84_chunk_133",
+      "strong_candidates": [
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_140",
+        "b9c22720dc84069f6e0976f9ce3a654b83869cd0608619a49f29ba16a28a5745_chunk_141"
+      ]
+    },
+    {
+      "source": "python-datetime-zh.md",
+      "store_chunk_id": "2e79918eccf4_chunk_2",
+      "strong_candidates": [
+        "2e79918eccf4402c06bac124e1669a666ebad12f9a95ba397fd2ae31ba19309a_chunk_5",
+        "2e79918eccf4402c06bac124e1669a666ebad12f9a95ba397fd2ae31ba19309a_chunk_6"
+      ]
+    },
+    {
+      "source": "python-datetime-zh.md",
+      "store_chunk_id": "2e79918eccf4_chunk_3",
+      "strong_candidates": [
+        "2e79918eccf4402c06bac124e1669a666ebad12f9a95ba397fd2ae31ba19309a_chunk_6",
+        "2e79918eccf4402c06bac124e1669a666ebad12f9a95ba397fd2ae31ba19309a_chunk_7"
+      ]
+    },
+    {
+      "source": "python-datetime-zh.md",
+      "store_chunk_id": "2e79918eccf4_chunk_25",
+      "strong_candidates": [
+        "2e79918eccf4402c06bac124e1669a666ebad12f9a95ba397fd2ae31ba19309a_chunk_29",
+        "2e79918eccf4402c06bac124e1669a666ebad12f9a95ba397fd2ae31ba19309a_chunk_30"
+      ]
+    },
+    {
+      "source": "python-tutorial-en.md",
+      "store_chunk_id": "e564a122a7a2_chunk_71",
+      "strong_candidates": [
+        "e564a122a7a244ca38da988a362be6bd9a57a92b71de24956fe7cf9441f08201_chunk_126",
+        "e564a122a7a244ca38da988a362be6bd9a57a92b71de24956fe7cf9441f08201_chunk_127"
+      ]
+    },
+    {
+      "source": "python-tutorial-en.md",
+      "store_chunk_id": "e564a122a7a2_chunk_113",
+      "strong_candidates": [
+        "e564a122a7a244ca38da988a362be6bd9a57a92b71de24956fe7cf9441f08201_chunk_195",
+        "e564a122a7a244ca38da988a362be6bd9a57a92b71de24956fe7cf9441f08201_chunk_196"
+      ]
+    },
+    {
+      "source": "python-tutorial-zh.md",
+      "store_chunk_id": "32c427fb50e2_chunk_35",
+      "strong_candidates": [
+        "32c427fb50e2d80912f2ef69da69781b42bfc6a1ee92b6928b8eea400229356e_chunk_101",
+        "32c427fb50e2d80912f2ef69da69781b42bfc6a1ee92b6928b8eea400229356e_chunk_102"
+      ]
+    },
+    {
+      "source": "python-whatsnew313-zh.md",
+      "store_chunk_id": "81544765752f_chunk_18",
+      "strong_candidates": [
+        "81544765752ff3a713970d64d300c511ee2687b7cb5336c754a7dace174bf78e_chunk_68",
+        "81544765752ff3a713970d64d300c511ee2687b7cb5336c754a7dace174bf78e_chunk_69"
+      ]
+    },
+    {
+      "source": "rfc3986.txt",
+      "store_chunk_id": "86ef1bf559c5_chunk_5",
+      "strong_candidates": [
+        "86ef1bf559c5b765d4d90cb1875e094218211db4eae843187d4808e871c2e5d9_chunk_13",
+        "86ef1bf559c5b765d4d90cb1875e094218211db4eae843187d4808e871c2e5d9_chunk_14"
+      ]
+    },
+    {
+      "source": "rust-book-core.md",
+      "store_chunk_id": "4f9001ca8c15_chunk_55",
+      "strong_candidates": [
+        "4f9001ca8c15777288078dc98bf19f201e276e07d9a3fa3a08e7cc88cbfe3c3d_chunk_78",
+        "4f9001ca8c15777288078dc98bf19f201e276e07d9a3fa3a08e7cc88cbfe3c3d_chunk_79"
+      ]
+    }
+  ],
+  "by_threshold_runtime": {
+    "0.25": 1002,
+    "0.50": 991,
+    "0.75": 893
+  },
+  "by_threshold_store": {
+    "0.25": 957,
+    "0.50": 751,
+    "0.75": 449
+  },
+  "containment_fallback": 0,
+  "coverage_any": 1.0,
+  "coverage_by_threshold_runtime": {
+    "0.25": 0.996024,
+    "0.50": 0.985089,
+    "0.75": 0.887674
+  },
+  "coverage_by_threshold_store": {
+    "0.25": 0.951292,
+    "0.50": 0.746521,
+    "0.75": 0.446322
+  },
+  "failed": 0,
+  "mapped_any": 1006,
+  "one_to_many": 930,
+  "per_source": {
+    "art-of-war.txt": {
+      "coverage": 1.0,
+      "mapped": 203,
+      "store_chunks": 203
+    },
+    "nodejs-fs.md": {
+      "coverage": 1.0,
+      "mapped": 160,
+      "store_chunks": 160
+    },
+    "postgresql-tutorial.md": {
+      "coverage": 1.0,
+      "mapped": 20,
+      "store_chunks": 20
+    },
+    "python-datetime-zh.md": {
+      "coverage": 1.0,
+      "mapped": 43,
+      "store_chunks": 43
+    },
+    "python-glossary-zh.md": {
+      "coverage": 1.0,
+      "mapped": 21,
+      "store_chunks": 21
+    },
+    "python-tutorial-en.md": {
+      "coverage": 1.0,
+      "mapped": 144,
+      "store_chunks": 144
+    },
+    "python-tutorial-zh.md": {
+      "coverage": 1.0,
+      "mapped": 74,
+      "store_chunks": 74
+    },
+    "python-whatsnew313-zh.md": {
+      "coverage": 1.0,
+      "mapped": 49,
+      "store_chunks": 49
+    },
+    "react-learn-zh.md": {
+      "coverage": 1.0,
+      "mapped": 29,
+      "store_chunks": 29
+    },
+    "rfc3986.txt": {
+      "coverage": 1.0,
+      "mapped": 86,
+      "store_chunks": 86
+    },
+    "rust-book-core.md": {
+      "coverage": 1.0,
+      "mapped": 73,
+      "store_chunks": 73
+    },
+    "sqlite-lang.md": {
+      "coverage": 1.0,
+      "mapped": 69,
+      "store_chunks": 69
+    },
+    "vue-guide-zh.md": {
+      "coverage": 1.0,
+      "mapped": 35,
+      "store_chunks": 35
+    }
+  },
+  "span_located": 1006,
+  "store_total": 1006,
+  "unmapped": 0,
+  "unmapped_examples": []
+}

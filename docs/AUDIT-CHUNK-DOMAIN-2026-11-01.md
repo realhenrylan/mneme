@@ -1,9 +1,9 @@
 # 答案级 citation 指标 chunk 域错位审计
 
 - 日期：2026-11-01
-- 状态：**只读审计完成；未改代码、数据、配置；M6a 评测暂停**
+- 状态：**只读审计完成；Phase 1 只读原型完成（2026-11-01）；未改代码、数据、配置；M6a 评测暂停**
 - 范围：M2、M4c arm1/arm2、M6a a′ baseline；`evaluation/citation_metrics.py`、`src/chunking.py`、`src/rag.py`、`data/v2-corpus/chunks/`
-- 结论一句话：**M4c/M2 的 citation recall/precision 不是有效指标；0.0456 不是 recall，而是 runtime/store 两个 chunk 域的 ID 碰撞与 context 扩容共同产生的伪值。M6a 的 C1/C3 基线、U 例集与上界全部失效，评测必须暂停。**
+- 结论一句话：**M4c/M2 的 citation recall/precision 不是有效指标；0.0456 不是 recall，而是 runtime/store 两个 chunk 域的 ID 碰撞与 context 扩容共同产生的伪值。M6a 的 C1/C3 基线、U 例集与上界全部失效，评测必须暂停。Phase 1 证明 C1/C3 在 runtime 域仍有信号，但 0.2510/0.3494 是新口径（按映射后的 runtime truth 计，平均 2.58 个 runtime chunk / store chunk），不能与旧 0.0456 同比；必须先冻结映射、算 oracle 上界，再重签阈值。**
 
 ---
 
@@ -12,7 +12,7 @@
 1. **两个 chunk 域**：评测真值 `relevant_chunk_ids` 来自 `data/v2-corpus/chunks/`（corpus v2.0.0，1,006 chunks，Recursive 2000/200）；运行时 context 来自 `prepare_index` 的 `src.chunking` v3 section/child（2,947 chunks）。两者 ID 都写成 `{source_sha256_prefix12}_chunk_{n}`，但 `_chunk_{n}` 是各自序号空间，**同 ID 不同文**。
 2. **指标直接做 ID 交集**：`evaluation/citation_metrics.py:206-218` 的 precision/recall 用 `supported_chunks & relevant_chunk_ids`，没有文本或 span 映射；因此它测到的是“序号碰撞”，不是“引用命中真值”。
 3. **M4c arm2 的 0.0456**：3,065 个 context ID 中 1,184 个（38.6%）不在 store；122 个可答例中只有 31 例在 context 里出现至少一个真值 ID；33 个“命中”全部未经文本核验。0.0456 不能作为 C1 基线。
-4. **a′ baseline 也不能配对**：150 例中仅 12 例可解析，138 例含 store 中不存在的 `context_chunk_ids_ordered`；同 ID 文本 `snippet ⊆ store` 校验 0/1877 吻合。`full_sources` 只保存 `record.snippet`（首例 25 chunk 共 6,066 字符），不是完整 chunk 文本。a′ 的 INVALID 裁决正确。
+4. **a′ baseline 在 store 域不能配对，但在 runtime 域可重放**：按 store 域解析仅 12/150 例，138 例含 store 中不存在的 `context_chunk_ids_ordered`；同 ID 文本 `snippet ⊆ store` 校验 0/1877 吻合。`full_sources` 只保存 `record.snippet`（首例 25 chunk 共 6,066 字符），记录本身不能恢复全文。Phase 1 重建 runtime map 后，a′ 的 3,108/3,108 个 ordered ID **全部可解析**，因此可用 runtime map 的全文做离线精确重放；a′ 的 INVALID 裁决仍正确（其原定 capture 假设不成立）。
 5. **影响边界**：M5d 的 G1=0.5575 / G2′=1.0 不依赖 chunk ID，门禁结论不受直接影响；但 M5d 报告中“citation recall 0.0456”一类叙述需要标注失效。M6a 实现本身不被否定，被否定的是评测数据契约与预注册基线。
 6. **修复顺序**：先做 Phase 1 只读映射原型（runtime 全文/span + store truth→runtime 桥 + 复算 M2/M4c + 修 capture），再决定是否重签 M6a 预注册。Phase 1 前不跑模型、不改产品代码。
 
@@ -113,10 +113,57 @@
 
 ---
 
+## 5A. Phase 1 执行结果（2026-11-01，只读）
+
+Phase 1 已完成，5 个停止条件均未触发：重建 runtime chunk 2,947、四臂 context ID 可解析率 1.00、store→runtime 映射覆盖率 1.00、未改 `src/`、全程无 LLM/网络。完整报告见 [`results/answer-level/chunk-domain-audit-2026-11-01/report.md`](../results/answer-level/chunk-domain-audit-2026-11-01/report.md)，指标见同目录 `metrics.json`，manifest 自哈希 `c23c1f3f…e36cfc3`。
+
+### 5A.1 重建与桥
+
+| 项 | 结果 |
+|---|---:|
+| 重建 runtime chunks | 2,947（与现有索引一致） |
+| span 定位 | 2,947/2,947 |
+| store chunks | 1,006 |
+| 映射覆盖率（至少 1 个 runtime 候选） | 1.00（1,006/1,006） |
+| 一对多 | 930 |
+| 歧义（≥2 候选各 ≥50%） | 16 |
+| 主口径条件覆盖率（t=0.50，ratio_runtime） | 98.5% |
+| ratio_store t=0.50 条件覆盖率 | 74.7%（truth 未映射 18.0%，不能作主口径） |
+
+### 5A.2 桥接后指标（t=0.50，ratio_runtime）
+
+| 臂 | 旧 recall | 旧 precision | 新 recall (evi) | 新 precision (evi) | 新 recall (ctx) | 新 precision (ctx) | store-hit recall (evi) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| M2 | 0.0322 | 0.0300 | 0.1928 | 0.2940 | 0.2955 | 0.0710 | 0.3033 |
+| arm1 | 0.0322 | 0.0333 | 0.2267 | 0.3336 | 0.3489 | 0.0792 | 0.3578 |
+| arm2 | 0.0456 | 0.0400 | 0.2510 | 0.3494 | 0.4008 | 0.0521 | 0.3878 |
+
+**读法（关键）**：
+
+- `新 recall (evi)` 的分母是**映射后的 runtime truth 集合**，不是旧口径的 store truth 数。`mean_rel_runtime_size=2.58`，即一个 store chunk 平均映射 2.58 个 runtime chunk；因此 0.2510 与旧 0.0456 **不是同一把尺子**，不能直接说“提升 5.5 倍”。
+- 更接近旧分母的是 `store-hit recall (evi)`（arm2 0.3878）：按 store truth 计，任一映射 runtime chunk 被引用即命中；它仍因“任一子 chunk”而偏宽松。
+- 三臂 recall 的排序（arm2 > arm1 > M2）部分来自 context 扩容（arm2 25 块 vs arm1/M2 更少）；同表 arm2 的 ctx precision 0.0521 低于 arm1 0.0792，不能把排序当作纯引用质量结论。M6a 的同 context 配对不受此混杂影响。
+- 主口径 `ratio_runtime` 是单边宽松映射：短 runtime chunk 完全落在长 store chunk 内即 ratio=1.0，precision 0.3494 是**区域级**精度。`ratio_store` 口径的 precision 更低（arm2 0.2352），但 18% truth 未映射，不能单独作主口径。
+- 旧阈值 0.0456/0.10/0.0400/0.2067 全部作废；新阈值必须在冻结映射策略、算出 oracle 上界后重签。
+
+### 5A.3 a′ baseline
+
+- ordered context IDs：**3,108/3,108 可解析**（150/150 例）；说明 runtime map 足以恢复 context 的 **ID 序列与全文**。
+- `full_sources`：150/150 例均为 150 字符 snippet；首例 25 chunk 全文 22,267 字符，`full_sources` 仅 6,066 字符（27.2%）。
+- 结论：a′ **可以用 runtime map 离线精确重放**；capture 修复不是 C1/C3 重放的前置条件，而是“单凭 outcomes 记录可复现”和 `retrieved_not_in_context` / fabricated 文本裁决的前置条件。后续 capture 修复仍应做，但不应阻塞配对重放。
+
+### 5A.4 仍未解决
+
+1. **映射策略未冻结**：单边 `ratio_runtime`、双边覆盖、`ratio_store` 三者给出的绝对数值不同；Phase 2 必须先由 owner 选定并写入预注册。
+2. **缺 oracle 上界**：旧 0.2067 已作废；需要用 a′ baseline 在“只重定向既有槽位”的约束下计算每例最大可达 recall，聚合为 M6a 的天花板；没有上界就无法合理设定 C1。
+3. **C3 的 fabricated/retrieved_not_in_context**：旧 capture 只有 snippet，需在 capture 修复后重测；在此之前 C3 只能使用可离线验证的部分。
+
+---
+
 ## 6. 决策与边界
 
-- **M6a 评测暂停**：在 Phase 1 完成、owner 重签前，不跑 150 例、不跑 judge/al3、不产出 PASS/FAIL。
-- **不 push**：本审计与后续 Phase 1 产物均本地保留，除非 owner 明确要求。
+- **M6a 评测暂停**：Phase 1 已完成，但 Phase 2A（映射策略 + oracle + 阈值重签）未完成前，不跑 150 例、不跑 judge/al3、不产出 PASS/FAIL。
+- **不 push**：本审计、Phase 1 证据与 Phase 2A 草案均本地保留；提交仅本地 commit，除非 owner 明确要求 push。
 - **不改产品默认**：`src/`、配置默认、检索/rerank/Graph RAG 均不动。
 - **不改数据**：不修 store、不重新切 chunk、不改 dataset；Phase 1 只读/原型。
 - **不把 ID 交集当 truth**：任何后续指标必须使用 source+span/文本映射，并在报告中披露覆盖率与歧义。
@@ -125,10 +172,11 @@
 
 ## 7. 未决问题
 
-1. **桥接粒度**：store chunk 与 runtime child chunk 的覆盖阈值（交集字符比例）取多少？一对多时是否允许重复计分？
+1. **桥接粒度与方向**：单边 `ratio_runtime`、双边覆盖、`ratio_store` 三种策略的绝对数值不同；Phase 2 必须选定一种并冻结。一对多时是按映射后的 runtime truth 计（`recall_evi`），还是按 store truth “任一子 chunk 命中”计（`store_hit_recall_evi`），也必须二选一，不能混报。
 2. **C1/C3 的产品口径**：是“引用指向的 runtime chunk 与 truth span 有重叠”，还是“必须完全覆盖 truth span”？两者对阈值影响很大。
-3. **历史产物**：M4c/M5d/M6a 报告中引用 0.0456 的段落，是逐条加勘误，还是统一在 STATUS 标注失效？
-4. **a′ baseline 的处置**：保留为 runtime 基线证据，还是删除以节省仓库体积？当前建议保留（已密封、可审计）。
+3. **oracle 上界**：旧 0.2067 已作废；需在 a′ baseline 上按“只重定向既有槽位”计算每例最大可达 recall，聚合为 M6a 天花板；C1 必须落在 control 与 oracle 之间，否则无区分力。
+4. **历史产物**：M4c/M5d/M6a 报告中引用 0.0456 的段落，是逐条加勘误，还是统一在 STATUS 标注失效？
+5. **a′ baseline 的处置**：保留为 runtime 基线证据，还是删除以节省仓库体积？当前建议保留（已密封、可审计）。
 
 ---
 
@@ -141,5 +189,7 @@
 - `data/v2-corpus/chunks/chunk-manifest.json`（store v2.0.0，1,006 chunks）
 - `results/answer-level/m4c-arm2-2026-09-06/manifest.json`（0.0456/0.04 的原始 manifest）
 - `results/answer-level/m6a-paired-2026-11-01/report.md`（a′ INVALID）
+- `results/answer-level/chunk-domain-audit-2026-11-01/report.md`（Phase 1 完整结果）
+- `results/answer-level/chunk-domain-audit-2026-11-01/metrics.json`（Phase 1 指标与阈值敏感性）
 - `plans/ANSWER-LEVEL-M6a-CITATION-QUALITY-PREREGISTRATION-2026-10-31.md`（失效的基线/C1/C3）
 - `plans/ANSWER-LEVEL-M6a-PAIRED-REPLAY-ADDENDUM-2026-11-01.md`（a′ 方法与其 capture 假设）

@@ -1,0 +1,338 @@
+{
+  "bridge_coverage": {
+    "ambiguous": 16,
+    "coverage_any": 1.0,
+    "coverage_by_threshold_runtime": {
+      "0.25": 0.996024,
+      "0.50": 0.985089,
+      "0.75": 0.887674
+    },
+    "coverage_by_threshold_store": {
+      "0.25": 0.951292,
+      "0.50": 0.746521,
+      "0.75": 0.446322
+    },
+    "one_to_many": 930
+  },
+  "c1_c3_assessment": {
+    "coverage_gate_pass": true,
+    "mapping_coverage_any": 1.0,
+    "note": "C1/C3 may only be discussed if overall mapping coverage >=95%. Threshold-conditional coverage below 95% is flagged per row.",
+    "threshold_coverage_flags": {
+      "0.25": {
+        "runtime": 0.996024,
+        "store": 0.951292
+      },
+      "0.50": {
+        "runtime": 0.985089,
+        "store": 0.746521
+      },
+      "0.75": {
+        "runtime": 0.887674,
+        "store": 0.446322
+      }
+    }
+  },
+  "generated_at": "2026-11-01T23:16:27+0800",
+  "git_commit": "c70cda2e496c8e9d6e2cd5eea8062b0647e8a263",
+  "id_collision_reproduction": {
+    "arm1": {
+      "case_any_overlap": 0.1667,
+      "matches_old_manifest": true,
+      "precision": 0.0333,
+      "recall": 0.0322
+    },
+    "arm2": {
+      "case_any_overlap": 0.2067,
+      "matches_old_manifest": true,
+      "precision": 0.04,
+      "recall": 0.0456
+    },
+    "m2": {
+      "case_any_overlap": 0.1533,
+      "matches_old_manifest": true,
+      "precision": 0.03,
+      "recall": 0.0322
+    }
+  },
+  "metric_口径": "per-case precision/recall then mean over all 150 cases, round 4; precision=0.0 when retrieved set empty; recall=0.0 when truth empty (identical to citation_metrics.py:206-218 + _aggregate)",
+  "per_arm": {
+    "arm1": {
+      "case_count": 150,
+      "fabricated_total": 0,
+      "old_manifest": {
+        "citation_precision_avg": 0.0333,
+        "citation_recall_avg": 0.0322
+      },
+      "retrieved_not_in_context_total": 0,
+      "thresholds": {
+        "0.25": {
+          "runtime": {
+            "case_any_overlap_ctx": 0.4867,
+            "mean_rel_runtime_size": 2.8067,
+            "mean_unmapped_truth_chunks": 0.0,
+            "precision_ctx_based": 0.0846,
+            "precision_evi_based": 0.3458,
+            "recall_ctx_based": 0.3458,
+            "recall_evi_based": 0.218,
+            "store_hit_recall_ctx": 0.4333,
+            "store_hit_recall_evi": 0.3744,
+            "truth_chunks_unmapped_rate": 0.0
+          },
+          "store": {
+            "case_any_overlap_ctx": 0.4533,
+            "mean_rel_runtime_size": 1.5333,
+            "mean_unmapped_truth_chunks": 0.0067,
+            "precision_ctx_based": 0.0643,
+            "precision_evi_based": 0.2898,
+            "recall_ctx_based": 0.3797,
+            "recall_evi_based": 0.248,
+            "store_hit_recall_ctx": 0.405,
+            "store_hit_recall_evi": 0.3194,
+            "truth_chunks_unmapped_rate": 0.0067
+          }
+        },
+        "0.50": {
+          "runtime": {
+            "case_any_overlap_ctx": 0.4667,
+            "mean_rel_runtime_size": 2.58,
+            "mean_unmapped_truth_chunks": 0.0067,
+            "precision_ctx_based": 0.0792,
+            "precision_evi_based": 0.3336,
+            "recall_ctx_based": 0.3489,
+            "recall_evi_based": 0.2267,
+            "store_hit_recall_ctx": 0.4167,
+            "store_hit_recall_evi": 0.3578,
+            "truth_chunks_unmapped_rate": 0.0067
+          },
+          "store": {
+            "case_any_overlap_ctx": 0.3733,
+            "mean_rel_runtime_size": 0.8933,
+            "mean_unmapped_truth_chunks": 0.2067,
+            "precision_ctx_based": 0.0418,
+            "precision_evi_based": 0.2244,
+            "recall_ctx_based": 0.3411,
+            "recall_evi_based": 0.2411,
+            "store_hit_recall_ctx": 0.3378,
+            "store_hit_recall_evi": 0.2378,
+            "truth_chunks_unmapped_rate": 0.18
+          }
+        },
+        "0.75": {
+          "runtime": {
+            "case_any_overlap_ctx": 0.44,
+            "mean_rel_runtime_size": 2.3867,
+            "mean_unmapped_truth_chunks": 0.0667,
+            "precision_ctx_based": 0.0702,
+            "precision_evi_based": 0.2913,
+            "recall_ctx_based": 0.3336,
+            "recall_evi_based": 0.2168,
+            "store_hit_recall_ctx": 0.39,
+            "store_hit_recall_evi": 0.3178,
+            "truth_chunks_unmapped_rate": 0.0667
+          },
+          "store": {
+            "case_any_overlap_ctx": 0.2667,
+            "mean_rel_runtime_size": 0.56,
+            "mean_unmapped_truth_chunks": 0.54,
+            "precision_ctx_based": 0.029,
+            "precision_evi_based": 0.1411,
+            "recall_ctx_based": 0.2444,
+            "recall_evi_based": 0.1644,
+            "store_hit_recall_ctx": 0.2278,
+            "store_hit_recall_evi": 0.1544,
+            "truth_chunks_unmapped_rate": 0.4667
+          }
+        }
+      },
+      "truth_cases": 122,
+      "truth_mismatch_vs_dataset": 0
+    },
+    "arm2": {
+      "case_count": 150,
+      "fabricated_total": 0,
+      "old_manifest": {
+        "citation_precision_avg": 0.04,
+        "citation_recall_avg": 0.0456
+      },
+      "retrieved_not_in_context_total": 0,
+      "thresholds": {
+        "0.25": {
+          "runtime": {
+            "case_any_overlap_ctx": 0.5533,
+            "mean_rel_runtime_size": 2.8067,
+            "mean_unmapped_truth_chunks": 0.0,
+            "precision_ctx_based": 0.0564,
+            "precision_evi_based": 0.3722,
+            "recall_ctx_based": 0.4081,
+            "recall_evi_based": 0.2494,
+            "store_hit_recall_ctx": 0.4894,
+            "store_hit_recall_evi": 0.4178,
+            "truth_chunks_unmapped_rate": 0.0
+          },
+          "store": {
+            "case_any_overlap_ctx": 0.5267,
+            "mean_rel_runtime_size": 1.5333,
+            "mean_unmapped_truth_chunks": 0.0067,
+            "precision_ctx_based": 0.0423,
+            "precision_evi_based": 0.3148,
+            "recall_ctx_based": 0.4412,
+            "recall_evi_based": 0.2791,
+            "store_hit_recall_ctx": 0.4661,
+            "store_hit_recall_evi": 0.3594,
+            "truth_chunks_unmapped_rate": 0.0067
+          }
+        },
+        "0.50": {
+          "runtime": {
+            "case_any_overlap_ctx": 0.5333,
+            "mean_rel_runtime_size": 2.58,
+            "mean_unmapped_truth_chunks": 0.0067,
+            "precision_ctx_based": 0.0521,
+            "precision_evi_based": 0.3494,
+            "recall_ctx_based": 0.4008,
+            "recall_evi_based": 0.251,
+            "store_hit_recall_ctx": 0.4694,
+            "store_hit_recall_evi": 0.3878,
+            "truth_chunks_unmapped_rate": 0.0067
+          },
+          "store": {
+            "case_any_overlap_ctx": 0.4333,
+            "mean_rel_runtime_size": 0.8933,
+            "mean_unmapped_truth_chunks": 0.2067,
+            "precision_ctx_based": 0.027,
+            "precision_evi_based": 0.2352,
+            "recall_ctx_based": 0.3894,
+            "recall_evi_based": 0.2678,
+            "store_hit_recall_ctx": 0.3828,
+            "store_hit_recall_evi": 0.2644,
+            "truth_chunks_unmapped_rate": 0.18
+          }
+        },
+        "0.75": {
+          "runtime": {
+            "case_any_overlap_ctx": 0.5067,
+            "mean_rel_runtime_size": 2.3867,
+            "mean_unmapped_truth_chunks": 0.0667,
+            "precision_ctx_based": 0.0465,
+            "precision_evi_based": 0.3039,
+            "recall_ctx_based": 0.3879,
+            "recall_evi_based": 0.2422,
+            "store_hit_recall_ctx": 0.4478,
+            "store_hit_recall_evi": 0.3478,
+            "truth_chunks_unmapped_rate": 0.0667
+          },
+          "store": {
+            "case_any_overlap_ctx": 0.3,
+            "mean_rel_runtime_size": 0.56,
+            "mean_unmapped_truth_chunks": 0.54,
+            "precision_ctx_based": 0.0174,
+            "precision_evi_based": 0.149,
+            "recall_ctx_based": 0.2728,
+            "recall_evi_based": 0.1811,
+            "store_hit_recall_ctx": 0.2483,
+            "store_hit_recall_evi": 0.1667,
+            "truth_chunks_unmapped_rate": 0.4667
+          }
+        }
+      },
+      "truth_cases": 122,
+      "truth_mismatch_vs_dataset": 0
+    },
+    "m2": {
+      "case_count": 150,
+      "fabricated_total": 0,
+      "old_manifest": {
+        "citation_precision_avg": 0.03,
+        "citation_recall_avg": 0.0322
+      },
+      "retrieved_not_in_context_total": 0,
+      "thresholds": {
+        "0.25": {
+          "runtime": {
+            "case_any_overlap_ctx": 0.4267,
+            "mean_rel_runtime_size": 2.8067,
+            "mean_unmapped_truth_chunks": 0.0,
+            "precision_ctx_based": 0.0758,
+            "precision_evi_based": 0.3018,
+            "recall_ctx_based": 0.2919,
+            "recall_evi_based": 0.1824,
+            "store_hit_recall_ctx": 0.37,
+            "store_hit_recall_evi": 0.3167,
+            "truth_chunks_unmapped_rate": 0.0
+          },
+          "store": {
+            "case_any_overlap_ctx": 0.3933,
+            "mean_rel_runtime_size": 1.5333,
+            "mean_unmapped_truth_chunks": 0.0067,
+            "precision_ctx_based": 0.0577,
+            "precision_evi_based": 0.2484,
+            "recall_ctx_based": 0.3163,
+            "recall_evi_based": 0.1974,
+            "store_hit_recall_ctx": 0.3417,
+            "store_hit_recall_evi": 0.2617,
+            "truth_chunks_unmapped_rate": 0.0067
+          }
+        },
+        "0.50": {
+          "runtime": {
+            "case_any_overlap_ctx": 0.4133,
+            "mean_rel_runtime_size": 2.58,
+            "mean_unmapped_truth_chunks": 0.0067,
+            "precision_ctx_based": 0.071,
+            "precision_evi_based": 0.294,
+            "recall_ctx_based": 0.2955,
+            "recall_evi_based": 0.1928,
+            "store_hit_recall_ctx": 0.3567,
+            "store_hit_recall_evi": 0.3033,
+            "truth_chunks_unmapped_rate": 0.0067
+          },
+          "store": {
+            "case_any_overlap_ctx": 0.32,
+            "mean_rel_runtime_size": 0.8933,
+            "mean_unmapped_truth_chunks": 0.2067,
+            "precision_ctx_based": 0.0365,
+            "precision_evi_based": 0.1888,
+            "recall_ctx_based": 0.2811,
+            "recall_evi_based": 0.1911,
+            "store_hit_recall_ctx": 0.2778,
+            "store_hit_recall_evi": 0.1878,
+            "truth_chunks_unmapped_rate": 0.18
+          }
+        },
+        "0.75": {
+          "runtime": {
+            "case_any_overlap_ctx": 0.3867,
+            "mean_rel_runtime_size": 2.3867,
+            "mean_unmapped_truth_chunks": 0.0667,
+            "precision_ctx_based": 0.0626,
+            "precision_evi_based": 0.2507,
+            "recall_ctx_based": 0.2856,
+            "recall_evi_based": 0.1828,
+            "store_hit_recall_ctx": 0.3333,
+            "store_hit_recall_evi": 0.2667,
+            "truth_chunks_unmapped_rate": 0.0667
+          },
+          "store": {
+            "case_any_overlap_ctx": 0.2267,
+            "mean_rel_runtime_size": 0.56,
+            "mean_unmapped_truth_chunks": 0.54,
+            "precision_ctx_based": 0.0249,
+            "precision_evi_based": 0.1154,
+            "recall_ctx_based": 0.2044,
+            "recall_evi_based": 0.1244,
+            "store_hit_recall_ctx": 0.1844,
+            "store_hit_recall_evi": 0.1144,
+            "truth_chunks_unmapped_rate": 0.4667
+          }
+        }
+      },
+      "truth_cases": 122,
+      "truth_mismatch_vs_dataset": 0
+    }
+  },
+  "phase": "Phase1-3.3-recompute",
+  "truth_domain": {
+    "dataset_vs_outcomes_mismatch": 0
+  }
+}

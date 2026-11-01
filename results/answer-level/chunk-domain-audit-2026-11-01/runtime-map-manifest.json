@@ -1,0 +1,176 @@
+{
+  "distinct_normalized_ids": 2947,
+  "expected_total": 2947,
+  "finished_at": "2026-11-01T23:01:27+0800",
+  "git_commit": "c70cda2e496c8e9d6e2cd5eea8062b0647e8a263",
+  "inputs": {
+    "dataset": "evaluation\\datasets\\v2.1.jsonl",
+    "dataset_sha256": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+    "runtime_map": "runtime-map.jsonl",
+    "runtime_map_sha256": "121a7eabbb089af209a9de43d59be4f12ea8fee02047b09a24bbf91bd773b46e"
+  },
+  "manifest_self_sha256": "3dc95ec6484616f069512ba9624dcdd0e35bd4e49ad3e724bf771a3e1fceff5c",
+  "method": "LoaderRegistry(Pdf/Docx/Text).load + src.chunking.chunk_document (production path, no re-implementation); spans located by whitespace-insensitive sequential search of chunk text in the raw source file; normalized_id = first 12 hex of source_id (same rule as evaluation/generation_runner._normalize_chunk_id).",
+  "per_source": {
+    "art-of-war.txt": {
+      "chunks": 1195,
+      "file": "data\\v2-corpus\\documents\\processed\\art-of-war.txt",
+      "source_sha256": "0aa964ddb252df7f02e84174ff1a65c6fd971c067303c1da320f5734a3b05c37",
+      "spans_located": 1195
+    },
+    "nodejs-fs.md": {
+      "chunks": 190,
+      "file": "data\\v2-corpus\\documents\\processed\\nodejs-fs.md",
+      "source_sha256": "16358b59eaddb5a85dd33bf15eae4e14ede315be058a409124e029deaa0eea68",
+      "spans_located": 190
+    },
+    "postgresql-tutorial.md": {
+      "chunks": 22,
+      "file": "data\\v2-corpus\\documents\\processed\\postgresql-tutorial.md",
+      "source_sha256": "3b10f283915cd41ec725b8414312e7c3a6759f62ba22a680a14a9b69f2f485d1",
+      "spans_located": 22
+    },
+    "python-datetime-zh.md": {
+      "chunks": 72,
+      "file": "data\\v2-corpus\\documents\\processed\\python-datetime-zh.md",
+      "source_sha256": "b66276d873861e9c7c6e0ccbb18b956829e767004764424d9375554d64955033",
+      "spans_located": 72
+    },
+    "python-glossary-zh.md": {
+      "chunks": 26,
+      "file": "data\\v2-corpus\\documents\\processed\\python-glossary-zh.md",
+      "source_sha256": "3de198d4ce12fb8f621f39612fcae6ef2b735427adf736bb482e5857356a0756",
+      "spans_located": 26
+    },
+    "python-tutorial-en.md": {
+      "chunks": 258,
+      "file": "data\\v2-corpus\\documents\\processed\\python-tutorial-en.md",
+      "source_sha256": "7a9bb4e0a0cc3a69fd13fea955f876586680694aab0ab0be4b6e05c50c4baf9e",
+      "spans_located": 258
+    },
+    "python-tutorial-zh.md": {
+      "chunks": 212,
+      "file": "data\\v2-corpus\\documents\\processed\\python-tutorial-zh.md",
+      "source_sha256": "086d7591f1b2eddb54bcbd3382473e1f751450528eb23a1b8f7f329f17de2a8b",
+      "spans_located": 212
+    },
+    "python-whatsnew313-zh.md": {
+      "chunks": 132,
+      "file": "data\\v2-corpus\\documents\\processed\\python-whatsnew313-zh.md",
+      "source_sha256": "cfefeb2950496c198dc0c7c198578e34612e7f485638317c23411b31f2554af1",
+      "spans_located": 132
+    },
+    "react-learn-zh.md": {
+      "chunks": 44,
+      "file": "data\\v2-corpus\\documents\\processed\\react-learn-zh.md",
+      "source_sha256": "4c9708e90662a62b11d3a2a29b95d249593257ed7e263064c87f2aba50a9efc3",
+      "spans_located": 44
+    },
+    "rfc3986.txt": {
+      "chunks": 554,
+      "file": "data\\v2-corpus\\documents\\processed\\rfc3986.txt",
+      "source_sha256": "338de951ebeb1dfb55c0016cc0d904939cda2bd15e0bb1e3ccb5f9ff0754958a",
+      "spans_located": 554
+    },
+    "rust-book-core.md": {
+      "chunks": 98,
+      "file": "data\\v2-corpus\\documents\\processed\\rust-book-core.md",
+      "source_sha256": "3259dbd90a3fe522716384799857b930ea80446aaf9b8cd0d1d12a0808f421cf",
+      "spans_located": 98
+    },
+    "sqlite-lang.md": {
+      "chunks": 83,
+      "file": "data\\v2-corpus\\documents\\processed\\sqlite-lang.md",
+      "source_sha256": "d6141a33adc3cd842a662f7c248f711dbbc2d623271696f1c6532d156dc1c8bb",
+      "spans_located": 83
+    },
+    "vue-guide-zh.md": {
+      "chunks": 61,
+      "file": "data\\v2-corpus\\documents\\processed\\vue-guide-zh.md",
+      "source_sha256": "e52a60ed06601a0f2d6f71d7aa5e080aefb453834c1a54834fb1e7b2edab28fe",
+      "spans_located": 61
+    }
+  },
+  "phase": "Phase1-3.1-runtime-map",
+  "read_only_guarantees": [
+    "no writes outside results/answer-level/chunk-domain-audit-2026-11-01/",
+    "no LLM calls, no network"
+  ],
+  "resolvability": {
+    "a_prime": {
+      "arm": "a_prime",
+      "case_count": 150,
+      "cases_fully_resolvable": 150,
+      "distinct_ids": 920,
+      "field": "context_chunk_ids_ordered",
+      "mean_case_resolvable_rate": 1.0,
+      "resolvable_rate": 1.0,
+      "resolved_id_refs": 3108,
+      "total_id_refs": 3108,
+      "unresolved_distinct": 0,
+      "unresolved_top": []
+    },
+    "arm1": {
+      "arm": "arm1",
+      "case_count": 150,
+      "cases_fully_resolvable": 150,
+      "distinct_ids": 628,
+      "field": "context_chunk_ids",
+      "mean_case_resolvable_rate": 1.0,
+      "resolvable_rate": 1.0,
+      "resolved_id_refs": 1452,
+      "total_id_refs": 1452,
+      "unresolved_distinct": 0,
+      "unresolved_top": []
+    },
+    "arm2": {
+      "arm": "arm2",
+      "case_count": 150,
+      "cases_fully_resolvable": 150,
+      "distinct_ids": 905,
+      "field": "context_chunk_ids",
+      "mean_case_resolvable_rate": 1.0,
+      "resolvable_rate": 1.0,
+      "resolved_id_refs": 3065,
+      "total_id_refs": 3065,
+      "unresolved_distinct": 0,
+      "unresolved_top": []
+    },
+    "m2": {
+      "arm": "m2",
+      "case_count": 150,
+      "cases_fully_resolvable": 107,
+      "distinct_ids": 532,
+      "field": "context_chunk_ids",
+      "mean_case_resolvable_rate": 1.0,
+      "resolvable_rate": 1.0,
+      "resolved_id_refs": 1028,
+      "total_id_refs": 1028,
+      "unresolved_distinct": 0,
+      "unresolved_top": []
+    }
+  },
+  "scripts": {
+    "rebuild_runtime_map.py": "df73a3eb7f84d6822e7c07ed279a620fc588a67a69af31ba69e5927b31d3a201"
+  },
+  "source_sha256": {
+    "art-of-war.txt": "0aa964ddb252df7f02e84174ff1a65c6fd971c067303c1da320f5734a3b05c37",
+    "nodejs-fs.md": "16358b59eaddb5a85dd33bf15eae4e14ede315be058a409124e029deaa0eea68",
+    "postgresql-tutorial.md": "3b10f283915cd41ec725b8414312e7c3a6759f62ba22a680a14a9b69f2f485d1",
+    "python-datetime-zh.md": "b66276d873861e9c7c6e0ccbb18b956829e767004764424d9375554d64955033",
+    "python-glossary-zh.md": "3de198d4ce12fb8f621f39612fcae6ef2b735427adf736bb482e5857356a0756",
+    "python-tutorial-en.md": "7a9bb4e0a0cc3a69fd13fea955f876586680694aab0ab0be4b6e05c50c4baf9e",
+    "python-tutorial-zh.md": "086d7591f1b2eddb54bcbd3382473e1f751450528eb23a1b8f7f329f17de2a8b",
+    "python-whatsnew313-zh.md": "cfefeb2950496c198dc0c7c198578e34612e7f485638317c23411b31f2554af1",
+    "react-learn-zh.md": "4c9708e90662a62b11d3a2a29b95d249593257ed7e263064c87f2aba50a9efc3",
+    "rfc3986.txt": "338de951ebeb1dfb55c0016cc0d904939cda2bd15e0bb1e3ccb5f9ff0754958a",
+    "rust-book-core.md": "3259dbd90a3fe522716384799857b930ea80446aaf9b8cd0d1d12a0808f421cf",
+    "sqlite-lang.md": "d6141a33adc3cd842a662f7c248f711dbbc2d623271696f1c6532d156dc1c8bb",
+    "vue-guide-zh.md": "e52a60ed06601a0f2d6f71d7aa5e080aefb453834c1a54834fb1e7b2edab28fe"
+  },
+  "spans_located": 2947,
+  "spans_missing": 0,
+  "started_at": "2026-11-01T23:01:26+0800",
+  "total_chunks": 2947,
+  "total_matches_expected": true
+}

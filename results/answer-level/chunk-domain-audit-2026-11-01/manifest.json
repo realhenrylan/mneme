@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-11-01T23:36:53+08:00",
+  "git_branch": "main",
+  "git_commit": "c70cda2e496c8e9d6e2cd5eea8062b0647e8a263",
+  "git_status_porcelain_nonempty": true,
+  "inputs": {
+    "_tmp-baseline-outcomes.jsonl (extracted via git show de8181f:results/answer-level/m6a-paired-2026-11-01/baseline-outcomes.jsonl": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54",
+    "data/v2-corpus/chunks/chunk-manifest.json": "de5a580bac323e535e86936d71f2d2d714d07408a3c999999d632667342ffa0a",
+    "data/v2-corpus/chunks/chunks.jsonl": "a23d739aa9876b54cd197d32f16138e9799c74a1a1c6717bb9d232fb6a06d772",
+    "evaluation/datasets/v2.1.jsonl": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9"
+  },
+  "key_numbers": {
+    "a_prime_full_sources_snippet_only_cases": "150/150",
+    "a_prime_ordered_id_resolvable_rate": 1.0,
+    "bridged_t050_runtime": {
+      "arm1": {
+        "prec_ctx": 0.0792,
+        "prec_evi": 0.3336,
+        "rec_ctx": 0.3489,
+        "rec_evi": 0.2267
+      },
+      "arm2": {
+        "prec_ctx": 0.0521,
+        "prec_evi": 0.3494,
+        "rec_ctx": 0.4008,
+        "rec_evi": 0.251
+      },
+      "m2": {
+        "prec_ctx": 0.071,
+        "prec_evi": 0.294,
+        "rec_ctx": 0.2955,
+        "rec_evi": 0.1928
+      }
+    },
+    "c1_c3_definable_in_runtime_domain": true,
+    "mapping_coverage_any": 1.0,
+    "old_manifest": {
+      "arm1": {
+        "precision": 0.0333,
+        "recall": 0.0322
+      },
+      "arm2": {
+        "precision": 0.04,
+        "recall": 0.0456
+      },
+      "m2": {
+        "precision": 0.03,
+        "recall": 0.0322
+      }
+    },
+    "runtime_chunks": 2947,
+    "store_chunks": 1006
+  },
+  "manifest_self_sha256": "c23c1f3f4f8b129c741ea8e11e24a6e2f93a01bda0353f3878e3f25b3e36cfc3",
+  "phase": "Phase1-chunk-domain-audit-2026-11-01",
+  "products": {
+    "baseline-audit.json": "f20e80a194c0f3c7dfd62a842d0dbe37c858d497947777898b26136850e386d9",
+    "bridge-stats.json": "b2b25e1939e2110a015e776d94f054418ffd54b82a5d13512d8e00f2bda3ec85",
+    "mapping.jsonl": "0cf13de910ce5de811b22ed21b05e47033983a13f2def928a372de5161c136ac",
+    "metrics.json": "f0197f7ac50778a00cb8735f418cea814ebdb966cae32f7f18f483ee02e3fa1c",
+    "report.md": "b77b10194801e4e096479cedc693e523af2632426b66cc7a43cac6b7d47663ca",
+    "runtime-map-manifest.json": "c5b0733ce0246a46ce48e9a0846dd48618fe186e52e32586e503256fa0f14191",
+    "runtime-map.jsonl": "121a7eabbb089af209a9de43d59be4f12ea8fee02047b09a24bbf91bd773b46e"
+  },
+  "read_only_guarantees": [
+    "no changes to src/, evaluation/, tests/, config/, data/",
+    "no LLM calls, no network, no judge/al3, no M2/M4c/M6a reruns",
+    "no push, no commit, no docs/STATUS.md or CHANGELOG update",
+    "truth read only in offline mapping/recompute scripts",
+    "no ID-based chunk mapping; every mapping has source+span or text evidence"
+  ],
+  "scripts": {
+    "audit_baseline.py": "9ebfff391f42890137b73ed62267ac321e2e55a53c338c9804a255037deb9270",
+    "build_store_bridge.py": "44c95e1a40468f27683e42af97e92f2daea8c78bcdf8ff415020e110dc4fd5e1",
+    "finalize_audit.py": "05dd68d49f93440b2f42898b4a31c4f39f5cfa033a1fe0fdd473c90e12285c07",
+    "rebuild_runtime_map.py": "df73a3eb7f84d6822e7c07ed279a620fc588a67a69af31ba69e5927b31d3a201",
+    "recompute_metrics.py": "4bbf401ef0c92ecdd2626cd5c17e8d2c7f7752c9c0d0376aab8e21be341ee789"
+  },
+  "stop_conditions": {
+    "any_triggered": false,
+    "context_id_resolvability_ge_95pct": true,
+    "no_llm_or_network_used": true,
+    "no_src_modification_required": true,
+    "runtime_count_is_2947": true,
+    "store_to_runtime_coverage_ge_95pct": true
+  }
+}
