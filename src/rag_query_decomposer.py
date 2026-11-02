@@ -85,6 +85,7 @@ def _decompose_query_provenanced(
     model: str | None = None,
     temperature: float | None = None,
     max_retries: int = 2,
+    usage_sink=None,
 ) -> tuple[list[str], "StageProvenance"]:
     """拆解单一实现：返回 (sub_queries, stage provenance)。
 
@@ -130,6 +131,9 @@ def _decompose_query_provenanced(
         return [query], _stage("invalid_endpoint", True)
 
     from src.llm_gateway import llm_call_safe
+    call_kwargs = {}
+    if usage_sink is not None:
+        call_kwargs["usage_sink"] = usage_sink
     content, record = llm_call_safe(
         call_type="decompose",
         messages=[
@@ -141,6 +145,7 @@ def _decompose_query_provenanced(
         max_tokens=150,
         timeout=30,
         max_retries=max_retries,
+        **call_kwargs,
     )
     retries_used = int(getattr(record, "retries_used", 0) or 0)
 
@@ -167,6 +172,7 @@ def decompose_query_llm(
     max_retries: int = 2,
     *,
     _provenance_sink: list | None = None,
+    _usage_sink=None,
 ) -> list[str]:
     """LLM 驱动的查询拆解（公开 API，薄包装）。
 
@@ -174,10 +180,11 @@ def decompose_query_llm(
     通过统一 LLM Gateway 调用，享受 timeout、retry、错误分类等能力。
     model/temperature 未显式传入时从统一配置 Settings 调用期解析
     （显式参数优先）。``_provenance_sink`` 为 G1-S 内部侧信道
-    （同 rewrite_query_llm）。
+    （同 rewrite_query_llm）；``_usage_sink`` 为 P2-1 内部侧信道，
+    透传给 ``llm_call_safe`` 的 provider usage 回调（默认 None 行为不变）。
     """
     sub_queries, stage = _decompose_query_provenanced(
-        query, model, temperature, max_retries,
+        query, model, temperature, max_retries, usage_sink=_usage_sink,
     )
     if _provenance_sink is not None:
         _provenance_sink.append(stage)

@@ -254,6 +254,7 @@ class GenerationRunner:
                 bm25=self._bm25,
                 documents=self._all_docs,
                 metadatas=self._all_metadatas,
+                usage_origin="evaluation",
             )
         except Exception as e:
             answer = f"[Generation error: {e}]"

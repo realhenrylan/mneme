@@ -10,6 +10,7 @@
    变量（仅读取进程环境，不加载 .env——`.env` 由 src.config 统一加载）。
 """
 
+import logging
 import os
 import threading
 import time
@@ -21,6 +22,8 @@ from openai import OpenAI
 
 from src.config import get_settings, validate_llm_temperature
 from src.security import endpoint_validation_error, validate_endpoint
+
+log = logging.getLogger(__name__)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -279,6 +282,189 @@ def get_call_summary() -> dict:
     }
 
 
+# ── provider usage 观测（P2-1 Option A：查询级台账数据源）─────────
+# 只读 provider 回传的 usage，绝不估算/补齐；缺失字段一律 None（不写 0）。
+# sink 失败只影响观测，绝不影响调用结果。
+
+def _as_optional_int(value) -> int | None:
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        number = int(value)
+    except (TypeError, ValueError):
+        return None
+    return number if number >= 0 else None
+
+
+def _token_fields(usage) -> tuple[int | None, int | None, int | None]:
+    """provider usage → (prompt, completion, total)；缺失字段为 None。"""
+    if usage is None:
+        return None, None, None
+    return (
+        _as_optional_int(getattr(usage, "prompt_tokens", None)),
+        _as_optional_int(getattr(usage, "completion_tokens", None)),
+        _as_optional_int(getattr(usage, "total_tokens", None)),
+    )
+
+
+def _notify_usage_sink(usage_sink, payload: dict) -> None:
+    if usage_sink is None:
+        return
+    try:
+        usage_sink(payload)
+    except Exception:  # noqa: BLE001 - 观测失败必须静默
+        log.debug("usage_sink callback failed", exc_info=True)
+
+
+def _report_completed_call(
+    usage_sink,
+    *,
+    call_type: str,
+    model: str,
+    response,
+    latency_ms: float,
+    retries_used: int,
+) -> None:
+    """非流式成功调用回调：provider usage 存在才写 token，否则 None/missing。"""
+    if usage_sink is None:
+        return
+    usage = getattr(response, "usage", None)
+    prompt, completion, total = _token_fields(usage)
+    has_usage = (
+        prompt is not None or completion is not None or total is not None)
+    _notify_usage_sink(usage_sink, {
+        "call_type": call_type,
+        "model": getattr(response, "model", None) or model,
+        "prompt_tokens": prompt,
+        "completion_tokens": completion,
+        "total_tokens": total,
+        "latency_ms": latency_ms,
+        "retries_used": retries_used,
+        "error_category": None,
+        "usage_source": "provider" if has_usage else "missing",
+        "stream": False,
+        "ttft_ms": None,
+    })
+
+
+class _UsageReportingStream:
+    """流式响应包装：捕获 ``include_usage`` 尾块并回调 ``usage_sink``。
+
+    不改变 chunk 序列与 close 语义（``__getattr__`` 透传底层对象）。usage
+    在流耗尽时回调一次；提前 ``settle()``/``close()`` 时以 ``partial``
+    标注回调一次（幂等，绝不重复计数）。``stream_options`` 被 provider
+    拒绝时 ``usage_unsupported=True``，token 记 null、source=unsupported。
+    """
+
+    def __init__(
+        self,
+        stream,
+        *,
+        call_type: str,
+        model: str,
+        started_at: float,
+        retries_used: int,
+        usage_sink,
+        usage_unsupported: bool = False,
+    ) -> None:
+        self._stream = stream
+        self._call_type = call_type
+        self._model = model
+        self._started_at = started_at
+        self._retries_used = retries_used
+        self._usage_sink = usage_sink
+        self._usage_unsupported = usage_unsupported
+        self._usage = None
+        self._first_token_ms: float | None = None
+        self._completed = False
+        self._settled = False
+        self._lock = threading.Lock()
+
+    def __iter__(self):
+        completed = False
+        try:
+            for chunk in self._stream:
+                self._observe(chunk)
+                yield chunk
+            completed = True
+        finally:
+            self._completed = completed
+            self._settle()
+
+    def _observe(self, chunk) -> None:
+        usage = getattr(chunk, "usage", None)
+        if usage is not None and self._usage is None:
+            self._usage = usage
+        if self._first_token_ms is not None:
+            return
+        choices = getattr(chunk, "choices", None) or ()
+        if not choices:
+            # include_usage 的 usage-only 尾块 choices 为空——不是内容块。
+            return
+        delta = getattr(choices[0], "delta", None)
+        if getattr(delta, "content", None):
+            self._first_token_ms = (
+                (time.perf_counter() - self._started_at) * 1000)
+
+    def _settle(self) -> None:
+        with self._lock:
+            if self._settled:
+                return
+            self._settled = True
+        if self._usage_sink is None:
+            return
+        prompt = completion = total = None
+        source = "missing"
+        usage = self._usage
+        if usage is None:
+            # 少数 SDK/网关把 usage 挂在流对象上而非尾块；同样只读不估算。
+            usage = getattr(self._stream, "usage", None)
+        if self._usage_unsupported:
+            source = "unsupported"
+        elif usage is not None:
+            prompt, completion, total = _token_fields(usage)
+            if (prompt is not None or completion is not None
+                    or total is not None):
+                source = "provider"
+        elif not self._completed:
+            # 流被提前关闭：可能已生成 token 但未拿到 usage。
+            source = "partial"
+        _notify_usage_sink(self._usage_sink, {
+            "call_type": self._call_type,
+            "model": self._model,
+            "prompt_tokens": prompt,
+            "completion_tokens": completion,
+            "total_tokens": total,
+            "latency_ms": (
+                (time.perf_counter() - self._started_at) * 1000),
+            "retries_used": self._retries_used,
+            "error_category": None,
+            "usage_source": source,
+            "stream": True,
+            "ttft_ms": (
+                int(self._first_token_ms)
+                if self._first_token_ms is not None else None),
+        })
+
+    def settle(self) -> None:
+        """结算 usage 但不关闭底层流（消费方提前放弃时调用）。"""
+        self._settle()
+
+    def close(self) -> None:
+        self._settle()
+        close = getattr(self._stream, "close", None)
+        if close is None:
+            return
+        try:
+            close()
+        except Exception:  # noqa: BLE001
+            pass
+
+    def __getattr__(self, name):
+        stream = object.__getattribute__(self, "_stream")
+        return getattr(stream, name)
+
+
 def llm_call(
     call_type: str,
     messages: list[dict],
@@ -290,6 +476,8 @@ def llm_call(
     stream: bool = False,
     extra_body: dict | None = None,
     cancel_event: threading.Event | None = None,
+    *,
+    usage_sink=None,
 ) -> tuple[Any, LLMCallRecord]:
     """统一 LLM 调用网关。
 
@@ -317,6 +505,10 @@ def llm_call(
         stream: 是否流式
         extra_body: 附加请求体字段（如关闭推理模型的 thinking）
         cancel_event: 可取消事件；置位即取消（不重试）
+        usage_sink: provider usage 回调（可选，keyword-only）：成功调用回调
+            恰好一次（流式在流结束时）；缺失 usage 时 token 字段为 None，
+            ``usage_source`` 标注 provider/missing/unsupported/partial。
+            回调异常静默，不影响调用结果。
 
     Returns:
         (response, call_record) 元组
@@ -371,6 +563,10 @@ def llm_call(
 
     start = time.perf_counter()
     last_error: Exception | None = None
+    # 流式 usage 请求开关：provider 拒绝 stream_options 时回退一次并永久
+    # 标记本调用 unsupported（后续重试不再附加该参数）。
+    request_stream_usage = bool(stream) and usage_sink is not None
+    stream_usage_unsupported = False
 
     for attempt in range(max_retries + 1):
         # D1：每个 attempt 前检查取消（重试间无等待点被退避 wait 覆盖，
@@ -393,18 +589,55 @@ def llm_call(
                     kwargs["extra_body"] = extra_body
                 if stream:
                     kwargs["stream"] = True
-                response = client.chat.completions.create(**kwargs)
+                    if request_stream_usage:
+                        # provider usage 需显式请求 include_usage。
+                        kwargs["stream_options"] = {"include_usage": True}
+                try:
+                    response = client.chat.completions.create(**kwargs)
+                except Exception as exc:
+                    # 兼容回退：provider 拒绝 stream_options 时去掉参数重试
+                    # 恰好一次，并标记本调用 usage 不受支持（token 记 null）。
+                    if (request_stream_usage
+                            and classify_error(exc) == LLMErrorCategory.UNKNOWN):
+                        request_stream_usage = False
+                        stream_usage_unsupported = True
+                        kwargs.pop("stream_options", None)
+                        response = client.chat.completions.create(**kwargs)
+                    else:
+                        raise
 
             latency_ms = (time.perf_counter() - start) * 1000
             record.latency_ms = latency_ms
             record.retries_used = attempt
 
-            # 提取 token 使用量（非流式响应才有）
+            # 提取 token 使用量（非流式响应才有；流式由包装器结算）
             if not stream and hasattr(response, 'usage') and response.usage:
                 record.token_usage = TokenUsage(
                     prompt_tokens=response.usage.prompt_tokens or 0,
                     completion_tokens=response.usage.completion_tokens or 0,
                     total_tokens=response.usage.total_tokens or 0,
+                )
+
+            if not stream:
+                _report_completed_call(
+                    usage_sink,
+                    call_type=call_type,
+                    model=model,
+                    response=response,
+                    latency_ms=latency_ms,
+                    retries_used=attempt,
+                )
+            elif usage_sink is not None:
+                # 仅在观测激活时包装流对象——默认路径返回原始 response，
+                # 不改变既有调用面的类型/身份/迭代语义。
+                response = _UsageReportingStream(
+                    response,
+                    call_type=call_type,
+                    model=getattr(response, "model", None) or model,
+                    started_at=start,
+                    retries_used=attempt,
+                    usage_sink=usage_sink,
+                    usage_unsupported=stream_usage_unsupported,
                 )
 
             _record_call(record)
@@ -460,13 +693,19 @@ def llm_call_safe(
     max_tokens: int = 1000,
     timeout: float | None = None,
     max_retries: int = DEFAULT_MAX_RETRIES,
+    *,
+    usage_sink=None,
 ) -> tuple[str | None, LLMCallRecord]:
     """安全版 LLM 调用 — 不抛异常，返回 (content, record)。
 
     失败时 content 为 None，record.error_category 记录原因。
     适用于 decompose/rewrite 等有降级路径的场景。
+    ``usage_sink`` 透传给 ``llm_call``（keyword-only，默认 None 行为不变）。
     """
     try:
+        call_kwargs = {}
+        if usage_sink is not None:
+            call_kwargs["usage_sink"] = usage_sink
         response, record = llm_call(
             call_type=call_type,
             messages=messages,
@@ -476,6 +715,7 @@ def llm_call_safe(
             timeout=timeout,
             max_retries=max_retries,
             stream=False,
+            **call_kwargs,
         )
         content = response.choices[0].message.content.strip()
         return content, record
