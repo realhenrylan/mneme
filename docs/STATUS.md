@@ -13,7 +13,7 @@
 
 | 维度 | 状态 |
 |---|---|
-| 代码 | `main` @ `004e903`（产品源码基线 `1066d60`；T1–T8 + M6a Phase 2A 文档提交；未 push） |
+| 代码 | `main` @ `903f84d`（产品源码基线 `1066d60`；含 P2-1 合并；已 push） |
 | 路线图 | 23 个子项：**10 `[x]` / 10 `[~]` / 3 `[ ]`**；阶段 2 四子项全闭环；阶段 4 `NO_PROMOTION` |
 | 评测 | 答案级评测线 M1–M5d 闭环并 PASS；产品默认为臂2（2026-09-09） |
 | 质量门 | ✅ 默认套件 **2653 passed / 8 skipped / 318 deselected / 0 failed / 0 errors**（2026-10-31 收口）；`frozen_stage` 独立已知红 **240 failed / 78 errors / 0 passed / 2661 deselected** → P0-1 |
@@ -169,7 +169,13 @@ M6a 的预注册须独立成文，不在本账本内直接启动。
 
 ## 4. P2（观察 / 卫生）
 
-### P2-1 臂2 成本观察 — **WATCH（基线已建立，T6）**
+### P2-1 臂2 成本观察 — **WATCH（实现已合入，默认 off；基线已建立，T6）**
+
+- **实现已合入**：`feat/p2-1-usage-ledger @ fda26a7` → main `903f84d`（merge commit）。
+  `RAG_USAGE_LEDGER` 默认 **off**；只有开关 on 且 trace consent=`minimal` 才写
+  `${MNEME_DATA_DIR}/usage/`（未设时 `~/.mneme/usage/`）；缺失 token 记 null，不估算。
+  单测 59 例；合并后 `usage_ledger + llm_gateway` 98 passed；全量在规范路径 2712 passed
+  / 8 skipped / 318 deselected。默认关闭，合并本身不改变产品行为。
 
 - 已验证收益：修正率 **0.5575**、语义拒答 **1.0**、误拒率 **0.1393**；代价 token **+167%**。
 - 完整回退通道（复现 M2 基线）：`RAG_REFUSAL_THRESHOLD=0.03`、`RAG_DYNAMIC_MIN_K=12`、
@@ -201,12 +207,12 @@ M6a 的预注册须独立成文，不在本账本内直接启动。
 | P1-1 | P1 | 路线图回填（v2.1 / M1–M5d / 臂2） | **DONE** | — | 工程（已完成） |
 | P1-2 | P1 | M6 立项 | **NO_GO**（M6a Phase 2B FAIL，2026-11-02） | 已关闭；不合并、不重跑；证据保留在 `mneme-phase2b` | owner/工程（已关闭） |
 | P1-3 | P1 | 陈旧开放标记裁决 | **DONE** | — | owner（已裁决） |
-| P2-1 | P2 | 臂2 成本观察 | **WATCH** | 按 T6 阈值观察真实使用；owner 已确认观察 | owner |
+| P2-1 | P2 | 臂2 成本观察（实现已合入，默认 off） | **WATCH** | 部署后开 `RAG_USAGE_LEDGER` 采集真实样本；按 T6 阈值 | owner |
 | P2-2 | P2 | 仓库卫生（`.mimosa/`、日志、venv） | **DONE** | — | 工程（已完成） |
 
 ---
 
-## 6. 2026-10-31 / 11-01 执行记录（可复现）
+## 6. 2026-10-31 / 11-01 / 11-02 执行记录（可复现）
 
 **T1/T1c/T1b marker 收口**
 - 31 个测试文件带 `frozen_stage` marker：1 个全红文件保留模块级
@@ -263,6 +269,16 @@ python -m pytest -q --ignore=tests/analysis -m frozen_stage -p no:cacheprovider 
 - 裁决 **FAIL / NO_GO**；worktree `D:\GitHub\mneme-phase2b`，提交 `f6fb7ac`，未 push；
   不合并 `feat/m6a-citation-selection`，不重跑、不调阈值；重启须另立预注册。
 - 未改产品默认、未改产品 `src/`、未更新本文件之外的评测文档。
+
+**2026-11-02 P2-1 收口**
+- `feat/p2-1-usage-ledger @ fda26a7` 已合入 main `903f84d`（merge commit）；仅
+  `CHANGELOG.md` 冲突，保留 Phase 1 审计与 P2-1 两条记录。
+- 合并后 `tests/test_usage_ledger.py tests/test_llm_gateway.py` **98 passed**；
+  合并前规范路径全量 **2712 passed / 8 skipped / 318 deselected / 0 failed / 0 errors**。
+- `RAG_USAGE_LEDGER` 默认 **off**，只有开关 on + consent `minimal` 才写台账；合并本身
+  不改变产品行为。
+- 已 push `1eef4c9..903f84d main -> main`；CI 未能验证：`gh run list` 返回
+  `To get started with GitHub CLI, please run: gh auth login`（exit 4），未伪造结果。
 
 ---
 
