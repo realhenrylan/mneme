@@ -1,3 +1,7 @@
+## 2026-11-06
+
+- **仓库清理：移除 27 篇早期临时开发计划与草稿** — 清理 plans/ 下 2026-07 早期功能开发临时方案与单点修复草案（含 12 篇带时间戳会话草案、早期 TDD 计划与临时技术总结），释放无用历史跟踪文件；保留正式评测预注册、门禁章程、验收清单与 P2-1 观察方案（共 26 篇）。
+
 ## 2026-11-02
 
 - **M6a Phase 2A：oracle 修正为 context-reachable，Q2-e=0.4125 签批（只读；未 push）** — 原报告用 `O_store=0.7667` 作 oracle，但未检查 truth 候选是否在当前 case context 内；M6a 只能重定向 context chunk，因此原 Q2-e 中点 0.5717 不可达。修正 `scripts/audit/phase2a_oracle.py`：`T_reachable = {s ∈ T_store | mapped_runtime(s) ∩ Ctx ≠ ∅}`，`O_store_ach = min(m, |T_reachable|)/|T_store|`，并新增 `O_evi_ach`、`n_t_store_reachable`、`n_t_rt_reachable`；`O_store` 仅保留为理论上界。重跑后 A：`O_store_ach=0.4483`、control C1=0.3767、C3=0.3160、可分离区间 `[0.3967, 0.4383]`、Q2-e 中点 **0.4125**；B/C 覆盖 0.7286/0.7465，仅敏感性。Q2-a..f 已于 2026-11-02 由 owner 会话确认签批（Q2-e=0.4125）；Q2-c 的 fabricated/retrieved 两项仍因 capture 未修复未验证，C3 按降级表述。Phase 2B 必须用 LF 归一 dataset（`4597167d…`）生成 manifest；worktree 裸 CRLF 的 `88fa2928…` 只能作原始字节披露。修正版产物提交在本地 `eval/m6a-phase2a-2026-11-01 @ 744f373`，未 push；主仓仅改文档。**未跑 LLM、未改产品代码/默认、未 push。**
