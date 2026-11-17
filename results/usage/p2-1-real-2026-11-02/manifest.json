@@ -1,0 +1,25 @@
+{
+  "git_commit": "36ae6f378bb8fa8bfda8861604002484a47166d4",
+  "ledger_files": [
+    {
+      "path": "C:\\Users\\Henry Lan\\.mneme\\usage\\usage-2026-11.jsonl",
+      "sha256": "bb6212f804674ab27b9dac64c11469c6db81f23645e207e98e43dbd8352e6520"
+    }
+  ],
+  "window": {
+    "first_ts_bucket": "2026-11-02",
+    "last_ts_bucket": "2026-11-06"
+  },
+  "n": {
+    "origin_user": 47,
+    "provider_user": 45,
+    "corrected_user_tokens_non_null": 45
+  },
+  "analysis_script_sha256": "b7008e7a743b6372be52252a3724568be2e0bc3d2627dd81bfabb440d3aa5d70",
+  "generated_at_utc": "2026-11-08T13:26:35.022328+00:00",
+  "config_fingerprint_list": [
+    "3b34e9a5c952"
+  ],
+  "status": "INSUFFICIENT_SAMPLE",
+  "stop_condition": "24h_without_new_ledger_row"
+}

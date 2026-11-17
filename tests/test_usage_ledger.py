@@ -495,9 +495,12 @@ class TestReport:
         assert "query" not in text
 
     def test_cli_emits_json(self, ledger_env, capsys):
-        ledger_env.mkdir(parents=True)
-        (ledger_env / "usage-2026-11.jsonl").write_text(
-            json.dumps({"ts_bucket": "2026-11-01", "tokens_total": 5}) + "\n",
+        now = usage_ledger._utc_now()
+        path = usage_ledger._path_for(now)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps({"ts_bucket": usage_ledger._utc_day(now),
+                        "tokens_total": 5}) + "\n",
             encoding="utf-8")
         assert usage_ledger.main(["report", "--days", "7"]) == 0
         payload = json.loads(capsys.readouterr().out)

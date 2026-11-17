@@ -1,3 +1,11 @@
+## 2026-11-17
+
+- **行动账本快照校正 + 时间炸弹测试修复** — ①`docs/STATUS.md` §1 代码快照 `903f84d` 已过时（实际 HEAD `36ae6f3`，中间隔「移除 27 篇早期计划」与「P2-1 合并记录」两个提交），已校正并保留 `903f84d` 作为 P2-1 合并点标注。②质量门读数补记 2026-11-17 复跑：默认套件 **2712 passed / 8 skipped / 318 deselected / 0 failed / 0 errors**（379s），2026-10-31 的 2653 为 T1b 恢复后、P2-1 合入前的基线，两个数字并存不矛盾。③`tests/test_usage_ledger.py::TestReport::test_cli_emits_json` 修复：原断言把 `ts_bucket` 写死为 `2026-11-01` 并以 `--days 7` 查询，`build_report` 以 UTC 当天为基准回推，越过 2026-11-11 后该行必然落在窗口外 → **2026-11-17 实测 `1 failed, 2711 passed`**。改用既有先例（同文件 348 行）的 `usage_ledger._path_for(_utc_now())` + `_utc_day(now)` 派生，测试自此不随时间腐化。④`results/usage/p2-1-real-2026-11-02/` 入库（`analyze_usage.py` / `manifest.json` / `metrics.json` / `report.md`）；此前仅存在于工作树未跟踪状态，而 STATUS §4 与 2026-11-09 条目均已链接该路径，证据链在 `git clean` 或换机时会断。已扫描：无 API key / Authorization / 凭据命中；仅含聚合统计与台账文件 SHA-256，不含 query/answer 原文。
+
+## 2026-11-09
+
+- **P2-1 本轮采集结束，候选 4 探针搁置** — 连续 24 小时无新台账行后停止采集。47 条 `origin=user` 中，45 条有 provider 用量，2 条 `error/missing` 按原样保留。样本问题由 AI 生成，provider 样本数低于 200 条目标，本轮结果为 `INSUFFICIENT_SAMPLE`，无法用于 T6 成本裁决。行动账本保留 P2-1 为 `WATCH`，M6b 留在待办，日常使用优先。见[停止报告](results/usage/p2-1-real-2026-11-02/report.md)和[行动账本](docs/STATUS.md)。
+
 ## 2026-11-06
 
 - **仓库清理：移除 27 篇早期临时开发计划与草稿** — 清理 plans/ 下 2026-07 早期功能开发临时方案与单点修复草案（含 12 篇带时间戳会话草案、早期 TDD 计划与临时技术总结），释放无用历史跟踪文件；保留正式评测预注册、门禁章程、验收清单与 P2-1 观察方案（共 26 篇）。

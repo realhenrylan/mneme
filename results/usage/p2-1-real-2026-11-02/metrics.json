@@ -1,0 +1,281 @@
+{
+  "by_config_fingerprint": {
+    "3b34e9a5c952": {
+      "provider_corrected_n": 45,
+      "provider_rows": 45,
+      "provider_tokens_total": {
+        "mean": 1976.4,
+        "n": 45,
+        "p50": 1916.0,
+        "p90": 2458.0,
+        "p95": 2708.0
+      },
+      "refusal_count": 0,
+      "refusal_rate_corrected_n": 0.0,
+      "t6_status": "INSUFFICIENT_SAMPLE",
+      "user_rows": 47
+    }
+  },
+  "by_model": {
+    "deepseek-chat": {
+      "llm_calls": {
+        "mean": 1.467,
+        "n": 45,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 2.0
+      },
+      "n": 45,
+      "tokens_total": {
+        "mean": 1976.4,
+        "n": 45,
+        "p50": 1916.0,
+        "p90": 2458.0,
+        "p95": 2708.0
+      },
+      "total_ms": {
+        "mean": 4841.289,
+        "n": 45,
+        "p50": 3244.0,
+        "p90": 7077.8,
+        "p95": 8004.4
+      }
+    },
+    "unknown": {
+      "llm_calls": {
+        "mean": 0.0,
+        "n": 2,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0
+      },
+      "n": 2,
+      "tokens_total": {
+        "mean": null,
+        "n": 0,
+        "p50": null,
+        "p90": null,
+        "p95": null
+      },
+      "total_ms": {
+        "mean": 11099.5,
+        "n": 2,
+        "p50": 11099.5,
+        "p90": 11859.1,
+        "p95": 11954.05
+      }
+    }
+  },
+  "by_origin": {
+    "user": {
+      "llm_calls": {
+        "mean": 1.404,
+        "n": 47,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 2.0
+      },
+      "n": 47,
+      "tokens_total": {
+        "mean": 1976.4,
+        "n": 45,
+        "p50": 1916.0,
+        "p90": 2458.0,
+        "p95": 2708.0
+      },
+      "total_ms": {
+        "mean": 5107.596,
+        "n": 47,
+        "p50": 3326.0,
+        "p90": 7951.2,
+        "p95": 11299.4
+      }
+    }
+  },
+  "by_outcome_user": {
+    "answered": 45,
+    "error": 2,
+    "refused_post_llm": 0,
+    "refused_pre_llm": 0
+  },
+  "cache_hit_user": {
+    "n": 0,
+    "ratio": 0.0
+  },
+  "config_fingerprint_user": {
+    "3b34e9a5c952": {
+      "n": 47,
+      "share": 1.0
+    }
+  },
+  "context_chunks_user": {
+    "distribution": {
+      "10": {
+        "n": 17,
+        "share": 0.361702
+      },
+      "11": {
+        "n": 15,
+        "share": 0.319149
+      },
+      "12": {
+        "n": 7,
+        "share": 0.148936
+      },
+      "13": {
+        "n": 2,
+        "share": 0.042553
+      },
+      "14": {
+        "n": 1,
+        "share": 0.021277
+      },
+      "6": {
+        "n": 1,
+        "share": 0.021277
+      },
+      "9": {
+        "n": 4,
+        "share": 0.085106
+      }
+    },
+    "stats": {
+      "mean": 10.66,
+      "n": 47,
+      "p50": 11.0,
+      "p90": 12.0,
+      "p95": 12.7
+    }
+  },
+  "counts": {
+    "corrected_n_user_tokens_non_null": 45,
+    "fingerprint_count": 1,
+    "origin_evaluation_or_test_excluded": 0,
+    "origin_user": 47,
+    "provider_token_coverage": 0.957447,
+    "provider_user_rows": 45,
+    "rows_total": 47
+  },
+  "latency_ms_user": {
+    "total_ms": {
+      "mean": 5107.596,
+      "n": 47,
+      "p50": 3326.0,
+      "p90": 7951.2,
+      "p95": 11299.4
+    },
+    "ttft_ms": {
+      "mean": 1213.044,
+      "n": 45,
+      "p50": 1072.0,
+      "p90": 2115.6,
+      "p95": 3091.8
+    }
+  },
+  "quality": {
+    "analysis_uses_only_allowlisted_fields": true,
+    "forbidden_schema_keys": []
+  },
+  "refusal_stage_user": {
+    "none": {
+      "n": 47,
+      "share": 1.0
+    }
+  },
+  "refusal_user": {
+    "counts": {
+      "refused_post_llm": 0,
+      "refused_pre_llm": 0
+    },
+    "n": 0,
+    "rate_all_user": 0.0,
+    "rate_corrected_n": 0.0
+  },
+  "retrieval_k_user": {
+    "distribution": {
+      "20": {
+        "n": 47,
+        "share": 1.0
+      }
+    },
+    "stats": {
+      "mean": 20.0,
+      "n": 47,
+      "p50": 20.0,
+      "p90": 20.0,
+      "p95": 20.0
+    }
+  },
+  "retry_count_user": {
+    "distribution": {
+      "0": {
+        "n": 47,
+        "share": 1.0
+      }
+    },
+    "stats": {
+      "mean": 0.0,
+      "n": 47,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p95": 0.0
+    },
+    "total": 0
+  },
+  "source": {
+    "ledger_path": "C:\\Users\\Henry Lan\\.mneme\\usage\\usage-2026-11.jsonl",
+    "malformed_rows_skipped": 0,
+    "rows_read": 47
+  },
+  "t6": {
+    "status": "INSUFFICIENT_SAMPLE",
+    "thresholds": {
+      "provider_sample_target": 200,
+      "refusal_rate_band": [
+        0.2,
+        0.4
+      ],
+      "tokens_total_mean_review": 9839,
+      "tokens_total_mean_watch": 8658,
+      "tokens_total_p95_review": 18741,
+      "tokens_total_p95_watch": 15618
+    }
+  },
+  "token_stats_user": {
+    "tokens_completion": {
+      "mean": 231.489,
+      "n": 45,
+      "p50": 129.0,
+      "p90": 548.2,
+      "p95": 766.6
+    },
+    "tokens_prompt": {
+      "mean": 1744.911,
+      "n": 45,
+      "p50": 1719.0,
+      "p90": 2004.4,
+      "p95": 2135.2
+    },
+    "tokens_total": {
+      "mean": 1976.4,
+      "n": 45,
+      "p50": 1916.0,
+      "p90": 2458.0,
+      "p95": 2708.0
+    }
+  },
+  "usage_source_user": {
+    "missing": {
+      "n": 2,
+      "share": 0.042553
+    },
+    "provider": {
+      "n": 45,
+      "share": 0.957447
+    }
+  },
+  "window": {
+    "first_ts_bucket": "2026-11-02",
+    "last_ts_bucket": "2026-11-06"
+  }
+}
