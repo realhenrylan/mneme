@@ -1,0 +1,1936 @@
+{
+ "baseline_report_aggregates": {
+  "answer_hit_rate_avg": 0.1585,
+  "case_count": 150,
+  "cases_failed": 0,
+  "cases_without_effective_points": 28,
+  "citation_id_validity_avg": 0.9267,
+  "citation_precision_avg": 0.0466,
+  "citation_recall_avg": 0.0656,
+  "completion_tokens_avg": 122.0,
+  "completion_tokens_sum": 18294,
+  "faithfulness_avg": 0.6478,
+  "false_refusal_rate": 0.1311,
+  "generation_ms_avg": 2100.5,
+  "prompt_tokens_avg": 7729.5,
+  "prompt_tokens_sum": 1159423,
+  "refusal_case_count": 28,
+  "refusal_precision": 0.25,
+  "retrieval_ms_avg": 0.0,
+  "total_ms_avg": 2100.5,
+  "total_tokens_avg": 7851.4,
+  "total_tokens_sum": 1177717
+ },
+ "consistency": {
+  "assertions": [
+   "slots_before == slots_after",
+   "add == 0 and delete == 0",
+   "stripped([S#]) new_answer == baseline answer (byte-identical)"
+  ],
+  "checked_cases": 12,
+  "chunk_store_unresolvable_cases": [
+   {
+    "case_id": "multi-011",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_80', '81544765752f_chunk_54', '81544765752f_chunk_121', '32c427fb50e2_chunk_79', '32c427fb50e2_chunk_81']"
+    ]
+   },
+   {
+    "case_id": "multi-012",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_86', '32c427fb50e2_chunk_85', '81544765752f_chunk_65', '32c427fb50e2_chunk_87', '32c427fb50e2_chunk_84']"
+    ]
+   },
+   {
+    "case_id": "multi-013",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_95', '32c427fb50e2_chunk_103', '32c427fb50e2_chunk_94', '81544765752f_chunk_67', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "multi-014",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_100', '32c427fb50e2_chunk_94', '993955159403_chunk_30', '4f9001ca8c15_chunk_88', '32c427fb50e2_chunk_99']"
+    ]
+   },
+   {
+    "case_id": "multi-015",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_200', 'e564a122a7a2_chunk_192', 'e564a122a7a2_chunk_199', 'e564a122a7a2_chunk_201', 'e564a122a7a2_chunk_191']"
+    ]
+   },
+   {
+    "case_id": "multi-016",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_151', 'b9c22720dc84_chunk_187', '293d777c429b_chunk_477', '86ef1bf559c5_chunk_276', '293d777c429b_chunk_492']"
+    ]
+   },
+   {
+    "case_id": "multi-017",
+    "reasons": [
+     "chunk store 缺失: ['293d777c429b_chunk_1077', '293d777c429b_chunk_1012', '8b191b241b93_chunk_73', '293d777c429b_chunk_1076', '293d777c429b_chunk_1078']"
+    ]
+   },
+   {
+    "case_id": "multi-018",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_172', 'e564a122a7a2_chunk_210', 'e564a122a7a2_chunk_171', 'e564a122a7a2_chunk_173', 'e564a122a7a2_chunk_209']"
+    ]
+   },
+   {
+    "case_id": "multi-019",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_173', 'e564a122a7a2_chunk_172', '32c427fb50e2_chunk_138', 'e564a122a7a2_chunk_174', 'e564a122a7a2_chunk_171']"
+    ]
+   },
+   {
+    "case_id": "multi-020",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_249', 'e564a122a7a2_chunk_251', 'e564a122a7a2_chunk_248', 'e564a122a7a2_chunk_250', 'e564a122a7a2_chunk_252']"
+    ]
+   },
+   {
+    "case_id": "multi-021",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_145', 'e564a122a7a2_chunk_173', 'e564a122a7a2_chunk_172', '86ef1bf559c5_chunk_369', '86ef1bf559c5_chunk_367']"
+    ]
+   },
+   {
+    "case_id": "multi-023",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_203', 'e564a122a7a2_chunk_202', 'e564a122a7a2_chunk_204']"
+    ]
+   },
+   {
+    "case_id": "multi-024",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_65', '81544765752f_chunk_78', '32c427fb50e2_chunk_116', '81544765752f_chunk_49', '81544765752f_chunk_64']"
+    ]
+   },
+   {
+    "case_id": "multi-025",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_159', '32c427fb50e2_chunk_160', '81544765752f_chunk_78', '81544765752f_chunk_101', '81544765752f_chunk_87']"
+    ]
+   },
+   {
+    "case_id": "multi-026",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_65', '993955159403_chunk_43', '81544765752f_chunk_61', '81544765752f_chunk_96', '81544765752f_chunk_64']"
+    ]
+   },
+   {
+    "case_id": "multi-027",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_142', '32c427fb50e2_chunk_121', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_50', '32c427fb50e2_chunk_137']"
+    ]
+   },
+   {
+    "case_id": "multi-028",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_195', '81544765752f_chunk_81', '86ef1bf559c5_chunk_527', '81544765752f_chunk_76', '86ef1bf559c5_chunk_191']"
+    ]
+   },
+   {
+    "case_id": "multi-029",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_139', '32c427fb50e2_chunk_160', '993955159403_chunk_38', 'c9fd20815ea8_chunk_24']"
+    ]
+   },
+   {
+    "case_id": "multi-030",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_61', '81544765752f_chunk_65', '81544765752f_chunk_49', '32c427fb50e2_chunk_130']"
+    ]
+   },
+   {
+    "case_id": "multi-031",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_61', '81544765752f_chunk_129', '81544765752f_chunk_65', '993955159403_chunk_38']"
+    ]
+   },
+   {
+    "case_id": "multi-032",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_84', '81544765752f_chunk_78', '32c427fb50e2_chunk_194', '81544765752f_chunk_83', '81544765752f_chunk_85']"
+    ]
+   },
+   {
+    "case_id": "multi-033",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_86', '32c427fb50e2_chunk_85', '32c427fb50e2_chunk_87']"
+    ]
+   },
+   {
+    "case_id": "multi-034",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_49', '81544765752f_chunk_65', '81544765752f_chunk_67', '32c427fb50e2_chunk_131']"
+    ]
+   },
+   {
+    "case_id": "zh-021",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_114', '32c427fb50e2_chunk_115', '32c427fb50e2_chunk_110', 'c9fd20815ea8_chunk_21', '81544765752f_chunk_128']"
+    ]
+   },
+   {
+    "case_id": "zh-022",
+    "reasons": [
+     "chunk store 缺失: ['2e79918eccf4_chunk_62', '2e79918eccf4_chunk_70', 'c9fd20815ea8_chunk_24', '2e79918eccf4_chunk_61', '2e79918eccf4_chunk_63']"
+    ]
+   },
+   {
+    "case_id": "zh-023",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_176', '32c427fb50e2_chunk_175', 'e564a122a7a2_chunk_245', '5927c70d0f8e_chunk_56', '2e79918eccf4_chunk_60']"
+    ]
+   },
+   {
+    "case_id": "zh-024",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_134', '32c427fb50e2_chunk_107', '81544765752f_chunk_62', '32c427fb50e2_chunk_133', '32c427fb50e2_chunk_135']"
+    ]
+   },
+   {
+    "case_id": "zh-025",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_81', '81544765752f_chunk_81', '32c427fb50e2_chunk_82', '81544765752f_chunk_77', '81544765752f_chunk_74']"
+    ]
+   },
+   {
+    "case_id": "zh-026",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_96', '32c427fb50e2_chunk_131', '32c427fb50e2_chunk_86', '81544765752f_chunk_95', '81544765752f_chunk_81']"
+    ]
+   },
+   {
+    "case_id": "zh-027",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_157', '32c427fb50e2_chunk_116', '2e79918eccf4_chunk_65', '2e79918eccf4_chunk_64', 'e564a122a7a2_chunk_245']"
+    ]
+   },
+   {
+    "case_id": "zh-028",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_121', '32c427fb50e2_chunk_142', '81544765752f_chunk_65', '32c427fb50e2_chunk_93', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "zh-029",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_124', '32c427fb50e2_chunk_123', '81544765752f_chunk_61', '81544765752f_chunk_65', '81544765752f_chunk_58']"
+    ]
+   },
+   {
+    "case_id": "zh-030",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '32c427fb50e2_chunk_177', '2e79918eccf4_chunk_70', 'c9fd20815ea8_chunk_24', 'e564a122a7a2_chunk_162']"
+    ]
+   },
+   {
+    "case_id": "zh-031",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_134', '32c427fb50e2_chunk_135', '81544765752f_chunk_67', '293d777c429b_chunk_930', '293d777c429b_chunk_444']"
+    ]
+   },
+   {
+    "case_id": "zh-032",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_144', '32c427fb50e2_chunk_146', '81544765752f_chunk_54', '81544765752f_chunk_58', '32c427fb50e2_chunk_131']"
+    ]
+   },
+   {
+    "case_id": "zh-033",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_67', '81544765752f_chunk_66', '81544765752f_chunk_68']"
+    ]
+   },
+   {
+    "case_id": "zh-034",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_160', '81544765752f_chunk_122', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_159', '32c427fb50e2_chunk_161']"
+    ]
+   },
+   {
+    "case_id": "zh-035",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_108', '32c427fb50e2_chunk_111', '81544765752f_chunk_65', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "zh-036",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_108', '32c427fb50e2_chunk_110', '2e79918eccf4_chunk_70', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_127']"
+    ]
+   },
+   {
+    "case_id": "zh-037",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_182', '32c427fb50e2_chunk_100', '81544765752f_chunk_105', '81544765752f_chunk_103', '32c427fb50e2_chunk_183']"
+    ]
+   },
+   {
+    "case_id": "en-021",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_146', '86ef1bf559c5_chunk_273', '86ef1bf559c5_chunk_238', '32c427fb50e2_chunk_140', '293d777c429b_chunk_434']"
+    ]
+   },
+   {
+    "case_id": "en-022",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_338', '86ef1bf559c5_chunk_463', '86ef1bf559c5_chunk_465', '2e79918eccf4_chunk_43', '293d777c429b_chunk_411']"
+    ]
+   },
+   {
+    "case_id": "en-023",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_478', '86ef1bf559c5_chunk_479', '86ef1bf559c5_chunk_476', 'b9c22720dc84_chunk_168', '86ef1bf559c5_chunk_477']"
+    ]
+   },
+   {
+    "case_id": "en-024",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_76', '8b191b241b93_chunk_72', '293d777c429b_chunk_651', '293d777c429b_chunk_458', '293d777c429b_chunk_741']"
+    ]
+   },
+   {
+    "case_id": "en-025",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_172', '32c427fb50e2_chunk_137', '86ef1bf559c5_chunk_195', 'e564a122a7a2_chunk_171', 'e564a122a7a2_chunk_173']"
+    ]
+   },
+   {
+    "case_id": "en-026",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_80', '8b191b241b93_chunk_81', '8b191b241b93_chunk_79', '8b191b241b93_chunk_82']"
+    ]
+   },
+   {
+    "case_id": "en-027",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_78', '86ef1bf559c5_chunk_147', '86ef1bf559c5_chunk_144', '86ef1bf559c5_chunk_479', '293d777c429b_chunk_826']"
+    ]
+   },
+   {
+    "case_id": "en-028",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_375', '86ef1bf559c5_chunk_374', '293d777c429b_chunk_1097', '4f9001ca8c15_chunk_82', '86ef1bf559c5_chunk_376']"
+    ]
+   },
+   {
+    "case_id": "en-031",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_201', '86ef1bf559c5_chunk_160', '86ef1bf559c5_chunk_200', '86ef1bf559c5_chunk_202', '86ef1bf559c5_chunk_159']"
+    ]
+   },
+   {
+    "case_id": "en-032",
+    "reasons": [
+     "chunk store 缺失: ['b9c22720dc84_chunk_185', 'b9c22720dc84_chunk_184', 'b9c22720dc84_chunk_186']"
+    ]
+   },
+   {
+    "case_id": "mixed-016",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_157', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_160', '32c427fb50e2_chunk_107']"
+    ]
+   },
+   {
+    "case_id": "mixed-017",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_157', '81544765752f_chunk_54', '81544765752f_chunk_49', '81544765752f_chunk_65']"
+    ]
+   },
+   {
+    "case_id": "mixed-018",
+    "reasons": [
+     "chunk store 缺失: ['993955159403_chunk_32', '81544765752f_chunk_85', '81544765752f_chunk_61', '81544765752f_chunk_65', '993955159403_chunk_31']"
+    ]
+   },
+   {
+    "case_id": "mixed-019",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_78', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_77', '81544765752f_chunk_79', 'c9fd20815ea8_chunk_24']"
+    ]
+   },
+   {
+    "case_id": "mixed-020",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_67', '81544765752f_chunk_66']"
+    ]
+   },
+   {
+    "case_id": "zh-038",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_95', '81544765752f_chunk_96', '81544765752f_chunk_94', '81544765752f_chunk_97']"
+    ]
+   },
+   {
+    "case_id": "zh-039",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_92', 'e564a122a7a2_chunk_224', 'c9fd20815ea8_chunk_25']"
+    ]
+   },
+   {
+    "case_id": "zh-040",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_115', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_114', '32c427fb50e2_chunk_116', 'c9fd20815ea8_chunk_24']"
+    ]
+   },
+   {
+    "case_id": "zh-041",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_81', '32c427fb50e2_chunk_103', '32c427fb50e2_chunk_156', '32c427fb50e2_chunk_174', '81544765752f_chunk_79']"
+    ]
+   },
+   {
+    "case_id": "zh-042",
+    "reasons": [
+     "chunk store 缺失: ['2e79918eccf4_chunk_62', '32c427fb50e2_chunk_158', '2e79918eccf4_chunk_67', '81544765752f_chunk_54', '2e79918eccf4_chunk_70']"
+    ]
+   },
+   {
+    "case_id": "zh-043",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_157', '32c427fb50e2_chunk_155', '32c427fb50e2_chunk_174', '81544765752f_chunk_61', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "zh-044",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_86', '2e79918eccf4_chunk_68', '81544765752f_chunk_61', '32c427fb50e2_chunk_85', '32c427fb50e2_chunk_87']"
+    ]
+   },
+   {
+    "case_id": "en-033",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_91', '86ef1bf559c5_chunk_351', '86ef1bf559c5_chunk_90', '86ef1bf559c5_chunk_92', '86ef1bf559c5_chunk_350']"
+    ]
+   },
+   {
+    "case_id": "en-036",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_179', '86ef1bf559c5_chunk_178']"
+    ]
+   },
+   {
+    "case_id": "en-037",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_172', 'e564a122a7a2_chunk_171', 'e564a122a7a2_chunk_173']"
+    ]
+   },
+   {
+    "case_id": "en-038",
+    "reasons": [
+     "chunk store 缺失: ['293d777c429b_chunk_461', '293d777c429b_chunk_1066', '293d777c429b_chunk_671', 'e564a122a7a2_chunk_226', '293d777c429b_chunk_460']"
+    ]
+   },
+   {
+    "case_id": "en-039",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_73', '4f9001ca8c15_chunk_74']"
+    ]
+   },
+   {
+    "case_id": "mixed-021",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_61', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_157', '32c427fb50e2_chunk_95']"
+    ]
+   },
+   {
+    "case_id": "mixed-022",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_93', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_61', '32c427fb50e2_chunk_92', '32c427fb50e2_chunk_94']"
+    ]
+   },
+   {
+    "case_id": "mixed-023",
+    "reasons": [
+     "chunk store 缺失: ['993955159403_chunk_31', '81544765752f_chunk_78', '81544765752f_chunk_49', '81544765752f_chunk_65', '2e79918eccf4_chunk_70']"
+    ]
+   },
+   {
+    "case_id": "mixed-024",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_25', '81544765752f_chunk_127', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_126', '81544765752f_chunk_128']"
+    ]
+   },
+   {
+    "case_id": "mixed-025",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_80', '32c427fb50e2_chunk_121', '81544765752f_chunk_95', 'c9fd20815ea8_chunk_25']"
+    ]
+   },
+   {
+    "case_id": "zh-045",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_61', '81544765752f_chunk_129', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "zh-046",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_129', '32c427fb50e2_chunk_124', '32c427fb50e2_chunk_160', '81544765752f_chunk_128', '81544765752f_chunk_130']"
+    ]
+   },
+   {
+    "case_id": "zh-047",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_115', '32c427fb50e2_chunk_131', 'c9fd20815ea8_chunk_23', '293d777c429b_chunk_211', '2e79918eccf4_chunk_67']"
+    ]
+   },
+   {
+    "case_id": "zh-048",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_61', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_174', '81544765752f_chunk_129', '81544765752f_chunk_60']"
+    ]
+   },
+   {
+    "case_id": "zh-049",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_49', '32c427fb50e2_chunk_93', '81544765752f_chunk_85', '81544765752f_chunk_78', '32c427fb50e2_chunk_121']"
+    ]
+   },
+   {
+    "case_id": "zh-050",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_67', '81544765752f_chunk_49', '32c427fb50e2_chunk_190', '32c427fb50e2_chunk_159']"
+    ]
+   },
+   {
+    "case_id": "zh-051",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_67', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_147', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_157']"
+    ]
+   },
+   {
+    "case_id": "zh-052",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_85', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_84', '81544765752f_chunk_86']"
+    ]
+   },
+   {
+    "case_id": "zh-053",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_121', '81544765752f_chunk_78', '32c427fb50e2_chunk_98', '32c427fb50e2_chunk_142', '81544765752f_chunk_110']"
+    ]
+   },
+   {
+    "case_id": "zh-054",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_97', 'c9fd20815ea8_chunk_21']"
+    ]
+   },
+   {
+    "case_id": "en-040",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_72', '8b191b241b93_chunk_74', '8b191b241b93_chunk_71', '8b191b241b93_chunk_73', '8b191b241b93_chunk_75']"
+    ]
+   },
+   {
+    "case_id": "en-041",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_200', 'e564a122a7a2_chunk_155', 'e564a122a7a2_chunk_214', 'e564a122a7a2_chunk_199', 'e564a122a7a2_chunk_201']"
+    ]
+   },
+   {
+    "case_id": "en-042",
+    "reasons": [
+     "chunk store 缺失: ['b9c22720dc84_chunk_180', 'b9c22720dc84_chunk_178', 'b9c22720dc84_chunk_182', 'b9c22720dc84_chunk_179', 'b9c22720dc84_chunk_181']"
+    ]
+   },
+   {
+    "case_id": "en-043",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_71', '86ef1bf559c5_chunk_245', '32c427fb50e2_chunk_137', '32c427fb50e2_chunk_138', 'e564a122a7a2_chunk_172']"
+    ]
+   },
+   {
+    "case_id": "en-044",
+    "reasons": [
+     "chunk store 缺失: ['5927c70d0f8e_chunk_39', '5927c70d0f8e_chunk_51', '5927c70d0f8e_chunk_43', '5927c70d0f8e_chunk_40', '5927c70d0f8e_chunk_50']"
+    ]
+   },
+   {
+    "case_id": "en-045",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_151', 'e564a122a7a2_chunk_156', 'e564a122a7a2_chunk_150', 'e564a122a7a2_chunk_152', 'e564a122a7a2_chunk_155']"
+    ]
+   },
+   {
+    "case_id": "en-046",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_155', 'e564a122a7a2_chunk_151', 'b9c22720dc84_chunk_167', 'e564a122a7a2_chunk_154', 'e564a122a7a2_chunk_156']"
+    ]
+   },
+   {
+    "case_id": "en-047",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_72', '8b191b241b93_chunk_75', 'e564a122a7a2_chunk_226', '8b191b241b93_chunk_71', '8b191b241b93_chunk_73']"
+    ]
+   },
+   {
+    "case_id": "en-048",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_74', 'e564a122a7a2_chunk_172', '761b22915b5e_chunk_20', '8b191b241b93_chunk_73', '8b191b241b93_chunk_75']"
+    ]
+   },
+   {
+    "case_id": "en-050",
+    "reasons": [
+     "chunk store 缺失: ['b9c22720dc84_chunk_180', 'b9c22720dc84_chunk_178', 'b9c22720dc84_chunk_184', '86ef1bf559c5_chunk_429', 'b9c22720dc84_chunk_179']"
+    ]
+   },
+   {
+    "case_id": "en-052",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_375', '86ef1bf559c5_chunk_546', '86ef1bf559c5_chunk_545', '8b191b241b93_chunk_72', '86ef1bf559c5_chunk_374']"
+    ]
+   },
+   {
+    "case_id": "en-053",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_72', '8b191b241b93_chunk_74', '293d777c429b_chunk_219', '293d777c429b_chunk_640', 'e564a122a7a2_chunk_172']"
+    ]
+   },
+   {
+    "case_id": "mixed-026",
+    "reasons": [
+     "chunk store 缺失: ['993955159403_chunk_43', '993955159403_chunk_42']"
+    ]
+   },
+   {
+    "case_id": "mixed-027",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_49', 'c9fd20815ea8_chunk_25', '81544765752f_chunk_50']"
+    ]
+   },
+   {
+    "case_id": "mixed-028",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_128', '81544765752f_chunk_55', '993955159403_chunk_29', '81544765752f_chunk_127', '81544765752f_chunk_129']"
+    ]
+   },
+   {
+    "case_id": "mixed-029",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_115', '32c427fb50e2_chunk_139', '32c427fb50e2_chunk_114', '32c427fb50e2_chunk_116']"
+    ]
+   },
+   {
+    "case_id": "mixed-030",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_129', '81544765752f_chunk_128', '32c427fb50e2_chunk_180', '81544765752f_chunk_130', '81544765752f_chunk_127']"
+    ]
+   },
+   {
+    "case_id": "mixed-031",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_190', '32c427fb50e2_chunk_147', 'c9fd20815ea8_chunk_23', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_189']"
+    ]
+   },
+   {
+    "case_id": "mixed-032",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_74', '8b191b241b93_chunk_73', '761b22915b5e_chunk_21', '32c427fb50e2_chunk_147', '8b191b241b93_chunk_75']"
+    ]
+   },
+   {
+    "case_id": "zh-055",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_116', '32c427fb50e2_chunk_118', '32c427fb50e2_chunk_163', '2e79918eccf4_chunk_66', '81544765752f_chunk_128']"
+    ]
+   },
+   {
+    "case_id": "zh-056",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_174', '81544765752f_chunk_61', 'e564a122a7a2_chunk_144', '4f9001ca8c15_chunk_88', 'e564a122a7a2_chunk_245']"
+    ]
+   },
+   {
+    "case_id": "zh-057",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_67', '32c427fb50e2_chunk_130', '32c427fb50e2_chunk_132', '81544765752f_chunk_66']"
+    ]
+   },
+   {
+    "case_id": "zh-058",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_80', '32c427fb50e2_chunk_116', '32c427fb50e2_chunk_119', '81544765752f_chunk_54', '293d777c429b_chunk_796']"
+    ]
+   },
+   {
+    "case_id": "zh-059",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_88', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_87', '32c427fb50e2_chunk_89', 'c9fd20815ea8_chunk_24']"
+    ]
+   },
+   {
+    "case_id": "en-054",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_172', '32c427fb50e2_chunk_137', 'e564a122a7a2_chunk_171', 'e564a122a7a2_chunk_173', '32c427fb50e2_chunk_136']"
+    ]
+   },
+   {
+    "case_id": "en-055",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_76', '86ef1bf559c5_chunk_218', 'e564a122a7a2_chunk_202', '86ef1bf559c5_chunk_227', '4f9001ca8c15_chunk_75']"
+    ]
+   },
+   {
+    "case_id": "en-057",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_97', '86ef1bf559c5_chunk_98', '86ef1bf559c5_chunk_457', '86ef1bf559c5_chunk_96', '86ef1bf559c5_chunk_99']"
+    ]
+   },
+   {
+    "case_id": "mixed-033",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_63', '81544765752f_chunk_91', 'c9fd20815ea8_chunk_24', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_145']"
+    ]
+   },
+   {
+    "case_id": "mixed-034",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_61', '2e79918eccf4_chunk_70', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_60', '81544765752f_chunk_62']"
+    ]
+   },
+   {
+    "case_id": "mixed-035",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_103', '32c427fb50e2_chunk_121', '81544765752f_chunk_106', 'e564a122a7a2_chunk_217']"
+    ]
+   },
+   {
+    "case_id": "noanswer-026",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_98', '81544765752f_chunk_81', '2e79918eccf4_chunk_67', '81544765752f_chunk_97', '81544765752f_chunk_99']"
+    ]
+   },
+   {
+    "case_id": "noanswer-027",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_115', '81544765752f_chunk_129', '81544765752f_chunk_128', '81544765752f_chunk_121', '32c427fb50e2_chunk_114']"
+    ]
+   },
+   {
+    "case_id": "noanswer-028",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_80', '81544765752f_chunk_95', '32c427fb50e2_chunk_147', '993955159403_chunk_43', 'c9fd20815ea8_chunk_25']"
+    ]
+   },
+   {
+    "case_id": "noanswer-029",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_81', '32c427fb50e2_chunk_86', '81544765752f_chunk_129']"
+    ]
+   },
+   {
+    "case_id": "noanswer-030",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_154', '81544765752f_chunk_121', '32c427fb50e2_chunk_153', '32c427fb50e2_chunk_155', '81544765752f_chunk_120']"
+    ]
+   },
+   {
+    "case_id": "noanswer-031",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_100', '81544765752f_chunk_99']"
+    ]
+   },
+   {
+    "case_id": "noanswer-032",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_174', '32c427fb50e2_chunk_142', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_87', '2e79918eccf4_chunk_67']"
+    ]
+   },
+   {
+    "case_id": "noanswer-033",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_195', '81544765752f_chunk_109', '32c427fb50e2_chunk_194', 'c9fd20815ea8_chunk_21']"
+    ]
+   },
+   {
+    "case_id": "noanswer-034",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_115', '81544765752f_chunk_78', '32c427fb50e2_chunk_121', '81544765752f_chunk_72']"
+    ]
+   },
+   {
+    "case_id": "noanswer-035",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_85', '81544765752f_chunk_82', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_130']"
+    ]
+   },
+   {
+    "case_id": "noanswer-036",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_99', '81544765752f_chunk_61', '32c427fb50e2_chunk_98', '32c427fb50e2_chunk_100', '81544765752f_chunk_60']"
+    ]
+   },
+   {
+    "case_id": "noanswer-037",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_78', '293d777c429b_chunk_461', '4f9001ca8c15_chunk_79', '293d777c429b_chunk_460']"
+    ]
+   },
+   {
+    "case_id": "noanswer-038",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_135', '86ef1bf559c5_chunk_134', '86ef1bf559c5_chunk_136']"
+    ]
+   },
+   {
+    "case_id": "noanswer-040",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_84', '4f9001ca8c15_chunk_83', '4f9001ca8c15_chunk_85']"
+    ]
+   },
+   {
+    "case_id": "noanswer-041",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_192', 'e564a122a7a2_chunk_191', 'e564a122a7a2_chunk_193']"
+    ]
+   },
+   {
+    "case_id": "noanswer-043",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_481', '86ef1bf559c5_chunk_480', '86ef1bf559c5_chunk_482']"
+    ]
+   },
+   {
+    "case_id": "noanswer-044",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_72', 'e564a122a7a2_chunk_151', '81544765752f_chunk_50', 'b9c22720dc84_chunk_187', '32c427fb50e2_chunk_137']"
+    ]
+   },
+   {
+    "case_id": "noanswer-045",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_374', '293d777c429b_chunk_439', '293d777c429b_chunk_802', '293d777c429b_chunk_217', '86ef1bf559c5_chunk_373']"
+    ]
+   },
+   {
+    "case_id": "noanswer-047",
+    "reasons": [
+     "chunk store 缺失: ['b9c22720dc84_chunk_184', 'b9c22720dc84_chunk_180', 'b9c22720dc84_chunk_183', 'b9c22720dc84_chunk_185', 'b9c22720dc84_chunk_179']"
+    ]
+   },
+   {
+    "case_id": "noanswer-049",
+    "reasons": [
+     "chunk store 缺失: ['293d777c429b_chunk_1065', '293d777c429b_chunk_1066', '293d777c429b_chunk_1064', '293d777c429b_chunk_1067']"
+    ]
+   },
+   {
+    "case_id": "noanswer-050",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_238', '81544765752f_chunk_82', '86ef1bf559c5_chunk_477', 'e564a122a7a2_chunk_237', 'e564a122a7a2_chunk_239']"
+    ]
+   },
+   {
+    "case_id": "noanswer-051",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '993955159403_chunk_34', 'c9fd20815ea8_chunk_24', '993955159403_chunk_43', '32c427fb50e2_chunk_139']"
+    ]
+   },
+   {
+    "case_id": "noanswer-052",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_123', '32c427fb50e2_chunk_86', '32c427fb50e2_chunk_194', '81544765752f_chunk_85', '81544765752f_chunk_65']"
+    ]
+   },
+   {
+    "case_id": "noanswer-053",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_207', '86ef1bf559c5_chunk_131', '32c427fb50e2_chunk_115', '293d777c429b_chunk_1077', '293d777c429b_chunk_870']"
+    ]
+   },
+   {
+    "case_id": "noanswer-054",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_62', '32c427fb50e2_chunk_93', '81544765752f_chunk_61', '81544765752f_chunk_65']"
+    ]
+   },
+   {
+    "case_id": "noanswer-055",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_197', '32c427fb50e2_chunk_208', 'e564a122a7a2_chunk_247', '86ef1bf559c5_chunk_378', 'e564a122a7a2_chunk_253']"
+    ]
+   }
+  ],
+  "failures": [
+   {
+    "case_id": "multi-011",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_80', '81544765752f_chunk_54', '81544765752f_chunk_121', '32c427fb50e2_chunk_79', '32c427fb50e2_chunk_81']"
+    ]
+   },
+   {
+    "case_id": "multi-012",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_86', '32c427fb50e2_chunk_85', '81544765752f_chunk_65', '32c427fb50e2_chunk_87', '32c427fb50e2_chunk_84']"
+    ]
+   },
+   {
+    "case_id": "multi-013",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_95', '32c427fb50e2_chunk_103', '32c427fb50e2_chunk_94', '81544765752f_chunk_67', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "multi-014",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_100', '32c427fb50e2_chunk_94', '993955159403_chunk_30', '4f9001ca8c15_chunk_88', '32c427fb50e2_chunk_99']"
+    ]
+   },
+   {
+    "case_id": "multi-015",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_200', 'e564a122a7a2_chunk_192', 'e564a122a7a2_chunk_199', 'e564a122a7a2_chunk_201', 'e564a122a7a2_chunk_191']"
+    ]
+   },
+   {
+    "case_id": "multi-016",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_151', 'b9c22720dc84_chunk_187', '293d777c429b_chunk_477', '86ef1bf559c5_chunk_276', '293d777c429b_chunk_492']"
+    ]
+   },
+   {
+    "case_id": "multi-017",
+    "reasons": [
+     "chunk store 缺失: ['293d777c429b_chunk_1077', '293d777c429b_chunk_1012', '8b191b241b93_chunk_73', '293d777c429b_chunk_1076', '293d777c429b_chunk_1078']"
+    ]
+   },
+   {
+    "case_id": "multi-018",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_172', 'e564a122a7a2_chunk_210', 'e564a122a7a2_chunk_171', 'e564a122a7a2_chunk_173', 'e564a122a7a2_chunk_209']"
+    ]
+   },
+   {
+    "case_id": "multi-019",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_173', 'e564a122a7a2_chunk_172', '32c427fb50e2_chunk_138', 'e564a122a7a2_chunk_174', 'e564a122a7a2_chunk_171']"
+    ]
+   },
+   {
+    "case_id": "multi-020",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_249', 'e564a122a7a2_chunk_251', 'e564a122a7a2_chunk_248', 'e564a122a7a2_chunk_250', 'e564a122a7a2_chunk_252']"
+    ]
+   },
+   {
+    "case_id": "multi-021",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_145', 'e564a122a7a2_chunk_173', 'e564a122a7a2_chunk_172', '86ef1bf559c5_chunk_369', '86ef1bf559c5_chunk_367']"
+    ]
+   },
+   {
+    "case_id": "multi-023",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_203', 'e564a122a7a2_chunk_202', 'e564a122a7a2_chunk_204']"
+    ]
+   },
+   {
+    "case_id": "multi-024",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_65', '81544765752f_chunk_78', '32c427fb50e2_chunk_116', '81544765752f_chunk_49', '81544765752f_chunk_64']"
+    ]
+   },
+   {
+    "case_id": "multi-025",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_159', '32c427fb50e2_chunk_160', '81544765752f_chunk_78', '81544765752f_chunk_101', '81544765752f_chunk_87']"
+    ]
+   },
+   {
+    "case_id": "multi-026",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_65', '993955159403_chunk_43', '81544765752f_chunk_61', '81544765752f_chunk_96', '81544765752f_chunk_64']"
+    ]
+   },
+   {
+    "case_id": "multi-027",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_142', '32c427fb50e2_chunk_121', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_50', '32c427fb50e2_chunk_137']"
+    ]
+   },
+   {
+    "case_id": "multi-028",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_195', '81544765752f_chunk_81', '86ef1bf559c5_chunk_527', '81544765752f_chunk_76', '86ef1bf559c5_chunk_191']"
+    ]
+   },
+   {
+    "case_id": "multi-029",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_139', '32c427fb50e2_chunk_160', '993955159403_chunk_38', 'c9fd20815ea8_chunk_24']"
+    ]
+   },
+   {
+    "case_id": "multi-030",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_61', '81544765752f_chunk_65', '81544765752f_chunk_49', '32c427fb50e2_chunk_130']"
+    ]
+   },
+   {
+    "case_id": "multi-031",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_61', '81544765752f_chunk_129', '81544765752f_chunk_65', '993955159403_chunk_38']"
+    ]
+   },
+   {
+    "case_id": "multi-032",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_84', '81544765752f_chunk_78', '32c427fb50e2_chunk_194', '81544765752f_chunk_83', '81544765752f_chunk_85']"
+    ]
+   },
+   {
+    "case_id": "multi-033",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_86', '32c427fb50e2_chunk_85', '32c427fb50e2_chunk_87']"
+    ]
+   },
+   {
+    "case_id": "multi-034",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_49', '81544765752f_chunk_65', '81544765752f_chunk_67', '32c427fb50e2_chunk_131']"
+    ]
+   },
+   {
+    "case_id": "zh-021",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_114', '32c427fb50e2_chunk_115', '32c427fb50e2_chunk_110', 'c9fd20815ea8_chunk_21', '81544765752f_chunk_128']"
+    ]
+   },
+   {
+    "case_id": "zh-022",
+    "reasons": [
+     "chunk store 缺失: ['2e79918eccf4_chunk_62', '2e79918eccf4_chunk_70', 'c9fd20815ea8_chunk_24', '2e79918eccf4_chunk_61', '2e79918eccf4_chunk_63']"
+    ]
+   },
+   {
+    "case_id": "zh-023",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_176', '32c427fb50e2_chunk_175', 'e564a122a7a2_chunk_245', '5927c70d0f8e_chunk_56', '2e79918eccf4_chunk_60']"
+    ]
+   },
+   {
+    "case_id": "zh-024",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_134', '32c427fb50e2_chunk_107', '81544765752f_chunk_62', '32c427fb50e2_chunk_133', '32c427fb50e2_chunk_135']"
+    ]
+   },
+   {
+    "case_id": "zh-025",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_81', '81544765752f_chunk_81', '32c427fb50e2_chunk_82', '81544765752f_chunk_77', '81544765752f_chunk_74']"
+    ]
+   },
+   {
+    "case_id": "zh-026",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_96', '32c427fb50e2_chunk_131', '32c427fb50e2_chunk_86', '81544765752f_chunk_95', '81544765752f_chunk_81']"
+    ]
+   },
+   {
+    "case_id": "zh-027",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_157', '32c427fb50e2_chunk_116', '2e79918eccf4_chunk_65', '2e79918eccf4_chunk_64', 'e564a122a7a2_chunk_245']"
+    ]
+   },
+   {
+    "case_id": "zh-028",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_121', '32c427fb50e2_chunk_142', '81544765752f_chunk_65', '32c427fb50e2_chunk_93', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "zh-029",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_124', '32c427fb50e2_chunk_123', '81544765752f_chunk_61', '81544765752f_chunk_65', '81544765752f_chunk_58']"
+    ]
+   },
+   {
+    "case_id": "zh-030",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '32c427fb50e2_chunk_177', '2e79918eccf4_chunk_70', 'c9fd20815ea8_chunk_24', 'e564a122a7a2_chunk_162']"
+    ]
+   },
+   {
+    "case_id": "zh-031",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_134', '32c427fb50e2_chunk_135', '81544765752f_chunk_67', '293d777c429b_chunk_930', '293d777c429b_chunk_444']"
+    ]
+   },
+   {
+    "case_id": "zh-032",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_144', '32c427fb50e2_chunk_146', '81544765752f_chunk_54', '81544765752f_chunk_58', '32c427fb50e2_chunk_131']"
+    ]
+   },
+   {
+    "case_id": "zh-033",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_67', '81544765752f_chunk_66', '81544765752f_chunk_68']"
+    ]
+   },
+   {
+    "case_id": "zh-034",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_160', '81544765752f_chunk_122', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_159', '32c427fb50e2_chunk_161']"
+    ]
+   },
+   {
+    "case_id": "zh-035",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_108', '32c427fb50e2_chunk_111', '81544765752f_chunk_65', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "zh-036",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_108', '32c427fb50e2_chunk_110', '2e79918eccf4_chunk_70', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_127']"
+    ]
+   },
+   {
+    "case_id": "zh-037",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_182', '32c427fb50e2_chunk_100', '81544765752f_chunk_105', '81544765752f_chunk_103', '32c427fb50e2_chunk_183']"
+    ]
+   },
+   {
+    "case_id": "en-021",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_146', '86ef1bf559c5_chunk_273', '86ef1bf559c5_chunk_238', '32c427fb50e2_chunk_140', '293d777c429b_chunk_434']"
+    ]
+   },
+   {
+    "case_id": "en-022",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_338', '86ef1bf559c5_chunk_463', '86ef1bf559c5_chunk_465', '2e79918eccf4_chunk_43', '293d777c429b_chunk_411']"
+    ]
+   },
+   {
+    "case_id": "en-023",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_478', '86ef1bf559c5_chunk_479', '86ef1bf559c5_chunk_476', 'b9c22720dc84_chunk_168', '86ef1bf559c5_chunk_477']"
+    ]
+   },
+   {
+    "case_id": "en-024",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_76', '8b191b241b93_chunk_72', '293d777c429b_chunk_651', '293d777c429b_chunk_458', '293d777c429b_chunk_741']"
+    ]
+   },
+   {
+    "case_id": "en-025",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_172', '32c427fb50e2_chunk_137', '86ef1bf559c5_chunk_195', 'e564a122a7a2_chunk_171', 'e564a122a7a2_chunk_173']"
+    ]
+   },
+   {
+    "case_id": "en-026",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_80', '8b191b241b93_chunk_81', '8b191b241b93_chunk_79', '8b191b241b93_chunk_82']"
+    ]
+   },
+   {
+    "case_id": "en-027",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_78', '86ef1bf559c5_chunk_147', '86ef1bf559c5_chunk_144', '86ef1bf559c5_chunk_479', '293d777c429b_chunk_826']"
+    ]
+   },
+   {
+    "case_id": "en-028",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_375', '86ef1bf559c5_chunk_374', '293d777c429b_chunk_1097', '4f9001ca8c15_chunk_82', '86ef1bf559c5_chunk_376']"
+    ]
+   },
+   {
+    "case_id": "en-031",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_201', '86ef1bf559c5_chunk_160', '86ef1bf559c5_chunk_200', '86ef1bf559c5_chunk_202', '86ef1bf559c5_chunk_159']"
+    ]
+   },
+   {
+    "case_id": "en-032",
+    "reasons": [
+     "chunk store 缺失: ['b9c22720dc84_chunk_185', 'b9c22720dc84_chunk_184', 'b9c22720dc84_chunk_186']"
+    ]
+   },
+   {
+    "case_id": "mixed-016",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_157', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_160', '32c427fb50e2_chunk_107']"
+    ]
+   },
+   {
+    "case_id": "mixed-017",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_157', '81544765752f_chunk_54', '81544765752f_chunk_49', '81544765752f_chunk_65']"
+    ]
+   },
+   {
+    "case_id": "mixed-018",
+    "reasons": [
+     "chunk store 缺失: ['993955159403_chunk_32', '81544765752f_chunk_85', '81544765752f_chunk_61', '81544765752f_chunk_65', '993955159403_chunk_31']"
+    ]
+   },
+   {
+    "case_id": "mixed-019",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_78', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_77', '81544765752f_chunk_79', 'c9fd20815ea8_chunk_24']"
+    ]
+   },
+   {
+    "case_id": "mixed-020",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_67', '81544765752f_chunk_66']"
+    ]
+   },
+   {
+    "case_id": "zh-038",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_95', '81544765752f_chunk_96', '81544765752f_chunk_94', '81544765752f_chunk_97']"
+    ]
+   },
+   {
+    "case_id": "zh-039",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_92', 'e564a122a7a2_chunk_224', 'c9fd20815ea8_chunk_25']"
+    ]
+   },
+   {
+    "case_id": "zh-040",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_115', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_114', '32c427fb50e2_chunk_116', 'c9fd20815ea8_chunk_24']"
+    ]
+   },
+   {
+    "case_id": "zh-041",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_81', '32c427fb50e2_chunk_103', '32c427fb50e2_chunk_156', '32c427fb50e2_chunk_174', '81544765752f_chunk_79']"
+    ]
+   },
+   {
+    "case_id": "zh-042",
+    "reasons": [
+     "chunk store 缺失: ['2e79918eccf4_chunk_62', '32c427fb50e2_chunk_158', '2e79918eccf4_chunk_67', '81544765752f_chunk_54', '2e79918eccf4_chunk_70']"
+    ]
+   },
+   {
+    "case_id": "zh-043",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_157', '32c427fb50e2_chunk_155', '32c427fb50e2_chunk_174', '81544765752f_chunk_61', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "zh-044",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_86', '2e79918eccf4_chunk_68', '81544765752f_chunk_61', '32c427fb50e2_chunk_85', '32c427fb50e2_chunk_87']"
+    ]
+   },
+   {
+    "case_id": "en-033",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_91', '86ef1bf559c5_chunk_351', '86ef1bf559c5_chunk_90', '86ef1bf559c5_chunk_92', '86ef1bf559c5_chunk_350']"
+    ]
+   },
+   {
+    "case_id": "en-036",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_179', '86ef1bf559c5_chunk_178']"
+    ]
+   },
+   {
+    "case_id": "en-037",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_172', 'e564a122a7a2_chunk_171', 'e564a122a7a2_chunk_173']"
+    ]
+   },
+   {
+    "case_id": "en-038",
+    "reasons": [
+     "chunk store 缺失: ['293d777c429b_chunk_461', '293d777c429b_chunk_1066', '293d777c429b_chunk_671', 'e564a122a7a2_chunk_226', '293d777c429b_chunk_460']"
+    ]
+   },
+   {
+    "case_id": "en-039",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_73', '4f9001ca8c15_chunk_74']"
+    ]
+   },
+   {
+    "case_id": "mixed-021",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_61', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_157', '32c427fb50e2_chunk_95']"
+    ]
+   },
+   {
+    "case_id": "mixed-022",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_93', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_61', '32c427fb50e2_chunk_92', '32c427fb50e2_chunk_94']"
+    ]
+   },
+   {
+    "case_id": "mixed-023",
+    "reasons": [
+     "chunk store 缺失: ['993955159403_chunk_31', '81544765752f_chunk_78', '81544765752f_chunk_49', '81544765752f_chunk_65', '2e79918eccf4_chunk_70']"
+    ]
+   },
+   {
+    "case_id": "mixed-024",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_25', '81544765752f_chunk_127', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_126', '81544765752f_chunk_128']"
+    ]
+   },
+   {
+    "case_id": "mixed-025",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_80', '32c427fb50e2_chunk_121', '81544765752f_chunk_95', 'c9fd20815ea8_chunk_25']"
+    ]
+   },
+   {
+    "case_id": "zh-045",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_61', '81544765752f_chunk_129', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_49']"
+    ]
+   },
+   {
+    "case_id": "zh-046",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_129', '32c427fb50e2_chunk_124', '32c427fb50e2_chunk_160', '81544765752f_chunk_128', '81544765752f_chunk_130']"
+    ]
+   },
+   {
+    "case_id": "zh-047",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_115', '32c427fb50e2_chunk_131', 'c9fd20815ea8_chunk_23', '293d777c429b_chunk_211', '2e79918eccf4_chunk_67']"
+    ]
+   },
+   {
+    "case_id": "zh-048",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_61', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_174', '81544765752f_chunk_129', '81544765752f_chunk_60']"
+    ]
+   },
+   {
+    "case_id": "zh-049",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_49', '32c427fb50e2_chunk_93', '81544765752f_chunk_85', '81544765752f_chunk_78', '32c427fb50e2_chunk_121']"
+    ]
+   },
+   {
+    "case_id": "zh-050",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_67', '81544765752f_chunk_49', '32c427fb50e2_chunk_190', '32c427fb50e2_chunk_159']"
+    ]
+   },
+   {
+    "case_id": "zh-051",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_67', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_147', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_157']"
+    ]
+   },
+   {
+    "case_id": "zh-052",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_85', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_84', '81544765752f_chunk_86']"
+    ]
+   },
+   {
+    "case_id": "zh-053",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_121', '81544765752f_chunk_78', '32c427fb50e2_chunk_98', '32c427fb50e2_chunk_142', '81544765752f_chunk_110']"
+    ]
+   },
+   {
+    "case_id": "zh-054",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_97', 'c9fd20815ea8_chunk_21']"
+    ]
+   },
+   {
+    "case_id": "en-040",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_72', '8b191b241b93_chunk_74', '8b191b241b93_chunk_71', '8b191b241b93_chunk_73', '8b191b241b93_chunk_75']"
+    ]
+   },
+   {
+    "case_id": "en-041",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_200', 'e564a122a7a2_chunk_155', 'e564a122a7a2_chunk_214', 'e564a122a7a2_chunk_199', 'e564a122a7a2_chunk_201']"
+    ]
+   },
+   {
+    "case_id": "en-042",
+    "reasons": [
+     "chunk store 缺失: ['b9c22720dc84_chunk_180', 'b9c22720dc84_chunk_178', 'b9c22720dc84_chunk_182', 'b9c22720dc84_chunk_179', 'b9c22720dc84_chunk_181']"
+    ]
+   },
+   {
+    "case_id": "en-043",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_71', '86ef1bf559c5_chunk_245', '32c427fb50e2_chunk_137', '32c427fb50e2_chunk_138', 'e564a122a7a2_chunk_172']"
+    ]
+   },
+   {
+    "case_id": "en-044",
+    "reasons": [
+     "chunk store 缺失: ['5927c70d0f8e_chunk_39', '5927c70d0f8e_chunk_51', '5927c70d0f8e_chunk_43', '5927c70d0f8e_chunk_40', '5927c70d0f8e_chunk_50']"
+    ]
+   },
+   {
+    "case_id": "en-045",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_151', 'e564a122a7a2_chunk_156', 'e564a122a7a2_chunk_150', 'e564a122a7a2_chunk_152', 'e564a122a7a2_chunk_155']"
+    ]
+   },
+   {
+    "case_id": "en-046",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_155', 'e564a122a7a2_chunk_151', 'b9c22720dc84_chunk_167', 'e564a122a7a2_chunk_154', 'e564a122a7a2_chunk_156']"
+    ]
+   },
+   {
+    "case_id": "en-047",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_72', '8b191b241b93_chunk_75', 'e564a122a7a2_chunk_226', '8b191b241b93_chunk_71', '8b191b241b93_chunk_73']"
+    ]
+   },
+   {
+    "case_id": "en-048",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_74', 'e564a122a7a2_chunk_172', '761b22915b5e_chunk_20', '8b191b241b93_chunk_73', '8b191b241b93_chunk_75']"
+    ]
+   },
+   {
+    "case_id": "en-050",
+    "reasons": [
+     "chunk store 缺失: ['b9c22720dc84_chunk_180', 'b9c22720dc84_chunk_178', 'b9c22720dc84_chunk_184', '86ef1bf559c5_chunk_429', 'b9c22720dc84_chunk_179']"
+    ]
+   },
+   {
+    "case_id": "en-052",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_375', '86ef1bf559c5_chunk_546', '86ef1bf559c5_chunk_545', '8b191b241b93_chunk_72', '86ef1bf559c5_chunk_374']"
+    ]
+   },
+   {
+    "case_id": "en-053",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_72', '8b191b241b93_chunk_74', '293d777c429b_chunk_219', '293d777c429b_chunk_640', 'e564a122a7a2_chunk_172']"
+    ]
+   },
+   {
+    "case_id": "mixed-026",
+    "reasons": [
+     "chunk store 缺失: ['993955159403_chunk_43', '993955159403_chunk_42']"
+    ]
+   },
+   {
+    "case_id": "mixed-027",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_49', 'c9fd20815ea8_chunk_25', '81544765752f_chunk_50']"
+    ]
+   },
+   {
+    "case_id": "mixed-028",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_128', '81544765752f_chunk_55', '993955159403_chunk_29', '81544765752f_chunk_127', '81544765752f_chunk_129']"
+    ]
+   },
+   {
+    "case_id": "mixed-029",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_115', '32c427fb50e2_chunk_139', '32c427fb50e2_chunk_114', '32c427fb50e2_chunk_116']"
+    ]
+   },
+   {
+    "case_id": "mixed-030",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_129', '81544765752f_chunk_128', '32c427fb50e2_chunk_180', '81544765752f_chunk_130', '81544765752f_chunk_127']"
+    ]
+   },
+   {
+    "case_id": "mixed-031",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_190', '32c427fb50e2_chunk_147', 'c9fd20815ea8_chunk_23', 'c9fd20815ea8_chunk_24', '32c427fb50e2_chunk_189']"
+    ]
+   },
+   {
+    "case_id": "mixed-032",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_74', '8b191b241b93_chunk_73', '761b22915b5e_chunk_21', '32c427fb50e2_chunk_147', '8b191b241b93_chunk_75']"
+    ]
+   },
+   {
+    "case_id": "zh-055",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_116', '32c427fb50e2_chunk_118', '32c427fb50e2_chunk_163', '2e79918eccf4_chunk_66', '81544765752f_chunk_128']"
+    ]
+   },
+   {
+    "case_id": "zh-056",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_174', '81544765752f_chunk_61', 'e564a122a7a2_chunk_144', '4f9001ca8c15_chunk_88', 'e564a122a7a2_chunk_245']"
+    ]
+   },
+   {
+    "case_id": "zh-057",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_67', '32c427fb50e2_chunk_130', '32c427fb50e2_chunk_132', '81544765752f_chunk_66']"
+    ]
+   },
+   {
+    "case_id": "zh-058",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_80', '32c427fb50e2_chunk_116', '32c427fb50e2_chunk_119', '81544765752f_chunk_54', '293d777c429b_chunk_796']"
+    ]
+   },
+   {
+    "case_id": "zh-059",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_88', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_87', '32c427fb50e2_chunk_89', 'c9fd20815ea8_chunk_24']"
+    ]
+   },
+   {
+    "case_id": "en-054",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_172', '32c427fb50e2_chunk_137', 'e564a122a7a2_chunk_171', 'e564a122a7a2_chunk_173', '32c427fb50e2_chunk_136']"
+    ]
+   },
+   {
+    "case_id": "en-055",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_76', '86ef1bf559c5_chunk_218', 'e564a122a7a2_chunk_202', '86ef1bf559c5_chunk_227', '4f9001ca8c15_chunk_75']"
+    ]
+   },
+   {
+    "case_id": "en-057",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_97', '86ef1bf559c5_chunk_98', '86ef1bf559c5_chunk_457', '86ef1bf559c5_chunk_96', '86ef1bf559c5_chunk_99']"
+    ]
+   },
+   {
+    "case_id": "mixed-033",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_63', '81544765752f_chunk_91', 'c9fd20815ea8_chunk_24', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_145']"
+    ]
+   },
+   {
+    "case_id": "mixed-034",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_61', '2e79918eccf4_chunk_70', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_60', '81544765752f_chunk_62']"
+    ]
+   },
+   {
+    "case_id": "mixed-035",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_103', '32c427fb50e2_chunk_121', '81544765752f_chunk_106', 'e564a122a7a2_chunk_217']"
+    ]
+   },
+   {
+    "case_id": "noanswer-026",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_98', '81544765752f_chunk_81', '2e79918eccf4_chunk_67', '81544765752f_chunk_97', '81544765752f_chunk_99']"
+    ]
+   },
+   {
+    "case_id": "noanswer-027",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_115', '81544765752f_chunk_129', '81544765752f_chunk_128', '81544765752f_chunk_121', '32c427fb50e2_chunk_114']"
+    ]
+   },
+   {
+    "case_id": "noanswer-028",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_80', '81544765752f_chunk_95', '32c427fb50e2_chunk_147', '993955159403_chunk_43', 'c9fd20815ea8_chunk_25']"
+    ]
+   },
+   {
+    "case_id": "noanswer-029",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', 'c9fd20815ea8_chunk_24', '81544765752f_chunk_81', '32c427fb50e2_chunk_86', '81544765752f_chunk_129']"
+    ]
+   },
+   {
+    "case_id": "noanswer-030",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_154', '81544765752f_chunk_121', '32c427fb50e2_chunk_153', '32c427fb50e2_chunk_155', '81544765752f_chunk_120']"
+    ]
+   },
+   {
+    "case_id": "noanswer-031",
+    "reasons": [
+     "chunk store 缺失: ['81544765752f_chunk_100', '81544765752f_chunk_99']"
+    ]
+   },
+   {
+    "case_id": "noanswer-032",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_174', '32c427fb50e2_chunk_142', 'c9fd20815ea8_chunk_23', '81544765752f_chunk_87', '2e79918eccf4_chunk_67']"
+    ]
+   },
+   {
+    "case_id": "noanswer-033",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_195', '81544765752f_chunk_109', '32c427fb50e2_chunk_194', 'c9fd20815ea8_chunk_21']"
+    ]
+   },
+   {
+    "case_id": "noanswer-034",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_115', '81544765752f_chunk_78', '32c427fb50e2_chunk_121', '81544765752f_chunk_72']"
+    ]
+   },
+   {
+    "case_id": "noanswer-035",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '81544765752f_chunk_85', '81544765752f_chunk_82', 'c9fd20815ea8_chunk_23', '32c427fb50e2_chunk_130']"
+    ]
+   },
+   {
+    "case_id": "noanswer-036",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_99', '81544765752f_chunk_61', '32c427fb50e2_chunk_98', '32c427fb50e2_chunk_100', '81544765752f_chunk_60']"
+    ]
+   },
+   {
+    "case_id": "noanswer-037",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_78', '293d777c429b_chunk_461', '4f9001ca8c15_chunk_79', '293d777c429b_chunk_460']"
+    ]
+   },
+   {
+    "case_id": "noanswer-038",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_135', '86ef1bf559c5_chunk_134', '86ef1bf559c5_chunk_136']"
+    ]
+   },
+   {
+    "case_id": "noanswer-040",
+    "reasons": [
+     "chunk store 缺失: ['4f9001ca8c15_chunk_84', '4f9001ca8c15_chunk_83', '4f9001ca8c15_chunk_85']"
+    ]
+   },
+   {
+    "case_id": "noanswer-041",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_192', 'e564a122a7a2_chunk_191', 'e564a122a7a2_chunk_193']"
+    ]
+   },
+   {
+    "case_id": "noanswer-043",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_481', '86ef1bf559c5_chunk_480', '86ef1bf559c5_chunk_482']"
+    ]
+   },
+   {
+    "case_id": "noanswer-044",
+    "reasons": [
+     "chunk store 缺失: ['8b191b241b93_chunk_72', 'e564a122a7a2_chunk_151', '81544765752f_chunk_50', 'b9c22720dc84_chunk_187', '32c427fb50e2_chunk_137']"
+    ]
+   },
+   {
+    "case_id": "noanswer-045",
+    "reasons": [
+     "chunk store 缺失: ['86ef1bf559c5_chunk_374', '293d777c429b_chunk_439', '293d777c429b_chunk_802', '293d777c429b_chunk_217', '86ef1bf559c5_chunk_373']"
+    ]
+   },
+   {
+    "case_id": "noanswer-047",
+    "reasons": [
+     "chunk store 缺失: ['b9c22720dc84_chunk_184', 'b9c22720dc84_chunk_180', 'b9c22720dc84_chunk_183', 'b9c22720dc84_chunk_185', 'b9c22720dc84_chunk_179']"
+    ]
+   },
+   {
+    "case_id": "noanswer-049",
+    "reasons": [
+     "chunk store 缺失: ['293d777c429b_chunk_1065', '293d777c429b_chunk_1066', '293d777c429b_chunk_1064', '293d777c429b_chunk_1067']"
+    ]
+   },
+   {
+    "case_id": "noanswer-050",
+    "reasons": [
+     "chunk store 缺失: ['e564a122a7a2_chunk_238', '81544765752f_chunk_82', '86ef1bf559c5_chunk_477', 'e564a122a7a2_chunk_237', 'e564a122a7a2_chunk_239']"
+    ]
+   },
+   {
+    "case_id": "noanswer-051",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_131', '993955159403_chunk_34', 'c9fd20815ea8_chunk_24', '993955159403_chunk_43', '32c427fb50e2_chunk_139']"
+    ]
+   },
+   {
+    "case_id": "noanswer-052",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_123', '32c427fb50e2_chunk_86', '32c427fb50e2_chunk_194', '81544765752f_chunk_85', '81544765752f_chunk_65']"
+    ]
+   },
+   {
+    "case_id": "noanswer-053",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_207', '86ef1bf559c5_chunk_131', '32c427fb50e2_chunk_115', '293d777c429b_chunk_1077', '293d777c429b_chunk_870']"
+    ]
+   },
+   {
+    "case_id": "noanswer-054",
+    "reasons": [
+     "chunk store 缺失: ['c9fd20815ea8_chunk_23', '81544765752f_chunk_62', '32c427fb50e2_chunk_93', '81544765752f_chunk_61', '81544765752f_chunk_65']"
+    ]
+   },
+   {
+    "case_id": "noanswer-055",
+    "reasons": [
+     "chunk store 缺失: ['32c427fb50e2_chunk_197', '32c427fb50e2_chunk_208', 'e564a122a7a2_chunk_247', '86ef1bf559c5_chunk_378', 'e564a122a7a2_chunk_253']"
+    ]
+   }
+  ],
+  "ok": false,
+  "stage": "m6a-paired-replay-consistency",
+  "verdict": "INVALID"
+ },
+ "decision": {
+  "baseline_vs_paired": {
+   "baseline_citation_precision_avg": 0.0466,
+   "baseline_citation_recall_avg": 0.0656,
+   "baseline_fabricated_citation_count": 0,
+   "baseline_retrieved_not_in_context_count": 0,
+   "note": "未裁决（INVALID 停止条件触发；禁止以部分结果裁决）",
+   "paired_citation_precision_avg": null,
+   "paired_citation_recall_avg": null
+  },
+  "budget": {
+   "accounting": "签批口径：生成 calls=150（1 生成调用/例）；judge/al3 未运行 0 调用；replay 0 LLM 调用。",
+   "al3_round1_tokens": {},
+   "al3_round2_tokens": {},
+   "call_cap": 400,
+   "generation_calls": 150,
+   "generation_tokens": 1177717,
+   "judge_tokens": {},
+   "ok": true,
+   "rejudge_calls": 0,
+   "replay_calls": 0,
+   "token_cap": 1500000,
+   "total_calls": 150,
+   "total_tokens": 1177717
+  },
+  "c1": {
+   "metric": "paired citation_recall_avg",
+   "note": "未裁决（INVALID 停止条件触发；禁止以部分结果裁决）",
+   "ok": null,
+   "threshold": 0.1,
+   "value": null
+  },
+  "c2": {
+   "formula": "(mechanical_hit + judge_hit + 0.5*judge_partial) / 174 >= 0.55 AND lower-round semantic_correct / 28 >= 0.90",
+   "note": "未裁决（INVALID 停止条件触发；禁止以部分结果裁决）",
+   "ok": null,
+   "value": null
+  },
+  "c3": {
+   "note": "未裁决（INVALID 停止条件触发；禁止以部分结果裁决）",
+   "ok": null,
+   "precision_threshold": 0.04,
+   "value": null
+  },
+  "chunk_domain_diagnosis": {
+   "cases_total": 150,
+   "cases_with_unresolvable_ids": 138,
+   "distinct_missing_ids": 420,
+   "distinct_ordered_ids": 920,
+   "runtime_chunker": "运行时索引 section/切片切分（prepare_index，2947 chunks）",
+   "snippet_text_checks": 1877,
+   "snippet_text_matches_normalized": 0,
+   "store_chunker": "src.rag.get_splitter RecursiveCharacterTextSplitter size=2000 overlap=200（chunk-manifest.json，corpus v2.0.0，1006 chunks）",
+   "store_file": "data/v2-corpus/chunks/chunks.jsonl",
+   "truth_ids_in_store": 113,
+   "truth_ids_total": 113
+  },
+  "integrity": {
+   "consistency_ok": false,
+   "consistency_verdict": "INVALID",
+   "m6a_module_sha256": "ee9963c76cbf580238b5914a3b1a34d6265bdd66a5bdbfeb3523a457bccc1613",
+   "m6a_module_sha256_ok": true,
+   "sealed_dirs": {
+    "al3_round1": {
+     "absent": true,
+     "dir": "al3_round1",
+     "manifest_fields": {},
+     "ok": true,
+     "problems": [
+      "未运行（目录不存在）"
+     ]
+    },
+    "al3_round2": {
+     "absent": true,
+     "dir": "al3_round2",
+     "manifest_fields": {},
+     "ok": true,
+     "problems": [
+      "未运行（目录不存在）"
+     ]
+    },
+    "baseline": {
+     "dir": "baseline",
+     "manifest_fields": {
+      "dataset_sha256": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+      "outcomes_sha256": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54",
+      "report_sha256": "2fdb1c2399f0ebfcf10cc457c1c0275bb30a9703ff3585d28556b816fbda50ef"
+     },
+     "ok": true,
+     "problems": []
+    },
+    "judge": {
+     "absent": true,
+     "dir": "judge",
+     "manifest_fields": {},
+     "ok": true,
+     "problems": [
+      "未运行（目录不存在）"
+     ]
+    }
+   },
+   "sealed_ok": true,
+   "src_clean": true
+  },
+  "problems": [
+   "离线重放一致性断言失败（见 consistency.json）",
+   "离线重放一致性前置失败（chunk store 无法解析全部 context_chunk_ids_ordered，缺失即停止，任务书五.1/五.5）",
+   "judge/al3 未运行（INVALID 停止条件触发，0 LLM 调用）"
+  ],
+  "protocol": "M6a paired replay addendum 2026-11-01 (signed Q2-a..d)",
+  "slot_attribution": {
+   "add": 0,
+   "cases_replayed": 12,
+   "delete": 0,
+   "fail_closed_cases": 0,
+   "note": "仅为可解析的 12 例部分结果，且同 ID 异文（域碰撞），不可用于裁决",
+   "retarget": 7,
+   "stats_sums": {
+    "examined": 28,
+    "groups": 20,
+    "invalid": 0,
+    "retargeted": 7,
+    "unchanged": 21
+   }
+  },
+  "stage": "m6a-paired-decision",
+  "verdict": "INVALID"
+ },
+ "replay_stats": {
+  "cases": 12,
+  "fail_closed_cases": 0,
+  "module_sha256": "ee9963c76cbf580238b5914a3b1a34d6265bdd66a5bdbfeb3523a457bccc1613",
+  "paired_aggregates": {
+   "citation_precision_avg": 0.0208,
+   "citation_precision_raw": 0.020833333333333332,
+   "citation_recall_avg": 0.0417,
+   "citation_recall_raw": 0.041666666666666664,
+   "fabricated_citation_count": 0,
+   "retrieved_not_in_context_count": 0
+  },
+  "per_case": [
+   {
+    "add": 0,
+    "case_id": "multi-022",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 0
+   },
+   {
+    "add": 0,
+    "case_id": "en-029",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 0
+   },
+   {
+    "add": 0,
+    "case_id": "en-030",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 0
+   },
+   {
+    "add": 0,
+    "case_id": "en-034",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 0
+   },
+   {
+    "add": 0,
+    "case_id": "en-035",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 0
+   },
+   {
+    "add": 0,
+    "case_id": "en-049",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 1
+   },
+   {
+    "add": 0,
+    "case_id": "en-051",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 4
+   },
+   {
+    "add": 0,
+    "case_id": "en-056",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 0
+   },
+   {
+    "add": 0,
+    "case_id": "noanswer-039",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 1
+   },
+   {
+    "add": 0,
+    "case_id": "noanswer-042",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 0
+   },
+   {
+    "add": 0,
+    "case_id": "noanswer-046",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 1
+   },
+   {
+    "add": 0,
+    "case_id": "noanswer-048",
+    "delete": 0,
+    "fail_closed": false,
+    "retarget": 0
+   }
+  ],
+  "slot_totals": {
+   "add": 0,
+   "delete": 0,
+   "retarget": 7
+  },
+  "stage": "m6a-paired-replay-stats",
+  "stats_sums": {
+   "examined": 28,
+   "groups": 20,
+   "invalid": 0,
+   "retargeted": 7,
+   "unchanged": 21
+  }
+ },
+ "stage": "m6a-paired-report"
+}

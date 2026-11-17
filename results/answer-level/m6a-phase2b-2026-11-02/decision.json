@@ -1,0 +1,23 @@
+{
+  "C2_G2prime_needed_for_verdict": false,
+  "C2_G2prime_status": "not_run_environment_missing_api_key_or_base_url",
+  "consistency": {
+    "cases_slot_count_unchanged": 150,
+    "cases_stripped_byte_identical": 150,
+    "cases_total": 150,
+    "mismatch_count": 0
+  },
+  "fabricated_retrieved_status": "unverified",
+  "failed_gates": [
+    "C1",
+    "C3_precision_evi"
+  ],
+  "judge_al3_calls": 0,
+  "judge_al3_tokens": 0,
+  "reasons": [
+    "C1 paired 0.3578 < 0.4125",
+    "C3 precision_evi paired 0.2963 < 0.3060"
+  ],
+  "replay_executed": true,
+  "verdict": "FAIL"
+}

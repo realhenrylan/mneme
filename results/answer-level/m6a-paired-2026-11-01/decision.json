@@ -1,0 +1,128 @@
+{
+ "baseline_vs_paired": {
+  "baseline_citation_precision_avg": 0.0466,
+  "baseline_citation_recall_avg": 0.0656,
+  "baseline_fabricated_citation_count": 0,
+  "baseline_retrieved_not_in_context_count": 0,
+  "note": "未裁决（INVALID 停止条件触发；禁止以部分结果裁决）",
+  "paired_citation_precision_avg": null,
+  "paired_citation_recall_avg": null
+ },
+ "budget": {
+  "accounting": "签批口径：生成 calls=150（1 生成调用/例）；judge/al3 未运行 0 调用；replay 0 LLM 调用。",
+  "al3_round1_tokens": {},
+  "al3_round2_tokens": {},
+  "call_cap": 400,
+  "generation_calls": 150,
+  "generation_tokens": 1177717,
+  "judge_tokens": {},
+  "ok": true,
+  "rejudge_calls": 0,
+  "replay_calls": 0,
+  "token_cap": 1500000,
+  "total_calls": 150,
+  "total_tokens": 1177717
+ },
+ "c1": {
+  "metric": "paired citation_recall_avg",
+  "note": "未裁决（INVALID 停止条件触发；禁止以部分结果裁决）",
+  "ok": null,
+  "threshold": 0.1,
+  "value": null
+ },
+ "c2": {
+  "formula": "(mechanical_hit + judge_hit + 0.5*judge_partial) / 174 >= 0.55 AND lower-round semantic_correct / 28 >= 0.90",
+  "note": "未裁决（INVALID 停止条件触发；禁止以部分结果裁决）",
+  "ok": null,
+  "value": null
+ },
+ "c3": {
+  "note": "未裁决（INVALID 停止条件触发；禁止以部分结果裁决）",
+  "ok": null,
+  "precision_threshold": 0.04,
+  "value": null
+ },
+ "chunk_domain_diagnosis": {
+  "cases_total": 150,
+  "cases_with_unresolvable_ids": 138,
+  "distinct_missing_ids": 420,
+  "distinct_ordered_ids": 920,
+  "runtime_chunker": "运行时索引 section/切片切分（prepare_index，2947 chunks）",
+  "snippet_text_checks": 1877,
+  "snippet_text_matches_normalized": 0,
+  "store_chunker": "src.rag.get_splitter RecursiveCharacterTextSplitter size=2000 overlap=200（chunk-manifest.json，corpus v2.0.0，1006 chunks）",
+  "store_file": "data/v2-corpus/chunks/chunks.jsonl",
+  "truth_ids_in_store": 113,
+  "truth_ids_total": 113
+ },
+ "integrity": {
+  "consistency_ok": false,
+  "consistency_verdict": "INVALID",
+  "m6a_module_sha256": "ee9963c76cbf580238b5914a3b1a34d6265bdd66a5bdbfeb3523a457bccc1613",
+  "m6a_module_sha256_ok": true,
+  "sealed_dirs": {
+   "al3_round1": {
+    "absent": true,
+    "dir": "al3_round1",
+    "manifest_fields": {},
+    "ok": true,
+    "problems": [
+     "未运行（目录不存在）"
+    ]
+   },
+   "al3_round2": {
+    "absent": true,
+    "dir": "al3_round2",
+    "manifest_fields": {},
+    "ok": true,
+    "problems": [
+     "未运行（目录不存在）"
+    ]
+   },
+   "baseline": {
+    "dir": "baseline",
+    "manifest_fields": {
+     "dataset_sha256": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+     "outcomes_sha256": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54",
+     "report_sha256": "2fdb1c2399f0ebfcf10cc457c1c0275bb30a9703ff3585d28556b816fbda50ef"
+    },
+    "ok": true,
+    "problems": []
+   },
+   "judge": {
+    "absent": true,
+    "dir": "judge",
+    "manifest_fields": {},
+    "ok": true,
+    "problems": [
+     "未运行（目录不存在）"
+    ]
+   }
+  },
+  "sealed_ok": true,
+  "src_clean": true
+ },
+ "problems": [
+  "离线重放一致性断言失败（见 consistency.json）",
+  "离线重放一致性前置失败（chunk store 无法解析全部 context_chunk_ids_ordered，缺失即停止，任务书五.1/五.5）",
+  "judge/al3 未运行（INVALID 停止条件触发，0 LLM 调用）"
+ ],
+ "protocol": "M6a paired replay addendum 2026-11-01 (signed Q2-a..d)",
+ "slot_attribution": {
+  "add": 0,
+  "cases_replayed": 12,
+  "delete": 0,
+  "fail_closed_cases": 0,
+  "note": "仅为可解析的 12 例部分结果，且同 ID 异文（域碰撞），不可用于裁决",
+  "retarget": 7,
+  "stats_sums": {
+   "examined": 28,
+   "groups": 20,
+   "invalid": 0,
+   "retargeted": 7,
+   "unchanged": 21
+  }
+ },
+ "stage": "m6a-paired-decision",
+ "verdict": "INVALID"
+}

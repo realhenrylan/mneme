@@ -1,0 +1,2 @@
+verdict=INVALID
+problems=['离线重放一致性断言失败（见 consistency.json）', '离线重放一致性前置失败（chunk store 无法解析全部 context_chunk_ids_ordered，缺失即停止，任务书五.1/五.5）', 'judge/al3 未运行（INVALID 停止条件触发，0 LLM 调用）']

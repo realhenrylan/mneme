@@ -130,7 +130,9 @@ M5d 之后没有立项文档。T5 已产出
 原 2026-11-01 预注册（Q1-a..e）已被
 [Phase 2A 预注册](../plans/ANSWER-LEVEL-M6a-PHASE2A-ORACLE-PREREGISTRATION-2026-11-01.md)
 重签覆盖；原 C1≥0.10 / C3≥0.0400 不再适用。Phase 2A 冻结映射与 oracle 后，Phase 2B
-离线配对重放（worktree `D:\GitHub\mneme-phase2b`，提交 `f6fb7ac`，未 push）：
+离线配对重放（原始执行在 worktree `D:\GitHub\mneme-phase2b`，提交 `f6fb7ac`；
+密封产物已于 2026-11-17 入主仓 `results/answer-level/m6a-phase2b-2026-11-02/`，
+自哈希与 7 个 `files_sha256` 独立复算 MATCH）：
 
 - 150/150 剥离 `[S#]` 后逐字节一致；槽位 460/460；102 个被重定向。
 - C1 `store_hit_recall_evi` **0.3578** < 0.4125；C3 `precision_evi` **0.2963** < 0.3060；
@@ -207,7 +209,7 @@ M6a 的预注册须独立成文，不在本账本内直接启动。
 | P0-1 | P0 | 冻结阶段测试与共享真值 SHA 耦合 | **DONE**（隔离 A + T1b） | 观察 CI known-red；v206 全红模块保留模块 marker | 工程（已完成） |
 | P0-2 | P0 | 回归日志未入库 | **DONE** | — | 工程（已完成） |
 | P1-1 | P1 | 路线图回填（v2.1 / M1–M5d / 臂2） | **DONE** | — | 工程（已完成） |
-| P1-2 | P1 | M6 立项 | **NO_GO**（M6a Phase 2B FAIL，2026-11-02） | 已关闭；不合并、不重跑；证据保留在 `mneme-phase2b` | owner/工程（已关闭） |
+| P1-2 | P1 | M6 立项 | **NO_GO**（M6a Phase 2B FAIL，2026-11-02） | 已关闭；不合并、不重跑；密封证据已入主仓 `results/answer-level/m6a-phase2b-2026-11-02/` | owner/工程（已关闭） |
 | P1-3 | P1 | 陈旧开放标记裁决 | **DONE** | — | owner（已裁决） |
 | P2-1 | P2 | 臂2 成本观察 | **WATCH**（本轮停止，`INSUFFICIENT_SAMPLE`） | 日常使用；有自然使用数据或实际成本问题时再决定是否恢复观察 | owner |
 | P2-2 | P2 | 仓库卫生（`.mimosa/`、日志、venv） | **DONE** | — | 工程（已完成） |
@@ -270,9 +272,12 @@ python -m pytest -q --ignore=tests/analysis -m frozen_stage -p no:cacheprovider 
 - 离线配对重放：150/150 剥离 `[S#]` 一致；460/460 槽位；102 个重定向。
 - C1 `store_hit_recall_evi` **0.3578** < 0.4125；C3 `precision_evi` **0.2963** < 0.3060；
   两者均低于 control（0.3767 / 0.3160）。C2/G2′ 未执行（C1/C3 已硬失败）。
-- 裁决 **FAIL / NO_GO**；worktree `D:\GitHub\mneme-phase2b`，提交 `f6fb7ac`，未 push；
+- 裁决 **FAIL / NO_GO**；原始执行在 worktree `D:\GitHub\mneme-phase2b`，提交 `f6fb7ac`；
+  密封产物已于 2026-11-17 复制入主仓 `results/answer-level/m6a-phase2b-2026-11-02/`（自哈希复算 MATCH）；
   不合并 `feat/m6a-citation-selection`，不重跑、不调阈值；重启须另立预注册。
-- 未改产品默认、未改产品 `src/`、未更新本文件之外的评测文档。
+- **更正（2026-11-17）**：此前“未改产品 `src/`”的表述不准确。`src/` 在 **phase2b 分支内**确实被改过
+  （新增 `src/citation_selection.py` 277 行，`src/rag.py` +8 行接入 `retarget_citations`），
+  但**均未合入 `main`**；产品默认值与主仓 `src/` 未变。该分支代码现随 M6a 判 FAIL 而成为未采用的死代码。
 
 **2026-11-02 P2-1 收口**
 - `feat/p2-1-usage-ledger @ fda26a7` 已合入 main `903f84d`（merge commit）；仅

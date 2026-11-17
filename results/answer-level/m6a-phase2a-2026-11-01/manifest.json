@@ -1,0 +1,47 @@
+{
+  "baseline": {
+    "cases_failed": 0,
+    "ref": "de8181f:results/answer-level/m6a-paired-base-2026-11-01/outcomes.jsonl",
+    "ref_secondary": "de8181f:results/answer-level/m6a-paired-2026-11-01/baseline-outcomes.jsonl",
+    "rows": 150,
+    "sha256": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54"
+  },
+  "dataset": {
+    "path": "evaluation\\datasets\\v2.1.jsonl",
+    "sha256_at_baseline_run": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+    "sha256_lf_normalized": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+    "sha256_note": "raw worktree bytes differ from the git blob only because core.autocrlf=true converts LF->CRLF on checkout; LF-normalized == blob == baseline-run value 4597167d…",
+    "sha256_worktree_raw": "88fa2928f545cf6bcdd4948cbd389e2488e769cf38d0a0db13fc9a1ffc7b27c5",
+    "truth_list_duplicates": [
+      "mixed-033"
+    ],
+    "truth_set_mismatch_vs_baseline": 0
+  },
+  "generated_at": "2026-11-02T14:14:36+0800",
+  "git_commit": "ab4073c1704e3a8e361e8a55373fbf03bad9859c",
+  "llm_calls": 0,
+  "manifest_sha256": "23841880e079b686c7a3f58757b5b14324ebecc48c76a0b118001617b18cebea",
+  "mapping": {
+    "path": "results\\answer-level\\chunk-domain-audit-2026-11-01\\mapping.jsonl",
+    "rows": 1006,
+    "sha256": "d63bf48af0a18d5b49ed3957159b84af71a056242c9af47843f94e9b4973d42d"
+  },
+  "network": false,
+  "outputs_sha256": {
+    "control-metrics.json": "519e9a4302c10464c2c9df7da29f3cb0e507922184d86f0ee324fb46754634ed",
+    "mapping-candidates.json": "e17e3880adbf6f801cfb545096f48723450783527eb056f618b80c5aa699e94b",
+    "oracle.json": "6134795acc446878842bd305c4de64b616056fe10284dbddf8b29eaeef03ab64",
+    "report.md": "e596323b5b586591031df26d02deb8eccf800cf4bef7e6f50141a9ba0f65a4b3"
+  },
+  "phase": "M6a-Phase2A",
+  "read_only": true,
+  "runtime_map": {
+    "path": "results\\answer-level\\chunk-domain-audit-2026-11-01\\runtime-map.jsonl",
+    "rows": 2947,
+    "sha256": "efe8595872891da599c41ba1ac2031cff181c2f3f7823bb74c7f514889193275"
+  },
+  "script": {
+    "path": "scripts\\audit\\phase2a_oracle.py",
+    "sha256": "6c983a20e5d0e57651e65d767e5ad92d98cfcaf860faec527904a24312032f2a"
+  }
+}

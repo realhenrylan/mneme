@@ -1,0 +1,13 @@
+# replay run log (scripts/m6a_paired_replay.py, 2026-11-01)
+# 第 1 次执行：加载冻结模块时崩溃（importlib 未注册 sys.modules，dataclass
+# 解析 AttributeError: 'NoneType' object has no attribute '__dict__'），发生在
+# 任何数据处理之前，0 产物；修复 loader（sys.modules[spec.name]=module）后
+# 移除空输出目录重跑（确定性离线，0 LLM 调用）。
+[chunks] 1006 chunks loaded
+[module] frozen citation_selection loaded (sha ee9963c76cbf5802…)
+[replay] cases=12 add=0 retarget=7 delete=0 fail_closed=0
+[replay] paired recall_avg=0.0417 precision_avg=0.0208（12 例部分结果，域碰撞，不裁决）
+[replay] consistency: INVALID
+[exit code: 2]
+# 停止条件：138/150 例 context_chunk_ids_ordered 含 chunk store 缺失 ID
+# （任务书五.1 缺失即停止 → 五.5 写 INVALID）；不跑 judge/al3。

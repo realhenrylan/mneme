@@ -1,0 +1,112 @@
+{
+ "cases": 12,
+ "fail_closed_cases": 0,
+ "module_sha256": "ee9963c76cbf580238b5914a3b1a34d6265bdd66a5bdbfeb3523a457bccc1613",
+ "paired_aggregates": {
+  "citation_precision_avg": 0.0208,
+  "citation_precision_raw": 0.020833333333333332,
+  "citation_recall_avg": 0.0417,
+  "citation_recall_raw": 0.041666666666666664,
+  "fabricated_citation_count": 0,
+  "retrieved_not_in_context_count": 0
+ },
+ "per_case": [
+  {
+   "add": 0,
+   "case_id": "multi-022",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 0
+  },
+  {
+   "add": 0,
+   "case_id": "en-029",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 0
+  },
+  {
+   "add": 0,
+   "case_id": "en-030",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 0
+  },
+  {
+   "add": 0,
+   "case_id": "en-034",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 0
+  },
+  {
+   "add": 0,
+   "case_id": "en-035",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 0
+  },
+  {
+   "add": 0,
+   "case_id": "en-049",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 1
+  },
+  {
+   "add": 0,
+   "case_id": "en-051",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 4
+  },
+  {
+   "add": 0,
+   "case_id": "en-056",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 0
+  },
+  {
+   "add": 0,
+   "case_id": "noanswer-039",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 1
+  },
+  {
+   "add": 0,
+   "case_id": "noanswer-042",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 0
+  },
+  {
+   "add": 0,
+   "case_id": "noanswer-046",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 1
+  },
+  {
+   "add": 0,
+   "case_id": "noanswer-048",
+   "delete": 0,
+   "fail_closed": false,
+   "retarget": 0
+  }
+ ],
+ "slot_totals": {
+  "add": 0,
+  "delete": 0,
+  "retarget": 7
+ },
+ "stage": "m6a-paired-replay-stats",
+ "stats_sums": {
+  "examined": 28,
+  "groups": 20,
+  "invalid": 0,
+  "retargeted": 7,
+  "unchanged": 21
+ }
+}

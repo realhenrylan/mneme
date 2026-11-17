@@ -1,0 +1,29 @@
+{
+ "base_commit": "746712d",
+ "baseline_outcomes_sha256": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54",
+ "files": {
+  "baseline-outcomes.jsonl": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54",
+  "consistency.json": "5d22795310120c26d1cfb707ac19acc2df7acfd9894a617f09609214d2594f2f",
+  "decision.json": "c39d20326c322635b54fe2d68619332a1a6bbc0a2c7d36f5d6e74c29e9f40501",
+  "eval-scripts/citation_metrics.py": "75dcb12a40cd6b50d0202445d42858dbbbb6273de3a17860b15faa297d4b363a",
+  "eval-scripts/generation_runner.py": "22e0933207107d7c9f7a2b487f6fa26ade75205b48617726f518e69f4d985915",
+  "eval-scripts/m6a_paired_decision.py": "83ee428846a2a630016d70f7b55cb38675754d3ace7c3b1ae2d333d3d5c0a84f",
+  "eval-scripts/m6a_paired_replay.py": "7a87598efdd8d86f9e5aad124ead46f52315576edd8873eb1b681829443137d0",
+  "eval-scripts/m6a_preflight.py": "d0473163cebcda98aabe7cab5e086dc102a2c0407f808ae8e94dba6241bcff5a",
+  "logs/decision.log": "fa83a15500aa08099dd17dda768cc49580435d83f7161d7485c6ee702a11ac50",
+  "logs/generation.log": "e301d510c4594f9cd617f15361e671680f05f11375f5fc8a73271037721aeaaa",
+  "logs/replay.log": "d644664d07810040e2478e87ff5b076434d230511eefe820f151e53d9aadc16b",
+  "outcomes-paired.jsonl": "3fd285c70cbc064dcddc246df91fb09dbd8502b63b15a3d210a3475463b34927",
+  "replay-stats.json": "f001358858639e9029edd3c01f6492cfcdcb0e05c8c7012f5f44dfa33cf33a49",
+  "report.json": "952f150437a043e9fbf153471b1f7e35f59b2baa477e1afb49c6c7476fda9b5a",
+  "report.md": "7de5495001aac364c6221d047e77b42cc3a9291b21b4a91e94de7fbb20b13a35"
+ },
+ "head_commit": "8ffa3e0d9f883d0805bea24ab29c80340ea4aef2",
+ "lineage": "m6a-paired-replay-2026-11-01",
+ "m6a_module_commit": "614e260",
+ "m6a_module_sha256": "ee9963c76cbf580238b5914a3b1a34d6265bdd66a5bdbfeb3523a457bccc1613",
+ "manifest_sha256": "13682e34b48987b3eb32638d99a09297263bd8d45c7aa6ffd3a5a6d78a957161",
+ "protocol": "M6a paired replay addendum 2026-11-01 (signed Q2-a..d)",
+ "stage": "m6a-paired-decision",
+ "verdict": "INVALID"
+}

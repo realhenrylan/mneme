@@ -1,7 +1,35 @@
-# 回归证据归档（2026-09-09 / 2026-10-31）
+# 回归证据归档（2026-08-30 / 2026-09-09 / 2026-10-31 / 2026-11-17）
 
 本目录保存可入库的回归证据副本，供版本库直接追溯，不依赖本机临时文件或 CI artifact。
 日志均为 `pytest -q` 原始输出（无 ANSI 颜色、未编辑），SHA-256 见各表。
+
+## 2026-11-17 默认套件（绿）
+
+| 项 | 值 |
+|---|---|
+| 工作树 | `main` @ `36ae6f3` + 本地提交 `5e589aa`（未 push） |
+| 运行时间 | 2026-11-17 23:15–23:22（Asia/Shanghai；`5e589aa` 提交于 23:21） |
+| 耗时 | 340.62 s（0:05:40） |
+| 命令 | `PYTHONUTF8=1 python -m pytest -q --ignore=tests/analysis -m "not frozen_stage" -p no:cacheprovider` |
+| 环境 | Windows（Git Bash）；Python 3.12 + pytest 9.0.3（系统解释器） |
+| 读数 | **2712 passed / 8 skipped / 318 deselected / 0 failed / 0 errors** |
+| 说明 | 现场复跑读数；因命令经 `tail` 管道只保留了末 8 行，**未入库完整日志**，仅在此表登记读数。与 2026-10-31 的 2653 之差 59 = P2-1 usage ledger 新增用例。 |
+
+## 2026-08-30 全量回归（M2 后基线，CHANGELOG 引用件）
+
+| 项 | 值 |
+|---|---|
+| 来源 | 原路径 `results/full-regression.log`（现已被 `2026-08-30-full-regression.log` 取代）；2026-09-03 仓库清理时移入 `D:\GitHub\mneme-cleanup-quarantine-20260903`，**从未进入 git** |
+| 运行时间 | 文件 mtime 2026-08-30 13:08（Asia/Shanghai） |
+| 命令 | `python -m pytest -q --ignore=tests/analysis`（全口径，未排除 `frozen_stage`） |
+| 读数 | **242 failed / 2518 passed / 1 skipped / 7 deselected / 78 errors**，697.25 s |
+| 归档文件 | `2026-08-30-full-regression.log`（1,330,121 字节） |
+| SHA-256 | `8BF930ED5B91C20D9A6A950E27327CEE75367D43BF0964A89B6040A62D6587D8` |
+
+> 该日志是 `CHANGELOG.md` M1 条目「与 owner 基线（`results/full-regression.log`，全口径
+> 242 failed/78 errors 为既有状态）逐项对比**零新增失败**」的对比基线。此前唯一副本位于
+> 仓库外的 quarantine 目录，引用处于悬空状态；2026-11-17 按字节复制入库（`cmp` 校验一致），
+> 原件仍在 quarantine，未删除。
 
 ## 2026-10-31 默认套件（绿）
 

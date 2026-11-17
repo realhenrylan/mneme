@@ -1,0 +1,174 @@
+{
+  "base_commit": "004e903691943267c261f892ebe16e256df7f71f",
+  "baseline_generation_tokens": {
+    "answer_rows": 150,
+    "completion": 18294,
+    "prompt": 1159423,
+    "total": 1177717
+  },
+  "baseline_mechanical_miss_points": 151,
+  "baseline_raw_sha256_disclosure": "16d4797c05d68820d474ad42e92a540b25e7508dcd8f6c6cb0b33d1ee47989c6",
+  "baseline_raw_sha256_expected_disclosure": "16d4797c05d68820d474ad42e92a540b25e7508dcd8f6c6cb0b33d1ee47989c6",
+  "baseline_ref": "de8181f:results/answer-level/m6a-paired-2026-11-01/baseline-outcomes.jsonl",
+  "baseline_refusal_probes": 28,
+  "checks": [
+    {
+      "actual": "402bfffa0ee0b2de6b694df3af02ef44ec935f1a",
+      "expected": "402bfffa0ee0b2de6b694df3af02ef44ec935f1a",
+      "name": "worktree_head",
+      "passed": true
+    },
+    {
+      "actual": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54",
+      "expected": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54",
+      "name": "baseline_git_blob_sha256",
+      "passed": true
+    },
+    {
+      "actual": 150,
+      "expected": 150,
+      "name": "baseline_rows",
+      "passed": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "baseline_cases_failed_from_phase2a_manifest",
+      "passed": true
+    },
+    {
+      "actual": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54",
+      "expected": "5cd71261507a8367c9acb160bb71406fc289e85a19ed761a6fe0604ba85a5c54",
+      "name": "baseline_checkout_lf_equivalence",
+      "passed": true
+    },
+    {
+      "actual": 2947,
+      "expected": 2947,
+      "name": "runtime_map_rows",
+      "passed": true
+    },
+    {
+      "actual": "efe8595872891da599c41ba1ac2031cff181c2f3f7823bb74c7f514889193275",
+      "expected": "efe8595872891da599c41ba1ac2031cff181c2f3f7823bb74c7f514889193275",
+      "name": "runtime_map_worktree_sha256",
+      "passed": true
+    },
+    {
+      "actual": 1006,
+      "expected": 1006,
+      "name": "mapping_rows",
+      "passed": true
+    },
+    {
+      "actual": "d63bf48af0a18d5b49ed3957159b84af71a056242c9af47843f94e9b4973d42d",
+      "expected": "d63bf48af0a18d5b49ed3957159b84af71a056242c9af47843f94e9b4973d42d",
+      "name": "mapping_worktree_sha256",
+      "passed": true
+    },
+    {
+      "actual": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+      "expected": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+      "name": "dataset_git_blob_sha256",
+      "passed": true
+    },
+    {
+      "actual": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+      "expected": "4597167dadd72ba972373bedc44d27c858b7c7ddbe42f8ede9d37021b38e92a9",
+      "name": "dataset_worktree_lf_sha256",
+      "passed": true
+    },
+    {
+      "actual": "ee9963c76cbf580238b5914a3b1a34d6265bdd66a5bdbfeb3523a457bccc1613",
+      "expected": "ee9963c76cbf580238b5914a3b1a34d6265bdd66a5bdbfeb3523a457bccc1613",
+      "name": "m6a_module_git_blob_sha256",
+      "passed": true
+    },
+    {
+      "actual": "ee9963c76cbf580238b5914a3b1a34d6265bdd66a5bdbfeb3523a457bccc1613",
+      "expected": "ee9963c76cbf580238b5914a3b1a34d6265bdd66a5bdbfeb3523a457bccc1613",
+      "name": "m6a_module_worktree_lf_sha256",
+      "passed": true
+    },
+    {
+      "actual": 2947,
+      "expected": 2947,
+      "name": "runtime_map_normalized_id_uniqueness",
+      "passed": true
+    },
+    {
+      "actual": 3108,
+      "expected": 3108,
+      "name": "ordered_context_ids_total",
+      "passed": true
+    },
+    {
+      "actual": 3108,
+      "expected": 3108,
+      "name": "ordered_context_ids_resolvable_to_runtime_full_text",
+      "passed": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "baseline_answers_are_strings",
+      "passed": true
+    },
+    {
+      "actual": 0.3767,
+      "expected": 0.3767,
+      "name": "control_C1_store_hit_recall_evi",
+      "passed": true
+    },
+    {
+      "actual": 0.316,
+      "expected": 0.316,
+      "name": "control_C3_precision_evi",
+      "passed": true
+    }
+  ],
+  "control_metrics": {
+    "A": {
+      "mean_rel_runtime_size": 2.58,
+      "oracle_store_hit_achievable": 0.4483,
+      "precision_ctx": 0.0507,
+      "precision_evi": 0.316,
+      "recall_ctx": 0.3857,
+      "recall_evi": 0.2342,
+      "store_hit_recall_evi": 0.3767
+    },
+    "B": {
+      "mean_rel_runtime_size": 0.8733,
+      "oracle_store_hit_achievable": 0.355,
+      "precision_ctx": 0.0243,
+      "precision_evi": 0.195,
+      "recall_ctx": 0.3583,
+      "recall_evi": 0.24,
+      "store_hit_recall_evi": 0.2367
+    },
+    "C": {
+      "mean_rel_runtime_size": 0.8933,
+      "oracle_store_hit_achievable": 0.365,
+      "precision_ctx": 0.0248,
+      "precision_evi": 0.2016,
+      "recall_ctx": 0.3683,
+      "recall_evi": 0.2467,
+      "store_hit_recall_evi": 0.2433
+    }
+  },
+  "dataset_raw_sha256_disclosure": "88fa2928f545cf6bcdd4948cbd389e2488e769cf38d0a0db13fc9a1ffc7b27c5",
+  "dataset_raw_sha256_expected_disclosure": "88fa2928f545cf6bcdd4948cbd389e2488e769cf38d0a0db13fc9a1ffc7b27c5",
+  "failures": [],
+  "full_sources_used": false,
+  "head": "402bfffa0ee0b2de6b694df3af02ef44ec935f1a",
+  "m6a_commit": "614e2605b749d41a137f7b9d1e97e85ba52d907e",
+  "m6a_module_raw_sha256_disclosure": "b187bc33b1d42ae7f340e172145799606e6fcf96852fd32ff68172a66bfb4191",
+  "mapping_lf_sha256": "0cf13de910ce5de811b22ed21b05e47033983a13f2def928a372de5161c136ac",
+  "mapping_rows": 1006,
+  "ordered_ids_resolved": 3108,
+  "ordered_ids_total": 3108,
+  "phase2a_commit": "744f3738fa2f8eb8552a7ebb420ce67dcde1036b",
+  "runtime_map_lf_sha256": "121a7eabbb089af209a9de43d59be4f12ea8fee02047b09a24bbf91bd773b46e",
+  "runtime_map_rows": 2947,
+  "status": "PREFLIGHT_PASS"
+}
