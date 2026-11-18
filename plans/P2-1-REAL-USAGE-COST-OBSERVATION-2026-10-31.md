@@ -1,11 +1,17 @@
 # P2-1 真实使用成本：可计算性审计与最小采集方案
 
 - 日期：2026-10-31
-- 状态：**AUDIT 完成；结论 NO-GO（现有数据不足）；Option A 已获 owner 2026-11-01 授权实施（进行中）**。修复方案见 §7.2；实施与测试另行提交，不 push。
+- ~~状态：**AUDIT 完成；结论 NO-GO（现有数据不足）；Option A 已获 owner 2026-11-01 授权实施（进行中）**~~。修复方案见 §7.2；实施与测试另行提交，不 push。
 - 审计对象：`src/production_observability.py`、`src/llm_gateway.py`、`src/rag.py` 的观测/生成/计量接线，以及本机 `${MNEME_DATA_DIR}/traces`（未设时 `~/.mneme/traces`）现有 trace。
 - 上游：`docs/STATUS.md` §4 P2-1（WATCH，DoD 开放）；`results/cost-baseline-2026-10-31/report.md`（T6 基线）。
 - 边界：审计阶段只读；未改代码/traces/consent；未调用 LLM；未安装依赖；未读取 query/history/answer/model_response 原文。2026-11-01 owner 授权 Option A 实施后，代码改动在 `feat/p2-1-usage-ledger` 分支单独进行。
 - 本报告只含聚合数字，不含查询、答案、chunk id、trace id、会话标识、文件哈希或任何原文。
+
+> **当前状态（2026-11-18）**：上面那条状态行「Option A 进行中」**已过时**。Option A
+> 实现已于 **`903f84d`**（`merge: P2-1 opt-in query usage ledger`）合入 `main`；
+> 采集轮于 **2026-11-09** 以 `INSUFFICIENT_SAMPLE` 收尾（47 条 `origin=user` 台账行，
+> 连续 24 小时无新增后停止，见 [停止报告](../results/usage/p2-1-real-2026-11-02/report.md)）。
+> 原状态行保留并加删除线；§7.2 修复方案与 §0 的 NO-GO 审计结论仍是本文件的实质内容。
 
 ---
 
