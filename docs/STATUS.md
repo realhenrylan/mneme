@@ -272,7 +272,8 @@ python -m pytest -q --ignore=tests/analysis -m frozen_stage -p no:cacheprovider 
 - 离线配对重放：150/150 剥离 `[S#]` 一致；460/460 槽位；102 个重定向。
 - C1 `store_hit_recall_evi` **0.3578** < 0.4125；C3 `precision_evi` **0.2963** < 0.3060；
   两者均低于 control（0.3767 / 0.3160）。C2/G2′ 未执行（C1/C3 已硬失败）。
-- 裁决 **FAIL / NO_GO**；原始执行在 worktree `D:\GitHub\mneme-phase2b`，提交 `f6fb7ac`；
+- 裁决 **FAIL / NO_GO**；原始执行在 worktree `D:\GitHub\mneme-phase2b`（**该 worktree 已于
+  2026-11-18 移除**，分支 `eval/m6a-phase2b-2026-11-02 @ 04111bb` 与全部对象保留，未 push）；
   密封产物已于 2026-11-17 复制入主仓 `results/answer-level/m6a-phase2b-2026-11-02/`（自哈希复算 MATCH）；
   不合并 `feat/m6a-citation-selection`，不重跑、不调阈值；重启须另立预注册。
 - **更正（2026-11-17）**：此前“未改产品 `src/`”的表述不准确。`src/` 在 **phase2b 分支内**确实被改过
