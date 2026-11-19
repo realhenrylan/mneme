@@ -44,9 +44,11 @@ def _decode_log(raw: bytes) -> str:
     从而把"基线未变"误判为"基线改变"。
     """
     if raw.startswith(b"\xff\xfe"):
-        return raw.decode("utf-16-le", errors="replace")
+        # 跳过 BOM 字节本身，否则解码结果会以 U+FEFF 开头（虽不影响尾部正则，
+        # 但会让日志首行带隐形字符，发布到 CI 日志里很难排查）。
+        return raw[2:].decode("utf-16-le", errors="replace")
     if raw.startswith(b"\xfe\xff"):
-        return raw.decode("utf-16-be", errors="replace")
+        return raw[2:].decode("utf-16-be", errors="replace")
     if raw.startswith(b"\xef\xbb\xbf"):
         return raw[3:].decode("utf-8", errors="replace")
     try:
